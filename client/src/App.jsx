@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import './App.css'
 
-function App() {
-  const [res, setRes] = useState("apple");
+import Settings from "./Settings";
 
-  async function backEndRequestExample() {
-    const response = await axios.get('http://localhost:5000/api');
-    setRes(response.data["fruit"]);
-  }
-  
+function App() {
+
   return (
-    <div>
-      <h1>{res}</h1>
+    <div className="container">
+      <Settings></Settings>
+      <h1>Portfolio</h1>
+      <h2>Michael Lyons</h2>
     </div>
   )
 }
