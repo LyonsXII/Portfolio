@@ -8,6 +8,20 @@
   color: rgb(237, 237, 237);
 }
 
+.containerBackground {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url("./bg.webp");
+  background-size: cover;
+  opacity: 0.04;
+  width: 100%;
+  height: 100%;
+}
+
 .settingsContainer {
   position: absolute;
   top: 0px;
@@ -21,7 +35,7 @@
   border-left: 4px solid black;
 }
 
-.settingsContainer > .settingsButton {
+.settingsButton {
   height: 80px;
   width: 100%;
   display: flex;
@@ -30,7 +44,25 @@
   border-bottom: 4px solid black;
 }
 
-.settingsButton > img {
-  height: 60px;
-  width: 60px;
+.settingsButton > svg {
+  height: auto;
+  width: 80%;
+}
+
+.settingsContainerText {
+  position: absolute;
+  top: 0px;
+  right: calc(4% + 4px);
+  height: 248px;
+  width: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(65, 26, 145);
+  border-left: 4px solid black;
+  border-bottom: 4px solid black;
+}
+
+.verticalText {
+  writing-mode: vertical-rl;
 }
