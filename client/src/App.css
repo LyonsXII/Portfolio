@@ -27,7 +27,13 @@
   top: 0px;
   right: 0px;
   height: 100%;
-  width: 4%;
+  width: 12%;
+  display: flex;
+}
+
+.settingsButtonContainer {
+  height: 100%;
+  width: 33%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,13 +41,38 @@
   border-left: 4px solid black;
 }
 
+.settingsTextContainer {
+  height: 100%;
+  width: 67%;
+  flex-direction: column;
+  align-items: center;
+}
+
 .settingsButton {
-  height: 80px;
+  height: auto;
+  min-height: 80px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 4px solid black;
+}
+
+.settingsButtonHoverTextTop {
+  background-color: rgb(65, 26, 145);
+  border-left: 4px solid black;
+}
+
+.settingsButtonHoverText {
+  padding: 0px;
+  margin-top: -4px;
+  background-color: rgb(65, 26, 145);
+  border-top: 4px solid black;
+  border-left: 4px solid black;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .settingsButtonLower {
@@ -72,22 +103,4 @@
 
 .spacer {
   flex-grow: 1;
-}
-
-.settingsContainerText {
-  position: absolute;
-  top: 0px;
-  right: calc(4% + 4px);
-  height: 248px;
-  width: 3%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(65, 26, 145);
-  border-left: 4px solid black;
-  border-bottom: 4px solid black;
-}
-
-.verticalText {
-  writing-mode: vertical-rl;
 }
