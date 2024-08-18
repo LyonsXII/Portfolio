@@ -1,3 +1,10 @@
+:root {
+  --primary-colour: rgb(65, 26, 145);
+  --secondary-colour: rgb(111, 67, 199);
+
+  --primary-border-colour: black;
+}
+
 .container {
   height: 100vh;
   width: 100vw;
@@ -37,8 +44,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(65, 26, 145);
-  border-left: 4px solid black;
+  background-color: var(--primary-colour);
+  border-left: 4px solid var(--primary-border-colour);
 }
 
 .settingsTextContainer {
@@ -56,29 +63,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 4px solid black;
+  border-bottom: 4px solid var(--primary-border-colour);
 }
 
 .settingsButtonHoverText {
   margin-top: -4px;
-  background-color: rgb(65, 26, 145);
-  border-top: 4px solid black;
-  border-left: 4px solid black;
+  background-color: var(--primary-colour);
+  border-top: 4px solid var(--primary-border-colour);
+  border-left: 4px solid var(--primary-border-colour);
   border-radius: 20px 0px 0px 20px;
 }
 
 .settingsButtonHoverTextTop {
-  background-color: rgb(65, 26, 145);
-  border-left: 4px solid black;
+  background-color: var(--primary-colour);
+  border-left: 4px solid var(--primary-border-colour);
   border-radius: 0px 0px 0px 20px;
 }
 
 .settingsButtonHoverTextBottom {
   margin-top: -4px;
-  background-color: rgb(65, 26, 145);
-  border-left: 4px solid black;
+  background-color: var(--primary-colour);
+  border-left: 4px solid var(--primary-border-colour);
   border-radius: 20px 0px 0px 0px;
-  border-top: 4px solid black;
+  border-top: 4px solid var(--primary-border-colour);
   border-bottom: none;
   margin-top: -4px;
 }
@@ -88,7 +95,7 @@
 }
 
 .settingsButtonLower {
-  border-top: 4px solid black;
+  border-top: 4px solid var(--primary-border-colour);
   border-bottom: 0;
 }
 

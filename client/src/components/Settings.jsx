@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+
+import { ThemeContext } from "../context/ThemeContext";
 
 function Settings() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
   const [hoverText, setHoverText] = useState("");
   const [hoverTextVisible, setHoverTextVisible] = useState(false);
 
@@ -14,13 +18,13 @@ function Settings() {
     setHoverTextVisible(false);
   }
 
-  const highlighted = {backgroundColor: "antiquewhite"};
+  const highlighted = {backgroundColor: "rgb(111, 67, 199)"};
 
   return (
     <div>
-      <div className="settingsContainer">
-      <div className="settingsTextContainer">
-          <div className="settingsButton settingsButtonHoverTextTop hidden" style={hoverText == "Settings" ? { visibility: "visible" } : null}>
+      <div className="settingsContainer" style={{backgroundColor: theme.backgroundColor}}>
+        <div className="settingsTextContainer">
+          <div className="settingsButton settingsButtonHoverTextTop hidden" style={{visibility: hoverText == "Settings" ? "visible" : "hidden"}}>
             <h3>Settings</h3>
           </div>
           <div className="settingsButton settingsButtonHoverText hidden" style={hoverText == "Theme" ? { visibility: "visible" } : null}>
