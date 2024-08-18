@@ -29,11 +29,11 @@ function Settings() {
           <div className="settingsButton settingsButtonHoverText hidden" style={hoverText == "Colour" ? { visibility: "visible" } : null}>
             <h3>Colour</h3>
           </div>
-          <div className="spacer hidden"></div>
+          <div className="spacer"></div>
           <div className="settingsButton settingsButtonHoverText hidden" style={hoverText == "Github" ? { visibility: "visible" } : null}>
             <h3>Github</h3>
           </div>
-          <div className="settingsButton settingsButtonHoverText hidden" style={hoverText == "LinkedIn" ? { visibility: "visible" } : null}>
+          <div className="settingsButton settingsButtonHoverTextBottom hidden" style={hoverText == "LinkedIn" ? { visibility: "visible" } : null}>
             <h3>LinkedIn</h3>
           </div>
         </div>
