@@ -20,35 +20,35 @@ function Settings() {
 
   return (
     <div>
-      <div className="settingsContainer">
+      <div className="settingsContainer" style={{color: theme.textColor}}>
         <div className="settingsTextContainer">
-          <div className="settingsButton settingsButtonHoverTextTop" style={{backgroundColor: theme.primaryColour, visibility: hoverText == "Settings" ? "visible" : "hidden"}}>
+          <div className="settingsButton settingsButtonHoverTextTop" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "Settings" ? "visible" : "hidden"}}>
             <h3>Settings</h3>
           </div>
-          <div className="settingsButton settingsButtonHoverText" style={{backgroundColor: theme.primaryColour, visibility: hoverText == "Theme" ? "visible" : "hidden"}}>
+          <div className="settingsButton settingsButtonHoverText" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "Theme" ? "visible" : "hidden"}}>
             <h3>Theme</h3>
           </div>
-          <div className="settingsButton settingsButtonHoverText" style={{backgroundColor: theme.primaryColour, visibility: hoverText == "Colour" ? "visible" : "hidden"}}>
+          <div className="settingsButton settingsButtonHoverText" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "Colour" ? "visible" : "hidden"}}>
             <h3>Colour</h3>
           </div>
           <div className="spacer"></div>
-          <div className="settingsButton settingsButtonHoverText" style={{backgroundColor: theme.primaryColour, visibility: hoverText == "Github" ? "visible" : "hidden"}}>
+          <div className="settingsButton settingsButtonHoverText" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "Github" ? "visible" : "hidden"}}>
             <h3>Github</h3>
           </div>
-          <div className="settingsButton settingsButtonHoverTextBottom" style={{backgroundColor: theme.primaryColour, visibility: hoverText == "LinkedIn" ? "visible" : "hidden"}}>
+          <div className="settingsButton settingsButtonHoverTextBottom" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "LinkedIn" ? "visible" : "hidden"}}>
             <h3>LinkedIn</h3>
           </div>
         </div>
 
         <div className="settingsButtonContainer">
-          <div className="settingsButton" style={{backgroundColor: hoverText == "Settings" ? theme.secondaryColour : theme.primaryColour}} onMouseOver={() => {updateHoverText("Settings")}} onMouseLeave={() => {resetHoverText()}}>
+          <div className="settingsButton" style={{backgroundColor: hoverText == "Settings" ? theme.secondaryColor : theme.primaryColor}} onMouseOver={() => {updateHoverText("Settings")}} onMouseLeave={() => {resetHoverText()}}>
             <svg width="800px" height="800px" viewBox="0 0 1024 1024" >
               <path fill="none" stroke="black" strokeWidth="100px" strokeLinejoin="round" strokeLinecap="round" d="M600.704 64a32 32 0 0 1 30.464 22.208l35.2 109.376c14.784 7.232 28.928 15.36 42.432 24.512l112.384-24.192a32 32 0 0 1 34.432 15.36L944.32 364.8a32 32 0 0 1-4.032 37.504l-77.12 85.12a357.12 357.12 0 0 1 0 49.024l77.12 85.248a32 32 0 0 1 4.032 37.504l-88.704 153.6a32 32 0 0 1-34.432 15.296L708.8 803.904c-13.44 9.088-27.648 17.28-42.368 24.512l-35.264 109.376A32 32 0 0 1 600.704 960H423.296a32 32 0 0 1-30.464-22.208L357.696 828.48a351.616 351.616 0 0 1-42.56-24.64l-112.32 24.256a32 32 0 0 1-34.432-15.36L79.68 659.2a32 32 0 0 1 4.032-37.504l77.12-85.248a357.12 357.12 0 0 1 0-48.896l-77.12-85.248A32 32 0 0 1 79.68 364.8l88.704-153.6a32 32 0 0 1 34.432-15.296l112.32 24.256c13.568-9.152 27.776-17.408 42.56-24.64l35.2-109.312A32 32 0 0 1 423.232 64H600.64zm-23.424 64H446.72l-36.352 113.088-24.512 11.968a294.113 294.113 0 0 0-34.816 20.096l-22.656 15.36-116.224-25.088-65.28 113.152 79.68 88.192-1.92 27.136a293.12 293.12 0 0 0 0 40.192l1.92 27.136-79.808 88.192 65.344 113.152 116.224-25.024 22.656 15.296a294.113 294.113 0 0 0 34.816 20.096l24.512 11.968L446.72 896h130.688l36.48-113.152 24.448-11.904a288.282 288.282 0 0 0 34.752-20.096l22.592-15.296 116.288 25.024 65.28-113.152-79.744-88.192 1.92-27.136a293.12 293.12 0 0 0 0-40.256l-1.92-27.136 79.808-88.128-65.344-113.152-116.288 24.96-22.592-15.232a287.616 287.616 0 0 0-34.752-20.096l-24.448-11.904L577.344 128zM512 320a192 192 0 1 1 0 384 192 192 0 0 1 0-384zm0 64a128 128 0 1 0 0 256 128 128 0 0 0 0-256z"/>
 
               <path fill="#ededed" d="M600.704 64a32 32 0 0 1 30.464 22.208l35.2 109.376c14.784 7.232 28.928 15.36 42.432 24.512l112.384-24.192a32 32 0 0 1 34.432 15.36L944.32 364.8a32 32 0 0 1-4.032 37.504l-77.12 85.12a357.12 357.12 0 0 1 0 49.024l77.12 85.248a32 32 0 0 1 4.032 37.504l-88.704 153.6a32 32 0 0 1-34.432 15.296L708.8 803.904c-13.44 9.088-27.648 17.28-42.368 24.512l-35.264 109.376A32 32 0 0 1 600.704 960H423.296a32 32 0 0 1-30.464-22.208L357.696 828.48a351.616 351.616 0 0 1-42.56-24.64l-112.32 24.256a32 32 0 0 1-34.432-15.36L79.68 659.2a32 32 0 0 1 4.032-37.504l77.12-85.248a357.12 357.12 0 0 1 0-48.896l-77.12-85.248A32 32 0 0 1 79.68 364.8l88.704-153.6a32 32 0 0 1 34.432-15.296l112.32 24.256c13.568-9.152 27.776-17.408 42.56-24.64l35.2-109.312A32 32 0 0 1 423.232 64H600.64zm-23.424 64H446.72l-36.352 113.088-24.512 11.968a294.113 294.113 0 0 0-34.816 20.096l-22.656 15.36-116.224-25.088-65.28 113.152 79.68 88.192-1.92 27.136a293.12 293.12 0 0 0 0 40.192l1.92 27.136-79.808 88.192 65.344 113.152 116.224-25.024 22.656 15.296a294.113 294.113 0 0 0 34.816 20.096l24.512 11.968L446.72 896h130.688l36.48-113.152 24.448-11.904a288.282 288.282 0 0 0 34.752-20.096l22.592-15.296 116.288 25.024 65.28-113.152-79.744-88.192 1.92-27.136a293.12 293.12 0 0 0 0-40.256l-1.92-27.136 79.808-88.128-65.344-113.152-116.288 24.96-22.592-15.232a287.616 287.616 0 0 0-34.752-20.096l-24.448-11.904L577.344 128zM512 320a192 192 0 1 1 0 384 192 192 0 0 1 0-384zm0 64a128 128 0 1 0 0 256 128 128 0 0 0 0-256z"/>
             </svg>
           </div>
-          <div className="settingsButton" style={{backgroundColor: hoverText == "Theme" ? theme.secondaryColour : theme.primaryColour}} onClick={toggleTheme} onMouseOver={() => {updateHoverText("Theme")}} onMouseLeave={() => {resetHoverText()}}>
+          <div className="settingsButton" style={{backgroundColor: hoverText == "Theme" ? theme.secondaryColor : theme.primaryColor}} onClick={toggleTheme} onMouseOver={() => {updateHoverText("Theme")}} onMouseLeave={() => {resetHoverText()}}>
             <svg viewBox="-35 -35 600 600" >
               <path fill="none" stroke="black" strokeWidth="60px" strokeLinejoin="round" strokeLinecap="round" d="M468.277,116.662c-27.603-40.846-66.66-73.285-112.616-92.728C325.024,10.979,291.31,3.813,256.007,3.813
         s-68.914,7.166-99.422,20.135c-30.507,12.969-57.911,31.72-80.944,54.876C29.582,125.109,0.966,189.104,0.013,259.601v0.013
@@ -97,21 +97,21 @@ function Settings() {
         S409.03,254.503,397.61,254.503z"/>
             </svg>
           </div>
-          <div className="settingsButton" style={{backgroundColor: hoverText == "Colour" ? theme.secondaryColour : theme.primaryColour}} onMouseOver={() => {updateHoverText("Colour")}} onMouseLeave={() => {resetHoverText()}}>
+          <div className="settingsButton" style={{backgroundColor: hoverText == "Colour" ? theme.secondaryColor : theme.primaryColor}} onMouseOver={() => {updateHoverText("Colour")}} onMouseLeave={() => {resetHoverText()}}>
             <svg width="800px" height="800px" viewBox="0 0 20 20" >
               <path fill="none" stroke="black" strokeWidth="2px" strokeLinejoin="round" strokeLinecap="round" d="M17.8 2.2c-1-1-2.6-1-3.6 0L12.4 4l-.7-.7c-.4-.4-1-.4-1.4 0l-.8.7c-.4.4-.4 1 0 1.4l5 5c.4.4 1 .4 1.4 0l.7-.7c.4-.4.4-1 0-1.4l-.6-.7 1.8-1.8c1-1 1-2.6 0-3.6zM4.4 12c-2.2 2.2-.9 3.2-2.9 5.8l.7.7c2.6-2 3.6-.7 5.8-2.9l5.1-5.1-3.6-3.6L4.4 12z"/>
 
               <path fill="#ededed" d="M17.8 2.2c-1-1-2.6-1-3.6 0L12.4 4l-.7-.7c-.4-.4-1-.4-1.4 0l-.8.7c-.4.4-.4 1 0 1.4l5 5c.4.4 1 .4 1.4 0l.7-.7c.4-.4.4-1 0-1.4l-.6-.7 1.8-1.8c1-1 1-2.6 0-3.6zM4.4 12c-2.2 2.2-.9 3.2-2.9 5.8l.7.7c2.6-2 3.6-.7 5.8-2.9l5.1-5.1-3.6-3.6L4.4 12z"/>
             </svg>
           </div>
-          <div className="spacer" style={{backgroundColor: theme.primaryColour}}></div>
+          <div className="spacer" style={{backgroundColor: theme.primaryColor}}></div>
           <a href="https://github.com/LyonsXII">
-            <div className="settingsButton settingsButtonLower" style={{backgroundColor: hoverText == "Github" ? theme.secondaryColour : theme.primaryColour}} onMouseOver={() => {updateHoverText("Github")}} onMouseLeave={() => {resetHoverText()}}>
+            <div className="settingsButton settingsButtonLower" style={{backgroundColor: hoverText == "Github" ? theme.secondaryColor : theme.primaryColor}} onMouseOver={() => {updateHoverText("Github")}} onMouseLeave={() => {resetHoverText()}}>
             <img src="./icons/github.png"></img>
             </div>
           </a>
           <a href="https://www.linkedin.com/in/michael-lyons-60186b170/" >
-            <div className="settingsButton settingsButtonLower" style={{backgroundColor: hoverText == "LinkedIn" ? theme.secondaryColour : theme.primaryColour}} onMouseOver={() => {updateHoverText("LinkedIn")}} onMouseLeave={() => {resetHoverText()}}>
+            <div className="settingsButton settingsButtonLower" style={{backgroundColor: hoverText == "LinkedIn" ? theme.secondaryColor : theme.primaryColor}} onMouseOver={() => {updateHoverText("LinkedIn")}} onMouseLeave={() => {resetHoverText()}}>
               <svg width="100px" height="100px" viewBox="0 0 50 50">
                 <path fill="none" stroke="black" strokeWidth="6px" strokeLinejoin="round" strokeLinecap="round" d="M41,4H9C6.24,4,4,6.24,4,9v32c0,2.76,2.24,5,5,5h32c2.76,0,5-2.24,5-5V9C46,6.24,43.76,4,41,4z M17,20v19h-6V20H17z M11,14.47c0-1.4,1.2-2.47,3-2.47s2.93,1.07,3,2.47c0,1.4-1.12,2.53-3,2.53C12.2,17,11,15.87,11,14.47z M39,39h-6c0,0,0-9.26,0-10 c0-2-1-4-3.5-4.04h-0.08C27,24.96,26,27.02,26,29c0,0.91,0,10,0,10h-6V20h6v2.56c0,0,1.93-2.56,5.81-2.56 c3.97,0,7.19,2.73,7.19,8.26V39z"/>
 

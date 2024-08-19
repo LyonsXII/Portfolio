@@ -10,8 +10,8 @@ function App() {
 
   return (
     <ThemeProvider>
+      <Settings></Settings>
       <Container>
-        <Settings></Settings>
         <h1>Portfolio</h1>
         <h2>Michael Lyons</h2>
       </Container>
