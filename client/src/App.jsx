@@ -3,19 +3,18 @@ import axios from "axios";
 import './App.css'
 
 import Settings from "./components/Settings";
+import Container from "./components/Container"
 import { ThemeProvider } from "./context/ThemeContext";
 
-function App() {  
+function App() {
 
   return (
     <ThemeProvider>
-      <div className="container">
-        <div className="containerBackground">
-        </div>
-          <Settings></Settings>
+      <Container>
+        <Settings></Settings>
         <h1>Portfolio</h1>
         <h2>Michael Lyons</h2>
-      </div>
+      </Container>
     </ThemeProvider>
   )
 }

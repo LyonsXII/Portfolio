@@ -1,13 +1,17 @@
 export const lightTheme = {
-  backgroundColor: "#ffffff",
-  color: "#000000",
+  backgroundColor: "rgb(65, 26, 145)",
   backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
-  borderColour: "black"
+  primaryColor: "rgb(65, 26, 145)",
+  secondaryColor: "rgb(111, 67, 199)",
+  textColor: "antiquewhite",
+  borderColor: "black"
 };
 
 export const darkTheme = {
-  backgroundColor: "#000000",
-  color: "#ffffff",
+  backgroundColor: "rgb(65, 26, 145)",
   backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
-  borderColour: "black"
+  primaryColor: "rgb(65, 26, 145)",
+  secondaryColor: "rgb(111, 67, 199)",
+  textColor: "antiquewhite",
+  borderColor: "black"
 };
