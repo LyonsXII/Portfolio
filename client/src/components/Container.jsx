@@ -24,7 +24,7 @@ function Container({ children }) {
 
       <div style={{
           position: "absolute",
-          zIndex: "-1",
+          zIndex: "1",
           top: "0",
           bottom: "0",
           left: "0",
@@ -32,8 +32,9 @@ function Container({ children }) {
           backgroundImage: "url('./bg.webp')",
           backgroundSize: "cover",
           opacity: "0.04",
-          width: "100%",
+          pointerEvents: "none",
           height: "100%",
+          width: "100%"
       }}>
       </div>
     </div>
