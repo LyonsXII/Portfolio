@@ -3,13 +3,13 @@ import React, { useState, useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 function Container({ children }) {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, bg } = useContext(ThemeContext);
 
   return (
     <div>
       <div style={{
         backgroundColor: theme.backgroundColor,
-        backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
+        backgroundImage: bg,
         overflow: "hidden",
         color: theme.textColor,
         height: "100vh",

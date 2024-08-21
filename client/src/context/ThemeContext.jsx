@@ -7,10 +7,10 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(colourSchemeA);
   const [bg, setBg] = useState("url('https://www.transparenttextures.com/patterns/cubes.png')");
   const [themeCount, setThemeCount] = useState(1);
-  const [bgCount, setBgCount] = useState(0);
+  const [bgCount, setBgCount] = useState(1);
 
   function toggleTheme() {
-    setThemeCount((themeCount + 1) % 3);
+    setThemeCount(prevCount => (prevCount + 1) % 3);
     switch(themeCount) {
       case 0:
         setTheme(colourSchemeA);
@@ -27,16 +27,16 @@ export const ThemeProvider = ({ children }) => {
   };
 
   function toggleBg() {
-    setBgCount((bgCount + 1) % 3);
+    setBgCount(prevCount => (prevCount + 1) % 3);
     switch(bgCount) {
       case 0:
         setBg("url('https://www.transparenttextures.com/patterns/cubes.png')");
         break;
       case 1:
-        setBg("url('https://www.transparenttextures.com/patterns/cubes.png')");
+        setBg("url('https://www.transparenttextures.com/patterns/black-thread-light.png')");
         break;
       case 2:
-        setBg("url('https://www.transparenttextures.com/patterns/cubes.png')");
+        setBg("url('https://www.transparenttextures.com/patterns/dark-mosaic.png')");
         break;
       default:
         setBg("url('https://www.transparenttextures.com/patterns/cubes.png')");
@@ -44,7 +44,7 @@ export const ThemeProvider = ({ children }) => {
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, toggleBg }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, bg, toggleBg }}>
       {children}
     </ThemeContext.Provider>
   );

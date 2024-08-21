@@ -9,7 +9,7 @@ export const colourSchemeA = {
 
 export const colourSchemeB = {
   backgroundColor: "gray",
-  backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
+  backgroundImage: "none",
   primaryColor: "rgb(65, 26, 145)",
   secondaryColor: "rgb(111, 67, 199)",
   textColor: "antiquewhite",
