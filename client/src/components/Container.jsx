@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -13,7 +13,7 @@ function Container({ children }) {
         overflow: "hidden",
         color: theme.textColor,
         height: "100vh",
-        width: "100vw",
+        width: "96vw",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -31,7 +31,7 @@ function Container({ children }) {
           right: "0",
           backgroundImage: "url('./bg.webp')",
           backgroundSize: "cover",
-          opacity: "0.04",
+          opacity: "0.03",
           pointerEvents: "none",
           height: "100%",
           width: "100%"

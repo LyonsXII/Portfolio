@@ -33,7 +33,7 @@ export const ThemeProvider = ({ children }) => {
         setBg("url('https://www.transparenttextures.com/patterns/cubes.png')");
         break;
       case 1:
-        setBg("url('https://www.transparenttextures.com/patterns/black-thread-light.png')");
+        setBg("url('https://www.transparenttextures.com/patterns/notebook.png')");
         break;
       case 2:
         setBg("url('https://www.transparenttextures.com/patterns/dark-mosaic.png')");
