@@ -1,21 +1,28 @@
 import React, { useContext } from "react";
+import styled from 'styled-components';
 
 import { ThemeContext } from "../context/ThemeContext";
 
-function IntroButton(prop) {
+const StyledButton = styled.button`
+  height: 80px;
+  width: 300px;
+  background-color: ${props => props.theme.primaryColor};
+  color: ${props => props.theme.textColor};
+  border: 4px solid black;
+  border-radius: 20px;
+
+  &:hover {
+    background-color: ${props => props.theme.secondaryColor};
+  }
+`;
+
+function IntroButton(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <button style={{
-      height: "80px",
-      width: "300px",
-      backgroundColor: theme.primaryColor,
-      color: theme.textColor,
-      border: `4px solid ${theme.borderColor}`,
-      borderRadius: "20px"
-    }}>
-      <h3>{prop.name}</h3>
-    </button>
+    <StyledButton theme={theme}>
+      <h3>{props.name}</h3>
+    </StyledButton>
   )
 }
 
