@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 
-import IntroButton from "../components/IntroButton";
+import IntroButton from "./IntroButton";
 import { ThemeContext } from "../context/ThemeContext";
 
-function Intro() {
+function Introduction() {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div style={{
       display: "flex",
       height: "100%",
-      width: "100%"
+      width: "90.5%"
     }}>
       <div style={{
         display: "flex",
@@ -32,12 +32,12 @@ function Intro() {
         width: "40%",
         gap: "40px"
       }}>
-        <IntroButton name="Song Guesser"></IntroButton>
-        <IntroButton name="Faraday Cage"></IntroButton>
-        <IntroButton name="Faraday Cage"></IntroButton>
+        <IntroButton name="Song Guesser"/>
+        <IntroButton name="Faraday Cage"/>
+        <IntroButton name="Song Guesser"/>
       </div>
     </div>
   )
 }
 
-export default Intro
+export default Introduction

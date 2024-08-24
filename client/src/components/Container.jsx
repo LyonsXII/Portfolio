@@ -13,11 +13,7 @@ function Container({ children }) {
         overflow: "hidden",
         color: theme.textColor,
         height: "100vh",
-        width: "96vw",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center"
+        width: "96vw"
       }}>
         {children}
       </div>
