@@ -20,7 +20,7 @@ function IntroButton(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledButton theme={theme}>
+    <StyledButton theme={theme} onClick={props.choice}>
       <h3>{props.name}</h3>
     </StyledButton>
   )

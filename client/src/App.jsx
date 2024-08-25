@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import './App.css'
 
@@ -8,12 +8,17 @@ import Introduction from "./components/Introduction"
 import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
+  const [intro, setIntro] = useState(true);
+
+  function home() {
+    setIntro(true);
+  }
 
   return (
     <ThemeProvider>
-      <Settings />
+      <Settings home={home}/>
       <Container>
-        <Introduction />
+        {intro === true ? <Introduction /> : null}
       </Container>
     </ThemeProvider>
   )
