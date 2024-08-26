@@ -7,11 +7,12 @@ const StyledFlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  height: 100%;
+  margin-top: 60px;
 `;
 
 const StyledImage = styled.div`
-  height: 300px;
+  height: 400px;
   width: 80%;
   border: 4px solid black;
   border-radius: 20px;
@@ -27,8 +28,8 @@ function IntroText(props) {
       <StyledImage />
       <h3 style={{marginTop: "40px", paddingLeft: "40px",}}>
         {props.textA}
-        <br />
-        <br />
+          <br />
+          <br />
         {props.textB}
       </h3>
     </StyledFlexContainer>

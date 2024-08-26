@@ -25,6 +25,9 @@ function App() {
       <Settings home={home}/>
       <Container>
         {intro === true ? <Introduction /> : null}
+        {songGuesserSection === true ? null : null}
+        {faradaySection === true ? null : null}
+        {bookNotesSection === true ? null : null}
       </Container>
     </ThemeProvider>
   )

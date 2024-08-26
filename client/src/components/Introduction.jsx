@@ -13,24 +13,42 @@ function Introduction() {
   const [bookNotes, setBookNotes] = useState(false);
 
   function choiceSongGuesser() {
-    setInitial(false);
     setFaraday(false);
     setBookNotes(false);
-    setSongGuesser(true);
+
+    if (songGuesser === false) {
+      setSongGuesser(true);
+      setInitial(false);
+    } else if (songGuesser === true) {
+      setSongGuesser(false);
+      setInitial(true);
+    }
   }
 
   function choiceFaraday() {
-    setInitial(false);
     setSongGuesser(false);
     setBookNotes(false);
-    setFaraday(true);
+
+    if (faraday === false) {
+      setFaraday(true);
+      setInitial(false);
+    } else if (faraday === true) {
+      setFaraday(false);
+      setInitial(true);
+    }
   }
 
   function choiceBookNotes() {
-    setInitial(false);
     setSongGuesser(false);
     setFaraday(false);
-    setBookNotes(true);
+
+    if (bookNotes === false) {
+      setBookNotes(true);
+      setInitial(false);
+    } else if (bookNotes === true) {
+      setBookNotes(false);
+      setInitial(true);
+    }
   }
 
   return (
@@ -52,11 +70,12 @@ function Introduction() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center", 
-            justifyContent: "center"
+            justifyContent: "center",
+            paddingLeft: "40px"
           }}>
             <h1>Portfolio</h1>
             <h2>Michael Lyons</h2>
-            <h3 style={{marginTop: "40px"}}>Hey here's some text</h3>
+            <h3 style={{marginTop: "40px"}}>Welcome, here you'll find a portfolio I've put together to show off a few projects I've worked on since I started learning to code. Feel free to take a look and play around with whatever takes your fancy.</h3>
           </div>
         : null
         }
@@ -72,7 +91,7 @@ function Introduction() {
         : null}
         {/* Book Notes */}
         {bookNotes === true ?
-          <IntroText title="Faraday Cage" textA={`When I went on holiday this year I found myself getting back into reading after a longer break than I would've liked. In the interest of keeping organised I thought it might be fun to keep a record of the books I've been reading and my thoughts on them as I go. It's interesting how your thoughts on a book can change once you no longer have to deal with the author waxing lyrical about what clothes someone is wearing for pages on end.`} textB={`One of my first projects when I started learning about web development was putting together a book notes app, so I had a lot of fun with this one seeing how much progress I'd made.`}
+          <IntroText title="Book Notes" textA={`When I went on holiday this year I found myself getting back into reading after a longer break than I would've liked. In the interest of keeping organised I thought it might be fun to keep a record of the books I've been reading and my thoughts on them as I go. It's interesting how your thoughts on a book can change once you no longer have to deal with the author waxing lyrical about what clothes someone is wearing for pages on end.`} textB={`One of my first projects when I started learning about web development was putting together a book notes app, so I had a lot of fun with this one seeing how much progress I'd made.`}
           />
         : null}
       </div>
@@ -85,6 +104,7 @@ function Introduction() {
         width: "30%",
         gap: "40px"
       }}>
+        <IntroButton name="About Me" choice={choiceSongGuesser}/>
         <IntroButton name="Song Guesser" choice={choiceSongGuesser}/>
         <IntroButton name="Faraday Cage" choice={choiceFaraday}/>
         <IntroButton name="Book Notes" choice={choiceBookNotes}/>
