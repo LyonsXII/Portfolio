@@ -9,8 +9,14 @@ import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
   const [intro, setIntro] = useState(true);
+  const [songGuesserSection, setSongGuesserSection] = useState(false);
+  const [faradaySection, setFaradaySection] = useState(false);
+  const [bookNotesSection, setBookNotesSection] = useState(false);
 
   function home() {
+    setSongGuesserSection(false);
+    setFaradaySection(false);
+    setBookNotesSection(false);
     setIntro(true);
   }
 
