@@ -28,13 +28,7 @@ function SettingsButton(props) {
       onMouseLeave={() => {props.resetHoverText()}} 
       onClick={props.onClick}
     >
-      <object 
-        type="image/svg+xml" 
-        data={props.svgPath} 
-        height= "100%"
-        width= "100%"
-      >
-      </object>
+      <img src={props.svgPath} height="100%" width="100%"></img>
     </StyledSettingsButton>
   )
 }
