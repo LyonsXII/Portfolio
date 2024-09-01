@@ -18,6 +18,7 @@ function App() {
     setFaradaySection(false);
     setBookNotesSection(false);
     setIntro(true);
+    console.log("hye");
   }
 
   return (

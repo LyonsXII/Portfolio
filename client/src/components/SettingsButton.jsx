@@ -22,9 +22,19 @@ function SettingsButton(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledSettingsButton theme={theme} onMouseOver={() => {props.updateHoverText(props.value)}} onMouseLeave={() => {props.resetHoverText()}} onClick={props.home}>
-      <img src={props.svgPath} ></img>
-      <object id="my-svg" type="image/svg+xml" data={props.svgPath}></object>
+    <StyledSettingsButton 
+      theme={theme} 
+      onMouseOver={() => {props.updateHoverText(props.value)}} 
+      onMouseLeave={() => {props.resetHoverText()}} 
+      onClick={props.onClick}
+    >
+      <object 
+        type="image/svg+xml" 
+        data={props.svgPath} 
+        height= "100%"
+        width= "100%"
+      >
+      </object>
     </StyledSettingsButton>
   )
 }
