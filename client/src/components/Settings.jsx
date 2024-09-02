@@ -9,25 +9,28 @@ function Settings(props) {
   const { theme, toggleTheme, toggleBg } = useContext(ThemeContext);
 
   const [hoverText, setHoverText] = useState("");
-  const [hoverTextVisible, setHoverTextVisible] = useState(false);
 
   function updateHoverText(text) {
     setHoverText(text);
-    setHoverTextVisible(true);
   }
 
   function resetHoverText() {
     setHoverText("");
-    setHoverTextVisible(false);
   }
 
   return (
     <div>
       <div className="settingsContainer" style={{color: theme.textColor}}>
         <div className="settingsTextContainer">
-          <SettingsText text="Home"></SettingsText>
-          <SettingsText text="Settings"></SettingsText>
-          <div className="settingsButton settingsButtonHoverTextTop" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "Home" ? "visible" : "hidden"}}>
+          <SettingsText text="Home" curr={hoverText} position="Top"></SettingsText>
+          <SettingsText text="Settings" curr={hoverText}></SettingsText>
+          <SettingsText text="Theme" curr={hoverText}></SettingsText>
+          <SettingsText text="Colour" curr={hoverText}></SettingsText>
+          <div className="spacer"></div>
+          <SettingsText text="Github" curr={hoverText}></SettingsText>
+          <SettingsText text="LinkedIn" curr={hoverText}></SettingsText>
+          <SettingsText text="LeetCode" curr={hoverText}></SettingsText>
+          {/* <div className="settingsButton settingsButtonHoverTextTop" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "Home" ? "visible" : "hidden"}}>
             <h3>Home</h3>
           </div>
           <div className="settingsButton settingsButtonHoverText" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "Settings" ? "visible" : "hidden"}}>
@@ -48,7 +51,7 @@ function Settings(props) {
           </div>
           <div className="settingsButton settingsButtonHoverTextBottom" style={{backgroundColor: theme.primaryColor, visibility: hoverText == "LeetCode" ? "visible" : "hidden"}}>
             <h3>LeetCode</h3>
-          </div>
+          </div> */}
         </div>
 
         <div className="settingsButtonContainer">
