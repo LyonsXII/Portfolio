@@ -11,14 +11,17 @@ const StyledSettingsText = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${(props) => props.theme.primaryColor};
+  // Text only visible when button hovered over
   visibility: ${(props) => props.curr === props.text ? "visible" : "hidden"};
-  border-bottom: 4px solid black;
   margin-top: -4px;
-  border-top: 4px solid black;
   border-left: 4px solid black;
-
-  // Conditionally apply border radius based on prop.position
-  border-radius: ${(props) => props.position == "Top" ? '0px 0px 0px 20px' : '20px 0px 0px 20px'};
+  border-top: 4px solid black;
+  // Conditionally apply border radius and bottom border based on prop.position
+  border-bottom: ${(props) => props.position === "Bottom" ? "none" : "4px solid black"};
+  border-radius: ${(props) => 
+    props.position === "Top" ? "0px 0px 0px 20px" : 
+    props.position === "Bottom" ? "20px 0px 0px 0px" :
+    "20px 0px 0px 20px"};
 `;
 
 function SettingsText(props) {

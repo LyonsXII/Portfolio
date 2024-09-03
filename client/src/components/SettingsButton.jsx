@@ -10,8 +10,9 @@ const StyledSettingsButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.theme.primaryColor};
-  border-bottom: 4px solid black;
+  background-color: ${(props) => props.theme.primaryColor};
+  border-top: ${(props) => props.type === "Lower" ? "4px solid black" : "none"};
+  border-bottom: ${(props) => props.type === "Lower" ? "none" : "4px solid black"};
 
   :hover {
     background-color: ${props => props.theme.secondaryColor};
@@ -27,6 +28,7 @@ function SettingsButton(props) {
       onMouseOver={() => {props.updateHoverText(props.value)}} 
       onMouseLeave={() => {props.resetHoverText()}} 
       onClick={props.onClick}
+      type={props.type}
     >
       <img src={props.svgPath} height="100%" width="100%"></img>
     </StyledSettingsButton>
