@@ -38,14 +38,14 @@ function Settings(props) {
           <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>
           <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg"/>
           <div className="spacer" style={{backgroundColor: theme.primaryColor}}></div>
-          <a href="https://github.com/LyonsXII">
-            <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg" type="Lower"/>
+          <a href="https://github.com/LyonsXII" style={{ display: 'block', width: '100%' }}>
+            <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/github.svg" type="Lower"/>
           </a>
           <a href="https://www.linkedin.com/in/michael-lyons-60186b170/">
-            <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/linkedin.svg" type="Lower"/>
+            <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/linkedin.svg" type="Lower"/>
           </a>
           <a href="https://leetcode.com/u/MichaelLyons/">
-            <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg" type="Lower"/>
+            <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" type="Lower"/>
           </a>
         </div>
       </div>

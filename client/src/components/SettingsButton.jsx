@@ -30,7 +30,7 @@ function SettingsButton(props) {
       onClick={props.onClick}
       type={props.type}
     >
-      <img src={props.svgPath} height="100%" width="100%"></img>
+      <img src={props.svgPath} height="100%" width="100%" style={{minHeight: "80px"}}></img>
     </StyledSettingsButton>
   )
 }
