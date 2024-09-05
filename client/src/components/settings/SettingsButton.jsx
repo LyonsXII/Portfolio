@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import { ThemeContext } from "../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledSettingsButton = styled.div`
   height: auto;
@@ -23,15 +23,17 @@ function SettingsButton(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledSettingsButton 
-      theme={theme} 
-      onMouseOver={() => {props.updateHoverText(props.value)}} 
-      onMouseLeave={() => {props.resetHoverText()}} 
-      onClick={props.onClick}
-      type={props.type}
-    >
-      <img src={props.svgPath} height="100%" width="100%" style={{minHeight: "80px"}}></img>
-    </StyledSettingsButton>
+    <a href={props.link}>
+      <StyledSettingsButton 
+        theme={theme} 
+        onMouseOver={() => {props.updateHoverText(props.value)}} 
+        onMouseLeave={() => {props.resetHoverText()}} 
+        onClick={props.onClick}
+        type={props.type}
+      >
+        <img src={props.svgPath} height="100%" width="100%" style={{minHeight: "80px"}}></img>
+      </StyledSettingsButton>
+    </a>
   )
 }
 

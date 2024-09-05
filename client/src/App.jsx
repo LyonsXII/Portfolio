@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import './App.css'
 
-import Settings from "./components/Settings";
+import Settings from "./components/settings/Settings";
 import Container from "./components/Container";
-import Introduction from "./components/Introduction"
+import Introduction from "./components/introduction/Introduction"
 import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {

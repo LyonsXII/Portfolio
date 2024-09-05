@@ -1,9 +1,13 @@
 import React, { useState, useContext } from "react";
 
-import { ThemeContext } from "../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
+import SettingsContainer from "./SettingsContainer";
+import SettingsTextContainer from "./SettingsTextContainer";
+import SettingsButtonContainer from "./SettingsButtonContainer";
 import SettingsButton from "./SettingsButton";
 import SettingsText from "./SettingsText";
+import Spacer from "./Spacer";
 
 function Settings(props) {
   const { theme, toggleTheme, toggleBg } = useContext(ThemeContext);
@@ -20,35 +24,29 @@ function Settings(props) {
 
   return (
     <div>
-      <div className="settingsContainer" style={{color: theme.textColor}}>
-        <div className="settingsTextContainer">
+      <SettingsContainer>
+        <SettingsTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>
           <SettingsText text="Settings" curr={hoverText}/>
           <SettingsText text="Theme" curr={hoverText}/>
           <SettingsText text="Colour" curr={hoverText}/>
-          <div className="spacer"></div>
+          <Spacer/>
           <SettingsText text="GitHub" curr={hoverText}/>
           <SettingsText text="LinkedIn" curr={hoverText}/>
           <SettingsText text="LeetCode" curr={hoverText} position="Bottom"/>
-        </div>
+        </SettingsTextContainer>
 
-        <div className="settingsButtonContainer">
+        <SettingsButtonContainer>
           <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={props.home} svgPath="./icons/home.svg"/>
           <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={props.home} svgPath="./icons/settings.svg"/>
           <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>
           <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg"/>
-          <div className="spacer" style={{backgroundColor: theme.primaryColor}}></div>
-          <a href="https://github.com/LyonsXII" style={{ display: 'block', width: '100%' }}>
-            <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/github.svg" type="Lower"/>
-          </a>
-          <a href="https://www.linkedin.com/in/michael-lyons-60186b170/">
-            <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/linkedin.svg" type="Lower"/>
-          </a>
-          <a href="https://leetcode.com/u/MichaelLyons/">
-            <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" type="Lower"/>
-          </a>
-        </div>
-      </div>
+          <Spacer background={true} />
+          <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/github.svg" link="https://github.com/LyonsXII" type="Lower"/>
+          <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/linkedin.svg" link="https://www.linkedin.com/in/michael-lyons-60186b170/" type="Lower"/>
+          <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" link="https://leetcode.com/u/MichaelLyons/" type="Lower"/>
+        </SettingsButtonContainer>
+      </SettingsContainer>
     </div>
   )
 }

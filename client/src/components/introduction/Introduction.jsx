@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 
 import IntroButton from "./IntroButton";
 import IntroText from "./IntroText";
-import { ThemeContext } from "../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function Introduction() {
   const { theme } = useContext(ThemeContext);
