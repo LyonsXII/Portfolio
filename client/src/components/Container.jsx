@@ -3,16 +3,36 @@ import styled from 'styled-components';
 
 import { ThemeContext } from "../context/ThemeContext";
 
-const StyledDiv = styled.div`
-  background-color: ${(props) => props.theme.backgroundColor};
-  background-image: ${(props) => props.bg};;
-  overflow: hidden;
-  color: ${(props) => props.theme.textColor};
+const StyledContainer = styled.div`
+  position: absolute;
   height: 100vh;
   width: 96vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+`;
+
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 92vw;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const StyledBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  background-color: ${(props) => props.theme.backgroundColor};
+  background-image: ${(props) => props.bg};;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+`;
+
+const StyledBackgroundGif = styled.div`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -32,11 +52,11 @@ function Container({ children }) {
 
   return (
     <div>
-      <StyledDiv theme={theme} bg={bg}>
-        {children}
-      </StyledDiv>
-
-      <StyledBackground/>
+      <StyledContainer>
+        <StyledDiv theme={theme}>{children}</StyledDiv>
+      </StyledContainer>
+      <StyledBackground theme={theme} bg={bg}/>
+      <StyledBackgroundGif/>
     </div>
   )
 }
