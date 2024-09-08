@@ -32,7 +32,7 @@ const StyledIntroContainer = styled.div`
   padding-left: 40px;
 `;
 
-function Introduction() {
+function Introduction(props) {
   const { theme } = useContext(ThemeContext);
 
   const [initial, setInitial] = useState(true);
@@ -102,8 +102,8 @@ function Introduction() {
       </StyledContentContainer>
         
       <StyledButtonsContainer>
-        <IntroButton name="About Me" choice={choiceSongGuesser}/>
-        <IntroButton name="Song Guesser" choice={choiceSongGuesser}/>
+        <IntroButton name="About Me" choice={choiceSongGuesser} activate={props.activateSongGuesser}/>
+        <IntroButton name="Song Guesser" choice={choiceSongGuesser} activate={props.activateSongGuesser}/>
         <IntroButton name="Faraday Cage" choice={choiceFaraday}/>
         <IntroButton name="Book Notes" choice={choiceBookNotes}/>
       </StyledButtonsContainer>

@@ -6,6 +6,7 @@ import Settings from "./components/settings/Settings";
 import Container from "./components/Container";
 import Introduction from "./components/introduction/Introduction"
 import { ThemeProvider } from "./context/ThemeContext";
+import SongGuesser from "./components/introduction/songGuesser/SongGuesser";
 
 function App() {
   const [intro, setIntro] = useState(true);
@@ -20,12 +21,27 @@ function App() {
     setIntro(true);
   }
 
+  function activateSongGuesser() {
+    setSongGuesserSection(true);
+    setIntro(false);
+  }
+
+  function activateFaradayCage() {
+    setFaradaySection(true);
+    setIntro(false);
+  }
+
+  function activateBookNotes() {
+    setBookNotes(true);
+    setIntro(false);
+  }
+
   return (
     <ThemeProvider>
       <Settings home={home}/>
       <Container>
-        {intro === true ? <Introduction /> : null}
-        {songGuesserSection === true ? null : null}
+        {intro === true ? <Introduction activateSongGuesser={activateSongGuesser}/> : null}
+        {songGuesserSection === true ? <SongGuesser/> : null}
         {faradaySection === true ? null : null}
         {bookNotesSection === true ? null : null}
       </Container>

@@ -6,7 +6,7 @@ import { ThemeContext } from "../context/ThemeContext";
 const StyledContainer = styled.div`
   position: absolute;
   height: 100vh;
-  width: 96vw;
+  width: 88vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,8 +17,8 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 92vw;
+  height: 100%;
+  width: 100%;
   color: ${(props) => props.theme.textColor};
 `;
 

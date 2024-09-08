@@ -6,7 +6,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 const StyledDiv = styled.div`
   flex-grow: 1;
   width: 100%;
-  background-color: ${(props) => props.background === true ? props.theme.primaryColor : "none"};
+  background-color: ${(props) => props.background === "true" ? props.theme.primaryColor : "none"};
 `;
 
 function Spacer(props) {

@@ -9,7 +9,7 @@ const StyledDiv = styled.div`
   top: 0px;
   right: 0px;
   height: 100%;
-  width: 12%;
+  width: 12vw;
   display: flex;
 `;
 
