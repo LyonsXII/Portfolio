@@ -5,7 +5,8 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledButtonLeft = styled.button`
   height: 80px;
-  width: 300px;
+  width: 20vw;
+  min-width: 130px;
   background-color: ${props => props.theme.primaryColor};
   color: ${props => props.theme.textColor};
   border: 4px solid black;
@@ -18,7 +19,7 @@ const StyledButtonLeft = styled.button`
 
 const StyledButtonRight = styled.button`
   height: 80px;
-  width: 80px;
+  width: 4vw;
   margin-left: -4px;
   background-color: ${props => props.theme.primaryColor};
   color: ${props => props.theme.textColor};
@@ -36,7 +37,7 @@ function IntroButton(props) {
   return (
     <div style={{display: "flex"}}>
       <StyledButtonLeft theme={theme} onClick={props.choice}>
-        <h3>{props.name}</h3>
+        <h4>{props.name}</h4>
       </StyledButtonLeft>
       <StyledButtonRight theme={theme} onClick={props.activate}/>
     </div>

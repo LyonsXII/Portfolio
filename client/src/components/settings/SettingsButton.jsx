@@ -7,6 +7,7 @@ const StyledSettingsButton = styled.div`
   height: auto;
   min-height: 80px;
   width: 100%;
+  min-width: 80px;
   display: flex;
   align-items: center;
   justify-content: center;

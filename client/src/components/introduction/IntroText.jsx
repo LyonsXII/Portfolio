@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledFlexContainer = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,14 +26,14 @@ function IntroText(props) {
 
   return (
     <StyledFlexContainer>
-      <h1>{props.title}</h1>
+      <h2>{props.title}</h2>
       <StyledImage />
-      <h3 style={{marginTop: "40px", paddingLeft: "40px",}}>
+      <h4 style={{marginTop: "40px", paddingLeft: "40px",}}>
         {props.textA}
           <br />
           <br />
         {props.textB}
-      </h3>
+      </h4>
     </StyledFlexContainer>
   )
 }

@@ -85,8 +85,8 @@ function Introduction(props) {
         {initial === true ?
           <StyledIntroContainer>
             <h1>Portfolio</h1>
-            <h2>Michael Lyons</h2>
-            <h3 style={{marginTop: "40px"}}>{text.introText}</h3>
+            <h3>Michael Lyons</h3>
+            <h4 style={{marginTop: "40px", width: "90%"}}>{text.introText}</h4>
           </StyledIntroContainer>
         : null
         }

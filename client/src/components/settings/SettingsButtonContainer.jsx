@@ -6,6 +6,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 const StyledDiv = styled.div`
   height: 100%;
   width: 33%;
+  min-width: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;

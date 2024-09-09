@@ -10,6 +10,8 @@ const StyledButton = styled.button`
   border-radius: 10px;
   border: 4px solid black;
   grid-column: ${props => props.columns};
+  grid-column-start: ${props => props.start ? props.start : null};
+  grid-column-end: ${props => props.end ? props.end : null};
   grid-row: ${props => props.rows};
   color: ${(props) => props.theme.textColor};
 
@@ -22,7 +24,7 @@ function SongGuesserButton(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows}>
+    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end}>
       <h3>{props.name}</h3>
     </StyledButton>
   )

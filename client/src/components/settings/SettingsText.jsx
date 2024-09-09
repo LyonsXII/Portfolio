@@ -34,7 +34,7 @@ function SettingsText(props) {
       text={props.text}
       position={props.position}
     >
-      <h3>{props.text}</h3>
+      <h4>{props.text}</h4>
     </StyledSettingsText>
   )
 }
