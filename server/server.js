@@ -82,6 +82,13 @@ app.post("/choices", async (req, res) => {
   res.json(choices)
 });
 
+app.post("/mp3", async (req, res) => {
+  const location = req.body.location;
+  const filePath = __dirname + "\\public\\" + location;
+  res.sendFile(filePath);
+  console.log(location);
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
 });

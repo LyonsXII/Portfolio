@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 import axios from "axios";
 
-import SongGuesserButton from "./SongGuesserButton";
+import SongGuesserChoice from "./SongGuesserChoice";
 
 import { ThemeContext } from "../../../context/ThemeContext";
 
@@ -38,16 +38,21 @@ function SongGuesserGame(props) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const [songFilePath, setSongFilePath] = useState("");
-  const [pipelineAudioFile, setPipelineAudioFile] = useState(null);
-  const audioRef = React.useRef(null);
+  const [song, setSong] = useState(null);
   const [videoURL, setVideoURL] = useState("https://www.youtube.com/watch?v=7U7BDn-gU18");
+
+  const click = new Audio("./music/misc/Click.mp3");
 
   // Fetch number of possible questions for category from database
   async function getNumQuestions() {
-    const postData = {"category": props.category, "difficulty": props.difficulty};
-    const response = await axios.post('http://localhost:5000/numQuestions', postData);
-    setNumQuestions(response.data[0]["count"]);
-    console.log("Number of questions: ", response.data[0]["count"]);
+    try {
+      const postData = {"category": props.category, "difficulty": props.difficulty};
+      const response = await axios.post('http://localhost:5000/numQuestions', postData);
+      setNumQuestions(response.data[0]["count"]);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+
   }
 
   // Fetch options from database
@@ -88,19 +93,56 @@ function SongGuesserGame(props) {
     }
   };
 
-  useEffect(() => {fetchData()}, []);
-
-  function test() {
-    getNumQuestions();
-    fetchData();
+  // Fetch mp3 file from backend
+  async function getAudio() {
+    const songPostData = {"location": songFilePath};
+    const songData = await axios.post('http://localhost:5000/mp3', songPostData, {responseType: "blob"});
+    return songData.data
   }
+
+  // Set current song to correct choice
+  async function updateSong() {
+    try{
+      const audio = await getAudio();
+      const url = URL.createObjectURL(audio);
+      const newSong = new Audio(url);
+      setSong(newSong);
+    } catch(error) {
+      console.error('Error fetching the audio file:', error);
+    }
+  }
+
+  // Song playback functionality functions
+  function playSong() {
+    song.play();
+    click.play();
+  }
+
+  function buttonClick() {
+    click.play();
+  }
+
+  function handleAnswer(correct) {
+    if (correct) {
+
+    } else {
+
+    }
+    setShowAnswer(true);
+    console.log("working");
+  }
+
+  // Fetch first set of questions on component load
+  useEffect(() => {fetchData()}, []);
+  // Set current song whenever new set of choices is fetched
+  useEffect(() => {updateSong()}, [songFilePath]);
 
   return (
     <StyledContainer>
-      <h1 onClick={test}>Guess the song...</h1>
+      <h1 onClick={playSong}>Guess the song...</h1>
       <StyledGrid>
         {choices.map((choice, index) => {
-          return <SongGuesserButton key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} columns="span 6" rows="span 6"/>
+          return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer} columns="span 6" rows="span 6"/>
         })}
       </StyledGrid>
     </StyledContainer>
