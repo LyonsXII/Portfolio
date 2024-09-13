@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from "axios";
 
 import SongGuesserChoice from "./SongGuesserChoice";
+import SongGuesserVideo from "./SongGuesserVideo";
 
 import { ThemeContext } from "../../../context/ThemeContext";
 
@@ -24,7 +25,6 @@ const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
-  margin-left: ${props => props.position === "First" ? null : "4%"};
   gap: 20px;
 `;
 
@@ -55,7 +55,7 @@ function SongGuesserGame(props) {
 
   }
 
-  // Fetch options from database
+  // Fetch choices from database
   async function fetchData() {
     function shuffle(array) {
       // Fisher-Yates shuffle algorithm
@@ -112,16 +112,6 @@ function SongGuesserGame(props) {
     }
   }
 
-  // Song playback functionality functions
-  function playSong() {
-    song.play();
-    click.play();
-  }
-
-  function buttonClick() {
-    click.play();
-  }
-
   function handleAnswer(correct) {
     if (correct) {
 
@@ -129,7 +119,19 @@ function SongGuesserGame(props) {
 
     }
     setShowAnswer(true);
-    console.log("working");
+    click.play();
+    song.pause();
+  }
+
+  function startGame() {
+    setExcluded([]);
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    click.play();
+    fetchData();
+    setShowAnswer(false);
   }
 
   // Fetch first set of questions on component load
@@ -139,7 +141,11 @@ function SongGuesserGame(props) {
 
   return (
     <StyledContainer>
-      <h1 onClick={playSong}>Guess the song...</h1>
+      {showAnswer === false ? 
+        <h1 onClick={()=>{song.play()}}>Guess the song...</h1> : 
+        <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion}/>
+      }
+
       <StyledGrid>
         {choices.map((choice, index) => {
           return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer} columns="span 6" rows="span 6"/>

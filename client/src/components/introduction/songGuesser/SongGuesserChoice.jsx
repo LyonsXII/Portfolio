@@ -21,7 +21,7 @@ const StyledButton = styled.button`
   box-shadow: 0px 0px 10px black;
 
   &:hover {
-    background-color: ${props => props.theme.secondaryColor};
+    background-color: ${props => props.showAnswer === false ? props.theme.secondaryColor : null};
     color: ${props => props.theme.tertiaryColor};
   }
 `;
@@ -30,7 +30,7 @@ function SongGuesserChoice(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end}  correct={props.correct} showAnswer={props.showAnswer} onClick={() => {props.onClick()}}>
+    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end}  correct={props.correct} showAnswer={props.showAnswer} onClick={() => {props.onClick(props.correct)}}>
       <h3>{props.name}</h3>
     </StyledButton>
   )
