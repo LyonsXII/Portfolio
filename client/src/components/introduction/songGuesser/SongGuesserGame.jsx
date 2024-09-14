@@ -38,7 +38,7 @@ function SongGuesserGame(props) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const [songFilePath, setSongFilePath] = useState("");
-  const [song, setSong] = useState(null);
+  const [song, setSong] = useState("./music/misc/Click.mp3");
   const [videoURL, setVideoURL] = useState("https://www.youtube.com/watch?v=7U7BDn-gU18");
 
   const click = new Audio("./music/misc/Click.mp3");
@@ -112,6 +112,11 @@ function SongGuesserGame(props) {
     }
   }
 
+  function replaySong() {
+    song.currentTime = 0;
+    song.play();
+  }
+
   function handleAnswer(correct) {
     if (correct) {
 
@@ -143,7 +148,7 @@ function SongGuesserGame(props) {
     <StyledContainer>
       {showAnswer === false ? 
         <h1 onClick={()=>{song.play()}}>Guess the song...</h1> : 
-        <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion}/>
+        <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} replaySong={replaySong}/>
       }
 
       <StyledGrid>

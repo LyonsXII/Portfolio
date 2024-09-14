@@ -25,8 +25,15 @@ const StyledButton = styled.button`
 function SongGuesserButton(props) {
   const { theme } = useContext(ThemeContext);
 
+  const click = new Audio("./music/misc/Click.mp3");
+
+  function buttonClick() {
+    click.play();
+    props.onClick(props.name);
+  }
+
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} onClick={() => {props.onClick(props.value)}}>
+    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} onClick={buttonClick}>
       <h3>{props.name}</h3>
     </StyledButton>
   )

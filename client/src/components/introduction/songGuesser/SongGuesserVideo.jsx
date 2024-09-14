@@ -16,9 +16,20 @@ const StyledContainer = styled.div`
 
 const StyledDivLeft = styled.div`
   height: 100%;
-  width: 94%;
+  width: calc(100% + 4px);
   border: 4px solid black;
+  border-right: none;
   border-radius: 20px 0px 0px 20px;
+`;
+
+const StyledIframe = styled.iframe`
+  border: none;
+  border-radius: 16px 0px 0px 16px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
 `;
 
 const StyledDivRight = styled.div`
@@ -26,7 +37,6 @@ const StyledDivRight = styled.div`
   width: 6%;
   border: 4px solid black;
   border-radius: 0px 20px 20px 0px;
-  margin-left: -4px;
 `;
 
 const StyledButton = styled.button`
@@ -43,11 +53,11 @@ function SongGuesserVideo(props) {
   return (
     <StyledContainer theme={theme}>
       <StyledDivLeft>
-        <iframe src={props.url} style={{ border: "none", borderRadius: "inherit", width: "100%", height: "100%" }}></iframe>
+        <StyledIframe src={props.url}/>
       </StyledDivLeft>
       <StyledDivRight>
         <StyledButton theme={theme} position="Top" onClick={props.nextQuestion}/>
-        <StyledButton theme={theme} position="Bottom"/>
+        <StyledButton theme={theme} position="Bottom" onClick={props.replaySong}/>
       </StyledDivRight>
     </StyledContainer>
   )
