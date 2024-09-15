@@ -25,11 +25,9 @@ const StyledDivLeft = styled.div`
 const StyledIframe = styled.iframe`
   border: none;
   border-radius: 16px 0px 0px 16px;
-  box-sizing: border-box;
   width: 100%;
-  height: 100%;
-  padding: 0px;
-  margin: 0px;
+  height: calc(100% + 0.5px); // Avoids subpixel gap, something to do with subpixel rendering?
+  margin-top: 0px;
 `;
 
 const StyledDivRight = styled.div`
