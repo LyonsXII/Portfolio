@@ -30,15 +30,14 @@ function Settings(props) {
 
   return (
     <div>
-      <SettingsContainer>
+      <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible}/>
+      <SettingsContainer settingsHidden={settingsHidden}>
         <SettingsTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>
           <SettingsText text="Settings" curr={hoverText}/>
           <SettingsText text="Theme" curr={hoverText}/>
           <SettingsText text="Colour" curr={hoverText}/>
-          <Spacer>
-            <SettingsNotch toggleButtonsVisible={toggleButtonsVisible}/>
-          </Spacer>
+          <Spacer/>
           <SettingsText text="GitHub" curr={hoverText}/>
           <SettingsText text="LinkedIn" curr={hoverText}/>
           <SettingsText text="LeetCode" curr={hoverText} position="Bottom"/>

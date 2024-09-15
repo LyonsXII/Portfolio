@@ -17,7 +17,7 @@ function SettingsButtonContainer({ children, ...props }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-      <StyledDiv theme={theme} settingsHidden={props.settingsHidden}>
+      <StyledDiv theme={theme} settingsHidden={props.settingsHidden} onMouseOver={props.toggleButtonsVisible} onMouseLeave={props.toggleButtonsVisible}>
         {children}
       </StyledDiv>
   )

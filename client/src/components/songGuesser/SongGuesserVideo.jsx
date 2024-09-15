@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledContainer = styled.div`
   height: 50%;

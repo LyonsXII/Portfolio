@@ -5,10 +5,9 @@ import axios from "axios";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledContainer = styled.div`
-  position: absolute;
   height: 100vh;
   width: 88vw;
   display: flex;

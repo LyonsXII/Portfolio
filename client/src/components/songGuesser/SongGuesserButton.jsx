@@ -1,16 +1,12 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledButton = styled.button`
   height: 100%;
   width: 100%;
-  background-color: ${(props) => 
-    props.showAnswer ? 
-      props.correct ? "green" : "red"
-      : props.theme.primaryColor
-  };
+  background-color: ${props => props.theme.primaryColor};
   border-radius: 10px;
   border: 4px solid black;
   grid-column: ${props => props.columns};
@@ -21,19 +17,26 @@ const StyledButton = styled.button`
   box-shadow: 0px 0px 10px black;
 
   &:hover {
-    background-color: ${props => props.showAnswer === false ? props.theme.secondaryColor : null};
+    background-color: ${props => props.theme.secondaryColor};
     color: ${props => props.theme.tertiaryColor};
   }
 `;
 
-function SongGuesserChoice(props) {
+function SongGuesserButton(props) {
   const { theme } = useContext(ThemeContext);
 
+  const click = new Audio("./music/misc/Click.mp3");
+
+  function buttonClick() {
+    click.play();
+    props.onClick(props.name);
+  }
+
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end}  correct={props.correct} showAnswer={props.showAnswer} onClick={() => {props.onClick(props.correct)}}>
+    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} onClick={buttonClick}>
       <h3>{props.name}</h3>
     </StyledButton>
   )
 }
 
-export default SongGuesserChoice
+export default SongGuesserButton

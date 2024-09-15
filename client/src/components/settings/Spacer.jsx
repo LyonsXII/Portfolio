@@ -9,7 +9,7 @@ const StyledDiv = styled.div`
   justify-content: flex-end;
   flex-grow: 1;
   width: 100%;
-  background-color: ${(props) => props.background === "true" ? props.theme.primaryColor : "none"};
+  background-color: ${(props) => props.background === "true" ? props.theme.secondaryColor : "none"};
 `;
 
 function Spacer({ children, ...props }) {

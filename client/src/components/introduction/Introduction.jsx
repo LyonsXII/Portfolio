@@ -20,7 +20,7 @@ const StyledButtonsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 30%;
+  width: 36%;
   gap: 40px;
 `;
 
@@ -29,7 +29,6 @@ const StyledIntroContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-left: 40px;
 `;
 
 function Introduction(props) {

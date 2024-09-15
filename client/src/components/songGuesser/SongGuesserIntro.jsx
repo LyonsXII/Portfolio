@@ -3,10 +3,9 @@ import styled from 'styled-components';
 
 import SongGuesserButton from "./SongGuesserButton";
 
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledContainer = styled.div`
-  position: absolute;
   height: 100vh;
   width: 88vw;
   display: flex;

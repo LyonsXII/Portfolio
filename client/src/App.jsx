@@ -6,7 +6,7 @@ import Settings from "./components/settings/Settings";
 import Container from "./components/Container";
 import Introduction from "./components/introduction/Introduction"
 import { ThemeProvider } from "./context/ThemeContext";
-import SongGuesser from "./components/introduction/songGuesser/SongGuesser";
+import SongGuesser from "./components/songGuesser/SongGuesser";
 
 function App() {
   const [intro, setIntro] = useState(true);
@@ -38,12 +38,12 @@ function App() {
 
   return (
     <ThemeProvider>
-      <Settings home={home}/>
       <Container>
         {intro === true ? <Introduction activateSongGuesser={activateSongGuesser}/> : null}
         {songGuesserSection === true ? <SongGuesser/> : null}
         {faradaySection === true ? null : null}
         {bookNotesSection === true ? null : null}
+        <Settings home={home}/>
       </Container>
     </ThemeProvider>
   )

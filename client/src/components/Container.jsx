@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import { ThemeContext } from "../context/ThemeContext";
 
 const StyledContainer = styled.div`
-  position: absolute;
   height: 100vh;
-  width: 88vw;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,10 +23,11 @@ const StyledDiv = styled.div`
 
 const StyledBackground = styled.div`
   position: absolute;
-  z-index: -1;
+  z-index:-1;
   background-color: ${(props) => props.theme.backgroundColor};
   background-image: ${(props) => props.bg};;
   overflow: hidden;
+  pointer-events: none;
   height: 100vh;
   width: 100vw;
 `;
@@ -52,11 +52,13 @@ function Container({ children }) {
 
   return (
     <div>
-      <StyledContainer>
-        <StyledDiv theme={theme}>{children}</StyledDiv>
-      </StyledContainer>
       <StyledBackground theme={theme} bg={bg}/>
       <StyledBackgroundGif/>
+      <StyledContainer>
+        <StyledDiv theme={theme}>
+          {children}
+        </StyledDiv>
+      </StyledContainer>
     </div>
   )
 }

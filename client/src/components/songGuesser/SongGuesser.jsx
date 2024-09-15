@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import SongGuesserIntro from "./SongGuesserIntro";
 import SongGuesserGame from "./SongGuesserGame";
 
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function SongGuesser(props) {
   const { theme } = useContext(ThemeContext);
