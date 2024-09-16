@@ -2,14 +2,22 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 import axios from "axios";
 
+import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-const StyledContainer = styled.div`
+const StyledFlexboxContainer = styled.div`
   height: 100vh;
-  width: 88vw;
+  width: 100vw;
+  display: flex;
+  overflow: hidden;
+`;
+
+const StyledContainer = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,6 +49,8 @@ function SongGuesserGame(props) {
   const [videoURL, setVideoURL] = useState("https://www.youtube.com/watch?v=7U7BDn-gU18");
 
   const click = new Audio("./music/misc/Click.mp3");
+  const victory = new Audio("./music/misc/Victory.mp3");
+  const defeat = new Audio("./music/misc/Defeat.mp3");
 
   // Fetch number of possible questions for category from database
   async function getNumQuestions() {
@@ -116,17 +126,7 @@ function SongGuesserGame(props) {
     song.play();
   }
 
-  function handleAnswer(correct) {
-    if (correct) {
-
-    } else {
-
-    }
-    setShowAnswer(true);
-    click.play();
-    song.pause();
-  }
-
+  // Game functionality
   function startGame() {
     setExcluded([]);
     nextQuestion();
@@ -138,24 +138,38 @@ function SongGuesserGame(props) {
     setShowAnswer(false);
   }
 
+  function handleAnswer(correct) {
+    if (correct) {
+      victory.play();
+    } else {
+      defeat.play();
+    }
+    setShowAnswer(true);
+    click.play();
+    song.pause();
+  }
+
   // Fetch first set of questions on component load
   useEffect(() => {fetchData()}, []);
   // Set current song whenever new set of choices is fetched
   useEffect(() => {updateSong()}, [songFilePath]);
 
   return (
-    <StyledContainer>
-      {showAnswer === false ? 
-        <h1 onClick={()=>{song.play()}}>Guess the song...</h1> : 
-        <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} replaySong={replaySong}/>
-      }
+    <StyledFlexboxContainer>
+      {props.mode === "Regular" && <SongGuesserScore/>}
+      <StyledContainer>
+        {showAnswer === false ? 
+          <h1 onClick={()=>{song.play()}}>Guess the song...</h1> : 
+          <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} replaySong={replaySong}/>
+        }
 
-      <StyledGrid>
-        {choices.map((choice, index) => {
-          return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer} columns="span 6" rows="span 6"/>
-        })}
-      </StyledGrid>
-    </StyledContainer>
+        <StyledGrid>
+          {choices.map((choice, index) => {
+            return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer} columns="span 6" rows="span 6"/>
+          })}
+        </StyledGrid>
+      </StyledContainer>
+    </StyledFlexboxContainer>
   )
 }
 

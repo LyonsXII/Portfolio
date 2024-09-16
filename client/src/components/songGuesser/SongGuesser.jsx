@@ -15,6 +15,8 @@ function SongGuesser(props) {
   const [difficulty, setDifficulty] = useState("Easy");
   const [mode, setMode] = useState("Regular");
 
+  const [score, setScore] = useState(0);
+
   function startGame() {
     setIntro(false);
   }
@@ -33,7 +35,7 @@ function SongGuesser(props) {
 
   return (
     intro === true ? 
-      <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode}/> : 
+      <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
       <SongGuesserGame category={category} difficulty={difficulty} mode={mode}/>
   )
 }

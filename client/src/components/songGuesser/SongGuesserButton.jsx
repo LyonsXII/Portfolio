@@ -14,7 +14,7 @@ const StyledButton = styled.button`
   grid-column-end: ${props => props.end ? props.end : null};
   grid-row: ${props => props.rows};
   color: ${(props) => props.theme.textColor};
-  box-shadow: 0px 0px 10px black;
+  box-shadow: ${(props) => props.name === props.section ? "0px 0px 8px antiquewhite" : "0px 0px 10px black"};
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
@@ -33,7 +33,7 @@ function SongGuesserButton(props) {
   }
 
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} onClick={buttonClick}>
+    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} onClick={buttonClick} name={props.name} section={props.section}>
       <h3>{props.name}</h3>
     </StyledButton>
   )
