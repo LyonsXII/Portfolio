@@ -12,7 +12,7 @@ const StyledContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 70%;
+  width: 80%;
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -22,6 +22,7 @@ const StyledButtonsContainer = styled.div`
   justify-content: center;
   width: 36%;
   gap: 40px;
+  margin-right: 4vw;
 `;
 
 const StyledIntroContainer = styled.div`

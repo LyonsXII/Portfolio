@@ -5,12 +5,14 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const StyledDiv = styled.div`
   height: 100%;
+  min-height: 80px;
   width: 33%;
   min-width: 80px;
   display: ${(props) => props.settingsHidden === false ? "flex" : "none"};
   flex-direction: column;
   align-items: center;
   border-left: 4px solid black;
+  z-index: 2;
 `;
 
 function SettingsButtonContainer({ children, ...props }) {

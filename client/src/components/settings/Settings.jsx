@@ -6,6 +6,7 @@ import SettingsContainer from "./SettingsContainer";
 import SettingsTextContainer from "./SettingsTextContainer";
 import SettingsButtonContainer from "./SettingsButtonContainer";
 import SettingsNotch from "./SettingsNotch";
+import SettingsMenu from "./SettingsMenu";
 import SettingsButton from "./SettingsButton";
 import SettingsText from "./SettingsText";
 import Spacer from "./Spacer";
@@ -15,6 +16,7 @@ function Settings(props) {
 
   const [hoverText, setHoverText] = useState(""); 
   const [settingsHidden, setSettingsHidden] = useState(true);
+  const [settingsMenuHidden, setSettingsMenuHidden] = useState(true);
 
   function updateHoverText(text) {
     setHoverText(text);
@@ -28,9 +30,14 @@ function Settings(props) {
     setSettingsHidden((prevState) => !prevState);
   }
 
+  function toggleSettingsMenu() {
+    setSettingsMenuHidden((prevState) => !prevState);
+  }
+
   return (
     <div>
       <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible}/>
+      <SettingsMenu settingsMenuHidden={settingsMenuHidden}/>
       <SettingsContainer settingsHidden={settingsHidden}>
         <SettingsTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>
@@ -45,7 +52,7 @@ function Settings(props) {
 
         <SettingsButtonContainer settingsHidden={settingsHidden}>
           <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={props.home} svgPath="./icons/home.svg"/>
-          <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={props.home} svgPath="./icons/settings.svg"/>
+          <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleSettingsMenu} svgPath="./icons/settings.svg"/>
           <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>
           <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg"/>
           <Spacer background="true"/>

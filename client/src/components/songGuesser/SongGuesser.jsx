@@ -15,8 +15,6 @@ function SongGuesser(props) {
   const [difficulty, setDifficulty] = useState("Easy");
   const [mode, setMode] = useState("Regular");
 
-  const [score, setScore] = useState(0);
-
   function startGame() {
     setIntro(false);
   }

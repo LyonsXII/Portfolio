@@ -43,6 +43,7 @@ function SongGuesserGame(props) {
   const [songInfo, setSongInfo] = useState([{}]);
   const [excluded, setExcluded] = useState([]);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [score, setScore] = useState(0);
 
   const [songFilePath, setSongFilePath] = useState("");
   const [song, setSong] = useState("./music/misc/Click.mp3");
@@ -141,6 +142,7 @@ function SongGuesserGame(props) {
   function handleAnswer(correct) {
     if (correct) {
       victory.play();
+      setScore(prevScore => prevScore + 1);
     } else {
       defeat.play();
     }
@@ -156,7 +158,7 @@ function SongGuesserGame(props) {
 
   return (
     <StyledFlexboxContainer>
-      {props.mode === "Regular" && <SongGuesserScore/>}
+      {props.mode === "Regular" && <SongGuesserScore score={score}/>}
       <StyledContainer>
         {showAnswer === false ? 
           <h1 onClick={()=>{song.play()}}>Guess the song...</h1> : 

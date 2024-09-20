@@ -86,7 +86,6 @@ app.post("/mp3", async (req, res) => {
   const location = req.body.location;
   const filePath = __dirname + "\\public\\" + location;
   res.sendFile(filePath);
-  console.log(location);
 });
 
 app.listen(port, () => {
