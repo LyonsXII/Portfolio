@@ -13,6 +13,7 @@ const StyledSettingsDiv = styled.div`
   position: absolute;
   top: calc(50% - 50px);
   right: ${(props) => props.settingsHidden === true ? "0px" : "84px"};
+  z-index: 3;
 `;
 
 function SettingsNotch(props) {
