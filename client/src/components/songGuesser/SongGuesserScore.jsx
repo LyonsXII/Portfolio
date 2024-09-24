@@ -6,7 +6,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 const StyledFlexbox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
   width: 3vw;
   border-right: 4px solid black;
   background-color: ${props => props.theme.primaryColor};

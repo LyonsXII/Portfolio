@@ -6,6 +6,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 const StyledContainer = styled.div`
   height: 50%;
   width: 70%;
+  margin-bottom: -2vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +27,7 @@ const StyledIframe = styled.iframe`
   border: none;
   border-radius: 16px 0px 0px 16px;
   width: 100%;
-  height: calc(100% + 0.5px); // Avoids subpixel gap, something to do with subpixel rendering?
+  height: calc(100% + 0px); // Adding 0.5px avoids subpixel gap, something to do with subpixel rendering?
   margin-top: 0px;
 `;
 
@@ -37,12 +38,12 @@ const StyledDivRight = styled.div`
   border-radius: 0px 20px 20px 0px;
 `;
 
-const StyledButton = styled.button`
-  height: 50%;
+const StyledButton = styled.div`
+  height: calc(50% - 2px);
   width: 100%;
-  border-bottom: ${props => props.position === "Top" ? "4px solid black" : null};
+  border-bottom: 4px solid black;
   border-radius: ${props => props.position === "Top" ? "0px 20px 0px 0px" : "0px 0px 20px 0px"};
-  background-color: ${props => props.theme.secondaryColor};
+  background-color: ${props => props.theme.primaryColor};
 `;
 
 function SongGuesserVideo(props) {
@@ -55,7 +56,7 @@ function SongGuesserVideo(props) {
       </StyledDivLeft>
       <StyledDivRight>
         <StyledButton theme={theme} position="Top" onClick={props.nextQuestion}/>
-        <StyledButton theme={theme} position="Bottom" onClick={props.replaySong}/>
+        <StyledButton theme={theme} position="Bottom" onClick={props.playSong}/>
       </StyledDivRight>
     </StyledContainer>
   )
