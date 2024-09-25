@@ -54,11 +54,59 @@ const StyledSettingsContainer = styled.div`
   align-items: flex-start;
 `;
 
+const StyledOptionFlexbox = styled.div`
+  display: flex;
+  width: 40%;
+  gap: 30px;
+`;
+
+const Slider = styled.input`
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  transition: opacity .2s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  /* WebKit browsers (Chrome, Safari, etc.) */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  /* Firefox */
+  &::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  /* Custom thumb styling for Internet Explorer and Edge */
+  &::-ms-thumb {
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+  }
+`;
+
+
 const StyledTextContainer = styled.div`
   height: 100%;
   width: 100%;
-  padding-top: 20px;
-  padding-left: 20px;
+  padding-top: 30px;
+  padding-left: 30px;
 `;
 
 function SettingsMenu(props) {
@@ -82,7 +130,10 @@ function SettingsMenu(props) {
           <SettingsMenuHeaderElement value="Book Notes" position="Last" active={active} updateActive={updateActive}/>
         </StyledSettingsHeader>
         <StyledTextContainer>
-          <h4>Hello</h4>
+          <StyledOptionFlexbox>
+            <h4>Volume</h4>
+            <Slider type="range" min="0" max="100" value="50" class="slider" id="myRange"/>
+          </StyledOptionFlexbox>
         </StyledTextContainer>
       </StyledSettingsContainer>
     </StyledFlexbox>

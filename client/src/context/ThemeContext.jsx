@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { colourSchemeA, colourSchemeB, colourSchemeC } from "../themes";
+import { colourSchemeA, colourSchemeB, colourSchemeC } from "./themes";
 
 export const ThemeContext = createContext();
 
