@@ -101,7 +101,6 @@ const Slider = styled.input`
   }
 `;
 
-
 const StyledTextContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -120,7 +119,7 @@ function SettingsMenu(props) {
 
   return (
     <div>
-    <StyledSettingsBackground theme={theme} settingsMenuHidden={props.settingsMenuHidden}/>
+    <StyledSettingsBackground theme={theme} settingsMenuHidden={props.settingsMenuHidden} onClick={props.toggleSettingsMenu}/>
     <StyledFlexbox settingsMenuHidden={props.settingsMenuHidden}>
       <StyledSettingsContainer theme={theme}>
         <StyledSettingsHeader theme={theme}>
@@ -132,7 +131,7 @@ function SettingsMenu(props) {
         <StyledTextContainer>
           <StyledOptionFlexbox>
             <h4>Volume</h4>
-            <Slider type="range" min="0" max="100" value="50" class="slider" id="myRange"/>
+            <Slider type="range" min="0" max="100" value={props.volume} class="slider" id="myRange" onChange={props.changeVolume}/>
           </StyledOptionFlexbox>
         </StyledTextContainer>
       </StyledSettingsContainer>

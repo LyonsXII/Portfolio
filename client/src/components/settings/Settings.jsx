@@ -37,7 +37,7 @@ function Settings(props) {
   return (
     <div>
       <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible}/>
-      <SettingsMenu settingsMenuHidden={settingsMenuHidden}/>
+      <SettingsMenu settingsMenuHidden={settingsMenuHidden} toggleSettingsMenu={toggleSettingsMenu} volume={props.volume} changeVolume={props.changeVolume}/>
       <SettingsContainer settingsHidden={settingsHidden}>
         <SettingsTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>

@@ -34,7 +34,7 @@ function SongGuesser(props) {
   return (
     intro === true ? 
       <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
-      <SongGuesserGame category={category} difficulty={difficulty} mode={mode}/>
+      <SongGuesserGame category={category} difficulty={difficulty} mode={mode} volume={props.volume}/>
   )
 }
 

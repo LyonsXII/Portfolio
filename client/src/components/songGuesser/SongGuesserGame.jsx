@@ -48,7 +48,6 @@ function SongGuesserGame(props) {
 
   const [songFilePath, setSongFilePath] = useState("");
   const [song, setSong] = useState("./music/misc/Click.mp3");
-  const [volume, setVolume] = useState(1);
   const audioRef = useRef(null);
   const [videoURL, setVideoURL] = useState("https://www.youtube.com/watch?v=7U7BDn-gU18");
 
@@ -134,10 +133,6 @@ function SongGuesserGame(props) {
 
   }
 
-  function changeVolume() {
-    audioRef.current.volume = 0.2;
-  }
-
   // Game functionality
   function startGame() {
     setExcluded([]);
@@ -160,12 +155,15 @@ function SongGuesserGame(props) {
     setShowAnswer(true);
     click.play();
     audioRef.current.pause();
+    changeVolume();
   }
 
   // Fetch first set of questions on component load
   useEffect(() => {fetchData()}, []);
   // Set current song whenever new set of choices is fetched
   useEffect(() => {updateSong()}, [songFilePath]);
+  // Update volume of audio playback when volume updated
+  useEffect(() => {audioRef.current.volume = props.volume / 100}, [props.volume]);
 
   return (
     <StyledFlexboxContainer>

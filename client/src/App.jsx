@@ -14,6 +14,8 @@ function App() {
   const [faradaySection, setFaradaySection] = useState(false);
   const [bookNotesSection, setBookNotesSection] = useState(false);
 
+  const [volume, setVolume] = useState(40);
+
   function home() {
     setSongGuesserSection(false);
     setFaradaySection(false);
@@ -36,14 +38,18 @@ function App() {
     setIntro(false);
   }
 
+  function changeVolume(event) {
+    setVolume(event.target.value);
+  }
+
   return (
     <ThemeProvider>
       <Container>
         {intro === true ? <Introduction activateSongGuesser={activateSongGuesser}/> : null}
-        {songGuesserSection === true ? <SongGuesser/> : null}
+        {songGuesserSection === true ? <SongGuesser volume={volume}/> : null}
         {faradaySection === true ? null : null}
         {bookNotesSection === true ? null : null}
-        <Settings home={home}/>
+        <Settings home={home} volume={volume} changeVolume={changeVolume}/>
       </Container>
     </ThemeProvider>
   )
