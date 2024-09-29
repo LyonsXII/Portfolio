@@ -163,7 +163,10 @@ function SongGuesserGame(props) {
   // Set current song whenever new set of choices is fetched
   useEffect(() => {updateSong()}, [songFilePath]);
   // Update volume of audio playback when volume updated
-  useEffect(() => {audioRef.current.volume = props.volume / 100}, [props.volume]);
+  useEffect(() => {
+    audioRef.current.volume = props.volume / 100;
+    click.volume = props.volume / 100;
+  }, [props.volume]);
 
   return (
     <StyledFlexboxContainer>

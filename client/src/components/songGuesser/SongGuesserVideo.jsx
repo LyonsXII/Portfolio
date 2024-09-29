@@ -1,7 +1,20 @@
 import React, { useContext } from "react";
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+
+const swingInTopFwd = keyframes`
+  0% {
+    transform: rotateX(-100deg);
+    transform-origin: top;
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    transform-origin: top;
+    opacity: 1;
+  }
+`;
 
 const StyledContainer = styled.div`
   height: 50%;
@@ -13,6 +26,8 @@ const StyledContainer = styled.div`
   background-color: ${props => props.theme.primaryColor};
   border-radius: 20px;
   box-shadow: 0px 0px 10px black;
+
+	animation: ${swingInTopFwd} 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
 `;
 
 const StyledDivLeft = styled.div`

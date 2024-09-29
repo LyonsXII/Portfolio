@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
@@ -23,13 +23,25 @@ const StyledSettingsButton = styled.div`
 function SettingsButton(props) {
   const { theme } = useContext(ThemeContext);
 
+  const click = new Audio("./music/misc/Click.mp3");
+  click.volume = props.volume / 100;
+
+  function onClick() {
+    props.onClick();
+    click.play();
+  }
+
+  useEffect(() => {
+    if (props.volume) {click.volume = props.volume / 100}
+  }, [props.volume]);
+
   return (
     <a href={props.link}>
       <StyledSettingsButton 
         theme={theme} 
         onMouseOver={() => {props.updateHoverText(props.value)}} 
         onMouseLeave={() => {props.resetHoverText()}} 
-        onClick={props.onClick}
+        onClick={onClick}
         type={props.type}
       >
         <img src={props.svgPath} height="100%" width="100%" style={{minHeight: "80px"}}></img>

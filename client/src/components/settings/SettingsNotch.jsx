@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
@@ -20,12 +20,17 @@ function SettingsNotch(props) {
   const { theme } = useContext(ThemeContext);
 
   const click = new Audio("./music/misc/Click.mp3");
+  click.volume = props.volume / 100;
 
   function toggle() {
     props.toggleButtonsVisible();
     click.play();
   }
 
+  useEffect(() => {
+    if (props.volume) {click.volume = props.volume / 100}
+  }, [props.volume]);
+  
   return (
     <a href={props.link}>
       <StyledSettingsDiv theme={theme} onClick={toggle} settingsHidden={props.settingsHidden}/>

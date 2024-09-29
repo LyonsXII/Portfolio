@@ -27,7 +27,7 @@ function SongGuesserChoice(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end}  correct={props.correct} showAnswer={props.showAnswer} onClick={() => {props.onClick(props.correct)}}>
+    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} correct={props.correct} showAnswer={props.showAnswer} onClick={() => {props.onClick(props.correct)}}>
       <h3>{props.name}</h3>
     </StyledButton>
   )
