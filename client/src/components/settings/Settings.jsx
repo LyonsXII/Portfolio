@@ -36,8 +36,8 @@ function Settings(props) {
 
   return (
     <div>
-      <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible} volume={props.volume}/>
-      <SettingsMenu settingsMenuHidden={settingsMenuHidden} toggleSettingsMenu={toggleSettingsMenu} volume={props.volume} changeVolume={props.changeVolume}/>
+      <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible}/>
+      <SettingsMenu settingsMenuHidden={settingsMenuHidden} toggleSettingsMenu={toggleSettingsMenu} changeVolume={props.changeVolume}/>
       <SettingsContainer settingsHidden={settingsHidden}>
         <SettingsTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>
@@ -51,14 +51,14 @@ function Settings(props) {
         </SettingsTextContainer>
 
         <SettingsButtonContainer settingsHidden={settingsHidden}>
-          <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={props.home} svgPath="./icons/home.svg" volume={props.volume}/>
-          <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleSettingsMenu} svgPath="./icons/settings.svg" volume={props.volume}/>
-          <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg" volume={props.volume}/>
-          <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg" volume={props.volume}/>
+          <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={props.home} svgPath="./icons/home.svg"/>
+          <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleSettingsMenu} svgPath="./icons/settings.svg"/>
+          <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>
+          <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg"/>
           <Spacer background="true"/>
-          <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/github.svg" link="https://github.com/LyonsXII" type="Lower" volume={props.volume}/>
-          <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/linkedin.svg" link="https://www.linkedin.com/in/michael-lyons-60186b170/" type="Lower" volume={props.volume}/>
-          <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" link="https://leetcode.com/u/MichaelLyons/" type="Lower" volume={props.volume}/>
+          <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/github.svg" link="https://github.com/LyonsXII" type="Lower"/>
+          <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/linkedin.svg" link="https://www.linkedin.com/in/michael-lyons-60186b170/" type="Lower"/>
+          <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" link="https://leetcode.com/u/MichaelLyons/" type="Lower"/>
         </SettingsButtonContainer>
       </SettingsContainer>
     </div>

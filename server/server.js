@@ -77,8 +77,8 @@ app.post("/choices", async (req, res) => {
   }
 
   // Adding correct / false to choices
-  choices[0]["correct"] = true;
-  for (let i = 1; i < choices.length; i++) {choices[i]["correct"] = false;}
+  choices[0]["correct"] = "true";
+  for (let i = 1; i < choices.length; i++) {choices[i]["correct"] = "false";}
   res.json(choices)
 });
 

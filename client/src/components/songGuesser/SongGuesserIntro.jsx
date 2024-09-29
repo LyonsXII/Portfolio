@@ -25,7 +25,7 @@ const StyledFlexbox = styled.div`
   margin-top: 8vh;
 `;
 
-const StyledGrid = styled.div`
+const StyledGrid = styled.div.attrs(({ showAnswer, ...rest }) => rest)`
   height: 100%;
   width: 100%;
   display: grid;

@@ -5,8 +5,8 @@ import './App.css'
 import Settings from "./components/settings/Settings";
 import Container from "./components/Container";
 import Introduction from "./components/introduction/Introduction"
-import { ThemeProvider } from "./context/ThemeContext";
 import SongGuesser from "./components/songGuesser/SongGuesser";
+import { ThemeProvider } from "./context/ThemeContext";
 import { AudioProvider } from "./context/AudioContext";
 
 function App() {

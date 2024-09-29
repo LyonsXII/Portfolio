@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 const StyledButton = styled.button`
   height: 100%;
@@ -24,13 +25,12 @@ const StyledButton = styled.button`
 
 function SongGuesserButton(props) {
   const { theme } = useContext(ThemeContext);
-
-  const click = new Audio("./music/misc/Click.mp3");
+  const { clickSound } = useContext(AudioContext);
 
   function buttonClick() {
-    click.play();
     props.onClick(props.name);
-  }
+    clickSound();
+  } 
 
   return (
     <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} onClick={buttonClick} name={props.name} section={props.section}>

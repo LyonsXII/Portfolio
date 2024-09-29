@@ -6,7 +6,6 @@ import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
-import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
 const StyledFlexboxContainer = styled.div`
@@ -38,8 +37,7 @@ const StyledChoiceGrid = styled.div`
 `;
 
 function SongGuesserGame(props) {
-  const { theme } = useContext(ThemeContext);
-  const { volume } = useContext(AudioContext);
+  const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
 
   const [choices, setChoices] = useState([{}]);
   const [numQuestions, setNumQuestions] = useState(0);
@@ -52,10 +50,6 @@ function SongGuesserGame(props) {
   const [song, setSong] = useState("./music/misc/Click.mp3");
   const audioRef = useRef(null);
   const [videoURL, setVideoURL] = useState("https://www.youtube.com/watch?v=7U7BDn-gU18");
-
-  const click = new Audio("./music/misc/Click.mp3");
-  const victory = new Audio("./music/misc/Victory.mp3");
-  const defeat = new Audio("./music/misc/Defeat.mp3");
 
   // Fetch number of possible questions for category from database
   async function getNumQuestions() {
@@ -142,20 +136,21 @@ function SongGuesserGame(props) {
   }
 
   function nextQuestion() {
-    click.play();
+    clickSound();
     fetchData();
     setShowAnswer(false);
   }
 
   function handleAnswer(correct) {
+    console.log(correct);
     if (correct) {
-      victory.play();
+      victorySound();
       setScore(prevScore => prevScore + 1);
     } else {
-      defeat.play();
+      defeatSound();
     }
     setShowAnswer(true);
-    click.play();
+    clickSound();
     audioRef.current.pause();
   }
 
@@ -166,7 +161,6 @@ function SongGuesserGame(props) {
   // Update volume of audio playback when volume updated
   useEffect(() => {
     audioRef.current.volume = volume / 100;
-    click.volume = volume / 100;
   }, [volume]);
 
   return (
@@ -179,7 +173,7 @@ function SongGuesserGame(props) {
           <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} playSong={playSong}/>
         }
 
-        <StyledChoiceGrid>
+        <StyledChoiceGrid showAnswer={showAnswer}>
           {choices.map((choice, index) => {
             return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer}/>
           })}

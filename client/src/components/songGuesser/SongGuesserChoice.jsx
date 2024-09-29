@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 const StyledButton = styled.button`
   padding: 20px;
@@ -25,9 +26,15 @@ const StyledButton = styled.button`
 
 function SongGuesserChoice(props) {
   const { theme } = useContext(ThemeContext);
+  const { clickSound } = useContext(AudioContext);
+
+  function onClick() {
+    props.onClick();
+    clickSound();
+  }
 
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} correct={props.correct} showAnswer={props.showAnswer} onClick={() => {props.onClick(props.correct)}}>
+    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} correct={props.correct} showAnswer={props.showAnswer} onClick={() => {onClick()}}>
       <h3>{props.name}</h3>
     </StyledButton>
   )

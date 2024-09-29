@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled, { keyframes } from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 const swingInTopFwd = keyframes`
   0% {
@@ -63,6 +64,17 @@ const StyledButton = styled.div`
 
 function SongGuesserVideo(props) {
   const { theme } = useContext(ThemeContext);
+  const { clickSound } = useContext(AudioContext);
+
+  function nextQuestion() {
+    props.nextQuestion();
+    clickSound();
+  }
+
+  function playSong() {
+    props.playSong();
+    clickSound.play();
+  }
 
   return (
     <StyledContainer theme={theme}>
@@ -70,8 +82,8 @@ function SongGuesserVideo(props) {
         <StyledIframe src={props.url}/>
       </StyledDivLeft>
       <StyledDivRight>
-        <StyledButton theme={theme} position="Top" onClick={props.nextQuestion}/>
-        <StyledButton theme={theme} position="Bottom" onClick={props.playSong}/>
+        <StyledButton theme={theme} position="Top" onClick={nextQuestion}/>
+        <StyledButton theme={theme} position="Bottom" onClick={playSong}/>
       </StyledDivRight>
     </StyledContainer>
   )
