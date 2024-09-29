@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 const StyledSettingsDiv = styled.div`
   height: 100px;
@@ -18,9 +19,10 @@ const StyledSettingsDiv = styled.div`
 
 function SettingsNotch(props) {
   const { theme } = useContext(ThemeContext);
+  const { volume } = useContext(AudioContext);
 
   const click = new Audio("./music/misc/Click.mp3");
-  click.volume = props.volume / 100;
+  click.volume = volume / 100;
 
   function toggle() {
     props.toggleButtonsVisible();
@@ -28,8 +30,8 @@ function SettingsNotch(props) {
   }
 
   useEffect(() => {
-    if (props.volume) {click.volume = props.volume / 100}
-  }, [props.volume]);
+    if (volume) {click.volume = volume / 100}
+  }, [volume]);
   
   return (
     <a href={props.link}>

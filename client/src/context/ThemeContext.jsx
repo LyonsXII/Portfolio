@@ -1,9 +1,9 @@
 import React, { createContext, useState } from "react";
 import { colourSchemeA, colourSchemeB, colourSchemeC } from "./themes";
 
-export const ThemeContext = createContext();
+const ThemeContext = createContext();
 
-export const ThemeProvider = ({ children }) => {
+function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(colourSchemeA);
   const [bg, setBg] = useState("url('https://www.transparenttextures.com/patterns/cubes.png')");
   const [themeCount, setThemeCount] = useState(1);
@@ -49,3 +49,5 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
+
+export{ ThemeProvider, ThemeContext }

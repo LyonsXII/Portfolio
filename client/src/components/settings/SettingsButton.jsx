@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 const StyledSettingsButton = styled.div`
   height: auto;
@@ -22,9 +23,10 @@ const StyledSettingsButton = styled.div`
 
 function SettingsButton(props) {
   const { theme } = useContext(ThemeContext);
+  const { volume } = useContext(AudioContext);
 
   const click = new Audio("./music/misc/Click.mp3");
-  click.volume = props.volume / 100;
+  click.volume = volume / 100;
 
   function onClick() {
     props.onClick();
@@ -32,8 +34,8 @@ function SettingsButton(props) {
   }
 
   useEffect(() => {
-    if (props.volume) {click.volume = props.volume / 100}
-  }, [props.volume]);
+    if (volume) {click.volume = volume / 100}
+  }, [volume]);
 
   return (
     <a href={props.link}>

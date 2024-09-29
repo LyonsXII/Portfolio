@@ -7,6 +7,7 @@ import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 const StyledFlexboxContainer = styled.div`
   height: 100vh;
@@ -38,6 +39,7 @@ const StyledChoiceGrid = styled.div`
 
 function SongGuesserGame(props) {
   const { theme } = useContext(ThemeContext);
+  const { volume } = useContext(AudioContext);
 
   const [choices, setChoices] = useState([{}]);
   const [numQuestions, setNumQuestions] = useState(0);
@@ -155,7 +157,6 @@ function SongGuesserGame(props) {
     setShowAnswer(true);
     click.play();
     audioRef.current.pause();
-    changeVolume();
   }
 
   // Fetch first set of questions on component load
@@ -164,9 +165,9 @@ function SongGuesserGame(props) {
   useEffect(() => {updateSong()}, [songFilePath]);
   // Update volume of audio playback when volume updated
   useEffect(() => {
-    audioRef.current.volume = props.volume / 100;
-    click.volume = props.volume / 100;
-  }, [props.volume]);
+    audioRef.current.volume = volume / 100;
+    click.volume = volume / 100;
+  }, [volume]);
 
   return (
     <StyledFlexboxContainer>

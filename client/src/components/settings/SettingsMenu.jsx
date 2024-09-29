@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 import SettingsMenuHeaderElement from "./SettingsMenuHeaderElement";
 
@@ -110,6 +111,7 @@ const StyledTextContainer = styled.div`
 
 function SettingsMenu(props) {
   const { theme } = useContext(ThemeContext);
+  const { volume, changeVolume } = useContext(AudioContext);
 
   const [active, setActive] = useState("General");
 
@@ -131,7 +133,7 @@ function SettingsMenu(props) {
         <StyledTextContainer>
           <StyledOptionFlexbox>
             <h4>Volume</h4>
-            <Slider type="range" min="0" max="100" value={props.volume} class="slider" id="myRange" onChange={props.changeVolume}/>
+            <Slider type="range" min="0" max="100" value={volume} class="slider" id="myRange" onChange={changeVolume}/>
           </StyledOptionFlexbox>
         </StyledTextContainer>
       </StyledSettingsContainer>

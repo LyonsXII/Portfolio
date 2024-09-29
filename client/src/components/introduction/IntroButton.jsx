@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { AudioContext } from "../../context/AudioContext";
 
 const StyledButtonLeft = styled.button`
   height: 80px;
@@ -33,6 +34,7 @@ const StyledButtonRight = styled.button`
 
 function IntroButton(props) {
   const { theme } = useContext(ThemeContext);
+  const { volume } = useContext(AudioContext);
 
   return (
     <div style={{display: "flex"}}>
