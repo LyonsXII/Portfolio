@@ -95,7 +95,7 @@ function SongGuesserGame(props) {
       setSongInfo({id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty});
       const shuffledChoices = shuffle(response.data);
       setChoices(shuffledChoices);
-      
+
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -142,7 +142,6 @@ function SongGuesserGame(props) {
   }
 
   function handleAnswer(correct) {
-    console.log(correct);
     if (correct) {
       victorySound();
       setScore(prevScore => prevScore + 1);

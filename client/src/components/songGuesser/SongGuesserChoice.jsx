@@ -29,7 +29,7 @@ function SongGuesserChoice(props) {
   const { clickSound } = useContext(AudioContext);
 
   function onClick() {
-    props.onClick();
+    props.onClick(props.correct);
     clickSound();
   }
 

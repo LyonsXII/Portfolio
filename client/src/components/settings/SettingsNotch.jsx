@@ -1,35 +1,33 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-const StyledSettingsDiv = styled.div`
+const StyledSettingsDiv = styled.div.attrs(({ settingsHidden, ...rest}) => rest)`
   height: 100px;
   width: 1vw;
-  background-color: ${(props) => props.theme.primaryColor};
+  background-color: ${({theme}) => theme.primaryColor};
   border: 4px solid black;
   border-right: none;
   border-radius: 20px 0px 0px 20px;
   position: absolute;
   top: calc(50% - 50px);
-  right: ${(props) => props.settingsHidden === true ? "0px" : "84px"};
+  right: ${({settingsHidden}) => settingsHidden === true ? "0px" : "84px"};
   z-index: 3;
 `;
 
-function SettingsNotch(props) {
+function SettingsNotch({ settingsHidden, toggleButtonsVisible }) {
   const { theme } = useContext(ThemeContext);
-  const { volume, clickSound } = useContext(AudioContext);
+  const { clickSound } = useContext(AudioContext);
 
   function toggle() {
-    props.toggleButtonsVisible();
+    toggleButtonsVisible();
     clickSound();
   }
 
   return (
-    <a href={props.link}>
-      <StyledSettingsDiv theme={theme} onClick={toggle} settingsHidden={props.settingsHidden}/>
-    </a>
+    <StyledSettingsDiv theme={theme} onClick={toggle} settingsHidden={settingsHidden}/>
   )
 }
 

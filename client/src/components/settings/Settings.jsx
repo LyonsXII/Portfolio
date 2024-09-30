@@ -12,7 +12,7 @@ import SettingsText from "./SettingsText";
 import Spacer from "./Spacer";
 
 function Settings(props) {
-  const { theme, toggleTheme, toggleBg } = useContext(ThemeContext);
+  const { toggleTheme, toggleBg } = useContext(ThemeContext);
   
   const [hoverText, setHoverText] = useState(""); 
   const [settingsHidden, setSettingsHidden] = useState(true);
