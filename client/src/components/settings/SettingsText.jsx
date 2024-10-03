@@ -10,31 +10,31 @@ const StyledSettingsText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.primaryColor};
+  background-color: ${({ theme }) => theme.primaryColor};
   // Text only visible when button hovered over
-  visibility: ${(props) => props.curr === props.text ? "visible" : "hidden"};
+  visibility: ${({ $curr, $text }) => $curr === $text ? "visible" : "hidden"};
   margin-top: -4px;
   border-left: 4px solid black;
   border-top: 4px solid black;
   // Conditionally apply border radius and bottom border based on prop.position
-  border-bottom: ${(props) => props.position === "Bottom" ? "none" : "4px solid black"};
-  border-radius: ${(props) => 
-    props.position === "Top" ? "0px 0px 0px 20px" : 
-    props.position === "Bottom" ? "20px 0px 0px 0px" :
+  border-bottom: ${({ $position }) => $position === "Bottom" ? "none" : "4px solid black"};
+  border-radius: ${({ $position }) => 
+    $position === "Top" ? "0px 0px 0px 20px" : 
+    $position === "Bottom" ? "20px 0px 0px 0px" :
     "20px 0px 0px 20px"};
 `;
 
-function SettingsText(props) {
+function SettingsText({ text, curr, position}) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <StyledSettingsText 
       theme={theme}
-      curr={props.curr}
-      text={props.text}
-      position={props.position}
+      $curr={curr}
+      $text={text}
+      $position={position}
     >
-      <h4>{props.text}</h4>
+      <h4>{text}</h4>
     </StyledSettingsText>
   )
 }

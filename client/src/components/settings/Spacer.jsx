@@ -9,14 +9,14 @@ const StyledDiv = styled.div`
   justify-content: flex-end;
   flex-grow: 1;
   width: 100%;
-  background-color: ${(props) => props.background === "true" ? props.theme.secondaryColor : "none"};
+  background-color: ${({ theme, $background }) => $background === "true" ? theme.secondaryColor : "none"};
 `;
 
-function Spacer({ children, ...props }) {
+function Spacer({ children, background }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-      <StyledDiv theme={theme} background={props.background}>
+      <StyledDiv theme={theme} $background={background}>
         {children}
       </StyledDiv>
   )
