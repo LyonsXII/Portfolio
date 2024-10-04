@@ -24,7 +24,7 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.primaryColor};
+  background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 20px;
   box-shadow: 0px 0px 10px black;
 
@@ -58,32 +58,32 @@ const StyledButton = styled.div`
   height: calc(50% - 2px);
   width: 100%;
   border-bottom: 4px solid black;
-  border-radius: ${props => props.position === "Top" ? "0px 20px 0px 0px" : "0px 0px 20px 0px"};
-  background-color: ${props => props.theme.primaryColor};
+  border-radius: ${({ $position }) => $position === "Top" ? "0px 20px 0px 0px" : "0px 0px 20px 0px"};
+  background-color: ${({ theme }) => theme.primaryColor};
 `;
 
-function SongGuesserVideo(props) {
+function SongGuesserVideo({ url, nextQuestion, playSong }) {
   const { theme } = useContext(ThemeContext);
   const { clickSound } = useContext(AudioContext);
 
-  function nextQuestion() {
-    props.nextQuestion();
+  function handleNextQuestion() {
+    nextQuestion();
     clickSound();
   }
 
-  function playSong() {
-    props.playSong();
-    clickSound.play();
+  function handlePlaySong() {
+    playSong();
+    clickSound();
   }
 
   return (
     <StyledContainer theme={theme}>
       <StyledDivLeft>
-        <StyledIframe src={props.url}/>
+        <StyledIframe src={url}/>
       </StyledDivLeft>
       <StyledDivRight>
-        <StyledButton theme={theme} position="Top" onClick={nextQuestion}/>
-        <StyledButton theme={theme} position="Bottom" onClick={playSong}/>
+        <StyledButton theme={theme} $position="Top" onClick={handleNextQuestion}/>
+        <StyledButton theme={theme} onClick={handlePlaySong}/>
       </StyledDivRight>
     </StyledContainer>
   )

@@ -15,7 +15,7 @@ const StyledSettingsBackground = styled.div`
   background-color: black;
   z-index: 1;
   opacity: 0.8;
-  display: ${(props) => props.settingsMenuHidden === true ? "none" : "inline"};
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "inline"};
 `;
 
 const StyledFlexbox = styled.div`
@@ -24,8 +24,8 @@ const StyledFlexbox = styled.div`
   left: 0;
   height: 100vh;
   width: 100vw;
-  background-color: ${(props) => props.theme.primaryColor};
-  display: ${(props) => props.settingsMenuHidden === true ? "none" : "flex"};
+  background-color: ${({ theme }) => theme.primaryColor};
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
   justify-content: center;
   align-items: center;
 `;
@@ -33,11 +33,11 @@ const StyledFlexbox = styled.div`
 const StyledSettingsHeader = styled.div`
   height: 10vh;
   width: 70vw;
-  background-color: ${(props) => props.theme.secondaryColor};
+  background-color: ${({ theme }) => theme.secondaryColor};
   border-radius: 20px 20px 0px 0px;
   border-bottom: 4px solid black;
   z-index: 4;
-  display: ${(props) => props.settingsMenuHidden === true ? "none" : "flex"};
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
   justify-self: center;
   align-self: flex-start;
 `;
@@ -45,11 +45,11 @@ const StyledSettingsHeader = styled.div`
 const StyledSettingsContainer = styled.div`
   height: 60vh;
   width: 70vw;
-  background-color: ${(props) => props.theme.primaryColor};
+  background-color: ${({ theme }) => theme.primaryColor};
   border: 4px solid black;
   border-radius: 20px;
   z-index: 3;
-  display: ${(props) => props.settingsMenuHidden === true ? "none" : "flex"};
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -109,7 +109,7 @@ const StyledTextContainer = styled.div`
   padding-left: 30px;
 `;
 
-function SettingsMenu(props) {
+function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
   const { theme } = useContext(ThemeContext);
   const { volume, changeVolume } = useContext(AudioContext);
 
@@ -121,8 +121,8 @@ function SettingsMenu(props) {
 
   return (
     <div>
-    <StyledSettingsBackground theme={theme} settingsMenuHidden={props.settingsMenuHidden} onClick={props.toggleSettingsMenu}/>
-    <StyledFlexbox settingsMenuHidden={props.settingsMenuHidden}>
+    <StyledSettingsBackground theme={theme} $settingsMenuHidden={settingsMenuHidden} onClick={toggleSettingsMenu}/>
+    <StyledFlexbox $settingsMenuHidden={settingsMenuHidden}>
       <StyledSettingsContainer theme={theme}>
         <StyledSettingsHeader theme={theme}>
           <SettingsMenuHeaderElement value="General" position="First" active={active} updateActive={updateActive}/>
@@ -133,7 +133,7 @@ function SettingsMenu(props) {
         <StyledTextContainer>
           <StyledOptionFlexbox>
             <h4>Volume</h4>
-            <Slider type="range" min="0" max="100" value={volume} class="slider" id="myRange" onChange={changeVolume}/>
+            <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
           </StyledOptionFlexbox>
         </StyledTextContainer>
       </StyledSettingsContainer>

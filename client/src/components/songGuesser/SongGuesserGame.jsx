@@ -29,7 +29,7 @@ const StyledContainer = styled.div`
 const StyledChoiceGrid = styled.div`
   height: 20%;
   width: 80%;
-  margin-top: ${props => props.showAnswer === true ? "0vh" : "8vh"};
+  margin-top: 8vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-content: space-between;

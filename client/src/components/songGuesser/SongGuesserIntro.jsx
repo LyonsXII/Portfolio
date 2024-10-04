@@ -31,7 +31,7 @@ const StyledGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
-  margin-left: ${props => props.position === "First" ? null : "4%"};
+  margin-left: ${({ $position }) => $position === "First" ? null : "4%"};
   gap: 20px;
 `;
 
@@ -43,7 +43,7 @@ function SongGuesserIntro(props) {
       <h1>Song Guesser</h1>
       
       <StyledFlexbox>
-        <StyledGrid position="First">
+        <StyledGrid $position="First">
           <SongGuesserButton name="Pop" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
           <SongGuesserButton name="Indie" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
           <SongGuesserButton name="Anime" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>

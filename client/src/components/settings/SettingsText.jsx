@@ -16,7 +16,7 @@ const StyledSettingsText = styled.div`
   margin-top: -4px;
   border-left: 4px solid black;
   border-top: 4px solid black;
-  // Conditionally apply border radius and bottom border based on prop.position
+  // Conditionally apply border radius and bottom border based on position
   border-bottom: ${({ $position }) => $position === "Bottom" ? "none" : "4px solid black"};
   border-radius: ${({ $position }) => 
     $position === "Top" ? "0px 0px 0px 20px" : 
