@@ -18,14 +18,14 @@ const StyledDiv = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
-  color: ${(props) => props.theme.textColor};
+  color: ${({ theme }) => theme.textColor};
 `;
 
 const StyledBackground = styled.div`
   position: absolute;
   z-index:-1;
-  background-color: ${(props) => props.theme.backgroundColor};
-  background-image: ${(props) => props.bg};;
+  background-color: ${({ theme }) => theme.backgroundColor};
+  background-image: ${({ $bg }) => $bg};;
   overflow: hidden;
   pointer-events: none;
   height: 100vh;
@@ -52,7 +52,7 @@ function Container({ children }) {
 
   return (
     <div>
-      <StyledBackground theme={theme} bg={bg}/>
+      <StyledBackground theme={theme} $bg={bg}/>
       <StyledBackgroundGif/>
       <StyledContainer>
         <StyledDiv theme={theme}>
