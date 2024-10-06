@@ -88,8 +88,8 @@ function SongGuesserGame(props) {
 
       // Setting retrieved data
       const data = response.data[0];
-      setVideoURL(data.video_link);
       if (songFilePath !== data.location) {
+        setVideoURL(data.video_link);
         setSongFilePath(data.location);
         setExcluded((prev) => {
           if (!prev.includes(data.id)) {

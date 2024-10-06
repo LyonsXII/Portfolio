@@ -1,19 +1,28 @@
-import React, { useContext } from "react";
-import styled, { keyframes } from 'styled-components';
+import React, { useState, useContext } from "react";
+import styled, { keyframes, css } from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-const swingInTopFwd = keyframes`
+const slideInLeft = keyframes`
   0% {
-    transform: rotateX(-100deg);
-    transform-origin: top;
+    transform: translateX(-1000px);
     opacity: 0;
   }
   100% {
-    transform: rotateX(0deg);
-    transform-origin: top;
+    transform: translateX(0);
     opacity: 1;
+  }
+`;
+
+const slideOutRight = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(1000px);
+    opacity: 0;
   }
 `;
 
@@ -28,7 +37,11 @@ const StyledContainer = styled.div`
   border-radius: 20px;
   box-shadow: 0px 0px 10px black;
 
-	animation: ${swingInTopFwd} 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+  animation: ${({ $animationState }) => 
+    $animationState === "Enter" 
+      ? css`${slideInLeft} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both` 
+      : css`${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both`
+  };
 `;
 
 const StyledDivLeft = styled.div`
@@ -66,9 +79,14 @@ function SongGuesserVideo({ url, nextQuestion, playSong }) {
   const { theme } = useContext(ThemeContext);
   const { clickSound } = useContext(AudioContext);
 
+  const [animationState, setAnimationState] = useState("Enter");
+
   function handleNextQuestion() {
-    nextQuestion();
+    setAnimationState("Exit");
     clickSound();
+    setTimeout(() => {
+      nextQuestion();
+    }, 500);
   }
 
   function handlePlaySong() {
@@ -77,7 +95,7 @@ function SongGuesserVideo({ url, nextQuestion, playSong }) {
   }
 
   return (
-    <StyledContainer theme={theme}>
+    <StyledContainer theme={theme} $animationState={animationState} >
       <StyledDivLeft>
         <StyledIframe src={url}/>
       </StyledDivLeft>
