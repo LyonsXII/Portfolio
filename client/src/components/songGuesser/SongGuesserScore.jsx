@@ -9,13 +9,13 @@ const StyledFlexbox = styled.div`
   height: 100vh;
   width: 3vw;
   border-right: 4px solid black;
-  background-color: ${props => props.theme.primaryColor};
+  background-color: ${({ theme }) => theme.primaryColor};
 `;
 
 const StyledIncrement = styled.div`
   height: calc(100vh / 20);
   border-bottom: 4px solid black;
-  background-color: ${(props) => props.current === true ? props.theme.secondaryColor : props.theme.primaryColor};
+  background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
 `
 
 const StyledBox = styled.div`
@@ -26,22 +26,22 @@ const StyledBox = styled.div`
   align-items: center;
 `
 
-function SongGuesserScore(props) {
+function SongGuesserScore({ score }) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div>
       <StyledFlexbox theme={theme}>
-        {Array.from({ length: props.score }, (_, i) => (
+        {Array.from({ length: score }, (_, i) => (
           <StyledIncrement theme={theme} key={i}>
             <StyledBox>
               <h4>{i + 1}</h4>
             </StyledBox>
           </StyledIncrement>
         ))}
-        <StyledIncrement theme={theme} current={true}>
+        <StyledIncrement theme={theme} $current={"true"}>
             <StyledBox>
-              <h4>{props.score + 1}</h4>
+              <h4>{score + 1}</h4>
             </StyledBox>
           </StyledIncrement>
       </StyledFlexbox>

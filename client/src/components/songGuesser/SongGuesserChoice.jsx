@@ -10,32 +10,32 @@ const StyledButton = styled.button`
   white-space: normal;
   border-radius: 10px;
   border: 4px solid black;
-  color: ${(props) => props.theme.textColor};
+  color: ${({ theme }) => theme.textColor};
   box-shadow: 0px 0px 10px black;
-  background-color: ${(props) => 
-    props.showAnswer ? 
-      props.correct ? "green" : "red"
-      : props.theme.primaryColor
+  background-color: ${({ $showAnswer, $correct, theme }) => 
+    $showAnswer ? 
+      $correct ? "green" : "red"
+      : theme.primaryColor
   };
 
   &:hover {
-    background-color: ${props => props.showAnswer === false ? props.theme.secondaryColor : null};
-    color: ${props => props.theme.tertiaryColor};
+    background-color: ${({ $showAnswer, theme }) => $showAnswer === false ? theme.secondaryColor : null};
+    color: ${({ theme }) => theme.tertiaryColor};
   }
 `;
 
-function SongGuesserChoice(props) {
+function SongGuesserChoice({ name, correct, showAnswer, onClick }) {
   const { theme } = useContext(ThemeContext);
   const { clickSound } = useContext(AudioContext);
 
-  function onClick() {
-    props.onClick(props.correct);
+  function handleOnClick() {
+    onClick(correct);
     clickSound();
   }
 
   return (
-    <StyledButton theme={theme} columns={props.columns} rows={props.rows} start={props.start} end={props.end} correct={props.correct} showAnswer={props.showAnswer} onClick={() => {onClick()}}>
-      <h3>{props.name}</h3>
+    <StyledButton theme={theme} $correct={correct} $showAnswer={showAnswer} onClick={() => {handleOnClick()}}>
+      <h3>{name}</h3>
     </StyledButton>
   )
 }

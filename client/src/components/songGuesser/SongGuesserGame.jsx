@@ -60,7 +60,6 @@ function SongGuesserGame(props) {
     } catch(error) {
       console.error('Error fetching data:', error);
     }
-
   }
 
   // Fetch choices from database
@@ -81,7 +80,7 @@ function SongGuesserGame(props) {
 
     try {
       // Post request to backend
-      if (excluded == [undefined]) {
+      if (excluded.length === 0) {
         const choicesPostData = {"category": props.category, "difficulty": props.difficulty, "excluded": []};
       }
       const choicesPostData = {"category": props.category, "difficulty": props.difficulty, "excluded": excluded};
@@ -90,11 +89,18 @@ function SongGuesserGame(props) {
       // Setting retrieved data
       const data = response.data[0];
       setVideoURL(data.video_link);
-      setSongFilePath(data.location);
-      setExcluded((prev) => [...prev, data.id]);
-      setSongInfo({id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty});
-      const shuffledChoices = shuffle(response.data);
-      setChoices(shuffledChoices);
+      if (songFilePath !== data.location) {
+        setSongFilePath(data.location);
+        setExcluded((prev) => {
+          if (!prev.includes(data.id)) {
+            return [...prev, data.id]
+          }
+          return prev
+        });
+        setSongInfo({id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty});
+        const shuffledChoices = shuffle(response.data);
+        setChoices(shuffledChoices);
+      }
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -110,12 +116,14 @@ function SongGuesserGame(props) {
 
   // Set current song to correct choice
   async function updateSong() {
-    try{
-      const audio = await getAudio();
-      const url = URL.createObjectURL(audio);
-      setSong(url);
-    } catch(error) {
-      console.error('Error fetching the audio file:', error);
+    if (songFilePath) {
+      try{
+        const audio = await getAudio();
+        const url = URL.createObjectURL(audio);
+        setSong(url);
+      } catch(error) {
+        console.error('Error fetching the audio file:', error);
+      }
     }
   }
 
@@ -172,7 +180,7 @@ function SongGuesserGame(props) {
           <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} playSong={playSong}/>
         }
 
-        <StyledChoiceGrid showAnswer={showAnswer}>
+        <StyledChoiceGrid>
           {choices.map((choice, index) => {
             return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer}/>
           })}
