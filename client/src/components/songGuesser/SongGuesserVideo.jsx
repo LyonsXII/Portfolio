@@ -3,28 +3,7 @@ import styled, { keyframes, css } from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
-
-const slideInLeft = keyframes`
-  0% {
-    transform: translateX(-1000px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
-
-const slideOutRight = keyframes`
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(1000px);
-    opacity: 0;
-  }
-`;
+import { slideInLeftAnimation, slideOutUpAnimation } from '../../context/Animations';
 
 const StyledContainer = styled.div`
   height: 50%;
@@ -39,8 +18,8 @@ const StyledContainer = styled.div`
 
   animation: ${({ $animationState }) => 
     $animationState === "Enter" 
-      ? css`${slideInLeft} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both` 
-      : css`${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both`
+      ? slideInLeftAnimation
+      : slideOutUpAnimation
   };
 `;
 
