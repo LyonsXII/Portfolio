@@ -8,7 +8,6 @@ import { slideInLeftAnimation, slideOutUpAnimation } from '../../context/Animati
 const StyledContainer = styled.div`
   height: 50%;
   width: 70%;
-  margin-bottom: -2vh;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -5,11 +5,13 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
 const StyledButton = styled.button`
-  padding: 20px;
+  padding: 15px 30px;
   word-wrap: break-word;
   white-space: normal;
+  letter-spacing: 2px;
   border-radius: 10px;
   border: 4px solid black;
+  transition: margin 10s ease;
   color: ${({ theme }) => theme.textColor};
   box-shadow: 0px 0px 10px black;
   background-color: ${({ $showAnswer, $correct, theme }) => 
@@ -17,10 +19,12 @@ const StyledButton = styled.button`
       $correct ? "green" : "red"
       : theme.primaryColor
   };
-
+  
   &:hover {
     background-color: ${({ $showAnswer, theme }) => $showAnswer === false ? theme.secondaryColor : null};
     color: ${({ theme }) => theme.tertiaryColor};
+    transform: scale(1.02);
+    transition: transform 0.2s ease, background-color 1s ease;
   }
 `;
 

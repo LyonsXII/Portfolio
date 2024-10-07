@@ -8,6 +8,8 @@ import SongGuesserVideo from "./SongGuesserVideo";
 
 import { AudioContext } from "../../context/AudioContext";
 
+import { slideInLeftAnimation } from '../../context/Animations';
+
 const StyledFlexboxContainer = styled.div`
   height: 100vh;
   width: 100vw;
@@ -33,7 +35,14 @@ const StyledChoiceGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-content: space-between;
-  gap: 20px;
+  gap: 25px;
+`;
+
+const StyledTextBox = styled.div`
+  height: 25%;
+  display: flex;
+  align-items: center;
+  animation: ${ slideInLeftAnimation };
 `;
 
 function SongGuesserGame(props) {
@@ -176,8 +185,10 @@ function SongGuesserGame(props) {
       {props.mode === "Regular" && <SongGuesserScore score={score}/>}
       <StyledContainer>
         {showAnswer === false ? 
-          <h1 onClick={() => playSong()}>Guess the song...</h1> : 
-          <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} playSong={playSong}/>
+          <StyledTextBox>
+            <h1 onClick={() => playSong()}>Guess the song...</h1>
+          </StyledTextBox> 
+          : <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} playSong={playSong}/>
         }
 
         <StyledChoiceGrid>
