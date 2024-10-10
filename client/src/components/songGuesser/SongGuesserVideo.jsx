@@ -3,11 +3,21 @@ import styled, { keyframes, css } from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
-import { slideInLeftAnimation, slideOutUpAnimation } from '../../context/Animations';
+import { slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 const StyledContainer = styled.div`
-  height: 50%;
+  height: 60%;
   width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+
+const StyledVideoContainer = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +28,7 @@ const StyledContainer = styled.div`
   animation: ${({ $animationState }) => 
     $animationState === "Enter" 
       ? slideInLeftAnimation
-      : slideOutUpAnimation
+      : slideOutRightAnimation
   };
 `;
 
@@ -53,7 +63,22 @@ const StyledButton = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
 `;
 
-function SongGuesserVideo({ url, nextQuestion, playSong }) {
+const StyledTextContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 40px;
+  margin-left: 2vw;
+
+  animation: ${({ $animationState }) => 
+    $animationState === "Enter" 
+      ? slideInLeftAnimation
+      : slideOutRightAnimation
+  };
+`;
+
+function SongGuesserVideo({ url, nextQuestion, playSong, name, property }) {
   const { theme } = useContext(ThemeContext);
   const { clickSound } = useContext(AudioContext);
 
@@ -73,14 +98,20 @@ function SongGuesserVideo({ url, nextQuestion, playSong }) {
   }
 
   return (
-    <StyledContainer theme={theme} $animationState={animationState} >
-      <StyledDivLeft>
-        <StyledIframe src={url}/>
-      </StyledDivLeft>
-      <StyledDivRight>
-        <StyledButton theme={theme} $position="Top" onClick={handleNextQuestion}/>
-        <StyledButton theme={theme} onClick={handlePlaySong}/>
-      </StyledDivRight>
+    <StyledContainer>
+      <StyledVideoContainer theme={theme} $animationState={animationState}>
+        <StyledDivLeft>
+          <StyledIframe src={url}/>
+        </StyledDivLeft>
+        <StyledDivRight>
+          <StyledButton theme={theme} $position="Top" onClick={handleNextQuestion}/>
+          <StyledButton theme={theme} onClick={handlePlaySong}/>
+        </StyledDivRight>
+      </StyledVideoContainer>
+      <StyledTextContainer $animationState={animationState}>
+        <h3 style={{fontSize: "3.5rem"}}>{name}</h3>
+        <h4 style={{fontSize: "2.5rem", marginBottom: "2px"}}>{property}</h4>
+      </StyledTextContainer>
     </StyledContainer>
   )
 }

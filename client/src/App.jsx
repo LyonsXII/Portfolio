@@ -8,6 +8,7 @@ import Introduction from "./components/introduction/Introduction"
 import SongGuesser from "./components/songGuesser/SongGuesser";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AudioProvider } from "./context/AudioContext";
+import { SettingsProvider } from "./context/SettingsContext";
 
 function App() {
   const [intro, setIntro] = useState(true);
@@ -40,13 +41,15 @@ function App() {
   return (
     <ThemeProvider>
       <AudioProvider>
-        <Container>
-          {intro === true ? <Introduction activateSongGuesser={activateSongGuesser}/> : null}
-          {songGuesserSection === true ? <SongGuesser/> : null}
-          {faradaySection === true ? null : null}
-          {bookNotesSection === true ? null : null}
-          <Settings home={home}/>
-        </Container>
+        <SettingsProvider>
+          <Container>
+            {intro === true ? <Introduction activateSongGuesser={activateSongGuesser}/> : null}
+            {songGuesserSection === true ? <SongGuesser/> : null}
+            {faradaySection === true ? null : null}
+            {bookNotesSection === true ? null : null}
+            <Settings home={home}/>
+          </Container>
+        </SettingsProvider>
       </AudioProvider>
     </ThemeProvider>
   )

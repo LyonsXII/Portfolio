@@ -8,7 +8,7 @@ const StyledButton = styled.button`
   padding: 15px 30px;
   word-wrap: break-word;
   white-space: normal;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   border-radius: 10px;
   border: 4px solid black;
   transition: margin 10s ease;
@@ -21,10 +21,10 @@ const StyledButton = styled.button`
   };
   
   &:hover {
-    background-color: ${({ $showAnswer, theme }) => $showAnswer === false ? theme.secondaryColor : null};
     color: ${({ theme }) => theme.tertiaryColor};
-    transform: scale(1.02);
-    transition: transform 0.2s ease, background-color 1s ease;
+    background-color: ${({ $showAnswer, theme }) => $showAnswer === false ? theme.secondaryColor : null};
+    transform: scale(1.01);
+    transition: transform 0.2s ease, background-color 0.8s ease;
   }
 `;
 

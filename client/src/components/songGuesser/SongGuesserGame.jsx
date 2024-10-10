@@ -7,6 +7,7 @@ import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
 import { AudioContext } from "../../context/AudioContext";
+import { SettingsContext } from "../../context/SettingsContext";
 
 import { slideInLeftAnimation } from '../../context/Animations';
 
@@ -31,10 +32,10 @@ const StyledContainer = styled.div`
 const StyledChoiceGrid = styled.div`
   height: 20%;
   width: 80%;
-  margin-top: 8vh;
+  margin-top: 3vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  justify-content: space-between;
+  justify-content: center;
   gap: 25px;
 `;
 
@@ -47,6 +48,7 @@ const StyledTextBox = styled.div`
 
 function SongGuesserGame(props) {
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
+  const { autoplay, autoNextQuestion } = useContext(SettingsContext);
 
   const [choices, setChoices] = useState([{}]);
   const [numQuestions, setNumQuestions] = useState(0);
@@ -168,12 +170,17 @@ function SongGuesserGame(props) {
     setShowAnswer(true);
     clickSound();
     audioRef.current.pause();
+    if (autoNextQuestion) {setTimeout(() => {nextQuestion()}, 3000)}
   }
 
   // Fetch first set of questions on component load
   useEffect(() => {fetchData()}, []);
   // Set current song whenever new set of choices is fetched
   useEffect(() => {updateSong()}, [songFilePath]);
+  // Automatically play next song if autoplay toggled on in settings
+  useEffect(() => {
+    if (autoplay) {setTimeout(() => {playSong()}, 500)}
+  }, [song]);
   // Update volume of audio playback when volume updated
   useEffect(() => {
     audioRef.current.volume = volume / 100;
@@ -188,7 +195,7 @@ function SongGuesserGame(props) {
           <StyledTextBox>
             <h1 onClick={() => playSong()}>Guess the song...</h1>
           </StyledTextBox> 
-          : <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} playSong={playSong}/>
+          : <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} playSong={playSong} name={songInfo.song_name} property={songInfo.property}/>
         }
 
         <StyledChoiceGrid>

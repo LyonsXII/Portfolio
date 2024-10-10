@@ -131,10 +131,20 @@ function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
           <SettingsMenuHeaderElement value="Book Notes" position="Last" active={active} updateActive={updateActive}/>
         </StyledSettingsHeader>
         <StyledTextContainer>
-          <StyledOptionFlexbox>
+          {active === "General" ? 
+            <StyledOptionFlexbox>
             <h4>Volume</h4>
             <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
-          </StyledOptionFlexbox>
+            </StyledOptionFlexbox>
+          : null}
+          {active === "Song Guesser" ? 
+            <StyledOptionFlexbox>
+            <h4>Autoplay</h4>
+            <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
+            <h4>Auto Next Question</h4>
+            <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
+            </StyledOptionFlexbox>
+          : null}
         </StyledTextContainer>
       </StyledSettingsContainer>
     </StyledFlexbox>
