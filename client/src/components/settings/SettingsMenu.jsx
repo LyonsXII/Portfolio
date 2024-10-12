@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
+import { SettingsContext } from "../../context/SettingsContext";
 
 import SettingsMenuHeaderElement from "./SettingsMenuHeaderElement";
 
@@ -57,8 +58,16 @@ const StyledSettingsContainer = styled.div`
 
 const StyledOptionFlexbox = styled.div`
   display: flex;
+  flex-direction: column;
   width: 40%;
   gap: 30px;
+`;
+
+const StyledOptionFlexboxEntry = styled.div`
+  display: flex;
+  width: 100%;
+  min-width: 100%;
+  gap: 40px;
 `;
 
 const Slider = styled.input`
@@ -112,6 +121,7 @@ const StyledTextContainer = styled.div`
 function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
   const { theme } = useContext(ThemeContext);
   const { volume, changeVolume } = useContext(AudioContext);
+  const { autoplay, toggleAutoplay, autoNextQuestion, toggleAutoNextQuestion } = useContext(SettingsContext);
 
   const [active, setActive] = useState("General");
 
@@ -139,10 +149,14 @@ function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
           : null}
           {active === "Song Guesser" ? 
             <StyledOptionFlexbox>
-            <h4>Autoplay</h4>
-            <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
-            <h4>Auto Next Question</h4>
-            <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
+              <StyledOptionFlexboxEntry>
+                <h4>Autoplay</h4>
+                <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
+              </StyledOptionFlexboxEntry>
+              <StyledOptionFlexboxEntry>
+                <h4>Autoplay Next Question</h4>
+                <input type="checkbox" checked={autoplay} onChange={toggleAutoplay}/>
+              </StyledOptionFlexboxEntry>
             </StyledOptionFlexbox>
           : null}
         </StyledTextContainer>

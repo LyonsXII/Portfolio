@@ -7,11 +7,11 @@ function SettingsProvider({ children }) {
   const [autoNextQuestion, setAutoNextQuestion] = useState(true);
 
   function toggleAutoplay() {
-    setAutoplay(!prev);
+    setAutoplay(prev => !prev);
   }
 
   function toggleAutoNextQuestion() {
-    setAutoNextQuestion(!prev);
+    setAutoNextQuestion(prev => !prev);
   }
 
   return (
