@@ -58,9 +58,12 @@ function SongGuesserGame(props) {
   const [score, setScore] = useState(0);
 
   const [songFilePath, setSongFilePath] = useState("");
-  const [song, setSong] = useState("./music/misc/Click.mp3");
+  const [song, setSong] = useState(null);
   const audioRef = useRef(null);
-  const [videoURL, setVideoURL] = useState("https://www.youtube.com/watch?v=7U7BDn-gU18");
+  const [videoURL, setVideoURL] = useState("");
+
+  const [userClickedNext, setUserClickedNext] = useState(false);
+  const nextQuestionTimeoutRef = useRef(null);
 
   // Fetch number of possible questions for category from database
   async function getNumQuestions() {
@@ -155,12 +158,29 @@ function SongGuesserGame(props) {
   }
 
   function nextQuestion() {
+    // Clear any existing timeout before moving to the next question
+    if (nextQuestionTimeoutRef.current) {
+      clearTimeout(nextQuestionTimeoutRef.current);
+      nextQuestionTimeoutRef.current = null; // Reset the ref to avoid future issues
+    }
     clickSound();
     fetchData();
     setShowAnswer(false);
+    setUserClickedNext(false);
+  }
+
+  function nextQuestionButton() {
+    // Clear timeout if user clicked next button themselves
+    if (nextQuestionTimeoutRef.current) {
+      clearTimeout(nextQuestionTimeoutRef.current);
+      nextQuestionTimeoutRef.current = null; // Reset the ref to avoid future issues
+    }
+    setUserClickedNext(true);
+    nextQuestion();
   }
 
   function handleAnswer(correct) {
+    clickSound();
     if (correct) {
       victorySound();
       setScore(prevScore => prevScore + 1);
@@ -168,9 +188,16 @@ function SongGuesserGame(props) {
       defeatSound();
     }
     setShowAnswer(true);
-    clickSound();
     audioRef.current.pause();
-    if (autoNextQuestion) {setTimeout(() => {nextQuestion()}, 3000)}
+
+    if (autoNextQuestion) {
+      if (!userClickedNext) {
+        nextQuestionTimeoutRef.current = setTimeout(() => {
+          nextQuestion();
+          setUserClickedNext(false);
+        }, 3000);
+      }
+    }
   }
 
   // Fetch first set of questions on component load
@@ -195,7 +222,7 @@ function SongGuesserGame(props) {
           <StyledTextBox>
             <h1 onClick={() => playSong()}>Guess the song...</h1>
           </StyledTextBox> 
-          : <SongGuesserVideo url={videoURL} nextQuestion={nextQuestion} playSong={playSong} name={songInfo.song_name} property={songInfo.property}/>
+          : <SongGuesserVideo url={videoURL} nextQuestionButton={nextQuestionButton} playSong={playSong} name={songInfo.song_name} property={songInfo.property}/>
         }
 
         <StyledChoiceGrid>

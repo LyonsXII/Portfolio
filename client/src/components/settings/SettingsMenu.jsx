@@ -155,7 +155,7 @@ function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
               </StyledOptionFlexboxEntry>
               <StyledOptionFlexboxEntry>
                 <h4>Autoplay Next Question</h4>
-                <input type="checkbox" checked={autoplay} onChange={toggleAutoplay}/>
+                <input type="checkbox" checked={autoNextQuestion} onChange={toggleAutoNextQuestion}/>
               </StyledOptionFlexboxEntry>
             </StyledOptionFlexbox>
           : null}

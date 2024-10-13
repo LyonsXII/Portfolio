@@ -78,17 +78,17 @@ const StyledTextContainer = styled.div`
   };
 `;
 
-function SongGuesserVideo({ url, nextQuestion, playSong, name, property }) {
+function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property }) {
   const { theme } = useContext(ThemeContext);
   const { clickSound } = useContext(AudioContext);
 
   const [animationState, setAnimationState] = useState("Enter");
 
-  function handleNextQuestion() {
+  function handleNextQuestionButton() {
     setAnimationState("Exit");
     clickSound();
     setTimeout(() => {
-      nextQuestion();
+      nextQuestionButton();
     }, 500);
   }
 
@@ -104,7 +104,7 @@ function SongGuesserVideo({ url, nextQuestion, playSong, name, property }) {
           <StyledIframe src={url}/>
         </StyledDivLeft>
         <StyledDivRight>
-          <StyledButton theme={theme} $position="Top" onClick={handleNextQuestion}/>
+          <StyledButton theme={theme} $position="Top" onClick={handleNextQuestionButton}/>
           <StyledButton theme={theme} onClick={handlePlaySong}/>
         </StyledDivRight>
       </StyledVideoContainer>
