@@ -15,6 +15,7 @@ const StyledSettingsDiv = styled.div`
   top: calc(50% - 50px);
   right: ${({ $settingsHidden }) => $settingsHidden === true ? "0px" : "84px"};
   z-index: 3;
+  cursor: pointer;
 `;
 
 function SettingsNotch({ settingsHidden, toggleButtonsVisible }) {

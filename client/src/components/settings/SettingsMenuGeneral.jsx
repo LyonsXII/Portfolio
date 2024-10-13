@@ -19,38 +19,38 @@ const StyledOptionFlexboxEntry = styled.div`
 `;
 
 const Slider = styled.input`
-  -webkit-appearance: none;  /* Override default CSS styles */
+  -webkit-appearance: none;
   appearance: none;
-  width: 100%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
   transition: opacity .2s;
 
   &:hover {
     opacity: 1;
   }
 
-  /* WebKit browsers (Chrome, Safari, etc.) */
+  //Webkit browsers
   &::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
   }
 
-  /* Firefox */
+  //Firefox
   &::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    width: 25px;
+    height: 25px;
+    background: #04aa6d;
+    cursor: pointer;
   }
 
-  /* Custom thumb styling for Internet Explorer and Edge */
+  //Custom thumb styling for internet explorer and edge
   &::-ms-thumb {
     width: 25px;
     height: 25px;

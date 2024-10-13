@@ -15,6 +15,7 @@ const StyledSettingsButton = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
   border-top: ${({ type }) => type === "Lower" ? "4px solid black" : "none"};
   border-bottom: ${({ type }) => type === "Lower" ? "none" : "4px solid black"};
+  cursor: pointer;
 
   :hover {
     background-color: ${props => props.theme.secondaryColor};

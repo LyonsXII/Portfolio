@@ -16,6 +16,7 @@ const StyledButton = styled.button`
   grid-row: ${({ $rows }) => $rows};
   color: ${({ theme }) => theme.textColor};
   box-shadow: ${({ $name, $section }) => $name === $section ? "0px 0px 8px antiquewhite" : "0px 0px 10px black"};
+  cursor: pointer;
 
   &:hover {
     background-color: ${({ theme }) => theme.secondaryColor};
