@@ -12,24 +12,24 @@ const StyledSettingsButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.primaryColor};
-  border-top: ${(props) => props.type === "Lower" ? "4px solid black" : "none"};
-  border-bottom: ${(props) => props.type === "Lower" ? "none" : "4px solid black"};
+  background-color: ${({ theme }) => theme.primaryColor};
+  border-top: ${({ type }) => type === "Lower" ? "4px solid black" : "none"};
+  border-bottom: ${({ type }) => type === "Lower" ? "none" : "4px solid black"};
 
   :hover {
     background-color: ${props => props.theme.secondaryColor};
   }
 `;
 
-function SettingsButton(props) {
+function SettingsButton({ value, svgPath, link, type, onClick, updateHoverText, resetHoverText }) {
   const { theme } = useContext(ThemeContext);
   const { volume } = useContext(AudioContext);
 
   const click = new Audio("./music/misc/Click.mp3");
   click.volume = volume / 100;
 
-  function onClick() {
-    props.onClick();
+  function onClickHandler() {
+    onClick();
     click.play();
   }
 
@@ -38,15 +38,15 @@ function SettingsButton(props) {
   }, [volume]);
 
   return (
-    <a href={props.link}>
+    <a href={link}>
       <StyledSettingsButton 
         theme={theme} 
-        onMouseOver={() => {props.updateHoverText(props.value)}} 
-        onMouseLeave={() => {props.resetHoverText()}} 
-        onClick={onClick}
-        type={props.type}
+        onMouseOver={() => {updateHoverText(value)}} 
+        onMouseLeave={() => {resetHoverText()}} 
+        onClick={onClickHandler}
+        type={type}
       >
-        <img src={props.svgPath} height="100%" width="100%" style={{minHeight: "80px"}}></img>
+        <img src={svgPath} height="100%" width="100%" style={{minHeight: "80px"}}></img>
       </StyledSettingsButton>
     </a>
   )

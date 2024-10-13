@@ -158,10 +158,10 @@ function SongGuesserGame(props) {
   }
 
   function nextQuestion() {
-    // Clear any existing timeout before moving to the next question
+    // Clear any existing autoNextQuestion timeout before automatically moving to the next question
     if (nextQuestionTimeoutRef.current) {
       clearTimeout(nextQuestionTimeoutRef.current);
-      nextQuestionTimeoutRef.current = null; // Reset the ref to avoid future issues
+      nextQuestionTimeoutRef.current = null;
     }
     clickSound();
     fetchData();
@@ -170,10 +170,10 @@ function SongGuesserGame(props) {
   }
 
   function nextQuestionButton() {
-    // Clear timeout if user clicked next button themselves
+    // Clear autoNextQuestion timeout if user clicked next button themselves
     if (nextQuestionTimeoutRef.current) {
       clearTimeout(nextQuestionTimeoutRef.current);
-      nextQuestionTimeoutRef.current = null; // Reset the ref to avoid future issues
+      nextQuestionTimeoutRef.current = null;
     }
     setUserClickedNext(true);
     nextQuestion();

@@ -6,6 +6,8 @@ import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
 
 import SettingsMenuHeaderElement from "./SettingsMenuHeaderElement";
+import SettingsMenuGeneral from "./SettingsMenuGeneral";
+import SettingsMenuSongGuesser from "./SettingsMenuSongGuesser";
 
 const StyledSettingsBackground = styled.div`
   position: absolute;
@@ -70,47 +72,6 @@ const StyledOptionFlexboxEntry = styled.div`
   gap: 40px;
 `;
 
-const Slider = styled.input`
-  -webkit-appearance: none;  /* Override default CSS styles */
-  appearance: none;
-  width: 100%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  transition: opacity .2s;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  /* WebKit browsers (Chrome, Safari, etc.) */
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
-
-  /* Firefox */
-  &::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
-
-  /* Custom thumb styling for Internet Explorer and Edge */
-  &::-ms-thumb {
-    width: 25px;
-    height: 25px;
-    background: #04AA6D;
-    cursor: pointer;
-  }
-`;
-
 const StyledTextContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -141,24 +102,8 @@ function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
           <SettingsMenuHeaderElement value="Book Notes" position="Last" active={active} updateActive={updateActive}/>
         </StyledSettingsHeader>
         <StyledTextContainer>
-          {active === "General" ? 
-            <StyledOptionFlexbox>
-            <h4>Volume</h4>
-            <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
-            </StyledOptionFlexbox>
-          : null}
-          {active === "Song Guesser" ? 
-            <StyledOptionFlexbox>
-              <StyledOptionFlexboxEntry>
-                <h4>Autoplay</h4>
-                <Slider type="range" min="0" max="100" value={volume} id="myRange" onChange={changeVolume}/>
-              </StyledOptionFlexboxEntry>
-              <StyledOptionFlexboxEntry>
-                <h4>Autoplay Next Question</h4>
-                <input type="checkbox" checked={autoNextQuestion} onChange={toggleAutoNextQuestion}/>
-              </StyledOptionFlexboxEntry>
-            </StyledOptionFlexbox>
-          : null}
+          {active === "General" ? <SettingsMenuGeneral/> : null}
+          {active === "Song Guesser" ? <SettingsMenuSongGuesser/> : null}
         </StyledTextContainer>
       </StyledSettingsContainer>
     </StyledFlexbox>
