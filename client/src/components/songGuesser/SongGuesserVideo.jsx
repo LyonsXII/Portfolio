@@ -3,6 +3,7 @@ import styled, { keyframes, css } from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
+
 import { slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 const StyledContainer = styled.div`

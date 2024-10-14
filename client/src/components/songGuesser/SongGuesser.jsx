@@ -31,9 +31,14 @@ function SongGuesser(props) {
     setMode(mode);
   }
 
+  function handleGameOver() {
+    setIntro(true);
+    setGameOver(false);
+  }
+
   return (
     intro === true ? 
-      <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
+      <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} handleGameOver={handleGameOver} category={category} difficulty={difficulty} mode={mode}/> : 
       <SongGuesserGame category={category} difficulty={difficulty} mode={mode}/>
   )
 }

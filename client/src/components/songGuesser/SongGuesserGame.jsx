@@ -5,6 +5,7 @@ import axios from "axios";
 import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
+import GameOver from "./GameOver";
 
 import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
@@ -46,16 +47,17 @@ const StyledTextBox = styled.div`
   animation: ${ slideInLeftAnimation };
 `;
 
-function SongGuesserGame(props) {
+function SongGuesserGame({ category, difficulty, mode, handleGameOver }) {
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
   const { autoplay, autoNextQuestion } = useContext(SettingsContext);
 
   const [choices, setChoices] = useState([{}]);
   const [numQuestions, setNumQuestions] = useState(0);
   const [songInfo, setSongInfo] = useState([{}]);
-  const [excluded, setExcluded] = useState([]);
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [excluded, setExcluded] = useState([]); 
   const [score, setScore] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
+  const [gameOver, setGameOver] = useState(true);
 
   const [songFilePath, setSongFilePath] = useState("");
   const [song, setSong] = useState(null);
@@ -68,7 +70,7 @@ function SongGuesserGame(props) {
   // Fetch number of possible questions for category from database
   async function getNumQuestions() {
     try {
-      const postData = {"category": props.category, "difficulty": props.difficulty};
+      const postData = {"category": category, "difficulty": difficulty};
       const response = await axios.post('http://localhost:5000/numQuestions', postData);
       setNumQuestions(response.data[0]["count"]);
     } catch(error) {
@@ -95,9 +97,9 @@ function SongGuesserGame(props) {
     try {
       // Post request to backend
       if (excluded.length === 0) {
-        const choicesPostData = {"category": props.category, "difficulty": props.difficulty, "excluded": []};
+        const choicesPostData = {"category": category, "difficulty": difficulty, "excluded": []};
       }
-      const choicesPostData = {"category": props.category, "difficulty": props.difficulty, "excluded": excluded};
+      const choicesPostData = {"category": category, "difficulty": difficulty, "excluded": excluded};
       const response = await axios.post('http://localhost:5000/choices', choicesPostData);
 
       // Setting retrieved data
@@ -186,11 +188,12 @@ function SongGuesserGame(props) {
       setScore(prevScore => prevScore + 1);
     } else {
       defeatSound();
+      if (mode === "Sudden Death") {setGameOver(true)}
     }
     setShowAnswer(true);
     audioRef.current.pause();
 
-    if (autoNextQuestion) {
+    if (autoNextQuestion && correct || mode != "Sudden Death") {
       if (!userClickedNext) {
         nextQuestionTimeoutRef.current = setTimeout(() => {
           nextQuestion();
@@ -216,7 +219,8 @@ function SongGuesserGame(props) {
   return (
     <StyledFlexboxContainer>
       <audio ref={audioRef} src={song}/>
-      {props.mode === "Regular" && <SongGuesserScore score={score}/>}
+      {gameOver && <GameOver handleGameOver={handleGameOver}/>}
+      {mode === "Regular" && <SongGuesserScore score={score}/>}
       <StyledContainer>
         {showAnswer === false ? 
           <StyledTextBox>
