@@ -9,8 +9,8 @@ const StyledElement = styled.div`
   width: 100%;
   white-space: nowrap;
   padding: 0px 2vw 0px 2vw;
-  border-radius: ${({ $position }) => $position === "First" ? "20px 0px 0px 0px" :
-    $position === "Last" ? "0px 20px 0px 0px" : "0px"};
+  border-radius: ${({ $position }) => $position === "First" ? "16px 0px 0px 0px" :
+    $position === "Last" ? "0px 16px 0px 0px" : "0px"};
   border-right: ${({ $position }) => $position === "Last" ? "none" : "4px solid black"};
   background-color: ${({ $value, $active, theme }) => $value === $active ? theme.secondaryColor : theme.primaryColor};
   display: flex;

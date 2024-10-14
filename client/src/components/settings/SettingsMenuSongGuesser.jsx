@@ -8,13 +8,14 @@ import { SettingsContext } from "../../context/SettingsContext";
 const StyledOptionFlexbox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: calc(100% - 60px);
+  height: 100%;
   gap: 30px;
 `;
 
 const StyledOptionFlexboxEntry = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
   min-width: 100%;
   gap: 40px;
@@ -33,6 +34,7 @@ const StyledInput = styled.input`
   position: relative;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-shadow: 0px 0px 10px black;
 
   // Knob settings
   &::after {
@@ -48,22 +50,30 @@ const StyledInput = styled.input`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
-  // State changes when toggled
+  // State when toggled off
+  &:not(:checked) {
+    opacity: 0.8;
+  }
+
+  // State changes when toggled on
   &:checked {
     background-color: ${({ theme }) => theme.tertiaryColor};
-
     &::after {
-      left: calc(100% - 27px); /* Move knob to right */
+      left: calc(100% - 27px);
+      opacity: 1;
     }
   }
 
   // Hover effect
   &:hover {
-    background-color: #b289b5;
+    transform: scale(1.05);
+    box-shadow: 0px 0px 16px black;
   }
 `;
 
-
+const StyledText = styled.p`
+  font-size: 30px;
+`
 
 function SettingsMenuSongGuesser({ active }) {
   const { theme } = useContext(ThemeContext);
@@ -73,11 +83,11 @@ function SettingsMenuSongGuesser({ active }) {
   return (
     <StyledOptionFlexbox>
       <StyledOptionFlexboxEntry>
-        <h4>Autoplay</h4>
+        <StyledText>Autoplay</StyledText>
         <StyledInput theme={theme} type="checkbox" checked={autoplay} onChange={toggleAutoplay}/>
       </StyledOptionFlexboxEntry>
       <StyledOptionFlexboxEntry>
-        <h4>Autoplay Next Question</h4>
+        <StyledText>Auto Next Question</StyledText>
         <StyledInput theme={theme} type="checkbox" checked={autoNextQuestion} onChange={toggleAutoNextQuestion}/>
       </StyledOptionFlexboxEntry>
     </StyledOptionFlexbox>

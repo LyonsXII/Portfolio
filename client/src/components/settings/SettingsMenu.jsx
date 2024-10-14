@@ -56,6 +56,7 @@ const StyledSettingsContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  background-color: ${({ theme }) => theme.secondaryColor};
 `;
 
 const StyledOptionFlexbox = styled.div`
@@ -75,8 +76,7 @@ const StyledOptionFlexboxEntry = styled.div`
 const StyledTextContainer = styled.div`
   height: 100%;
   width: 100%;
-  padding-top: 30px;
-  padding-left: 30px;
+  padding: 30px;
 `;
 
 function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
