@@ -72,5 +72,5 @@ export const fadeOut = keyframes`
 `;
 
 export const fadeOutAnimation = css`
-  ${fadeOut} 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  ${fadeOut} 1.2s ease-out both;
 `;

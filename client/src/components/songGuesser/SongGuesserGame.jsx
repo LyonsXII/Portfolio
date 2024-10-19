@@ -5,7 +5,6 @@ import axios from "axios";
 import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
-import GameOver from "./GameOver";
 
 import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
@@ -13,8 +12,8 @@ import { SettingsContext } from "../../context/SettingsContext";
 import { slideInLeftAnimation } from '../../context/Animations';
 
 const StyledFlexboxContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   overflow: hidden;
 `;
@@ -47,7 +46,7 @@ const StyledTextBox = styled.div`
   animation: ${ slideInLeftAnimation };
 `;
 
-function SongGuesserGame({ category, difficulty, mode, handleGameOver }) {
+function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOver }) {
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
   const { autoplay, autoNextQuestion } = useContext(SettingsContext);
 
@@ -57,7 +56,6 @@ function SongGuesserGame({ category, difficulty, mode, handleGameOver }) {
   const [excluded, setExcluded] = useState([]); 
   const [score, setScore] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [gameOver, setGameOver] = useState(true);
 
   const [songFilePath, setSongFilePath] = useState("");
   const [song, setSong] = useState(null);
@@ -193,7 +191,7 @@ function SongGuesserGame({ category, difficulty, mode, handleGameOver }) {
     setShowAnswer(true);
     audioRef.current.pause();
 
-    if (autoNextQuestion && correct || mode != "Sudden Death") {
+    if (correct && autoNextQuestion || mode != "Sudden Death") {
       if (!userClickedNext) {
         nextQuestionTimeoutRef.current = setTimeout(() => {
           nextQuestion();
@@ -219,7 +217,6 @@ function SongGuesserGame({ category, difficulty, mode, handleGameOver }) {
   return (
     <StyledFlexboxContainer>
       <audio ref={audioRef} src={song}/>
-      {gameOver && <GameOver handleGameOver={handleGameOver}/>}
       {mode === "Regular" && <SongGuesserScore score={score}/>}
       <StyledContainer>
         {showAnswer === false ? 

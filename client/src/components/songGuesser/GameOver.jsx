@@ -11,19 +11,26 @@ const StyledBackdrop = styled.div`
   align-items: center;
   position: absolute;
   height: 100vh;
-  width: 100vw;
+  width: 112vw;
   background-color: black; 
-  z-index: 1000;
+  z-index: 4;
   opacity: 1;
+  cursor: pointer;
 
   animation: ${fadeInAnimation};
+
+  animation: ${({ $gameOverExit }) => 
+    !$gameOverExit
+      ? fadeInAnimation
+      : fadeOutAnimation
+  };
 `;
 
-function GameOver({ handleGameOver }) {
+function GameOver({ gameOverExit, handleGameOver }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledBackdrop onClick={handleGameOver}>
+    <StyledBackdrop $gameOverExit={gameOverExit} onClick={handleGameOver}>
 
     </StyledBackdrop>
   )

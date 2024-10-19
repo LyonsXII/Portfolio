@@ -11,7 +11,7 @@ import SettingsButton from "./SettingsButton";
 import SettingsText from "./SettingsText";
 import Spacer from "./Spacer";
 
-function Settings(props) {
+function Settings({ home, changeVolume }) {
   const { toggleTheme, toggleBg } = useContext(ThemeContext);
   
   const [hoverText, setHoverText] = useState(""); 
@@ -37,7 +37,7 @@ function Settings(props) {
   return (
     <div>
       <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible}/>
-      <SettingsMenu settingsMenuHidden={settingsMenuHidden} toggleSettingsMenu={toggleSettingsMenu} changeVolume={props.changeVolume}/>
+      <SettingsMenu settingsMenuHidden={settingsMenuHidden} toggleSettingsMenu={toggleSettingsMenu} changeVolume={changeVolume}/>
       <SettingsContainer settingsHidden={settingsHidden}>
         <SettingsTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>
@@ -51,7 +51,7 @@ function Settings(props) {
         </SettingsTextContainer>
 
         <SettingsButtonContainer settingsHidden={settingsHidden}>
-          <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={props.home} svgPath="./icons/home.svg"/>
+          <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={home} svgPath="./icons/home.svg"/>
           <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleSettingsMenu} svgPath="./icons/settings.svg"/>
           <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>
           <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg"/>

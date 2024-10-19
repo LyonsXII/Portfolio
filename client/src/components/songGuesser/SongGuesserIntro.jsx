@@ -13,11 +13,9 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  margin-top: 40vh;
 `;
 
 const StyledFlexbox = styled.div`
-  height: 70%;
   width: 90%;
   display: flex;
   align-items: center;
@@ -26,16 +24,15 @@ const StyledFlexbox = styled.div`
 `;
 
 const StyledGrid = styled.div`
-  height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   margin-left: ${({ $position }) => $position === "First" ? null : "4%"};
   gap: 20px;
 `;
 
-function SongGuesserIntro(props) {
+function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficulty, mode, updateMode, startGame }) {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -44,19 +41,19 @@ function SongGuesserIntro(props) {
       
       <StyledFlexbox>
         <StyledGrid $position="First">
-          <SongGuesserButton name="Pop" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
-          <SongGuesserButton name="Indie" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
-          <SongGuesserButton name="Anime" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
-          <SongGuesserButton name="Video Games" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
-          <SongGuesserButton name="Movies" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
-          <SongGuesserButton name="TV Shows" columns="span 6" rows="span 2" onClick={props.updateCategory} section={props.category}/>
+          <SongGuesserButton name="Pop" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Indie" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Anime" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Video Games" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Movies" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="TV Shows" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
         </StyledGrid>
         <StyledGrid>
-          <SongGuesserButton name="Easy" columns="span 6" rows="span 2" onClick={props.updateDifficulty} section={props.difficulty}/>
-          <SongGuesserButton name="Hard" columns="span 6" rows="span 2" onClick={props.updateDifficulty} section={props.difficulty}/>
-          <SongGuesserButton name="Regular" columns="span 6" rows="span 2" onClick={props.updateMode} section={props.mode}/>
-          <SongGuesserButton name="Sudden Death" columns="span 6" rows="span 2" onClick={props.updateMode} section={props.mode}/>
-          <SongGuesserButton name="Start" rows="span 2" start="3" end="11" onClick={props.startGame}/>
+          <SongGuesserButton name="Easy" columns="span 6" rows="span 2" onClick={updateDifficulty} section={difficulty}/>
+          <SongGuesserButton name="Hard" columns="span 6" rows="span 2" onClick={updateDifficulty} section={difficulty}/>
+          <SongGuesserButton name="Regular" columns="span 6" rows="span 2" onClick={updateMode} section={mode}/>
+          <SongGuesserButton name="Sudden Death" columns="span 6" rows="span 2" onClick={updateMode} section={mode}/>
+          <SongGuesserButton name="Start" rows="span 2" start="3" end="11" onClick={startGame}/>
         </StyledGrid>
       </StyledFlexbox>
     </StyledContainer>

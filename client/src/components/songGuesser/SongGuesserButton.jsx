@@ -7,6 +7,7 @@ import { AudioContext } from "../../context/AudioContext";
 const StyledButton = styled.button`
   height: 100%;
   width: 100%;
+  padding: 15px 0px;
   background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 10px;
   border: 4px solid black;
