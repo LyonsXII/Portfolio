@@ -6,6 +6,7 @@ import Settings from "./components/settings/Settings";
 import Container from "./components/Container";
 import Introduction from "./components/introduction/Introduction"
 import SongGuesser from "./components/songGuesser/SongGuesser";
+import FaradayCage from "./components/faradayCage/FaradayCage";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AudioProvider } from "./context/AudioContext";
 import { SettingsProvider } from "./context/SettingsContext";
@@ -43,9 +44,9 @@ function App() {
       <AudioProvider>
         <SettingsProvider>
           <Container>
-            {intro === true ? <Introduction activateSongGuesser={activateSongGuesser}/> : null}
+            {intro === true ? <Introduction activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage}/> : null}
             {songGuesserSection === true ? <SongGuesser/> : null}
-            {faradaySection === true ? null : null}
+            {faradaySection === true ? <FaradayCage/> : null}
             {bookNotesSection === true ? null : null}
             <Settings home={home}/>
           </Container>

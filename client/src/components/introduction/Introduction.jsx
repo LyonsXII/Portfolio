@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import IntroButton from "./IntroButton";
 import IntroText from "./IntroText";
-import { ThemeContext } from "../../context/ThemeContext";
 
 import { text } from "./text";
 
@@ -32,9 +31,7 @@ const StyledIntroContainer = styled.div`
   justify-content: center;
 `;
 
-function Introduction(props) {
-  const { theme } = useContext(ThemeContext);
-
+function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [initial, setInitial] = useState(true);
   const [songGuesser, setSongGuesser] = useState(false);
   const [faraday, setFaraday] = useState(false);
@@ -44,12 +41,12 @@ function Introduction(props) {
     setFaraday(false);
     setBookNotes(false);
 
-    if (songGuesser === false) {
-      setSongGuesser(true);
-      setInitial(false);
-    } else if (songGuesser === true) {
+    if (songGuesser) {
       setSongGuesser(false);
       setInitial(true);
+    } else if (!songGuesser) {
+      setSongGuesser(true);
+      setInitial(false);
     }
   }
 
@@ -57,12 +54,12 @@ function Introduction(props) {
     setSongGuesser(false);
     setBookNotes(false);
 
-    if (faraday === false) {
-      setFaraday(true);
-      setInitial(false);
-    } else if (faraday === true) {
+    if (faraday) {
       setFaraday(false);
       setInitial(true);
+    } else if (!faraday) {
+      setFaraday(true);
+      setInitial(false);
     }
   }
 
@@ -102,9 +99,9 @@ function Introduction(props) {
       </StyledContentContainer>
         
       <StyledButtonsContainer>
-        <IntroButton name="About Me" choice={choiceSongGuesser} activate={props.activateSongGuesser}/>
-        <IntroButton name="Song Guesser" choice={choiceSongGuesser} activate={props.activateSongGuesser}/>
-        <IntroButton name="Faraday Cage" choice={choiceFaraday}/>
+        <IntroButton name="About Me" choice={choiceSongGuesser}/>
+        <IntroButton name="Song Guesser" choice={choiceSongGuesser} activate={activateSongGuesser}/>
+        <IntroButton name="Faraday Cage" choice={choiceFaraday} activate={activateFaradayCage}/>
         <IntroButton name="Book Notes" choice={choiceBookNotes}/>
       </StyledButtonsContainer>
     </div>
