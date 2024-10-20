@@ -1,4 +1,4 @@
-import { exp, matrix, size, ones, log, abs, concat, multiply, transpose, sqrt, complex, max, round, subtract, im, re, pow } from "mathjs";
+import { exp, matrix, size, ones, log, abs, concat, multiply, transpose, sqrt, complex, max, round, subtract, im, re, pow, pinv } from "mathjs";
 import ExcelJS from "exceljs";
 import fs from "fs";
 
@@ -44,7 +44,7 @@ function CHT(n, r, sides) {
   }
 
   // Setup constant term matrix and right-hand side matrix
-  const A = [[0]];
+  let A = [[0]];
   for (let i = 0; i < size(z); i++) {A.push([-1]);}
   const zs = complex(2, 0); // Location of source emitter
 
@@ -58,20 +58,19 @@ function CHT(n, r, sides) {
     }
 
     // Algebraic terms
-    A[0].push(0);
-    for (let j = 0; j < n; j++) {
-      for (let k = 1; k <= N; k++) {
-        for (let i = 0; i < z.length; i++) {
-            let zck = pow(subtract(complex(z[i]), c[j]), -k);
-            A[i + 1].push(re(zck));
-            A[i + 1].push(im(zck));
-        }
+    for (let j = 1; j <= N; j++) {
+      A[0].push(0);
+      A[0].push(0);
+      for (let k = 0; k < z.length; k++) {
+        const zck = pow(subtract(complex(z[k]), c[i]), -j);
+        A[k + 1].push(re(zck));
+        A[k + 1].push(im(zck));
       }
     }
   }
 
   // Populating right-hand side matrix
-  const rhs = [];
+  let rhs = [[0]];
   for (let j = 0; j < size(z); j++) {
     const term = -log(abs(subtract(complex(z[j]), zs)));
     rhs.push([term]);
@@ -79,10 +78,15 @@ function CHT(n, r, sides) {
   
   // Testing output / export to excel sheet
   const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet("Sheet1");
+  const worksheet1 = workbook.addWorksheet("A");
+  const worksheet2 = workbook.addWorksheet("rhs");
 
   A.forEach((row) => {
-    worksheet.addRow(row);
+    worksheet1.addRow(row);
+  });
+
+  rhs.forEach((row) => {
+    worksheet2.addRow(row);
   });
 
   workbook.xlsx.writeFile('output.xlsx')
@@ -92,6 +96,12 @@ function CHT(n, r, sides) {
   .catch((err) => {
     console.log('Error writing spreadsheet:', err);
   });
+
+  // Solving least-squares problem
+  A = matrix(A);
+  rhs = matrix(rhs);
+  const A_pinv = pinv(A);
+  const X = multiply(A_pinv, rhs);
 
 
     // for (let k = 1; k <= N; k++) {
@@ -132,4 +142,4 @@ const n = 4; // Number of disks
 const r = 0.1; // Radius of disks
 const sides = 360; // Number of sides for cage
 
-CHT(n,r,sides);
+CHT(n, r, sides);
