@@ -1,6 +1,7 @@
-import { exp, matrix, size, ones, log, abs, concat, multiply, transpose, sqrt, complex, max, round, subtract, im, re, pow, pinv } from "mathjs";
+import { exp, matrix, size, ones, log, abs, concat, multiply, transpose, sqrt, complex, max, round, add, subtract, im, re, pow, pinv } from "mathjs";
 import ExcelJS from "exceljs";
 import fs from "fs";
+import Plotly from "plotly";
 
 function CHT(n, r, sides) {
   // Calculate disk centers
@@ -89,6 +90,125 @@ function CHT(n, r, sides) {
     worksheet2.addRow(row);
   });
 
+  // Solving least-squares problem
+  A = matrix(A);
+  rhs = matrix(rhs);
+  const A_pinv = pinv(A);
+  let X = multiply(A_pinv, rhs);
+
+  const e = X._data[0][0]; // Constant potential on wires
+  X = X._data.slice(1);
+
+  let d = []; // Coefficients of log terms
+  for (let i = 0; i < X.length; i += (2 * N + 1)) {
+      d.push(X[i]);
+  }
+  X = X.filter((_, i) => (i % (2 * N + 1) !== 0));
+
+  let a = []; // Coefficients of algebraic terms
+  let b = []; 
+  for (let i = 0; i < X.length; i += 2) {
+      a.push(X[i]);
+      b.push(X[i + 1]);
+  }
+
+  // Plotting results
+  function linspace(start, end, num) {
+    if (num === 1) {
+      return [start];
+    }
+  
+    const arr = [];
+    const step = (end - start) / (num - 1);
+  
+    for (let i = 0; i < num; i++) {
+      arr.push(start + step * i);
+    }
+  
+    return arr;
+  }
+
+  const x = linspace(-1.4, 2.2, 120);
+  const y = linspace(-1.8, 1.8, 120);
+
+  // Creating meshgrid
+  function meshgrid(x, y) {
+    let xx = [];
+    let yy = [];
+  
+    for (let i = 0; i < y.length; i++) {
+      xx[i] = [];
+      yy[i] = [];
+      for (let j = 0; j < x.length; j++) {
+        xx[i][j] = x[j];
+        yy[i][j] = y[i];
+      }
+    }
+  
+    return [xx, yy];
+  }
+  
+  const [xx, yy] = meshgrid(x, y);
+  let zz = [];
+  for (let i = 0; i < xx.length; i++) {
+    zz[i] = [];
+    for (let j = 0; j < xx[i].length; j++) {
+      zz[i][j] = complex(xx[i][j], yy[i][j]);
+    }
+  }
+
+  // Forming potential function
+  let uu = [];
+  for (let i = 0; i < zz.length; i++) {
+    uu[i] = [];
+    for (let j = 0; j < zz[i].length; j++) {
+      let zTerm = log(abs(subtract(zz[i][j], zs)));
+      uu[i][j] = zTerm;
+    }
+  }
+
+  // Correct up to the first part of the complicated bit
+  for (let j = 0; j < n; j++) {
+    for (let a = 0; a < uu.length; a++) {
+      for (let b = 0; b < uu[0].length; b++) {
+        uu[a][b] = add(uu[a][b], multiply(d[j], log(abs(subtract(zz[a][b], c[j])))));
+      }
+    }
+  }
+
+  // for (let j = 0; j < n; j++) {
+  //   for (let i = 0; i < zz.length; i++) {
+  //     for (let k = 0; k < zz[i].length; k++) {
+  //       let zjc = subtract(zz[i][k], c[j]);
+  //       uu[i][k] = add(uu[i][k], d[j] * log(abs(zjc)));
+  
+  //       for (let kVal = 1; kVal <= N; kVal++) {
+  //         let zck = pow(zjc, -kVal);
+  //         let kk = kVal + (j * N);
+  //         uu[i][k] = add(uu[i][k], a[kk] * re(zck) + b[kk] * im(zck));
+  //       }
+  //     }
+  //   }
+  // }
+  
+  // Exclude areas inside the disk boundaries (like the MATLAB uu(abs(zz-c(j)) < rr(j)) = NaN)
+  // for (let j = 0; j < n; j++) {
+  //   for (let i = 0; i < zz.length; i++) {
+  //     for (let k = 0; k < zz[i].length; k++) {
+  //       if (abs(subtract(zz[i][k], c[j])) < rr[j]) {
+  //         uu[i][k] = NaN;
+  //       }
+  //     }
+  //   }
+  // }
+
+  // Testing output / export to excel sheet
+  const worksheet3 = workbook.addWorksheet("uu");
+
+  uu.forEach((row) => {
+    worksheet3.addRow(row);
+  });
+
   workbook.xlsx.writeFile('output.xlsx')
   .then(() => {
     console.log('Spreadsheet successfully created');
@@ -96,46 +216,6 @@ function CHT(n, r, sides) {
   .catch((err) => {
     console.log('Error writing spreadsheet:', err);
   });
-
-  // Solving least-squares problem
-  A = matrix(A);
-  rhs = matrix(rhs);
-  const A_pinv = pinv(A);
-  const X = multiply(A_pinv, rhs);
-
-
-    // for (let k = 1; k <= N; k++) {
-    //   let realColumn = [[0]], imagColumn = [[0]];
-    //   for (let i = 0; i < z.length; i++) {
-    //       let zck = pow(subtract(complex(z[i]), c[j]), -k);
-    //       realColumn.push([re(zck)]);
-    //       imagColumn.push([im(zck)]);
-    //   }
-      // console.log("A", A);
-      // console.log("realColumn", realColumn);
-      // A = concat(A, realColumn);
-      // A = concat(A, imagColumn);
-      
-      // A = A.map((row, index) => {
-      //   console.log([imagColumn[index]]);
-      // });
-      // A = A.map((row, index) => row.concat(realColumn[index]).concat(imagColumn[index]));
-  //   }
-  // }
-
-
-  // Fill matrix A and right-hand side
-  // for (let i = 0; i < n; i++ ) {
-  //   const logTerm = log(abs(z - c[i]));
-  //   A.push([1, logTerm]);
-  // }
-
-  // for (let j = 0; j < N; j++) {
-  //   const zck = (z - c[i])^(-k);
-  //   A.push()
-  // }
-
-  // const X = lusolve(A, rhs);
 }
 
 const n = 4; // Number of disks
