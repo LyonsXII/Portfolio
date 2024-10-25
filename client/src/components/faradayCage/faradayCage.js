@@ -159,15 +159,18 @@ function CHT(n, r, sides) {
 
   // Forming potential function
   let uu = [];
+  const zck = [];
   for (let i = 0; i < zz.length; i++) {
     uu[i] = [];
+    zck.push([]);
     for (let j = 0; j < zz[i].length; j++) {
       let zTerm = log(abs(subtract(zz[i][j], zs)));
       uu[i][j] = zTerm;
+      zck[i].push(0);
     }
   }
 
-  // Correct up to the first part of the complicated bit
+
   for (let j = 0; j < n; j++) {
     for (let a = 0; a < uu.length; a++) {
       for (let b = 0; b < uu[0].length; b++) {
@@ -176,37 +179,79 @@ function CHT(n, r, sides) {
     }
   }
 
-  // for (let j = 0; j < n; j++) {
-  //   for (let i = 0; i < zz.length; i++) {
-  //     for (let k = 0; k < zz[i].length; k++) {
-  //       let zjc = subtract(zz[i][k], c[j]);
-  //       uu[i][k] = add(uu[i][k], d[j] * log(abs(zjc)));
-  
-  //       for (let kVal = 1; kVal <= N; kVal++) {
-  //         let zck = pow(zjc, -kVal);
-  //         let kk = kVal + (j * N);
-  //         uu[i][k] = add(uu[i][k], a[kk] * re(zck) + b[kk] * im(zck));
-  //       }
-  //     }
-  //   }
-  // }
-  
-  // Exclude areas inside the disk boundaries (like the MATLAB uu(abs(zz-c(j)) < rr(j)) = NaN)
-  // for (let j = 0; j < n; j++) {
-  //   for (let i = 0; i < zz.length; i++) {
-  //     for (let k = 0; k < zz[i].length; k++) {
-  //       if (abs(subtract(zz[i][k], c[j])) < rr[j]) {
-  //         uu[i][k] = NaN;
-  //       }
-  //     }
-  //   }
-  // }
+  let kk = 0;
+  for (let j = 0; j < n; j++) {
+    for (let aa = 1; aa <= N; aa++) {
+      for (let row = 0; row < uu.length; row++) {
+        for (let col = 0; col < uu[0].length; col++) {
+          zck[row][col] = pow(subtract(zz[row][col], c[j]), -aa);
+          kk = aa + (j * N) - 1;
+          uu[row][col] = add(uu[row][col], add(multiply(a[kk], re(zck[row][col])), multiply(b[kk], im(zck[row][col]))));
+        }
+      }
+    }
+  }
+
+  // Masking points inside boundary
+  for (let j = 0; j < n; j++) {
+    for (let row = 0; row < uu.length; row++) {
+      for (let col = 0; col < uu[0].length; col++) {
+        if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = NaN}
+      }
+    }
+  }
+
+  // Plotting results
+  let disks = [];
+  for (let j = 0; j < n; j++) {
+    let z = [];
+    for (let k = -50; k <= 50; k++) {
+      z.push(exp(complex(0, (Math.PI * k) / 50)));
+    }
+    let disk = z.map(zVal => add(c[j], multiply(rr[j], zVal)));
+    disks.push({
+      x: disk.map(val => re(val)),
+      y: disk.map(val => im(val)),
+      fill: 'toself',
+      fillcolor: 'rgba(255, 182, 193, 0.5)', // Light pink fill
+      line: { color: 'red' }
+    });
+  }
+
+  // Contour plot for uu
+  let contourData = {
+    z: uu,
+    x: x,
+    y: y,
+    type: 'contour',
+    colorscale: 'black'
+  };
+
+  // Source location plot (zs)
+  let sourceData = {
+    x: [re(zs)],
+    y: [im(zs)],
+    mode: 'markers',
+    marker: { color: 'red', size: 10 }
+  };
+
+  // Final plot
+  Plotly.newPlot('plotDiv', [contourData, sourceData, ...disks], {
+    xaxis: { range: [-1.4, 2.2], scaleanchor: "y", scaleratio: 1 },
+    yaxis: { range: [-1.8, 1.8] },
+    showlegend: false
+  });
 
   // Testing output / export to excel sheet
   const worksheet3 = workbook.addWorksheet("uu");
+  const worksheet4 = workbook.addWorksheet("zck");
 
   uu.forEach((row) => {
     worksheet3.addRow(row);
+  });
+
+  zck.forEach((row) => {
+    worksheet4.addRow(row);
   });
 
   workbook.xlsx.writeFile('output.xlsx')
