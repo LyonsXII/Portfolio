@@ -1,9 +1,8 @@
-import { exp, matrix, size, ones, log, abs, concat, multiply, transpose, sqrt, complex, max, round, add, subtract, im, re, pow, pinv } from "mathjs";
+import { exp, matrix, size, log, abs, multiply, complex, max, round, add, subtract, im, re, pow, pinv } from "mathjs";
 import ExcelJS from "exceljs";
 import fs from "fs";
-import Plotly from "plotly";
 
-function CHT(n, r, sides) {
+function Faraday(n, r, sides) {
   // Calculate disk centers
   const c = [];
   for (let i = 1; i <= n; i++) {
@@ -77,7 +76,7 @@ function CHT(n, r, sides) {
     rhs.push([term]);
   }
   
-  // Testing output / export to excel sheet
+  // Export to excel sheet - Testing
   const workbook = new ExcelJS.Workbook();
   const worksheet1 = workbook.addWorksheet("A");
   const worksheet2 = workbook.addWorksheet("rhs");
@@ -157,7 +156,7 @@ function CHT(n, r, sides) {
     }
   }
 
-  // Forming potential function
+  // Forming potential function matrix - uu
   let uu = [];
   const zck = [];
   for (let i = 0; i < zz.length; i++) {
@@ -169,7 +168,6 @@ function CHT(n, r, sides) {
       zck[i].push(0);
     }
   }
-
 
   for (let j = 0; j < n; j++) {
     for (let a = 0; a < uu.length; a++) {
@@ -201,70 +199,27 @@ function CHT(n, r, sides) {
     }
   }
 
-  // Plotting results
-  let disks = [];
-  for (let j = 0; j < n; j++) {
-    let z = [];
-    for (let k = -50; k <= 50; k++) {
-      z.push(exp(complex(0, (Math.PI * k) / 50)));
-    }
-    let disk = z.map(zVal => add(c[j], multiply(rr[j], zVal)));
-    disks.push({
-      x: disk.map(val => re(val)),
-      y: disk.map(val => im(val)),
-      fill: 'toself',
-      fillcolor: 'rgba(255, 182, 193, 0.5)', // Light pink fill
-      line: { color: 'red' }
-    });
-  }
+  // Export to excel sheet - Testing
+  // const worksheet3 = workbook.addWorksheet("uu");
+  // const worksheet4 = workbook.addWorksheet("zck");
 
-  // Contour plot for uu
-  let contourData = {
-    z: uu,
-    x: x,
-    y: y,
-    type: 'contour',
-    colorscale: 'black'
-  };
+  // uu.forEach((row) => {
+  //   worksheet3.addRow(row);
+  // });
 
-  // Source location plot (zs)
-  let sourceData = {
-    x: [re(zs)],
-    y: [im(zs)],
-    mode: 'markers',
-    marker: { color: 'red', size: 10 }
-  };
+  // zck.forEach((row) => {
+  //   worksheet4.addRow(row);
+  // });
 
-  // Final plot
-  Plotly.newPlot('plotDiv', [contourData, sourceData, ...disks], {
-    xaxis: { range: [-1.4, 2.2], scaleanchor: "y", scaleratio: 1 },
-    yaxis: { range: [-1.8, 1.8] },
-    showlegend: false
-  });
+  // workbook.xlsx.writeFile('output.xlsx')
+  // .then(() => {
+  //   console.log('Spreadsheet successfully created');
+  // })
+  // .catch((err) => {
+  //   console.log('Error writing spreadsheet:', err);
+  // });
 
-  // Testing output / export to excel sheet
-  const worksheet3 = workbook.addWorksheet("uu");
-  const worksheet4 = workbook.addWorksheet("zck");
-
-  uu.forEach((row) => {
-    worksheet3.addRow(row);
-  });
-
-  zck.forEach((row) => {
-    worksheet4.addRow(row);
-  });
-
-  workbook.xlsx.writeFile('output.xlsx')
-  .then(() => {
-    console.log('Spreadsheet successfully created');
-  })
-  .catch((err) => {
-    console.log('Error writing spreadsheet:', err);
-  });
+  return {xx: xx, yy: yy, uu: uu}
 }
 
-const n = 4; // Number of disks
-const r = 0.1; // Radius of disks
-const sides = 360; // Number of sides for cage
-
-CHT(n, r, sides);
+export { Faraday }
