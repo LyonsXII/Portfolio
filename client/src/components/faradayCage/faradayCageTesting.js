@@ -1,4 +1,4 @@
-import { exp, matrix, size, log, abs, multiply, complex, max, round, add, subtract, im, re, pow, pinv } from "mathjs";
+import { exp, matrix, size, log, abs, multiply, divide, complex, max, round, add, subtract, im, re, pow, pinv, pi } from "mathjs";
 import ExcelJS from "exceljs";
 import fs from "fs";
 
@@ -75,20 +75,20 @@ function Faraday(n, r, sides) {
     const term = -log(abs(subtract(complex(z[j]), zs)));
     rhs.push([term]);
   }
-  
+
   // Export to excel sheet - Testing
-  // const workbook = new ExcelJS.Workbook();
-  // const worksheet1 = workbook.addWorksheet("A");
-  // const worksheet2 = workbook.addWorksheet("rhs");
+  const workbook = new ExcelJS.Workbook();
+  const worksheet1 = workbook.addWorksheet("A");
+  const worksheet2 = workbook.addWorksheet("rhs");
 
-  // A.forEach((row) => {
-  //   worksheet1.addRow(row);
-  // });
+  A.forEach((row) => {
+    worksheet1.addRow(row);
+  });
 
-  // rhs.forEach((row) => {
-  //   worksheet2.addRow(row);
-  // });
-
+  rhs.forEach((row) => {
+    worksheet2.addRow(row);
+  });
+  
   // Solving least-squares problem
   A = matrix(A);
   rhs = matrix(rhs);
@@ -202,55 +202,45 @@ function Faraday(n, r, sides) {
   }
 
   // Generate z values for disks
-  const z = [];
+  const zDisk = [];
   for (let i = -50; i <= 50; i++) {
     const exponent = multiply(divide(multiply(complex(0, 1), i), 50), pi);
-    z.push(exp(exponent));
+    zDisk.push(exp(exponent));
   }
 
   const disk = [];
   for (let j = 0; j < n; j++) {
-    disk.push(c[j] + multiply(rr[j], z[j]))
+    disk.push(c[j] + multiply(rr[j], z[j]));
   }
 
-  // Heatmap data as used in plot
-  // const heatmapData = [];
-  // for (let i = 0 ; i < xx.length; i++) {
-  //   heatmapData.push([]);
-  // }
-
-  // for (let i = 0; i < xx.length; i++) {
-  //   for (let j = 0; j < yy.length; j++) {
-  //     heatmapData[i].push([xx[i][j], yy[i][j], uu[i][j]]);
-  //   }
-  // }
-
   // Export to excel sheet - Testing
-  // const worksheet3 = workbook.addWorksheet("uu");
-  // const worksheet4 = workbook.addWorksheet("zck");
-  // const worksheet5 = workbook.addWorksheet("heatmapData");
+  const worksheet3 = workbook.addWorksheet("uu");
+  const worksheet4 = workbook.addWorksheet("zck");
+  const worksheet5 = workbook.addWorksheet("disk");
 
-  // uu.forEach((row) => {
-  //   worksheet3.addRow(row);
-  // });
+  uu.forEach((row) => {
+    worksheet3.addRow(row);
+  });
 
-  // zck.forEach((row) => {
-  //   worksheet4.addRow(row);
-  // });
+  zck.forEach((row) => {
+    worksheet4.addRow(row);
+  });
 
-  // heatmapData.forEach((row) => {
-  //   worksheet5.addRow(row);
-  // });
+  disk.forEach((row) => {
+    worksheet5.addRow(row);
+  });
 
-  // workbook.xlsx.writeFile('output.xlsx')
-  // .then(() => {
-  //   console.log('Spreadsheet successfully created');
-  // })
-  // .catch((err) => {
-  //   console.log('Error writing spreadsheet:', err);
-  // });
+  workbook.xlsx.writeFile('output.xlsx')
+  .then(() => {
+    console.log('Spreadsheet successfully created');
+  })
+  .catch((err) => {
+    console.log('Error writing spreadsheet:', err);
+  });
 
   return {xx: xx, yy: yy, uu: uu}
 }
 
 export { Faraday }
+
+Faraday(4,0.1,360);
