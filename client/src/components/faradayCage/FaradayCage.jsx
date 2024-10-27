@@ -4,6 +4,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts3D from 'highcharts/highcharts-3d';
 import HeatmapModule from 'highcharts/modules/heatmap';
+import HighchartsContour from 'highcharts-contour';
 import { exp, pi, multiply, divide, complex } from "mathjs";
 
 import { ThemeContext } from "../../context/ThemeContext";
@@ -16,11 +17,10 @@ const StyledFlexboxContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  text-shadow: none;
 `;
 
 function FaradayCage(props) {
-  const n = 4; // Number of disks
+  const n = 12; // Number of disks
   const r = 0.1; // Radius of disks
   const sides = 360; // Number of sides for cage
   
@@ -29,7 +29,16 @@ function FaradayCage(props) {
   // Initialize the 3D module
   HeatmapModule(Highcharts);
 
-  // Generate z values
+  // Generate heatmap data from xx, yy, uu
+  let heatmapData = [];
+
+  for (let i = 0; i < 120; i++) {
+    for (let j = 0; j < 120; j++) {
+      heatmapData.push([xx[i][j], yy[i][j], uu[i][j]]);
+    }
+  }
+
+  // Generate z values for disks
   const z = [];
   for (let i = -50; i <= 50; i++) {
     const exponent = multiply(divide(multiply(complex(0, 1), i), 50), pi);
@@ -41,20 +50,21 @@ function FaradayCage(props) {
     chart: {
       type: 'heatmap',
       options3d: {
-        enabled: false, // Disabling 3D for a contour-like plot
+        enabled: false,
       },
       plotBorderWidth: 1,
     },
     title: {
       text: 'Faraday Cage',
+      style: { textShadow: "none"}
     },
     xAxis: {
       min: -1.4,
-      max: 2.2,
+      max: 1.8,
     },
     yAxis: {
-      min: -1.8,
-      max: 1.8,
+      min: -2.2,
+      max: 2.2,
     },
     colorAxis: {
       stops: [
@@ -63,14 +73,15 @@ function FaradayCage(props) {
         [1, '#fff'],
       ],
       min: -2,
-      max: 1.2,
+      max: 2,
     },
     series: [
       {
-        name: 'Contour',
+        name: 'Heatmap',
         borderWidth: 0,
-        data: uu,
+        data: heatmapData,
         colormap: 'black',
+        pointPadding: 0.01
       }
     ],
   };

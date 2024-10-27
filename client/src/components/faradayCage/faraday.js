@@ -77,17 +77,17 @@ function Faraday(n, r, sides) {
   }
   
   // Export to excel sheet - Testing
-  const workbook = new ExcelJS.Workbook();
-  const worksheet1 = workbook.addWorksheet("A");
-  const worksheet2 = workbook.addWorksheet("rhs");
+  // const workbook = new ExcelJS.Workbook();
+  // const worksheet1 = workbook.addWorksheet("A");
+  // const worksheet2 = workbook.addWorksheet("rhs");
 
-  A.forEach((row) => {
-    worksheet1.addRow(row);
-  });
+  // A.forEach((row) => {
+  //   worksheet1.addRow(row);
+  // });
 
-  rhs.forEach((row) => {
-    worksheet2.addRow(row);
-  });
+  // rhs.forEach((row) => {
+  //   worksheet2.addRow(row);
+  // });
 
   // Solving least-squares problem
   A = matrix(A);
@@ -111,7 +111,7 @@ function Faraday(n, r, sides) {
       b.push(X[i + 1]);
   }
 
-  // Plotting results
+  // Data for plotting results
   function linspace(start, end, num) {
     if (num === 1) {
       return [start];
@@ -170,9 +170,10 @@ function Faraday(n, r, sides) {
   }
 
   for (let j = 0; j < n; j++) {
-    for (let a = 0; a < uu.length; a++) {
-      for (let b = 0; b < uu[0].length; b++) {
-        uu[a][b] = add(uu[a][b], multiply(d[j], log(abs(subtract(zz[a][b], c[j])))));
+    for (let row = 0; row < uu.length; row++) {
+      for (let col = 0; col < uu[0].length; col++) {
+        const term = add(uu[row][col], multiply(d[j], log(abs(subtract(zz[row][col], c[j])))));
+        uu[row][col] = term[0];
       }
     }
   }
@@ -184,7 +185,8 @@ function Faraday(n, r, sides) {
         for (let col = 0; col < uu[0].length; col++) {
           zck[row][col] = pow(subtract(zz[row][col], c[j]), -aa);
           kk = aa + (j * N) - 1;
-          uu[row][col] = add(uu[row][col], add(multiply(a[kk], re(zck[row][col])), multiply(b[kk], im(zck[row][col]))));
+          const term = add(uu[row][col], add(multiply(a[kk], re(zck[row][col])), multiply(b[kk], im(zck[row][col]))));
+          uu[row][col] = term[0];
         }
       }
     }
@@ -194,14 +196,27 @@ function Faraday(n, r, sides) {
   for (let j = 0; j < n; j++) {
     for (let row = 0; row < uu.length; row++) {
       for (let col = 0; col < uu[0].length; col++) {
-        if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = NaN}
+        if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = 0} // CHT paper uses NaN instead of zeros
       }
     }
   }
 
+  // Heatmap data as used in plot
+  // const heatmapData = [];
+  // for (let i = 0 ; i < xx.length; i++) {
+  //   heatmapData.push([]);
+  // }
+
+  // for (let i = 0; i < xx.length; i++) {
+  //   for (let j = 0; j < yy.length; j++) {
+  //     heatmapData[i].push([xx[i][j], yy[i][j], uu[i][j]]);
+  //   }
+  // }
+
   // Export to excel sheet - Testing
   // const worksheet3 = workbook.addWorksheet("uu");
   // const worksheet4 = workbook.addWorksheet("zck");
+  // const worksheet5 = workbook.addWorksheet("heatmapData");
 
   // uu.forEach((row) => {
   //   worksheet3.addRow(row);
@@ -209,6 +224,10 @@ function Faraday(n, r, sides) {
 
   // zck.forEach((row) => {
   //   worksheet4.addRow(row);
+  // });
+
+  // heatmapData.forEach((row) => {
+  //   worksheet5.addRow(row);
   // });
 
   // workbook.xlsx.writeFile('output.xlsx')
@@ -223,3 +242,5 @@ function Faraday(n, r, sides) {
 }
 
 export { Faraday }
+
+Faraday(4,0.1,360);
