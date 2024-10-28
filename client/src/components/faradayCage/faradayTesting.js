@@ -201,22 +201,37 @@ function Faraday(n, r, sides) {
     }
   }
 
-  // Generate z values for disks
+  // Generate z values for generating disks
   const zDisk = [];
   for (let i = -50; i <= 50; i++) {
     const exponent = multiply(divide(multiply(complex(0, 1), i), 50), pi);
     zDisk.push(exp(exponent));
   }
 
+  // Generate data for plotting disks forming cage
   const disk = [];
   for (let j = 0; j < n; j++) {
-    disk.push(c[j] + multiply(rr[j], z[j]));
+    disk.push([]);
+    for (let row = 0; row < zDisk.length; row++) {
+      const complexMult = {
+        re: rr[j] * zDisk[row].re,
+        im: rr[j] * zDisk[row].im
+      }
+  
+      const complexAdd =  {
+        re: c[j].re + complexMult.re,
+        im: c[j].im + complexMult.im
+      }
+  
+      disk[j].push(complexAdd);
+    }
   }
 
   // Export to excel sheet - Testing
   const worksheet3 = workbook.addWorksheet("uu");
   const worksheet4 = workbook.addWorksheet("zck");
-  const worksheet5 = workbook.addWorksheet("disk");
+  const worksheet5 = workbook.addWorksheet("zDisk");
+  const worksheet6 = workbook.addWorksheet("disk");
 
   uu.forEach((row) => {
     worksheet3.addRow(row);
@@ -226,8 +241,12 @@ function Faraday(n, r, sides) {
     worksheet4.addRow(row);
   });
 
+  zDisk.forEach((row) => {
+    worksheet5.addRow([re(row), im(row)]);
+  });
+
   disk.forEach((row) => {
-    worksheet5.addRow(row);
+    worksheet6.addRow(row);
   });
 
   workbook.xlsx.writeFile('output.xlsx')
@@ -238,7 +257,7 @@ function Faraday(n, r, sides) {
     console.log('Error writing spreadsheet:', err);
   });
 
-  return {xx: xx, yy: yy, uu: uu}
+  return {xx: xx, yy: yy, uu: uu, disk}
 }
 
 export { Faraday }

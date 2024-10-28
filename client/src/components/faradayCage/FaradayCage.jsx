@@ -5,7 +5,6 @@ import HighchartsReact from 'highcharts-react-official';
 import Highcharts3D from 'highcharts/highcharts-3d';
 import HeatmapModule from 'highcharts/modules/heatmap';
 import HighchartsContour from 'highcharts-contour';
-import { exp, pi, multiply, divide, complex } from "mathjs"; // Do we need this?
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -23,21 +22,32 @@ const StyledFlexboxContainer = styled.div`
 const StyledChartContainer = styled.div`
   height: 80vh;
   width: 40vw;
-  border: 1px solid red;
+  border: 4px solid black;
 `;
 
 const StyledButton = styled.button`
   height: 80px;
   width: 10%;
+  border: 4px solid black;
   border-radius: 20px;
+  color: ${({ theme }) => theme.textColor};
+  background-color: ${({ theme }) => theme.primaryColor};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    color: ${({ theme }) => theme.tertiaryColor};
+  }
 `;
 
 function FaradayCage(props) {
+  const { theme } = useContext(ThemeContext);
+
   // Generate heatmap data from xx, yy, uu
   function updateData(n, r, sides) {
     const tempHeatmapData = [];
 
-    const { xx, yy, uu } = Faraday(n, r, sides);
+    const { xx, yy, uu, disk } = Faraday(n, r, sides);
 
     for (let i = 0; i < 120; i++) {
       for (let j = 0; j < 120; j++) {
@@ -119,7 +129,7 @@ function FaradayCage(props) {
           options={options}
         />
       </StyledChartContainer>
-      <StyledButton onClick={() => {updateData(n, r, sides)}}>
+      <StyledButton theme={theme} onClick={() => {updateData(n, r, sides)}}>
         <h4>
           Update Data
         </h4>
