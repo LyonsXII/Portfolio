@@ -5,6 +5,7 @@ import HighchartsReact from 'highcharts-react-official';
 import Highcharts3D from 'highcharts/highcharts-3d';
 import HeatmapModule from 'highcharts/modules/heatmap';
 import HighchartsContour from 'highcharts-contour';
+import HighchartsPolygon from 'highcharts/modules/polygon';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -45,17 +46,17 @@ function FaradayCage(props) {
 
   // Generate heatmap data from xx, yy, uu
   function updateData(n, r, sides) {
-    const tempHeatmapData = [];
+    const contour = [];
 
     const { xx, yy, uu, disk } = Faraday(n, r, sides);
 
     for (let i = 0; i < 120; i++) {
       for (let j = 0; j < 120; j++) {
-        tempHeatmapData.push([xx[i][j], yy[i][j], uu[i][j]]);
+        contour.push([xx[i][j], yy[i][j], uu[i][j]]);
       }
     }
 
-    setHeatmapData(tempHeatmapData);
+    setPlotData({ disk, contour });
   }
 
   const n = 10; // Number of disks
@@ -63,11 +64,34 @@ function FaradayCage(props) {
   const sides = 360; // Number of sides for cage
   
   // Initialize the 3D module
+  Highcharts3D(Highcharts);
   HeatmapModule(Highcharts);
+  HighchartsContour(Highcharts);
+  HighchartsPolygon(Highcharts);
 
-  let [heatmapData, setHeatmapData] = useState([]);
+  let [plotData, setPlotData] = useState({ disk: [], contour: [] });
 
   // Chart options
+  const diskSeries = plotData.disk.map((currDisk, index) => ({
+    type: "polygon",
+    name: `Disk ${index + 1}`,
+    color: "rgba(255, 179, 179, 0.5)",
+    data: currDisk
+  }));
+
+  const contourSeries = {
+    type: "heatmap",
+    name: "Contour Plot",
+    data: plotData.contour,
+    color: "black",
+    levels: {
+      start: -2,
+      end: 1.2,
+      step: 0.1
+    },
+    showInLegend: false
+  }
+
   const options = {
     chart: {
       type: 'heatmap',
@@ -93,32 +117,7 @@ function FaradayCage(props) {
       startOnTick: false,
       endOnTick: false
     },
-    colorAxis: {
-      stops: [
-        [0.0, '#000'],      // Black at min value (-2)
-        [0.1, '#222'],      // Very dark gray
-        [0.2, '#444'],      // Dark gray
-        [0.3, '#666'],      // Medium dark gray
-        [0.4, '#888'],      // Medium gray
-        [0.5, '#aaa'],      // Gray at midpoint (0)
-        [0.6, '#bbb'],      // Light gray
-        [0.7, '#ccc'],      // Lighter gray
-        [0.8, '#ddd'],      // Very light gray
-        [0.9, '#eee'],      // Almost white
-        [1.0, '#fff']       // White at max value (2)
-      ],
-      min: -2,
-      max: 2,
-    },
-    series: [
-      {
-        name: 'Heatmap',
-        borderWidth: 0,
-        data: heatmapData,
-        colormap: 'black',
-        pointPadding: 0.05
-      }
-    ],
+    series: [...diskSeries, contourSeries]
   };
 
   return (

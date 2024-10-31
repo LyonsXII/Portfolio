@@ -210,7 +210,7 @@ function Faraday(n, r, sides) {
         im: c[j].im + complexMult.im
       }
   
-      disk[j].push(complexAdd);
+      disk[j].push([complexAdd.re, complexAdd.im]);
     }
   }
 
