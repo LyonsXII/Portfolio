@@ -1,11 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import Highcharts3D from 'highcharts/highcharts-3d';
-import HeatmapModule from 'highcharts/modules/heatmap';
-import HighchartsContour from 'highcharts-contour';
-import HighchartsPolygon from 'highcharts/modules/polygon';
+import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -44,6 +39,8 @@ const StyledButton = styled.button`
 function FaradayCage(props) {
   const { theme } = useContext(ThemeContext);
 
+  let [plotData, setPlotData] = useState({ disk: [], contour: [] });
+
   // Generate heatmap data from xx, yy, uu
   function updateData(n, r, sides) {
     const contour = [];
@@ -51,81 +48,43 @@ function FaradayCage(props) {
     const { xx, yy, uu, disk } = Faraday(n, r, sides);
 
     for (let i = 0; i < 120; i++) {
+      contour.push([]);
       for (let j = 0; j < 120; j++) {
-        contour.push([xx[i][j], yy[i][j], uu[i][j]]);
+        contour[i].push(uu[i][j]);
       }
     }
 
     setPlotData({ disk, contour });
   }
 
-  const n = 10; // Number of disks
+  const n = 4; // Number of disks
   const r = 0.1; // Radius of disks
   const sides = 360; // Number of sides for cage
   
-  // Initialize the 3D module
-  Highcharts3D(Highcharts);
-  HeatmapModule(Highcharts);
-  HighchartsContour(Highcharts);
-  HighchartsPolygon(Highcharts);
-
-  let [plotData, setPlotData] = useState({ disk: [], contour: [] });
-
-  // Chart options
-  const diskSeries = plotData.disk.map((currDisk, index) => ({
-    type: "polygon",
-    name: `Disk ${index + 1}`,
-    color: "rgba(255, 179, 179, 0.5)",
-    data: currDisk
-  }));
-
-  const contourSeries = {
-    type: "heatmap",
-    name: "Contour Plot",
-    data: plotData.contour,
-    color: "black",
-    levels: {
-      start: -2,
-      end: 1.2,
-      step: 0.1
-    },
-    showInLegend: false
-  }
-
-  const options = {
-    chart: {
-      type: 'heatmap',
-      options3d: {
-        enabled: false,
-      },
-      plotBorderWidth: 1,
-      height: "100%"
-    },
-    title: {
-      text: 'Faraday Cage',
-      style: { textShadow: "none"}
-    },
-    xAxis: {
-      min: -1.4,
-      max: 1.8,
-      startOnTick: false,
-      endOnTick: false
-    },
-    yAxis: {
-      min: -1.8,
-      max: 1.8,
-      startOnTick: false,
-      endOnTick: false
-    },
-    series: [...diskSeries, contourSeries]
-  };
-
   return (
     <StyledFlexboxContainer>
       <StyledChartContainer>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
+        <Plot
+          data={[
+            {
+              z: plotData.contour,  // This is the 2D array representing Z values (heights)
+              type: 'contour',  // Specify contour plot
+              colorscale: 'Viridis',  // Choose a colorscale or customize it
+              contours: {
+                coloring: 'heatmap',  // Options are 'heatmap', 'lines', or 'none'
+                start: -3.5,
+                end: 1,
+                size: 0.1,
+                labelfont: {
+                  size: 20,
+                  color: 'white'
+                }
+              }
+            }
+          ]}
+          layout={ {autosize: true, title: 'Faraday Cage in Two Dimensions'} }
+          style={{ width: '100%', height: '100%' }}
+          useResizeHandler={true} 
         />
       </StyledChartContainer>
       <StyledButton theme={theme} onClick={() => {updateData(n, r, sides)}}>
