@@ -1,0 +1,16 @@
+function rootsOfUnity(n) {
+    const roots = [];
+    const angleIncrement = (2 * Math.PI) / n; // The angle difference between each root
+    
+    for (let k = 0; k < n; k++) {
+        const angle = k * angleIncrement;
+        const x = Math.cos(angle); // x-coordinate
+        const y = Math.sin(angle); // y-coordinate
+        roots.push({ x, y });
+    }
+    
+    return roots;
+}
+
+// Example usage
+console.log(rootsOfUnity(4)); // Prints the 4th roots of unity

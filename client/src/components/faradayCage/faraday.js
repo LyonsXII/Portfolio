@@ -183,7 +183,7 @@ function Faraday(n, r, sides) {
   for (let j = 0; j < n; j++) {
     for (let row = 0; row < uu.length; row++) {
       for (let col = 0; col < uu[0].length; col++) {
-        if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = 0} // CHT paper uses NaN instead of zeros
+        if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = null} // CHT paper uses NaN instead of zeros
       }
     }
   }
@@ -195,28 +195,7 @@ function Faraday(n, r, sides) {
     zDisk.push(exp(exponent));
   }
 
-  // Generate data for plotting disks forming cage
-  const disk = [];
-  for (let j = 0; j < n; j++) {
-    disk.push([]);
-    for (let row = 0; row < zDisk.length; row++) {
-      const complexMult = {
-        re: rr[j] * zDisk[row].re,
-        im: rr[j] * zDisk[row].im
-      }
-  
-      const complexAdd =  {
-        re: c[j].re + complexMult.re,
-        im: c[j].im + complexMult.im
-      }
-  
-      disk[j].push([complexAdd.re, complexAdd.im]);
-    }
-  }
-
-  return {xx: xx, yy: yy, uu: uu, disk: disk}
+  return {xx: xx, yy: yy, uu: uu }
 }
 
 export { Faraday }
-
-Faraday(4,0.1,360);
