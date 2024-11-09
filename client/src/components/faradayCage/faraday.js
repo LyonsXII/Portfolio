@@ -183,7 +183,7 @@ function Faraday(n, r, sides) {
   for (let j = 0; j < n; j++) {
     for (let row = 0; row < uu.length; row++) {
       for (let col = 0; col < uu[0].length; col++) {
-        if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = null} // CHT paper uses NaN instead of zeros
+        if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = null} // CHT paper uses NaN for new values
       }
     }
   }
@@ -195,7 +195,27 @@ function Faraday(n, r, sides) {
     zDisk.push(exp(exponent));
   }
 
-  return {xx: xx, yy: yy, uu: uu }
+  // Interpolation of masked disk areas for heat map visualisation
+  const uu_heat = structuredClone(uu);
+  for (let i = 0; i < uu_heat.length; i++) {
+    for (let j = 0; j < uu_heat[i].length; j++) {
+      if (uu_heat[i][j] === null) {
+        // Gather neighboring values that aren't null
+        const neighbors = [];
+        if (i > 0 && uu_heat[i - 1][j] !== null) neighbors.push(uu_heat[i - 1][j]);
+        if (i < uu_heat.length - 1 && uu_heat[i + 1][j] !== null) neighbors.push(uu_heat[i + 1][j]);
+        if (j > 0 && uu_heat[i][j - 1] !== null) neighbors.push(uu_heat[i][j - 1]);
+        if (j < uu_heat[i].length - 1 && uu_heat[i][j + 1] !== null) neighbors.push(uu_heat[i][j + 1]);
+
+        // Calculate the average of neighboring values
+        if (neighbors.length > 0) {
+          uu_heat[i][j] = neighbors.reduce((sum, val) => sum + val, 0) / neighbors.length;
+        }
+      }
+    }
+  }
+
+  return { xx: xx, yy: yy, uu: uu, uu_heat : uu_heat }
 }
 
 export { Faraday }

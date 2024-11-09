@@ -4,6 +4,7 @@ import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
+import FaradaySettingsRow from "./FaradaySettingsRow";
 import { Faraday } from "./faraday.js";
 
 const StyledFlexboxContainer = styled.div`
@@ -17,13 +18,14 @@ const StyledFlexboxContainer = styled.div`
 
 const StyledChartContainer = styled.div`
   height: 85vh;
-  width: 50vw;
+  width: 40vw;
   border: 4px solid black;
 `;
 
 const StyledButtonContainer = styled.div`
   height: 100vh;
-  width: 20vw;
+  width: auto;
+  margin-left: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,7 +42,7 @@ const StyledRowContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-  width: 40%;
+  width: auto;
   padding: 15px 30px;
   word-wrap: break-word;
   white-space: normal;
@@ -74,31 +76,86 @@ const StyledIncrementButton = styled.button`
   }
 `;
 
+const StyledToggle = styled.input`
+  // Hide default tickbox
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 60px;
+  height: 30px;
+  background-color: ${({ theme }) => theme.secondaryColor};
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 0px 10px black;
+
+  // Knob settings
+  &::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background-color: ${({ theme }) => theme.textColor};
+    border-radius: 50%;
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  // State when toggled off
+  &:not(:checked) {
+    opacity: 0.8;
+  }
+
+  // State changes when toggled on
+  &:checked {
+    background-color: ${({ theme }) => theme.tertiaryColor};
+    &::after {
+      left: calc(100% - 27px);
+      opacity: 1;
+    }
+  }
+
+  // Hover effect
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 16px black;
+  }
+`;
+
 function FaradayCage(props) {
   const { theme } = useContext(ThemeContext);
 
   const [plotData, setPlotData] = useState([]);
+  const [plotDataHeat, setPlotDataHeat] = useState([]);
   const [axisValues, setAxisValues] = useState({ xValues: [], yValues: [] });
   const [diskValues, setDiskValues] = useState({ diskXValues: [], diskYValues: [] });
 
   const [numDisks, setNumDisks] = useState(4);
   const [radiusDisks, setRadiusDisks] = useState(0.1);
   const [numSides, setNumSides] = useState(360);
+  const [heatmap, setHeatmap] = useState(false);
 
   // Generate heatmap data from xx, yy, uu
   function updateData(n, r, sides) {
     const contour = [];
+    const contour_heat = [];
     let xValues = [];
     let yValues = [];
 
-    const { xx, yy, uu } = Faraday(numDisks, radiusDisks, numSides);
+    const { xx, yy, uu, uu_heat } = Faraday(numDisks, radiusDisks, numSides);
 
     for (let i = 0; i < 120; i++) {
       contour.push([]);
+      contour_heat.push([]);
       xValues.push(-1.4 + (0.03 * i));
       yValues.push(-1.8 + (0.03) * i);
       for (let j = 0; j < 120; j++) {
         contour[i].push(uu[i][j]);
+        contour_heat[i].push(uu_heat[i][j]);
       }
     }
 
@@ -110,8 +167,9 @@ function FaradayCage(props) {
       
       for (let k = 0; k < n; k++) {
           const angle = k * angleIncrement;
-          diskXValues.push(Math.cos(angle)); // x-coordinate
-          diskYValues.push(Math.sin(angle)); // y-coordinate
+          // Ternary deals with floating point messiness
+          diskXValues.push(Math.abs(Math.cos(angle)) < 0.001 ? 0 : Math.cos(angle)); // X coordinates
+          diskYValues.push(Math.abs(Math.sin(angle)) < 0.001 ? 0 : Math.sin(angle)); // Y coordinates
       }
       
       return { diskXValues, diskYValues };
@@ -120,6 +178,7 @@ function FaradayCage(props) {
     const { diskXValues, diskYValues } = rootsOfUnity(numDisks);
 
     setPlotData(contour);
+    setPlotDataHeat(contour_heat);
     setAxisValues({ xValues, yValues });
     setDiskValues({ diskXValues, diskYValues });
   }
@@ -135,11 +194,49 @@ function FaradayCage(props) {
     });
   }
 
+  function incrementRadiusDisks(direction) {
+    setRadiusDisks((prev) => {
+      if (direction === "Add") {
+        if (prev === 0.1) {return 0.5}
+        if (prev === 0.01) {return 0.1}
+      } else if (direction === "Subtract" && prev > 0) {
+        if (prev === 0.5) {return 0.1}
+        if (prev === 0.1) {return 0.01}
+      }
+      return prev;
+    });
+  }
+
+  function toggleMode() {
+    setHeatmap(prev => !prev);
+  }
+
   return (
     <StyledFlexboxContainer>
       <StyledChartContainer>
         <Plot
           data={[
+            // Heatmap
+            {
+              z: plotDataHeat, 
+              x: axisValues.xValues,
+              y: axisValues.yValues,
+              type: "contour",
+              colorscale: "Portland",
+              contours: {
+                coloring: "heatmap",  // "heatmap" or "lines"
+                width: 3,
+                start: -3.5,
+                end: 1,
+                size: 0.1,
+                showlines: false
+              },
+              line: {
+                width: 0
+              },
+              showscale: false,
+              opacity: heatmap ? 0.9 : 0
+            },
             // Contour plot
             {
               z: plotData, 
@@ -148,14 +245,14 @@ function FaradayCage(props) {
               type: "contour",
               colorscale: "Portland",
               contours: {
-                coloring: "lines",  // "heatmap" or "lines"
+                coloring: "lines",
                 width: 3,
                 start: -3.5,
                 end: 1,
                 size: 0.1
               },
               line: {
-                width: 2          // Adjust this for thicker lines
+                width: 2
               },
               showscale: false
             },
@@ -166,7 +263,7 @@ function FaradayCage(props) {
               mode: "markers",
               type: "scatter",
               marker: {
-                size: 22,
+                size: radiusDisks * 220,
                 color: "rgba(255, 0, 0, 0.6)",
                 line: {
                   color: "black",
@@ -187,11 +284,15 @@ function FaradayCage(props) {
               }
             },
             xaxis: {
+              zeroline: false,
+              showgrid: false,
               tickfont: {
                 size: 18
               }
             },
             yaxis: {
+              zeroline: false,
+              showgrid: false,
               tickfont: {
                 size: 18
               }
@@ -214,17 +315,13 @@ function FaradayCage(props) {
             Update Data
           </h4>
         </StyledButton>
+        <FaradaySettingsRow theme={theme} name="Number of Disks" value={numDisks} onClick={incrementNumDisks}/>
+        <FaradaySettingsRow theme={theme} name="Radius of Disks" value={radiusDisks} onClick={incrementRadiusDisks}/>
         <StyledRowContainer>
-          <StyledIncrementButton theme={theme} onClick={() => {incrementNumDisks("Subtract")}}/>
           <StyledButton theme={theme}>
-            <h4>
-              Number of Disks
-            </h4>
-            <h4>
-              {numDisks}
-            </h4>
+            <h4>Heatmap?</h4>
           </StyledButton>
-          <StyledIncrementButton theme={theme} onClick={() => {incrementNumDisks("Add")}}/>
+          <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}></StyledToggle>
         </StyledRowContainer>
       </StyledButtonContainer>
     </StyledFlexboxContainer>
