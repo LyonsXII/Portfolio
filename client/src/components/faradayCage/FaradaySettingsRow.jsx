@@ -52,6 +52,15 @@ const StyledIncrementButton = styled.button`
   }
 `;
 
+const StyledTextH4 = styled.h4`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);   
+`;
+
 function FaradaySettingsRow({ name, value, onClick }) {
   const { theme } = useContext(ThemeContext);
   const { volume } = useContext(AudioContext);
@@ -69,8 +78,8 @@ function FaradaySettingsRow({ name, value, onClick }) {
         <img src="./icons/minus.svg" height="100%" width="100%" style={{minHeight: "50px", marginTop: "14px"}}></img>
       </StyledIncrementButton>
       <StyledButton theme={theme}>
-        <h4>{name}</h4>
-        <h4>{value}</h4>
+        <StyledTextH4>{name}</StyledTextH4>
+        <StyledTextH4>{value}</StyledTextH4>
       </StyledButton>
       <StyledIncrementButton theme={theme} onClick={() => {onClickHandler("Add")}}>
         <img src="./icons/plus.svg" height="100%" width="100%" style={{minHeight: "50px", marginTop: "14px"}}></img>

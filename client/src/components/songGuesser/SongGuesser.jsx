@@ -49,7 +49,6 @@ function SongGuesser(props) {
       setGameOver(false);
       setGameOverExit(false);
     }, 1200)
-    
   }
 
   return (

@@ -195,7 +195,8 @@ function Faraday(n, r, sides) {
     zDisk.push(exp(exponent));
   }
 
-  // Interpolation of masked disk areas for heat map visualisation
+  // Creating data with interpolation of masked disk areas for cleaner heat map visualisation
+    // Otherwise you'll see blank areas underneath the disks
   const uu_heat = structuredClone(uu);
   for (let i = 0; i < uu_heat.length; i++) {
     for (let j = 0; j < uu_heat[i].length; j++) {
@@ -207,13 +208,15 @@ function Faraday(n, r, sides) {
         if (j > 0 && uu_heat[i][j - 1] !== null) neighbors.push(uu_heat[i][j - 1]);
         if (j < uu_heat[i].length - 1 && uu_heat[i][j + 1] !== null) neighbors.push(uu_heat[i][j + 1]);
 
-        // Calculate the average of neighboring values
+        // Calculate the average of neighboring values and set
         if (neighbors.length > 0) {
           uu_heat[i][j] = neighbors.reduce((sum, val) => sum + val, 0) / neighbors.length;
         }
       }
     }
   }
+
+  // Calculating gradient at center 
 
   return { xx: xx, yy: yy, uu: uu, uu_heat : uu_heat }
 }

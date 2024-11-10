@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
@@ -25,7 +25,7 @@ const StyledChartContainer = styled.div`
 const StyledButtonContainer = styled.div`
   height: 100vh;
   width: auto;
-  margin-left: 40px;
+  margin-left: 6%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,6 +126,24 @@ const StyledToggle = styled.input`
   }
 `;
 
+const StyledTextH3 = styled.h3`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);   
+`;
+
+const StyledTextH4 = styled.h4`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);   
+`;
+
 function FaradayCage(props) {
   const { theme } = useContext(ThemeContext);
 
@@ -136,7 +154,9 @@ function FaradayCage(props) {
 
   const [numDisks, setNumDisks] = useState(4);
   const [radiusDisks, setRadiusDisks] = useState(0.1);
+  const [tempRadiusDisks, setTempRadiusDisks] = useState(0.1);
   const [numSides, setNumSides] = useState(360);
+  const numSidesDict = {3: "Triangle", 4: "Square", 5: "Pentagon", 6: "Hexagon", 7: "Septagon", 8: "Octagon", 360: "Circle"}
   const [heatmap, setHeatmap] = useState(false);
 
   // Generate heatmap data from xx, yy, uu
@@ -146,7 +166,7 @@ function FaradayCage(props) {
     let xValues = [];
     let yValues = [];
 
-    const { xx, yy, uu, uu_heat } = Faraday(numDisks, radiusDisks, numSides);
+    const { xx, yy, uu, uu_heat } = Faraday(numDisks, tempRadiusDisks, numSides);
 
     for (let i = 0; i < 120; i++) {
       contour.push([]);
@@ -168,8 +188,10 @@ function FaradayCage(props) {
       for (let k = 0; k < n; k++) {
           const angle = k * angleIncrement;
           // Ternary deals with floating point messiness
-          diskXValues.push(Math.abs(Math.cos(angle)) < 0.001 ? 0 : Math.cos(angle)); // X coordinates
-          diskYValues.push(Math.abs(Math.sin(angle)) < 0.001 ? 0 : Math.sin(angle)); // Y coordinates
+          // Making adjustments to deal with Plotly placing disks based on bottom left corner
+            // Only really relevant for small values of radiusDisks
+          diskXValues.push(Math.abs(Math.cos(angle)) < 0.001 ? -0.015 : Math.cos(angle) * 0.97); // X coordinates
+          diskYValues.push(Math.abs(Math.sin(angle)) < 0.001 ? -0.015 : Math.sin(angle) * 0.97); // Y coordinates
       }
       
       return { diskXValues, diskYValues };
@@ -195,7 +217,7 @@ function FaradayCage(props) {
   }
 
   function incrementRadiusDisks(direction) {
-    setRadiusDisks((prev) => {
+    setTempRadiusDisks((prev) => {
       if (direction === "Add") {
         if (prev === 0.1) {return 0.5}
         if (prev === 0.01) {return 0.1}
@@ -207,9 +229,29 @@ function FaradayCage(props) {
     });
   }
 
+  function incrementNumSides(direction) {
+    const sidesArray = [360, 3, 4, 5, 6, 7, 8];
+    setNumSides((prev) => {
+      const currentIndex = sidesArray.indexOf(prev);
+  
+      if (direction === "Add") {
+        return sidesArray[Math.min(currentIndex + 1, sidesArray.length - 1)];
+      } else if (direction === "Subtract") {
+        return sidesArray[Math.max(currentIndex - 1, 0)];
+      }
+      
+      return prev;
+    });
+  }
+
   function toggleMode() {
     setHeatmap(prev => !prev);
   }
+
+  // Updating radiusDisks, stops plot disks updating prematurely
+  useEffect(() => {
+    setRadiusDisks(tempRadiusDisks);
+  }, [plotData]);
 
   return (
     <StyledFlexboxContainer>
@@ -309,19 +351,18 @@ function FaradayCage(props) {
         />
       </StyledChartContainer>
       <StyledButtonContainer>
-        <h3>Settings</h3>
+        <StyledTextH3>Configuration</StyledTextH3>
         <StyledButton theme={theme} onClick={() => {updateData(numDisks, radiusDisks, numSides)}}>
-          <h4>
-            Update Data
-          </h4>
+          <StyledTextH4>Update Data</StyledTextH4>
         </StyledButton>
         <FaradaySettingsRow theme={theme} name="Number of Disks" value={numDisks} onClick={incrementNumDisks}/>
-        <FaradaySettingsRow theme={theme} name="Radius of Disks" value={radiusDisks} onClick={incrementRadiusDisks}/>
+        <FaradaySettingsRow theme={theme} name="Radius of Disks" value={tempRadiusDisks} onClick={incrementRadiusDisks}/>
+        <FaradaySettingsRow theme={theme} name="Shape" value={numSidesDict[numSides]} onClick={incrementNumSides}/>
         <StyledRowContainer>
           <StyledButton theme={theme}>
-            <h4>Heatmap?</h4>
+            <StyledTextH4>Heatmap?</StyledTextH4>
           </StyledButton>
-          <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}></StyledToggle>
+          <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}/>
         </StyledRowContainer>
       </StyledButtonContainer>
     </StyledFlexboxContainer>
