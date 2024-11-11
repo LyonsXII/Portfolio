@@ -41,14 +41,12 @@ function Faraday(n, r, sides) {
       const x1 = [];
       const y1 = [];
       for (let i = 0; i < 360; i += step) {
-        x1.push(p[i].toFixed(5));
-        y1.push(s[i].toFixed(5));
+        x1.push(p[i]);
+        y1.push(s[i]);
       }
 
       return { x1, y1 }
     }
-
-    const { x1, y1 } = poly(sides);
 
     // Produces disk coordinates for disks placed along edge of polygon
     function divisor(x1, y1, n) {
@@ -77,20 +75,20 @@ function Faraday(n, r, sides) {
 
       const markerDistance = divide(cumulativeDistance[cumulativeDistance.length - 1], n);
       const markerLocations = [];
-      for (let i = 0; i < cumulativeDistance[cumulativeDistance.length - 1]; i += markerDistance) {
-        markerLocations.push(i);
+      for (let i = 1; i <= n; i ++) {
+        markerLocations.push(markerDistance * i);
       }
-      console.log(cumulativeDistance);
 
       const markerIndices = markerLocations.map(loc =>
         interp1(cumulativeDistance, Array.from({ length: cumulativeDistance.length }, (_, i) => i), loc)
       );
+      console.log(markerIndices);
 
       // Calculate base indices and interpolation weights
       const markerBasePos = markerIndices.map(index => Math.floor(index));
       const weightSecond = markerIndices.map((index, i) => index - markerBasePos[i]);
 
-      // Step 4: Interpolate x and y values based on weights
+      // Interpolate x and y values based on weights
       const mask = markerBasePos.map(index => index < cumulativeDistance.length - 1);
       const xr = [];
       const yr = [];
@@ -122,12 +120,17 @@ function Faraday(n, r, sides) {
       return { xr, yr };
     }
 
-    const {xr, yr} = divisor(x1, y1, 4);
+  const { x1, y1 } = poly(sides);
+  // Add first disk to end of poly to account for returning to first disk in path
+  x1.push(x1[0]);
+  y1.push(y1[0]);
+  const {xr, yr} = divisor(x1, y1, n);
 
-    const c = [];
-    for (let i = 0; i < xr.length; i++) {
-      c.push(complex(xr[i], yr[i]));
-    }
+  const c = [];
+  for (let i = 0; i < xr.length; i++) {
+    c.push(complex(xr[i], yr[i]));
+  }
+  console.log(c);
   
   const rr = new Array(c.length).fill(r); // Vector of Radii
   const N = max(0, round(4 + 0.5 * Math.log10(r))); // Number of terms in expansions
@@ -391,4 +394,4 @@ function Faraday(n, r, sides) {
 
 export { Faraday }
 
-Faraday(4,0.1,5);
+Faraday(10,0.1,3);

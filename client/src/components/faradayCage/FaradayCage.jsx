@@ -166,7 +166,7 @@ function FaradayCage(props) {
     let xValues = [];
     let yValues = [];
 
-    const { xx, yy, uu, uu_heat } = Faraday(numDisks, tempRadiusDisks, numSides);
+    const { xx, yy, uu, uu_heat, diskXValues, diskYValues } = Faraday(numDisks, tempRadiusDisks, numSides);
 
     for (let i = 0; i < 120; i++) {
       contour.push([]);
@@ -178,26 +178,6 @@ function FaradayCage(props) {
         contour_heat[i].push(uu_heat[i][j]);
       }
     }
-
-    // Calculating n-th roots of unity to position disks for plot
-    function rootsOfUnity(n) {
-      const diskXValues = [];
-      const diskYValues = [];
-      const angleIncrement = (2 * Math.PI) / n; // The angle difference between each root
-      
-      for (let k = 0; k < n; k++) {
-          const angle = k * angleIncrement;
-          // Ternary deals with floating point messiness
-          // Making adjustments to deal with Plotly placing disks based on bottom left corner
-            // Only really relevant for small values of radiusDisks
-          diskXValues.push(Math.abs(Math.cos(angle)) < 0.001 ? -0.015 : Math.cos(angle) * 0.97); // X coordinates
-          diskYValues.push(Math.abs(Math.sin(angle)) < 0.001 ? -0.015 : Math.sin(angle) * 0.97); // Y coordinates
-      }
-      
-      return { diskXValues, diskYValues };
-    }
-
-    const { diskXValues, diskYValues } = rootsOfUnity(numDisks);
 
     setPlotData(contour);
     setPlotDataHeat(contour_heat);

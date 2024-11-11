@@ -1,16 +1,153 @@
-import { exp, matrix, size, log, abs, multiply, divide, complex, max, round, add, subtract, im, re, pow, pinv, pi } from "mathjs";
+import { exp, sin, cos, matrix, size, log, abs, multiply, divide, complex, max, round, add, subtract, im, re, pow, pinv, pi } from "mathjs";
 import ExcelJS from "exceljs";
 import fs from "fs";
 
 function Faraday(n, r, sides) {
-  // Calculate disk centers
   const c = [];
-  for (let i = 1; i <= n; i++) {
-    const angle = 2 * Math.PI * (i / n);
-    const complexExp = exp(complex(0, angle));
-    c.push(complexExp);
+  const diskXValues = [];
+  const diskYValues = [];
+  const yr = [];
+  if (sides === 360) {
+    // Calculate disk centers (CHT Paper Approach)
+    // Used for circle case
+    for (let i = 1; i <= n; i++) {
+      const angle = 2 * pi * (i / n);
+      const complexExp = exp(complex(0, angle));
+      c.push(complexExp);
+    }
+
+    for (let i = 0; i < c.length; i++) {
+      diskXValues.push(c[i].re);
+      diskYValues.push(c[i].im);
+    }
+  } else {
+    // Calculate disk centers for a polyon with the specified number of sides
+    // Creates linear space (also used to produce uu)
+    function linspace(start, end, num) {
+      if (num === 1) {
+        return [start];
+      }
+    
+      const arr = [];
+      const step = (end - start) / (num - 1);
+    
+      for (let i = 0; i < num; i++) {
+        arr.push(start + step * i);
+      }
+    
+      return arr;
+    }
+
+    // Produces x and y coordinates for the vertices of a polygon with the specified number of sides
+    function poly(sides) {
+      const degrees = linspace(0, 2 * pi, 361);
+      const p = []; // Cosine values
+      const s = []; // Sin values
+      for (let i = 0; i < degrees.length; i++) {
+        p.push(cos(degrees[i]));
+        s.push(sin(degrees[i]));
+      }
+      const step = 360 / sides;
+      const x1 = [];
+      const y1 = [];
+      for (let i = 0; i < 360; i += step) {
+        x1.push(p[i]);
+        y1.push(s[i]);
+      }
+
+      return { x1, y1 }
+    }
+
+    // Produces disk coordinates for disks placed along edge of polygon
+    function divisor(x1, y1, n) {
+      // Calculate total distance needed to traverse polygon edges
+      let cumulativeDistance = [0];
+      for (let i = 1; i < x1.length; i++) {
+        const dx = x1[i] - x1[i - 1];
+        const dy = y1[i] - y1[i - 1];
+        const distance = pow(add(pow(dx, 2), pow(dy, 2)), 0.5);
+        cumulativeDistance.push(add(cumulativeDistance[i - 1], distance));
+      }
+
+      // Calculate distance needed to place each disk for even spacing
+      function interp1(x, y, xi) {
+        // Loop through each interval in x to find where xi fits
+        for (let i = 0; i < x.length - 1; i++) {
+            if (xi >= x[i] && xi <= x[i + 1]) {
+                // Calculate the interpolation factor 't'
+                const t = (xi - x[i]) / (x[i + 1] - x[i]);
+                // Interpolate the corresponding y value
+                return y[i] * (1 - t) + y[i + 1] * t;
+            }
+        }
+        return NaN; // Return NaN if xi is out of bounds of x array
+      }
+
+      const markerDistance = divide(cumulativeDistance[cumulativeDistance.length - 1], n);
+      const markerLocations = [];
+      for (let i = 1; i <= n; i ++) {
+        markerLocations.push(markerDistance * i);
+      }
+
+      const markerIndices = markerLocations.map(loc =>
+        interp1(cumulativeDistance, Array.from({ length: cumulativeDistance.length }, (_, i) => i), loc)
+      );
+
+      // Calculate base indices and interpolation weights
+      const markerBasePos = markerIndices.map(index => Math.floor(index));
+      const weightSecond = markerIndices.map((index, i) => index - markerBasePos[i]);
+
+      // Interpolate x and y values based on weights
+      const mask = markerBasePos.map(index => index < cumulativeDistance.length - 1);
+      const xr = [];
+      const yr = [];
+      for (let i = 0; i < mask.length; i++) {
+          if (mask[i]) {
+              const base = markerBasePos[i];
+              xr.push(
+                  x1[base] * (1 - weightSecond[i]) + x1[base + 1] * weightSecond[i]
+              );
+              yr.push(
+                  y1[base] * (1 - weightSecond[i]) + y1[base + 1] * weightSecond[i]
+              );
+          }
+      }
+
+      // Handle potential final marker if the shape isn't closed
+      const final_x = x1[x1.length - 1];
+      const final_y = y1[y1.length - 1];
+      const final_marker = !mask[mask.length - 1] && (x1[0] !== final_x || y1[0] !== final_y);
+
+      xr.unshift(x1[0]);
+      yr.unshift(y1[0]);
+
+      if (final_marker) {
+          xr.push(final_x);
+          yr.push(final_y);
+      }
+
+      return { xr, yr };
+    }
+
+    // Create c the array of disk coordinates
+    const { x1, y1 } = poly(sides);
+    const scale_factor = {3: 0.64305, 4: 0.7979, 5: 1, 6: 1, 7: 1, 8: 1, 360: 1};
+    const con = scale_factor[sides];
+    x1.forEach((num, i) => x1[i] = num / con);
+    y1.forEach((num, i) => y1[i] = num / con);
+    // Add first disk to end of poly to account for returning to first disk in path
+    x1.push(x1[0]);
+    y1.push(y1[0]);
+    const {xr, yr} = divisor(x1, y1, n);
+
+    diskXValues.push(...xr);
+    diskYValues.push(...yr);
+
+    for (let i = 0; i < xr.length; i++) {
+      c.push(complex(xr[i], yr[i]));
+    }
   }
-  
+
   const rr = new Array(c.length).fill(r); // Vector of Radii
   const N = max(0, round(4 + 0.5 * Math.log10(r))); // Number of terms in expansions
   const npts = (3 * N) + 2; // Number of sample points on circles
@@ -196,7 +333,7 @@ function Faraday(n, r, sides) {
   }
 
   // Creating data with interpolation of masked disk areas for cleaner heat map visualisation
-    // Otherwise you'll see blank areas underneath the disks
+    // Removes blank areas under disks
   const uu_heat = structuredClone(uu);
   for (let i = 0; i < uu_heat.length; i++) {
     for (let j = 0; j < uu_heat[i].length; j++) {
@@ -218,7 +355,7 @@ function Faraday(n, r, sides) {
 
   // Calculating gradient at center 
 
-  return { xx: xx, yy: yy, uu: uu, uu_heat : uu_heat }
+  return { xx: xx, yy: yy, uu: uu, uu_heat : uu_heat, diskXValues : diskXValues, diskYValues : diskYValues }
 }
 
 export { Faraday }
