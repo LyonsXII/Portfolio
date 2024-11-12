@@ -142,6 +142,9 @@ function Faraday(n, r, sides) {
 
     diskXValues.push(...xr);
     diskYValues.push(...yr);
+    // Smoothing out floating point errors for plot hovering
+    diskXValues.forEach((disk, i) => diskXValues[i] = diskXValues[i].toFixed(5));
+    diskYValues.forEach((disk, i) => diskYValues[i] = diskYValues[i].toFixed(5));
 
     for (let i = 0; i < xr.length; i++) {
       c.push(complex(xr[i], yr[i]));
@@ -323,13 +326,6 @@ function Faraday(n, r, sides) {
         if (abs(subtract(zz[row][col], c[j])) < rr[j]) {uu[row][col] = null} // CHT paper uses NaN for new values
       }
     }
-  }
-
-  // Generate z values for generating disks
-  const zDisk = [];
-  for (let i = -50; i <= 50; i++) {
-    const exponent = multiply(divide(multiply(complex(0, 1), i), 50), pi);
-    zDisk.push(exp(exponent));
   }
 
   // Creating data with interpolation of masked disk areas for cleaner heat map visualisation

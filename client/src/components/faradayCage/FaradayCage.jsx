@@ -168,11 +168,15 @@ function FaradayCage(props) {
 
     const { xx, yy, uu, uu_heat, diskXValues, diskYValues } = Faraday(numDisks, tempRadiusDisks, numSides);
 
+    // Correcting Plotly marker placement
+    diskXValues.forEach((value, i) => diskXValues[i] = diskXValues[i] - 0.015);
+    diskYValues.forEach((value, i) => diskYValues[i] = diskYValues[i] - 0.015);
+
     for (let i = 0; i < 120; i++) {
       contour.push([]);
       contour_heat.push([]);
       xValues.push(-1.4 + (0.03 * i));
-      yValues.push(-1.8 + (0.03) * i);
+      yValues.push(-1.8 + (0.03 * i));
       for (let j = 0; j < 120; j++) {
         contour[i].push(uu[i][j]);
         contour_heat[i].push(uu_heat[i][j]);
@@ -197,29 +201,28 @@ function FaradayCage(props) {
   }
 
   function incrementRadiusDisks(direction) {
+    const radiusOptions = [0.01, 0.05, 0.1, 0.2, 0.5];
     setTempRadiusDisks((prev) => {
       if (direction === "Add") {
-        if (prev === 0.1) {return 0.5}
-        if (prev === 0.01) {return 0.1}
+        const index = radiusOptions.indexOf(prev);
+        return radiusOptions[Math.min(index + 1, radiusOptions.length - 1)];
       } else if (direction === "Subtract" && prev > 0) {
-        if (prev === 0.5) {return 0.1}
-        if (prev === 0.1) {return 0.01}
+        const index = radiusOptions.indexOf(prev);
+        return radiusOptions[Math.max(index - 1, 0)];
       }
       return prev;
     });
   }
 
   function incrementNumSides(direction) {
-    const sidesArray = [360, 3, 4, 5, 6, 7, 8];
+    const sidesOptions = [360, 3, 4, 5, 6, 7, 8];
     setNumSides((prev) => {
-      const currentIndex = sidesArray.indexOf(prev);
-  
+      const index = sidesOptions.indexOf(prev);
       if (direction === "Add") {
-        return sidesArray[Math.min(currentIndex + 1, sidesArray.length - 1)];
+        return sidesOptions[Math.min(index + 1, sidesOptions.length - 1)];
       } else if (direction === "Subtract") {
-        return sidesArray[Math.max(currentIndex - 1, 0)];
+        return sidesOptions[Math.max(index - 1, 0)];
       }
-      
       return prev;
     });
   }
