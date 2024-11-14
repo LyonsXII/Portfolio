@@ -82,7 +82,6 @@ function Faraday(n, r, sides) {
       const markerIndices = markerLocations.map(loc =>
         interp1(cumulativeDistance, Array.from({ length: cumulativeDistance.length }, (_, i) => i), loc)
       );
-      console.log(markerIndices);
 
       // Calculate base indices and interpolation weights
       const markerBasePos = markerIndices.map(index => Math.floor(index));
@@ -130,7 +129,6 @@ function Faraday(n, r, sides) {
   for (let i = 0; i < xr.length; i++) {
     c.push(complex(xr[i], yr[i]));
   }
-  console.log(c);
   
   const rr = new Array(c.length).fill(r); // Vector of Radii
   const N = max(0, round(4 + 0.5 * Math.log10(r))); // Number of terms in expansions
@@ -353,12 +351,64 @@ function Faraday(n, r, sides) {
     }
   }
 
+  // Calculating gradients
+  function calculateFullGradient(matrix) {
+    const numRows = matrix.length;
+    const numCols = matrix[0].length;
+
+    // Initialize gradient matrices
+    const gradientX = Array.from({ length: numRows }, () => Array(numCols).fill(0));
+    const gradientY = Array.from({ length: numRows }, () => Array(numCols).fill(0));
+
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            // Calculate gradient in X direction
+            if (j === 0) {
+                // Forward difference for the left edge
+                gradientX[i][j] = matrix[i][j + 1] - matrix[i][j];
+            } else if (j === numCols - 1) {
+                // Backward difference for the right edge
+                gradientX[i][j] = matrix[i][j] - matrix[i][j - 1];
+            } else {
+                // Central difference
+                gradientX[i][j] = (matrix[i][j + 1] - matrix[i][j - 1]) / 2;
+            }
+
+            // Calculate gradient in Y direction
+            if (i === 0) {
+                // Forward difference for the top edge
+                gradientY[i][j] = matrix[i + 1][j] - matrix[i][j];
+            } else if (i === numRows - 1) {
+                // Backward difference for the bottom edge
+                gradientY[i][j] = matrix[i][j] - matrix[i - 1][j];
+            } else {
+                // Central difference
+                gradientY[i][j] = (matrix[i + 1][j] - matrix[i - 1][j]) / 2;
+            }
+        }
+    }
+
+    return { gradientX, gradientY };
+  }
+
+  const { gradientX, gradientY } = calculateFullGradient(uu);
+  const midGrad = pow(add(pow(gradientX[59][59], 2), pow(gradientY[59][59], 2)), 1/2);
+  console.log(midGrad * 25);
+  const magnitudeGradient = [];
+  for (let i = 0; i < gradientX.length; i++) {
+    magnitudeGradient.push([]);
+    for (let j = 0; j < gradientX[0].length; i++) {
+      magnitudeGradient[i].push(pow(add(pow(gradientX[i][j], 2), pow(gradientY[i][j], 2)), 1/2) * 25);
+    }
+  }
+
   // Export to excel sheet - Testing
   const worksheet3 = workbook.addWorksheet("uu");
   const worksheet4 = workbook.addWorksheet("zck");
   const worksheet5 = workbook.addWorksheet("zDisk");
   const worksheet6 = workbook.addWorksheet("disk");
   const worksheet7 = workbook.addWorksheet("uu_heat");
+  const worksheet8 = workbook.addWorksheet("magnitudeGradient");
 
   uu.forEach((row) => {
     worksheet3.addRow(row);
@@ -381,6 +431,10 @@ function Faraday(n, r, sides) {
     worksheet7.addRow(row);
   });
 
+  magnitudeGradient.forEach((row) => {
+    worksheet8.addRow(row);
+  });
+
   workbook.xlsx.writeFile('output.xlsx')
   .then(() => {
     console.log('Spreadsheet successfully created');
@@ -394,4 +448,4 @@ function Faraday(n, r, sides) {
 
 export { Faraday }
 
-Faraday(10,0.1,3);
+Faraday(8,0.1,360);
