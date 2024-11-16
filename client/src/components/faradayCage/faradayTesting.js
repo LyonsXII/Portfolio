@@ -397,8 +397,8 @@ function Faraday(n, r, sides) {
   const magnitudeGradient = [];
   for (let i = 0; i < gradientX.length; i++) {
     magnitudeGradient.push([]);
-    for (let j = 0; j < gradientX[0].length; i++) {
-      magnitudeGradient[i].push(pow(add(pow(gradientX[i][j], 2), pow(gradientY[i][j], 2)), 1/2) * 25);
+    for (let j = 0; j < gradientX[0].length; j++) {
+      magnitudeGradient[i].push(pow(add(pow(gradientX[i][j], 2), pow(gradientY[i][j], 2)), 1/2));
     }
   }
 
@@ -409,6 +409,7 @@ function Faraday(n, r, sides) {
   const worksheet6 = workbook.addWorksheet("disk");
   const worksheet7 = workbook.addWorksheet("uu_heat");
   const worksheet8 = workbook.addWorksheet("magnitudeGradient");
+  const worksheet9 = workbook.addWorksheet("initialPlot");
 
   uu.forEach((row) => {
     worksheet3.addRow(row);
@@ -435,6 +436,9 @@ function Faraday(n, r, sides) {
     worksheet8.addRow(row);
   });
 
+  worksheet9.addRow(uu);
+  worksheet9.addRow(uu_heat);
+
   workbook.xlsx.writeFile('output.xlsx')
   .then(() => {
     console.log('Spreadsheet successfully created');
@@ -443,9 +447,9 @@ function Faraday(n, r, sides) {
     console.log('Error writing spreadsheet:', err);
   });
 
-  return {xx: xx, yy: yy, uu: uu, disk}
+  return { xx: xx, yy: yy, uu: uu }
 }
 
 export { Faraday }
 
-Faraday(8,0.1,360);
+Faraday(5,0.1,360);

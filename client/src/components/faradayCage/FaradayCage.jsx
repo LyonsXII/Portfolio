@@ -3,181 +3,63 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { StyledFlexboxContainer, StyledChartContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
 
 import FaradaySettingsRow from "./FaradaySettingsRow";
 import { Faraday } from "./faraday.js";
-
-const StyledFlexboxContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-`;
-
-const StyledChartContainer = styled.div`
-  height: 85vh;
-  width: 40vw;
-  border: 4px solid black;
-`;
-
-const StyledButtonContainer = styled.div`
-  height: 100vh;
-  width: auto;
-  margin-left: 6%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-`;
-
-const StyledRowContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-`;
-
-const StyledButton = styled.button`
-  width: auto;
-  padding: 15px 30px;
-  word-wrap: break-word;
-  white-space: normal;
-  border: 4px solid black;
-  border-radius: 20px;
-  color: ${({ theme }) => theme.textColor};
-  background-color: ${({ theme }) => theme.primaryColor};
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    color: ${({ theme }) => theme.tertiaryColor};
-    transform: scale(1.01);
-    transition: transform 0.2s ease, background-color 0.8s ease;
-  }
-`;
-
-const StyledIncrementButton = styled.button`
-  width: 10%;
-  padding: 15px 30px;
-  border: 4px solid black;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.primaryColor};
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    color: ${({ theme }) => theme.tertiaryColor};
-    transform: scale(1.01);
-    transition: transform 0.1s ease, background-color 0.8s ease;
-  }
-`;
-
-const StyledToggle = styled.input`
-  // Hide default tickbox
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  width: 60px;
-  height: 30px;
-  background-color: ${({ theme }) => theme.secondaryColor};
-  border-radius: 50px;
-  position: relative;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-shadow: 0px 0px 10px black;
-
-  // Knob settings
-  &::after {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 24px;
-    height: 24px;
-    background-color: ${({ theme }) => theme.textColor};
-    border-radius: 50%;
-    transition: 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-
-  // State when toggled off
-  &:not(:checked) {
-    opacity: 0.8;
-  }
-
-  // State changes when toggled on
-  &:checked {
-    background-color: ${({ theme }) => theme.tertiaryColor};
-    &::after {
-      left: calc(100% - 27px);
-      opacity: 1;
-    }
-  }
-
-  // Hover effect
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 0px 16px black;
-  }
-`;
-
-const StyledTextH3 = styled.h3`
-  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),               
-              0px 0px 10px rgba(0, 0, 0, 1);   
-`;
-
-const StyledTextH4 = styled.h4`
-  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),
-              0px 0px 10px rgba(0, 0, 0, 1),               
-              0px 0px 10px rgba(0, 0, 0, 1);   
-`;
+import { initialData } from "./initialData";  // Faraday output for initial scenario
 
 function FaradayCage(props) {
   const { theme } = useContext(ThemeContext);
 
-  const [plotData, setPlotData] = useState([]);
-  const [plotDataHeat, setPlotDataHeat] = useState([]);
-  const [axisValues, setAxisValues] = useState({ xValues: [], yValues: [] });
-  const [diskValues, setDiskValues] = useState({ diskXValues: [], diskYValues: [] });
+  const [plotData, setPlotData] = useState(initialData.uu);
+  const [plotDataHeat, setPlotDataHeat] = useState(initialData.uu_heat);
+  const [axisValues, setAxisValues] = useState({ 
+    xValues: Array.from({ length: 120 }, (_, i) => -1.4 + (i * 0.03)), 
+    yValues: Array.from({ length: 120 }, (_, i) => -1.8 + (i * 0.03))
+  });
+  const [diskValues, setDiskValues] = useState({ 
+    diskXValues: [
+      0.29401699437494744,
+      -0.8240169943749474,
+      -0.8240169943749475,
+      0.2940169943749472,
+      0.985
+  ], diskYValues: [
+      0.9360565162951535,
+      0.5727852522924732,
+      -0.602785252292473,
+      -0.9660565162951537,
+      -0.015000000000000244
+  ]});
 
-  const [numDisks, setNumDisks] = useState(4);
+  const [numDisks, setNumDisks] = useState(5);
   const [radiusDisks, setRadiusDisks] = useState(0.1);
   const [tempRadiusDisks, setTempRadiusDisks] = useState(0.1);
   const [numSides, setNumSides] = useState(360);
-  const numSidesDict = {3: "Triangle", 4: "Square", 5: "Pentagon", 6: "Hexagon", 7: "Septagon", 8: "Octagon", 360: "Circle"}
+  const numSidesDict = {3: "Triangle", 4: "Square", 5: "Pentagon", 6: "Hexagon", 7: "Septagon", 8: "Octagon", 360: "Circle"};
   const [heatmap, setHeatmap] = useState(false);
 
-  // Generate heatmap data from xx, yy, uu
-  function updateData(n, r, sides) {
+  // Update values used in plots
+  function setValues(uu, uu_heat, diskXValues, diskYValues) {
+    // Values used in contour and heatmap plots
     const contour = [];
     const contour_heat = [];
+    // X and Y values used for axes divisions
     let xValues = [];
     let yValues = [];
-
-    const { xx, yy, uu, uu_heat, diskXValues, diskYValues } = Faraday(numDisks, tempRadiusDisks, numSides);
 
     // Correcting Plotly marker placement
     diskXValues.forEach((value, i) => diskXValues[i] = diskXValues[i] - 0.015);
     diskYValues.forEach((value, i) => diskYValues[i] = diskYValues[i] - 0.015);
+    console.log(diskYValues);
 
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < uu.length; i++) {
       contour.push([]);
       contour_heat.push([]);
       xValues.push(-1.4 + (0.03 * i));
       yValues.push(-1.8 + (0.03 * i));
-      for (let j = 0; j < 120; j++) {
+      for (let j = 0; j < uu[0].length; j++) {
         contour[i].push(uu[i][j]);
         contour_heat[i].push(uu_heat[i][j]);
       }
@@ -187,6 +69,12 @@ function FaradayCage(props) {
     setPlotDataHeat(contour_heat);
     setAxisValues({ xValues, yValues });
     setDiskValues({ diskXValues, diskYValues });
+  }
+
+  // Generate heatmap data from xx, yy, uu
+  function updateData() {
+    const { uu, uu_heat, diskXValues, diskYValues } = Faraday(numDisks, tempRadiusDisks, numSides);
+    setValues(uu, uu_heat, diskXValues, diskYValues);
   }
 
   function incrementNumDisks(direction) {
@@ -231,7 +119,7 @@ function FaradayCage(props) {
     setHeatmap(prev => !prev);
   }
 
-  // Updating radiusDisks, stops plot disks updating prematurely
+  // Updating radiusDisks, stops plot disks updating prematurely when value adjusted in menu
   useEffect(() => {
     setRadiusDisks(tempRadiusDisks);
   }, [plotData]);
@@ -333,6 +221,7 @@ function FaradayCage(props) {
           useResizeHandler={true} 
         />
       </StyledChartContainer>
+
       <StyledButtonContainer>
         <StyledTextH3>Configuration</StyledTextH3>
         <StyledButton theme={theme} onClick={() => {updateData(numDisks, radiusDisks, numSides)}}>
@@ -348,6 +237,7 @@ function FaradayCage(props) {
           <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}/>
         </StyledRowContainer>
       </StyledButtonContainer>
+
     </StyledFlexboxContainer>
   )
 }

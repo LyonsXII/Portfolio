@@ -1,6 +1,4 @@
 import { exp, sin, cos, matrix, size, log, abs, multiply, divide, complex, max, round, add, subtract, im, re, pow, pinv, pi } from "mathjs";
-import ExcelJS from "exceljs";
-import fs from "fs";
 
 function Faraday(n, r, sides) {
   const c = [];
@@ -351,7 +349,7 @@ function Faraday(n, r, sides) {
 
   // Calculating gradient at center 
 
-  return { xx: xx, yy: yy, uu: uu, uu_heat : uu_heat, diskXValues : diskXValues, diskYValues : diskYValues }
+  return { uu: uu, uu_heat : uu_heat, diskXValues : diskXValues, diskYValues : diskYValues }
 }
 
 export { Faraday }
