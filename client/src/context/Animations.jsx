@@ -15,6 +15,36 @@ export const slideInLeftAnimation = css`
   ${slideInLeft} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 `;
 
+export const slideInTop = keyframes`
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+export const slideInTopAnimation = css`
+  ${slideInTop} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+`;
+
+export const slideOutBottom = keyframes`
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(1000px);
+    opacity: 1;
+  }
+`;
+
+export const slideOutBottomAnimation = css`
+  ${slideOutBottom} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+`;
+
 export const slideOutUp = keyframes`
   0% {
     -webkit-transform: translateY(0);
@@ -30,6 +60,23 @@ export const slideOutUp = keyframes`
 
 export const slideOutUpAnimation = css`
   ${slideOutUp} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
+export const slideInRight = keyframes`
+  0% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 0;
+  }
+`;
+
+export const slideInRightAnimation = css`
+  ${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;
 
 export const slideOutRight = keyframes`

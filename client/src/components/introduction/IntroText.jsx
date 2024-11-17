@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
+
+import { slideInTopAnimation, slideOutBottomAnimation } from '../../context/Animations';
 
 const StyledFlexContainer = styled.div`
   width: 90%;
@@ -11,6 +13,12 @@ const StyledFlexContainer = styled.div`
   justify-content: center;
   height: 100%;
   margin-top: 60px;
+
+  animation: ${({ $animationState }) => 
+    $animationState === "Enter" 
+      ? slideInTopAnimation
+      : slideOutBottomAnimation
+  };
 `;
 
 const StyledImage = styled.div`
@@ -24,8 +32,10 @@ const StyledImage = styled.div`
 function IntroText(props) {
   const { theme } = useContext(ThemeContext);
 
+  const [animationState, setAnimationState] = useState("Enter");
+
   return (
-    <StyledFlexContainer>
+    <StyledFlexContainer $animationState={animationState}>
       <h2>{props.title}</h2>
       <StyledImage />
       <h4 style={{marginTop: "40px", paddingLeft: "40px",}}>

@@ -5,31 +5,8 @@ import IntroButton from "./IntroButton";
 import IntroText from "./IntroText";
 
 import { text } from "./text";
-
-const StyledContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-`;
-
-const StyledButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 36%;
-  gap: 40px;
-  margin-right: 4vw;
-`;
-
-const StyledIntroContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+import { StyledContentContainer, StyledButtonsContainer, StyledIntroContainer, StyledTitle, StyledMinorTitle, StyledGallery } from "./Introduction.styles";
+import IntroductionGallery from "./IntroductionGallery";
 
 function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [initial, setInitial] = useState(true);
@@ -77,15 +54,13 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   }
 
   return (
-    <div style={{display: "flex"}}>
-      <StyledContentContainer>
+    <StyledContentContainer>
         {initial === true ?
           <StyledIntroContainer>
-            <h1>Portfolio</h1>
-            <h3>Michael Lyons</h3>
-            <h4 style={{marginTop: "40px", width: "90%"}}>{text.introText}</h4>
+            <StyledTitle>Portfolio</StyledTitle>
+            <StyledMinorTitle>Michael Lyons</StyledMinorTitle>
           </StyledIntroContainer>
-        : null
+          : null
         }
         {songGuesser === true ?
           <IntroText title="Song Guesser" textA={text.songGuesserTextA} textB={text.songGuesserTextB}/>
@@ -96,15 +71,8 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
         {bookNotes === true ?
           <IntroText title="Book Notes" textA={text.bookNotesTextA} textB={text.bookNotesTextB}/>
         : null}
-      </StyledContentContainer>
-        
-      <StyledButtonsContainer>
-        <IntroButton name="About Me" choice={choiceSongGuesser}/>
-        <IntroButton name="Song Guesser" choice={choiceSongGuesser} activate={activateSongGuesser}/>
-        <IntroButton name="Faraday Cage" choice={choiceFaraday} activate={activateFaradayCage}/>
-        <IntroButton name="Book Notes" choice={choiceBookNotes}/>
-      </StyledButtonsContainer>
-    </div>
+        <IntroductionGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes}/>
+    </StyledContentContainer>
   )
 }
 
