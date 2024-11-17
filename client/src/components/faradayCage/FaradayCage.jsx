@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext";
-import { StyledFlexboxContainer, StyledChartContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
+import { StyledFlexboxContainer, StyledChartContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledDiv, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
 
 import FaradaySettingsRow from "./FaradaySettingsRow";
 import { Faraday } from "./faraday.js";
@@ -14,6 +14,8 @@ function FaradayCage(props) {
 
   const [plotData, setPlotData] = useState(initialData.uu);
   const [plotDataHeat, setPlotDataHeat] = useState(initialData.uu_heat);
+  const [plotDataGradient, setPlotDataGradient] = useState([]);
+  const [centerGradient, setCenterGradient] = useState(0);
   const [axisValues, setAxisValues] = useState({ 
     xValues: Array.from({ length: 120 }, (_, i) => -1.4 + (i * 0.03)), 
     yValues: Array.from({ length: 120 }, (_, i) => -1.8 + (i * 0.03))
@@ -41,7 +43,7 @@ function FaradayCage(props) {
   const [heatmap, setHeatmap] = useState(false);
 
   // Update values used in plots
-  function setValues(uu, uu_heat, diskXValues, diskYValues) {
+  function setValues(uu, uu_heat, diskXValues, diskYValues, centerGradient) {
     // Values used in contour and heatmap plots
     const contour = [];
     const contour_heat = [];
@@ -52,13 +54,12 @@ function FaradayCage(props) {
     // Correcting Plotly marker placement
     diskXValues.forEach((value, i) => diskXValues[i] = diskXValues[i] - 0.015);
     diskYValues.forEach((value, i) => diskYValues[i] = diskYValues[i] - 0.015);
-    console.log(diskYValues);
 
     for (let i = 0; i < uu.length; i++) {
       contour.push([]);
       contour_heat.push([]);
-      xValues.push(-1.4 + (0.03 * i));
-      yValues.push(-1.8 + (0.03 * i));
+      xValues.push(-2 + (0.03333333 * i));
+      yValues.push(-2 + (0.03333333 * i));
       for (let j = 0; j < uu[0].length; j++) {
         contour[i].push(uu[i][j]);
         contour_heat[i].push(uu_heat[i][j]);
@@ -69,12 +70,13 @@ function FaradayCage(props) {
     setPlotDataHeat(contour_heat);
     setAxisValues({ xValues, yValues });
     setDiskValues({ diskXValues, diskYValues });
+    setCenterGradient(centerGradient);
   }
 
   // Generate heatmap data from xx, yy, uu
   function updateData() {
-    const { uu, uu_heat, diskXValues, diskYValues } = Faraday(numDisks, tempRadiusDisks, numSides);
-    setValues(uu, uu_heat, diskXValues, diskYValues);
+    const { uu, uu_heat, diskXValues, diskYValues, centerGradient } = Faraday(numDisks, tempRadiusDisks, numSides);
+    setValues(uu, uu_heat, diskXValues, diskYValues, centerGradient);
   }
 
   function incrementNumDisks(direction) {
@@ -224,6 +226,7 @@ function FaradayCage(props) {
 
       <StyledButtonContainer>
         <StyledTextH3>Configuration</StyledTextH3>
+        <StyledTextH4 style={{marginTop: "-30px"}}>Center Gradient: {centerGradient}</StyledTextH4>
         <StyledButton theme={theme} onClick={() => {updateData(numDisks, radiusDisks, numSides)}}>
           <StyledTextH4>Update Data</StyledTextH4>
         </StyledButton>
@@ -231,10 +234,10 @@ function FaradayCage(props) {
         <FaradaySettingsRow theme={theme} name="Radius of Disks" value={tempRadiusDisks} onClick={incrementRadiusDisks}/>
         <FaradaySettingsRow theme={theme} name="Shape" value={numSidesDict[numSides]} onClick={incrementNumSides}/>
         <StyledRowContainer>
-          <StyledButton theme={theme}>
+          <StyledDiv theme={theme}>
             <StyledTextH4>Heatmap?</StyledTextH4>
-          </StyledButton>
-          <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}/>
+            <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}/>
+          </StyledDiv>
         </StyledRowContainer>
       </StyledButtonContainer>
 

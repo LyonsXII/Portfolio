@@ -44,6 +44,8 @@ export const StyledButton = styled.button`
   border-radius: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
+  background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/diagonal_stripes.png');
+  background-size: 10px 10px;  /* Adjust the size for the pattern */
   cursor: pointer;
 
   &:hover {
@@ -54,11 +56,33 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const StyledIncrementButton = styled.button`
-  width: 10%;
+export const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: auto;
   padding: 15px 30px;
+  word-wrap: break-word;
+  white-space: normal;
   border: 4px solid black;
-  border-radius: 10px;
+  border-radius: 20px;
+  color: ${({ theme }) => theme.textColor};
+  background-color: ${({ theme }) => theme.primaryColor};
+  background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/diagonal_stripes.png');
+  background-size: 10px 10px;  /* Adjust the size for the pattern */
+`;
+
+export const StyledIncrementButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 60px;
+  padding: 0px;
+  border: 4px solid black;
+  border-radius: 40px;
   background-color: ${({ theme }) => theme.primaryColor};
   cursor: pointer;
 

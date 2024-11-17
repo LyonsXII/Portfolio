@@ -231,8 +231,8 @@ function Faraday(n, r, sides) {
   }
 
   // Creating linear spaces
-  const x = linspace(-1.4, 2.2, 120);
-  const y = linspace(-1.8, 1.8, 120);
+  const x = linspace(-2, 2, 120);
+  const y = linspace(-2, 2, 120);
 
   // Creating meshgrid
   function meshgrid(x, y) {
@@ -352,55 +352,90 @@ function Faraday(n, r, sides) {
   }
 
   // Calculating gradients
-  function calculateFullGradient(matrix) {
-    const numRows = matrix.length;
-    const numCols = matrix[0].length;
+  function gradient(uu, dx, dy) {
+    const rows = uu.length;
+    const cols = uu[0].length;
 
-    // Initialize gradient matrices
-    const gradientX = Array.from({ length: numRows }, () => Array(numCols).fill(0));
-    const gradientY = Array.from({ length: numRows }, () => Array(numCols).fill(0));
+    // Initialize gradients
+    const Dx = Array.from({ length: rows }, () => Array(cols).fill(0));
+    const Dy = Array.from({ length: rows }, () => Array(cols).fill(0));
 
-    for (let i = 0; i < numRows; i++) {
-        for (let j = 0; j < numCols; j++) {
-            // Calculate gradient in X direction
+    // Compute gradients using finite differences
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            // Compute Dx (partial derivative along x)
             if (j === 0) {
-                // Forward difference for the left edge
-                gradientX[i][j] = matrix[i][j + 1] - matrix[i][j];
-            } else if (j === numCols - 1) {
-                // Backward difference for the right edge
-                gradientX[i][j] = matrix[i][j] - matrix[i][j - 1];
+                // Forward difference at left boundary
+                Dx[i][j] = (uu[i][j + 1] - uu[i][j]) / dx;
+            } else if (j === cols - 1) {
+                // Backward difference at right boundary
+                Dx[i][j] = (uu[i][j] - uu[i][j - 1]) / dx;
             } else {
-                // Central difference
-                gradientX[i][j] = (matrix[i][j + 1] - matrix[i][j - 1]) / 2;
+                // Central difference for interior points
+                Dx[i][j] = (uu[i][j + 1] - uu[i][j - 1]) / (2 * dx);
             }
 
-            // Calculate gradient in Y direction
+            // Compute Dy (partial derivative along y)
             if (i === 0) {
-                // Forward difference for the top edge
-                gradientY[i][j] = matrix[i + 1][j] - matrix[i][j];
-            } else if (i === numRows - 1) {
-                // Backward difference for the bottom edge
-                gradientY[i][j] = matrix[i][j] - matrix[i - 1][j];
+                // Forward difference at top boundary
+                Dy[i][j] = (uu[i + 1][j] - uu[i][j]) / dy;
+            } else if (i === rows - 1) {
+                // Backward difference at bottom boundary
+                Dy[i][j] = (uu[i][j] - uu[i - 1][j]) / dy;
             } else {
-                // Central difference
-                gradientY[i][j] = (matrix[i + 1][j] - matrix[i - 1][j]) / 2;
+                // Central difference for interior points
+                Dy[i][j] = (uu[i + 1][j] - uu[i - 1][j]) / (2 * dy);
             }
         }
     }
 
-    return { gradientX, gradientY };
+    return { Dx, Dy };
   }
 
-  const { gradientX, gradientY } = calculateFullGradient(uu);
-  const midGrad = pow(add(pow(gradientX[59][59], 2), pow(gradientY[59][59], 2)), 1/2);
-  console.log(midGrad * 25);
+  function getCenterAverage(matrix) {
+    // Get the dimensions of the matrix
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+
+    // Check if the matrix is square
+    if (rows !== cols) {
+        throw new Error("Matrix must be square.");
+    }
+
+    let centerValues;
+
+    // Determine the center indices
+    if (rows % 2 === 1) {
+        // Odd-dimension: Single center value
+        const centerIdx = Math.floor(rows / 2); // Indexing starts at 0
+        centerValues = [matrix[centerIdx][centerIdx]];
+    } else {
+        // Even-dimension: Four center values
+        const centerIdx1 = rows / 2 - 1; // Convert MATLAB 1-based to 0-based indexing
+        const centerIdx2 = centerIdx1 + 1;
+
+        centerValues = [
+            matrix[centerIdx1][centerIdx1],
+            matrix[centerIdx1][centerIdx2],
+            matrix[centerIdx2][centerIdx1],
+            matrix[centerIdx2][centerIdx2],
+        ];
+    }
+
+    // Compute the average of the center value(s)
+    const centerAvg = centerValues.reduce((sum, value) => sum + value, 0) / centerValues.length;
+    return centerAvg;
+}
+
+  const { Dx, Dy } = gradient(uu, x[1] - x[0], y[1] - y[0]);
   const magnitudeGradient = [];
-  for (let i = 0; i < gradientX.length; i++) {
+  for (let i = 0; i < Dx.length; i++) {
     magnitudeGradient.push([]);
-    for (let j = 0; j < gradientX[0].length; j++) {
-      magnitudeGradient[i].push(pow(add(pow(gradientX[i][j], 2), pow(gradientY[i][j], 2)), 1/2));
+    for (let j = 0; j < Dx[0].length; j++) {
+      magnitudeGradient[i].push(pow((pow(Dx[i][j], 2) + pow(Dy[i][j], 2)), 1/2));
     }
   }
+  const centerGradient = getCenterAverage(magnitudeGradient);
 
   // Export to excel sheet - Testing
   const worksheet3 = workbook.addWorksheet("uu");
@@ -408,7 +443,7 @@ function Faraday(n, r, sides) {
   const worksheet5 = workbook.addWorksheet("zDisk");
   const worksheet6 = workbook.addWorksheet("disk");
   const worksheet7 = workbook.addWorksheet("uu_heat");
-  const worksheet8 = workbook.addWorksheet("magnitudeGradient");
+  const worksheet8 = workbook.addWorksheet("magntiudeGradient");
   const worksheet9 = workbook.addWorksheet("initialPlot");
 
   uu.forEach((row) => {
@@ -452,4 +487,4 @@ function Faraday(n, r, sides) {
 
 export { Faraday }
 
-Faraday(5,0.1,360);
+Faraday(20,0.01,360);
