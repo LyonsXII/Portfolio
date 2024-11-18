@@ -1,27 +1,17 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
+import { StyledButtonContainer } from "./Settings.styles";
+
 import { ThemeContext } from "../../context/ThemeContext";
 
-const StyledDiv = styled.div`
-  height: 100%;
-  min-height: 80px;
-  width: 33%;
-  min-width: 80px;
-  display: ${({ $settingsHidden }) => !$settingsHidden ? "flex" : "none"};
-  flex-direction: column;
-  align-items: center;
-  border-left: 4px solid black;
-  z-index: 2;
-`;
-
-function SettingsButtonContainer({ children, settingsHidden, toggleButtonsVisible }) {
+function SettingsButtonContainer({ children, toggleButtonsVisible }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-      <StyledDiv theme={theme} $settingsHidden={settingsHidden} onMouseOver={toggleButtonsVisible} onMouseLeave={toggleButtonsVisible}>
+      <StyledButtonContainer theme={theme} onMouseOver={toggleButtonsVisible} onMouseLeave={toggleButtonsVisible}>
         {children}
-      </StyledDiv>
+      </StyledButtonContainer>
   )
 }
 

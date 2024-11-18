@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
 import SettingsContainer from "./SettingsContainer";
-import SettingsTextContainer from "./SettingsTextContainer";
+import SettingsHoverTextContainer from "./SettingsHoverTextContainer";
 import SettingsButtonContainer from "./SettingsButtonContainer";
 import SettingsNotch from "./SettingsNotch";
 import SettingsMenu from "./SettingsMenu";
@@ -17,6 +17,8 @@ function Settings({ home, changeVolume }) {
   const [hoverText, setHoverText] = useState(""); 
   const [settingsHidden, setSettingsHidden] = useState(true);
   const [settingsMenuHidden, setSettingsMenuHidden] = useState(true);
+
+  const clickedRef = useRef(false);
 
   function updateHoverText(text) {
     setHoverText(text);
@@ -32,14 +34,16 @@ function Settings({ home, changeVolume }) {
 
   function toggleSettingsMenu() {
     setSettingsMenuHidden((prevState) => !prevState);
+    setAnimationState("Enter");
   }
 
   return (
     <div>
-      <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible}/>
       <SettingsMenu settingsMenuHidden={settingsMenuHidden} toggleSettingsMenu={toggleSettingsMenu} changeVolume={changeVolume}/>
-      <SettingsContainer settingsHidden={settingsHidden}>
-        <SettingsTextContainer>
+
+      <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible} clickedRef={clickedRef}/>
+      <SettingsContainer settingsHidden={settingsHidden} clickedRef={clickedRef}>
+        <SettingsHoverTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>
           <SettingsText text="Settings" curr={hoverText}/>
           <SettingsText text="Theme" curr={hoverText}/>
@@ -48,9 +52,9 @@ function Settings({ home, changeVolume }) {
           <SettingsText text="GitHub" curr={hoverText}/>
           <SettingsText text="LinkedIn" curr={hoverText}/>
           <SettingsText text="LeetCode" curr={hoverText} position="Bottom"/>
-        </SettingsTextContainer>
+        </SettingsHoverTextContainer>
 
-        <SettingsButtonContainer settingsHidden={settingsHidden}>
+        <SettingsButtonContainer>
           <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={home} svgPath="./icons/home.svg"/>
           <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleSettingsMenu} svgPath="./icons/settings.svg"/>
           <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>

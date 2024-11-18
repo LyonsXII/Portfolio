@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { StyledGalleryContainer, StyledGallery, StyledInput, StyledGalleryImage } from "./Introduction.styles";
 
-function IntroductionGallery({ choiceSongGuesser, choiceFaraday, choiceBookNotes }) {
+function IntroGallery({ choiceSongGuesser, choiceFaraday, choiceBookNotes }) {
 
   return (
     <StyledGalleryContainer>
@@ -23,4 +23,4 @@ function IntroductionGallery({ choiceSongGuesser, choiceFaraday, choiceBookNotes
   )
 }
 
-export default IntroductionGallery
+export default IntroGallery

@@ -1,23 +1,29 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import styled from 'styled-components';
+
+import { StyledSettingsContainer } from "./Settings.styles";
+
+import { slideInRightAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-const StyledDiv = styled.div`
-  color: ${({ theme }) => theme.textColor};
-  height: 100vh;
-  width: 12vw;
-  display: ${({ $settingsHidden }) => ($settingsHidden ? "none" : "flex")};
-  justify-content: flex-end;
-`;
-
-function SettingsContainer({ children, settingsHidden }) {
+function SettingsContainer({ children, settingsHidden, clickedRef }) {
   const { theme } = useContext(ThemeContext);
 
+  const [animationState, setAnimationState] = useState("None");
+
+  useEffect(() => {
+    if (clickedRef.current === true && settingsHidden === true) {
+      setAnimationState("Exit");
+    } else if (clickedRef.current === true && settingsHidden === false) {
+      setAnimationState("Enter");
+    }
+  }, [settingsHidden]);
+
   return (
-      <StyledDiv theme={theme} $settingsHidden={settingsHidden}>
+      <StyledSettingsContainer theme={theme} $settingsHidden={settingsHidden} $animationState={animationState}>
         {children}
-      </StyledDiv>
+      </StyledSettingsContainer>
   )
 }
 

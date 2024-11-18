@@ -64,37 +64,72 @@ export const slideOutUpAnimation = css`
 
 export const slideInRight = keyframes`
   0% {
-    -webkit-transform: translateX(-1000px);
-            transform: translateX(-1000px);
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-80px);
+            transform: translateX(-80px);
+    opacity: 1;
+  }
+`;
+
+export const slideInRightAnimation = css`
+  ${slideInRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
+export const slideOutRight = keyframes`
+  0% {
+    -webkit-transform: translateX(-80px);
+            transform: translateX(-80px);
     opacity: 1;
   }
   100% {
     -webkit-transform: translateX(0px);
             transform: translateX(0px);
-    opacity: 0;
-  }
-`;
-
-export const slideInRightAnimation = css`
-  ${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-`;
-
-export const slideOutRight = keyframes`
-  0% {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
     opacity: 1;
-  }
-  100% {
-    -webkit-transform: translateX(1000px);
-            transform: translateX(1000px);
-    opacity: 0;
   }
 `;
 
 export const slideOutRightAnimation = css`
   ${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;
+
+export const notchSlideLeft = keyframes`
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-80px);
+            transform: translateX(-80px);
+    opacity: 1;
+  }
+`;
+
+export const notchSlideLeftAnimation = css`
+  ${notchSlideLeft} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
+export const notchSlideRight = keyframes`
+  0% {
+    -webkit-transform: translateX(-80px);
+            transform: translateX(-80px);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 1;
+  }
+`;
+
+export const notchSlideRightAnimation = css`
+  ${notchSlideRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
 
 export const fadeIn = keyframes`
   0% {

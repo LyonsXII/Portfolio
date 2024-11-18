@@ -3,14 +3,17 @@ import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
+import { StyledH4 } from "./Settings.styles";
+
 const StyledSettingsText = styled.div`
   height: auto;
   min-height: 80px;
-  width: 100%;
+  width: auto;
+  padding: 0px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.primaryColor};
+  background-color: ${({ theme }) => theme.secondaryColor};
   // Text only visible when button hovered over
   visibility: ${({ $curr, $text }) => $curr === $text ? "visible" : "hidden"};
   margin-top: -4px;
@@ -34,7 +37,7 @@ function SettingsText({ text, curr, position}) {
       $text={text}
       $position={position}
     >
-      <h4>{text}</h4>
+      <StyledH4>{text}</StyledH4>
     </StyledSettingsText>
   )
 }

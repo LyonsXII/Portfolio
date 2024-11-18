@@ -34,7 +34,7 @@ export const StyledGalleryContainer = styled.div`
 
 // Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/"
 export const StyledGallery = styled.div`
-  --s: 200px; /* control the size of the images*/
+  --s: 180px; /* control the size of the images*/
   
   display: grid;
   grid-template-columns: repeat(3,auto);
@@ -140,6 +140,15 @@ export const StyledTitle = styled.h1`
 `;
 
 export const StyledMinorTitle = styled.h3`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);   
+`;
+
+export const StyledBodyText = styled.p`
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),

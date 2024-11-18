@@ -3,24 +3,15 @@ import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-const StyledDiv = styled.div`
-  height: 100%;
-  min-height: 80px;
-  width: 67%;
-  min-width: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
-`;
+import { StyledHoverTextContainer } from "./Settings.styles";
 
 function SettingsTextContainer({ children, ...props }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-      <StyledDiv theme={theme}>
+      <StyledHoverTextContainer theme={theme}>
         {children}
-      </StyledDiv>
+      </StyledHoverTextContainer>
   )
 }
 

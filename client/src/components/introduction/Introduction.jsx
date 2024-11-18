@@ -2,11 +2,13 @@ import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
 import IntroButton from "./IntroButton";
+import IntroTextInitial from "./IntroTextInitial";
 import IntroText from "./IntroText";
+import IntroGallery from "./IntroGallery";
 
 import { text } from "./text";
 import { StyledContentContainer, StyledButtonsContainer, StyledIntroContainer, StyledTitle, StyledMinorTitle, StyledGallery } from "./Introduction.styles";
-import IntroductionGallery from "./IntroductionGallery";
+
 
 function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [initial, setInitial] = useState(true);
@@ -14,17 +16,17 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [faraday, setFaraday] = useState(false);
   const [bookNotes, setBookNotes] = useState(false);
 
-  function choiceSongGuesser() {
-    setFaraday(false);
-    setBookNotes(false);
+  const [current, setCurrent] = useState("Portfolio");
 
-    if (songGuesser) {
-      setSongGuesser(false);
-      setInitial(true);
-    } else if (!songGuesser) {
-      setSongGuesser(true);
-      setInitial(false);
-    }
+  function choiceSongGuesser() {
+    setTimeout(() => {
+      setFaraday(false);
+      setBookNotes(false);
+      setInitial(prev => !prev);
+      setSongGuesser(prev => !prev);
+    }, 500)
+
+    current == "Song Guesser" ? setCurrent("Initial") : setCurrent("Song Guesser");
   }
 
   function choiceFaraday() {
@@ -56,10 +58,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   return (
     <StyledContentContainer>
         {initial === true ?
-          <StyledIntroContainer>
-            <StyledTitle>Portfolio</StyledTitle>
-            <StyledMinorTitle>Michael Lyons</StyledMinorTitle>
-          </StyledIntroContainer>
+          <IntroTextInitial title="Portfolio" text={text.introText} current={current}/>
           : null
         }
         {songGuesser === true ?
@@ -71,7 +70,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
         {bookNotes === true ?
           <IntroText title="Book Notes" textA={text.bookNotesTextA} textB={text.bookNotesTextB}/>
         : null}
-        <IntroductionGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes}/>
+        <IntroGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes}/>
     </StyledContentContainer>
   )
 }

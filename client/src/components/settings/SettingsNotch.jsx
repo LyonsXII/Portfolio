@@ -1,34 +1,33 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import styled from 'styled-components';
+
+import { StyledNotchContainer } from "./Settings.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-const StyledSettingsDiv = styled.div`
-  height: 100px;
-  width: 1vw;
-  background-color: ${({ theme }) => theme.primaryColor};
-  border: 4px solid black;
-  border-right: none;
-  border-radius: 20px 0px 0px 20px;
-  position: absolute;
-  top: calc(50% - 50px);
-  right: ${({ $settingsHidden }) => $settingsHidden === true ? "0px" : "84px"};
-  z-index: 3;
-  cursor: pointer;
-`;
-
-function SettingsNotch({ settingsHidden, toggleButtonsVisible }) {
+function SettingsNotch({ settingsHidden, toggleButtonsVisible, clickedRef }) {
   const { theme } = useContext(ThemeContext);
   const { clickSound } = useContext(AudioContext);
+
+  const [animationState, setAnimationState] = useState("None");
 
   function toggle() {
     toggleButtonsVisible();
     clickSound();
+    clickedRef.current = true;
   }
 
+  useEffect(() => {
+    if (clickedRef.current === true && settingsHidden === true) {
+      setAnimationState("Exit");
+    } else if (clickedRef.current === true && settingsHidden === false) {
+      setAnimationState("Enter");
+    }
+  }, [settingsHidden]);
+
   return (
-    <StyledSettingsDiv theme={theme} onClick={toggle} $settingsHidden={settingsHidden}/>
+    <StyledNotchContainer theme={theme} onClick={toggle} $settingsHidden={settingsHidden} $animationState={animationState}/>
   )
 }
 
