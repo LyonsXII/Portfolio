@@ -14,8 +14,8 @@ const StyledFlexContainer = styled.div`
   height: 100%;
   margin-top: 60px;
 
-  animation: ${({ $animationState }) => 
-    $animationState === "Enter" 
+  animation: ${({ $current, $title }) => 
+    $current === $title 
       ? slideInTopAnimation
       : slideOutBottomAnimation
   };
@@ -29,20 +29,18 @@ const StyledImage = styled.div`
   margin-top: 30px;
 `;
 
-function IntroText(props) {
+function IntroText({ title, textA, textB, current }) {
   const { theme } = useContext(ThemeContext);
 
-  const [animationState, setAnimationState] = useState("Enter");
-
   return (
-    <StyledFlexContainer $animationState={animationState}>
-      <h2>{props.title}</h2>
+    <StyledFlexContainer $current={current} $title={title}>
+      <h2>{title}</h2>
       <StyledImage />
       <h4 style={{marginTop: "40px", paddingLeft: "40px",}}>
-        {props.textA}
+        {textA}
           <br />
           <br />
-        {props.textB}
+        {textB}
       </h4>
     </StyledFlexContainer>
   )

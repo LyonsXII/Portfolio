@@ -18,7 +18,7 @@ const StyledFlexContainer = styled.div`
   padding: 0px 40px;
 
   animation: ${({ $current, $title }) => 
-    $current == $title 
+    $current === $title 
       ? slideInTopAnimation
       : slideOutBottomAnimation
   };

@@ -20,39 +20,47 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
 
   function choiceSongGuesser() {
     setTimeout(() => {
+      current === "Song Guesser" ? setInitial(true) : setInitial(false);
+      setSongGuesser(prev => !prev);
       setFaraday(false);
       setBookNotes(false);
-      setInitial(prev => !prev);
-      setSongGuesser(prev => !prev);
     }, 500)
 
-    current == "Song Guesser" ? setCurrent("Initial") : setCurrent("Song Guesser");
+    if (current === "Song Guesser") {
+      setCurrent("Portfolio"); 
+    } else {
+      setCurrent("Song Guesser");
+    } 
   }
 
   function choiceFaraday() {
-    setSongGuesser(false);
-    setBookNotes(false);
+    setTimeout(() => {
+      current === "Faraday Cage" ? setInitial(true) : setInitial(false);
+      setSongGuesser(false);
+      setFaraday(prev => !prev);
+      setBookNotes(false);
+    }, 500)
 
-    if (faraday) {
-      setFaraday(false);
-      setInitial(true);
-    } else if (!faraday) {
-      setFaraday(true);
-      setInitial(false);
-    }
+    if (current === "Faraday Cage") {
+      setCurrent("Portfolio"); 
+    } else {
+      setCurrent("Faraday Cage");
+    } 
   }
 
   function choiceBookNotes() {
-    setSongGuesser(false);
-    setFaraday(false);
+    setTimeout(() => {
+      current === "Book Notes" ? setInitial(true) : setInitial(false);
+      setSongGuesser(false);
+      setFaraday(false);
+      setBookNotes(prev => !prev);
+    }, 500)
 
-    if (bookNotes === false) {
-      setBookNotes(true);
-      setInitial(false);
-    } else if (bookNotes === true) {
-      setBookNotes(false);
-      setInitial(true);
-    }
+    if (current === "Book Notes") {
+      setCurrent("Portfolio"); 
+    } else {
+      setCurrent("Book Notes");
+    } 
   }
 
   return (
@@ -62,13 +70,13 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
           : null
         }
         {songGuesser === true ?
-          <IntroText title="Song Guesser" textA={text.songGuesserTextA} textB={text.songGuesserTextB}/>
+          <IntroText title="Song Guesser" textA={text.songGuesserTextA} textB={text.songGuesserTextB} current={current}/>
         : null}
         {faraday === true ?
-          <IntroText title="Faraday Cage" textA={text.faradayCageTextA} textB={text.faradayCageTextB}/>
+          <IntroText title="Faraday Cage" textA={text.faradayCageTextA} textB={text.faradayCageTextB} current={current}/>
         : null}
         {bookNotes === true ?
-          <IntroText title="Book Notes" textA={text.bookNotesTextA} textB={text.bookNotesTextB}/>
+          <IntroText title="Book Notes" textA={text.bookNotesTextA} textB={text.bookNotesTextB} current={current}/>
         : null}
         <IntroGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes}/>
     </StyledContentContainer>
