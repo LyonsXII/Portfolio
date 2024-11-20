@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { slideInTopAnimation, slideOutBottomAnimation } from '../../context/Animations';
+
 export const StyledContentContainer = styled.div`
   display: flex;
   align-items: center;
@@ -23,10 +25,20 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
+  margin: 0 2%;
+  padding: 0px 40px;
+
+  animation: ${({ $current, $title }) => 
+    $current === $title 
+      ? slideInTopAnimation
+      : slideOutBottomAnimation
+  };
 `;
 
 export const StyledGalleryContainer = styled.div`
-  width: 40%;
+  width: 28%;
+  margin: 0 4%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,7 +46,7 @@ export const StyledGalleryContainer = styled.div`
 
 // Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/"
 export const StyledGallery = styled.div`
-  --s: 180px; /* control the size of the images*/
+  --s: 200px; /* control the size of the images*/
   
   display: grid;
   grid-template-columns: repeat(3,auto);
@@ -44,7 +56,7 @@ export const StyledGallery = styled.div`
 
 export const StyledInput = styled.input`
   position: absolute;
-  border: 2px solid #000;
+  border: 4px solid #000;
   border-radius: 50%;
   inset: calc(50% - var(--s)/3);
   cursor: pointer;
@@ -59,6 +71,7 @@ export const StyledInput = styled.input`
     transform: scale(1);
     filter: brightness(1);
     pointer-events: initial;
+    transform: translateY(-40px);
   }
 
   &:checked {
@@ -68,6 +81,7 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledGalleryImage = styled.img`
+  border: 4px solid black;
   width: var(--s);
   aspect-ratio: 1;
   object-fit: cover;
@@ -136,7 +150,8 @@ export const StyledTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
-              0px 0px 10px rgba(0, 0, 0, 1);   
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 8rem;
 `;
 
 export const StyledMinorTitle = styled.h3`
@@ -145,7 +160,8 @@ export const StyledMinorTitle = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
-              0px 0px 10px rgba(0, 0, 0, 1);   
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 3rem;
 `;
 
 export const StyledBodyText = styled.p`
@@ -154,5 +170,6 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
-              0px 0px 10px rgba(0, 0, 0, 1);   
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 1.4rem;
 `;

@@ -1,28 +1,9 @@
 import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledTitle, StyledMinorTitle, StyledBodyText } from "./Introduction.styles";
-
-import { slideInTopAnimation, slideOutBottomAnimation } from '../../context/Animations';
+import { StyledTitle, StyledMinorTitle, StyledBodyText, StyledButtonsContainer, StyledIntroContainer } from "./Introduction.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
-
-const StyledFlexContainer = styled.div`
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  margin-top: 60px;
-  padding: 0px 40px;
-
-  animation: ${({ $current, $title }) => 
-    $current === $title 
-      ? slideInTopAnimation
-      : slideOutBottomAnimation
-  };
-`;
 
 const StyledImage = styled.div`
   height: 400px;
@@ -36,11 +17,11 @@ function IntroTextInitial({ title, text, current }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledFlexContainer $title={title} $current={current}>
+    <StyledIntroContainer $title={title} $current={current}>
       <StyledTitle>{title}</StyledTitle>
       <StyledMinorTitle>Michael Lyons</StyledMinorTitle>
-      <p>{text}</p>
-    </StyledFlexContainer>
+      <StyledBodyText style={{ marginTop: "40px" }}>{text}</StyledBodyText>
+    </StyledIntroContainer>
   )
 }
 
