@@ -9,7 +9,6 @@ import IntroGallery from "./IntroGallery";
 import { text } from "./text";
 import { StyledContentContainer, StyledButtonsContainer, StyledIntroContainer, StyledTitle, StyledMinorTitle, StyledGallery } from "./Introduction.styles";
 
-
 function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [initial, setInitial] = useState(true);
   const [songGuesser, setSongGuesser] = useState(false);
