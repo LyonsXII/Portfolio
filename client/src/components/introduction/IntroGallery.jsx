@@ -5,13 +5,13 @@ import { StyledGalleryContainer, StyledGallery, StyledInput, StyledGalleryImage 
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroGallery({ choiceSongGuesser, choiceFaraday, choiceBookNotes }) {
+function IntroGallery({ choiceSongGuesser, choiceFaraday, choiceBookNotes, toggleShowSubTitle }) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <StyledGalleryContainer>
       <StyledGallery>
-        <StyledInput theme={theme} type="checkbox"/>
+        <StyledInput theme={theme} type="checkbox" onMouseOver={toggleShowSubTitle}/>
         <StyledGalleryImage theme={theme} src="https://picsum.photos/id/1028/300/300" alt="a forest after an apocalypse" onClick={choiceSongGuesser}/>
         <StyledGalleryImage theme={theme} src="https://picsum.photos/id/15/300/300" alt="a waterfall and many rocks" onClick={choiceSongGuesser}/>
         <StyledGalleryImage theme={theme} src="https://picsum.photos/id/1040/300/300" alt="a house on a mountain" onClick={choiceSongGuesser}/>

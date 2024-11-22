@@ -20,13 +20,14 @@ export const StyledButtonsContainer = styled.div`
 `;
 
 export const StyledIntroContainer = styled.div`
+  height: 100%;
   width: 60%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   height: 100%;
-  margin: 0 2%;
+  margin: 0;
   padding: 0px 40px;
 
   animation: ${({ $current, $title }) => 
@@ -37,20 +38,21 @@ export const StyledIntroContainer = styled.div`
 `;
 
 export const StyledGalleryContainer = styled.div`
-  width: 28%;
-  margin: 0 4%;
+  height: 100vh;
+  width: 30%;
+  margin: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 // Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/"
 export const StyledGallery = styled.div`
-  --s: 200px; /* control the size of the images*/
+  --s: 200px; // Gallery image size
   
   display: grid;
   grid-template-columns: repeat(3,auto);
-  gap: 20px;
+  gap: 10px;
   position: relative;
   animation: ${bounceDownAnimation};
 `;
@@ -59,11 +61,14 @@ export const StyledInput = styled.input`
   position: absolute;
   border: 6px solid #000;
   border-radius: 50%;
-  inset: calc(49% - var(--s)/3);
+  width: calc(var(--s) / 1.25); /* Dynamically size */
+  height: calc(var(--s) / 1.25);
+  top: 38%;
+  left: 0;
   cursor: pointer;
   --g: linear-gradient(#000 0 0) no-repeat;
   background: var(--g) 50%/var(--b,0%) 8px,var(--g) 50%/8px var(--b,0%);
-  transition: transform 1.2s, background 0.6s, box-shadow 0.2s;
+  transition: transform 1.2s, box-shadow 0.2s;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -89,8 +94,7 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledGalleryImage = styled.img`
-  border: 4px solid black;
-  border: ${({ theme }) => `4px solid ${theme.primaryColor}`};
+  border: 6px solid black;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   width: var(--s);
   aspect-ratio: 1;
@@ -104,63 +108,64 @@ export const StyledGalleryImage = styled.img`
   &:hover {
     transition: 0.2s;
     box-shadow: 0 0px 10px rgba(255, 255, 255, 1);
-    border: ${({ theme }) => `4px solid ${theme.secondaryColor}`};
   }
 
   &:nth-of-type(1) {
     border-radius: 40px 0px 0px 0px;
     --i: 1;
-    --x: 155%;
-    --y: 155%;
+    --x: 20%;
+    --y: 150%;
   }
 
   &:nth-of-type(2) {
     --i: 2;
-    --x: 50%;
-    --y: 155%;
+    --x: -80%;
+    --y: 150%;
   }
 
   &:nth-of-type(3) {
     border-radius: 0px 40px 0px 0px;
     --i: 3;
-    --x: -55%;
-    --y: 155%;
+    --x: -180%;
+    --y: 150%;
   }
 
   &:nth-of-type(4) {
     --i: 4;
-    --x: 155%;
+    --x: 20%;
     --y: 50%;
   }
 
   &:nth-of-type(5) {
     --i: 5;
+    --x: -80%;
+    --y: 50%;
   }
 
   &:nth-of-type(6) {
     --i: 6;
-    --x: -55%;
+    --x: -180%;
     --y: 50%;
   }
 
   &:nth-of-type(7) {
     border-radius: 0px 0px 0px 40px;
     --i: 7;
-    --x: 155%;
-    --y: -55%;
+    --x: 20%;
+    --y: -50%;
   }
 
   &:nth-of-type(8) {
     --i: 8;
-    --x: 50%;
-    --y: -55%;
+    --x: -80%;
+    --y: -50%;
   }
 
   &:nth-of-type(9) {
     border-radius: 0px 0px 40px 0px;
     --i: 9;
-    --x: -55%;
-    --y: -55%;
+    --x: -180%;
+    --y: -50%;
   }
 `;
 
@@ -182,6 +187,7 @@ export const StyledMinorTitle = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 3rem;
+  display: ${({ $showSubTitle }) => $showSubTitle ? "auto" : "none"};
 `;
 
 export const StyledBodyText = styled.p`

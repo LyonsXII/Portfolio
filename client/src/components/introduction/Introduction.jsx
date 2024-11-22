@@ -14,8 +14,10 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [songGuesser, setSongGuesser] = useState(false);
   const [faraday, setFaraday] = useState(false);
   const [bookNotes, setBookNotes] = useState(false);
-
   const [current, setCurrent] = useState("Portfolio");
+
+  const [showSubTitle, setShowSubTitle] = useState(false);
+  const [expandIntroText, setExpandIntroText] = useState(false);
 
   function choiceSongGuesser() {
     setTimeout(() => {
@@ -62,10 +64,14 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
     } 
   }
 
+  function toggleShowSubTitle() {
+    setShowSubTitle(true);
+  }
+
   return (
     <StyledContentContainer>
         {initial === true ?
-          <IntroTextInitial title="Portfolio" text={text.introText} current={current}/>
+          <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle}/>
           : null
         }
         {songGuesser === true ?
@@ -77,7 +83,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
         {bookNotes === true ?
           <IntroText title="Book Notes" textA={text.bookNotesTextA} textB={text.bookNotesTextB} current={current}/>
         : null}
-        <IntroGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes}/>
+        <IntroGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes} toggleShowSubTitle={toggleShowSubTitle}/>
     </StyledContentContainer>
   )
 }

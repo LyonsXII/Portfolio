@@ -13,14 +13,13 @@ const StyledImage = styled.div`
   margin-top: 30px;
 `;
 
-function IntroTextInitial({ title, text, current }) {
+function IntroTextInitial({ title, text, current, showSubTitle }) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <StyledIntroContainer $title={title} $current={current}>
       <StyledTitle>{title}</StyledTitle>
-      <StyledMinorTitle>Michael Lyons</StyledMinorTitle>
-      <StyledBodyText style={{ marginTop: "40px" }}>{text}</StyledBodyText>
+      <StyledMinorTitle $showSubTitle={showSubTitle}>Michael Lyons</StyledMinorTitle>
     </StyledIntroContainer>
   )
 }
