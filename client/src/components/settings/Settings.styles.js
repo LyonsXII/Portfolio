@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { slideInRightAnimation, slideOutRightAnimation, notchSlideLeftAnimation, notchSlideRightAnimation } from '../../context/Animations';
+import { slideInRightSettingsAnimation, slideOutRightAnimation, notchSlideLeftAnimation, notchSlideRightAnimation } from '../../context/Animations';
 
 export const StyledNotchContainer = styled.div`
   height: 100px;
@@ -35,7 +35,7 @@ export const StyledSettingsContainer = styled.div`
 
   animation: ${({ $animationState }) => 
     $animationState === "Enter" 
-      ? slideInRightAnimation : 
+      ? slideInRightSettingsAnimation : 
       $animationState === "Exit" 
       ? slideOutRightAnimation :
       "none"

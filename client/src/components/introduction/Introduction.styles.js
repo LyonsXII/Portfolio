@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation } from '../../context/Animations';
+import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, slideInRightAnimation } from '../../context/Animations';
 
 export const StyledContentContainer = styled.div`
   display: flex;
@@ -177,6 +177,10 @@ export const StyledTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 8rem;
+  transition: transform 1s ease;
+  animation: ${({ $showSubTitle, $expandIntroText }) => 
+    $expandIntroText ? nudgeUpBodyTextAnimation 
+    : $showSubTitle ? nudgeUpSubTitleAnimation : "none"};
 `;
 
 export const StyledMinorTitle = styled.h3`
@@ -188,6 +192,20 @@ export const StyledMinorTitle = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 3rem;
   display: ${({ $showSubTitle }) => $showSubTitle ? "auto" : "none"};
+  animation: ${({ $expandIntroText }) => $expandIntroText ? nudgeUpBodyTextAnimation : swingInAnimation};
+`;
+
+export const StyledBodyTextInitialText = styled.p`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 2rem;
+  padding: 4% 0px 0px 4%;
+  text-align: right;
+  animation: ${slideInRightAnimation};
 `;
 
 export const StyledBodyText = styled.p`
@@ -197,5 +215,5 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 1.4rem;
+  font-size: 2rem;
 `;

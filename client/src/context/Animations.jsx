@@ -62,7 +62,7 @@ export const slideOutUpAnimation = css`
   ${slideOutUp} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;
 
-export const slideInRight = keyframes`
+export const slideInRightSettings = keyframes`
   0% {
     -webkit-transform: translateX(0px);
             transform: translateX(0px);
@@ -75,8 +75,8 @@ export const slideInRight = keyframes`
   }
 `;
 
-export const slideInRightAnimation = css`
-  ${slideInRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+export const slideInRightSettingsAnimation = css`
+  ${slideInRightSettings} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;
 
 export const slideOutRight = keyframes`
@@ -196,4 +196,68 @@ export const bounceDown = keyframes`
 
 export const bounceDownAnimation = css`
   ${bounceDown} 1.2s ease-out both;
+`;
+
+export const swingIn = keyframes`
+  0% {
+    transform: translateY(-600px) rotateX(-30deg) scale(0);
+    transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) rotateX(0) scale(1);
+    transform-origin: 50% 1400px;
+    opacity: 1;
+  }
+`;
+
+export const swingInAnimation = css`
+  ${swingIn} 1.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+`;
+
+export const nudgeUpSubTitle = keyframes`
+  0% {
+    transform: translateY(28px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+`;
+
+export const nudgeUpSubTitleAnimation = css`
+  ${nudgeUpSubTitle} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+`;
+
+export const nudgeUpBodyText = keyframes`
+  0% {
+    transform: translateY(56px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+`;
+
+export const nudgeUpBodyTextAnimation = css`
+  ${nudgeUpBodyText} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+`;
+
+export const slideInRight = keyframes`
+  0% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+    opacity: 1;
+  }
+`;
+
+export const slideInRightAnimation = css`
+  ${slideInRight} 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;

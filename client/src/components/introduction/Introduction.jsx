@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 
 import IntroButton from "./IntroButton";
@@ -18,6 +18,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
 
   const [showSubTitle, setShowSubTitle] = useState(false);
   const [expandIntroText, setExpandIntroText] = useState(false);
+  const [galleryAnimationComplete, setGalleryAnimationComplete] = useState(false);
 
   function choiceSongGuesser() {
     setTimeout(() => {
@@ -68,22 +69,32 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
     setShowSubTitle(true);
   }
 
+  function toggleExpandIntroText() {
+    setExpandIntroText((prev) => !prev);
+  }
+
+  // Time allowed insertion of subtitle to animation completion, avoids jarring title movement
+  useEffect(() => {
+    setTimeout(() => {setGalleryAnimationComplete(true)}, 1000)
+  } 
+  , []);
+
   return (
     <StyledContentContainer>
-        {initial === true ?
-          <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle}/>
+        {initial ?
+          <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle} expandIntroText={expandIntroText}/>
           : null
         }
-        {songGuesser === true ?
+        {songGuesser ?
           <IntroText title="Song Guesser" textA={text.songGuesserTextA} textB={text.songGuesserTextB} current={current}/>
         : null}
-        {faraday === true ?
+        {faraday ?
           <IntroText title="Faraday Cage" textA={text.faradayCageTextA} textB={text.faradayCageTextB} current={current}/>
         : null}
-        {bookNotes === true ?
+        {bookNotes ?
           <IntroText title="Book Notes" textA={text.bookNotesTextA} textB={text.bookNotesTextB} current={current}/>
         : null}
-        <IntroGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes} toggleShowSubTitle={toggleShowSubTitle}/>
+        <IntroGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText}/>
     </StyledContentContainer>
   )
 }

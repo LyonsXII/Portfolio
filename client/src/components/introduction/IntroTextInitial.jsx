@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledTitle, StyledMinorTitle, StyledBodyText, StyledButtonsContainer, StyledIntroContainer } from "./Introduction.styles";
+import { StyledTitle, StyledMinorTitle, StyledBodyTextInitialText, StyledButtonsContainer, StyledIntroContainer } from "./Introduction.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -13,13 +13,23 @@ const StyledImage = styled.div`
   margin-top: 30px;
 `;
 
-function IntroTextInitial({ title, text, current, showSubTitle }) {
+function IntroTextInitial({ title, text, current, showSubTitle, expandIntroText }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledIntroContainer $title={title} $current={current}>
-      <StyledTitle>{title}</StyledTitle>
-      <StyledMinorTitle $showSubTitle={showSubTitle}>Michael Lyons</StyledMinorTitle>
+    <StyledIntroContainer $title={title} $current={current} $expandIntroText={expandIntroText}>
+      <StyledTitle $showSubTitle={showSubTitle} $expandIntroText={expandIntroText}>
+        {title}
+      </StyledTitle>
+      <StyledMinorTitle $showSubTitle={showSubTitle} $expandIntroText={expandIntroText}>
+        Michael Lyons
+      </StyledMinorTitle>
+      {expandIntroText ?
+        <StyledBodyTextInitialText>
+          {text}
+        </StyledBodyTextInitialText>
+        : null
+      }
     </StyledIntroContainer>
   )
 }
