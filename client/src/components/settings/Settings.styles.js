@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { slideInRightSettingsAnimation, slideOutRightAnimation, notchSlideLeftAnimation, notchSlideRightAnimation } from '../../context/Animations';
+import { slideInRightSettingsAnimation, slideOutRightSettingsAnimation, notchSlideLeftAnimation, notchSlideRightAnimation } from '../../context/Animations';
 
 export const StyledNotchContainer = styled.div`
   height: 100px;

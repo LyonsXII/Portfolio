@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 import { StyledSettingsContainer } from "./Settings.styles";
 
-import { slideInRightAnimation, slideOutRightAnimation } from '../../context/Animations';
-
 import { ThemeContext } from "../../context/ThemeContext";
 
 function SettingsContainer({ children, settingsHidden, clickedRef }) {

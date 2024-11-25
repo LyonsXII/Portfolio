@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, slideInRightAnimation } from '../../context/Animations';
+import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, slideInBottomIntroAnimation, slideOutBottomIntroAnimation, nudgeDownBodyTextAnimation } from '../../context/Animations';
 
 export const StyledContentContainer = styled.div`
   display: flex;
@@ -48,7 +48,7 @@ export const StyledGalleryContainer = styled.div`
 
 // Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/"
 export const StyledGallery = styled.div`
-  --s: 200px; // Gallery image size
+  --s: 10vw; // Gallery image size
   
   display: grid;
   grid-template-columns: repeat(3,auto);
@@ -177,10 +177,12 @@ export const StyledTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 8rem;
-  transition: transform 1s ease;
-  animation: ${({ $showSubTitle, $expandIntroText }) => 
-    $expandIntroText ? nudgeUpBodyTextAnimation 
-    : $showSubTitle ? nudgeUpSubTitleAnimation : "none"};
+  animation: ${({ $showSubTitle, $subTitleEntranceComplete, $expandIntroText, $introBodyTextAnimationActive }) => 
+    $showSubTitle && !$subTitleEntranceComplete ? nudgeUpSubTitleAnimation
+    : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
+    : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
+    : "none"
+  }
 `;
 
 export const StyledMinorTitle = styled.h3`
@@ -192,7 +194,12 @@ export const StyledMinorTitle = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 3rem;
   display: ${({ $showSubTitle }) => $showSubTitle ? "auto" : "none"};
-  animation: ${({ $expandIntroText }) => $expandIntroText ? nudgeUpBodyTextAnimation : swingInAnimation};
+  animation: ${({ $showSubTitle, $expandIntroText, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
+    $showSubTitle && !$subTitleEntranceComplete ? swingInAnimation
+    : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
+    : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
+    : "none"
+  };
 `;
 
 export const StyledBodyTextInitialText = styled.p`
@@ -205,7 +212,11 @@ export const StyledBodyTextInitialText = styled.p`
   font-size: 2rem;
   padding: 4% 0px 0px 4%;
   text-align: right;
-  animation: ${slideInRightAnimation};
+  animation: ${({ $introBodyTextAnimationActive }) => 
+    $introBodyTextAnimationActive === "Entrance" ? slideInBottomIntroAnimation 
+    : $introBodyTextAnimationActive === "Exit" ? slideOutBottomIntroAnimation
+    : "none"
+  };
 `;
 
 export const StyledBodyText = styled.p`

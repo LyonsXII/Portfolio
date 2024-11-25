@@ -16,8 +16,11 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [bookNotes, setBookNotes] = useState(false);
   const [current, setCurrent] = useState("Portfolio");
 
+  // Animation states
   const [showSubTitle, setShowSubTitle] = useState(false);
+  const [subTitleEntranceComplete, setSubTitleEntranceComplete] = useState(false);
   const [expandIntroText, setExpandIntroText] = useState(false);
+  const [introBodyTextAnimationActive, setIntroBodyTextAnimationActive] = useState("none");
   const [galleryAnimationComplete, setGalleryAnimationComplete] = useState(false);
 
   function choiceSongGuesser() {
@@ -67,10 +70,19 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
 
   function toggleShowSubTitle() {
     setShowSubTitle(true);
+    setTimeout(() => {setSubTitleEntranceComplete(true)}, 1000);
   }
 
   function toggleExpandIntroText() {
-    setExpandIntroText((prev) => !prev);
+    if (expandIntroText) {
+      setTimeout(() => {setExpandIntroText(false)}, 1000);
+      setIntroBodyTextAnimationActive("Exit");
+      setTimeout(() => {setIntroBodyTextAnimationActive("none")}, 1000);
+    } else {
+      setExpandIntroText(true);
+      setIntroBodyTextAnimationActive("Entrance");
+      setTimeout(() => {setIntroBodyTextAnimationActive("none")}, 1000);
+    }
   }
 
   // Time allowed insertion of subtitle to animation completion, avoids jarring title movement
@@ -82,7 +94,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   return (
     <StyledContentContainer>
         {initial ?
-          <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle} expandIntroText={expandIntroText}/>
+          <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive}/>
           : null
         }
         {songGuesser ?

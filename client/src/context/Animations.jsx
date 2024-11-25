@@ -47,19 +47,32 @@ export const slideOutBottomAnimation = css`
 
 export const slideOutUp = keyframes`
   0% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
     opacity: 1;
   }
   100% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
+    transform: translateY(-1000px);
     opacity: 0;
   }
 `;
 
 export const slideOutUpAnimation = css`
   ${slideOutUp} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
+export const slideOutRight = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+`;
+
+export const slideOutRightAnimation = css`
+  ${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;
 
 export const slideInRightSettings = keyframes`
@@ -79,7 +92,7 @@ export const slideInRightSettingsAnimation = css`
   ${slideInRightSettings} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;
 
-export const slideOutRight = keyframes`
+export const slideOutRightSettings = keyframes`
   0% {
     -webkit-transform: translateX(-80px);
             transform: translateX(-80px);
@@ -92,8 +105,8 @@ export const slideOutRight = keyframes`
   }
 `;
 
-export const slideOutRightAnimation = css`
-  ${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+export const slideOutRightSettingsAnimation = css`
+  ${slideOutRightSettings} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 `;
 
 export const notchSlideLeft = keyframes`
@@ -200,7 +213,7 @@ export const bounceDownAnimation = css`
 
 export const swingIn = keyframes`
   0% {
-    transform: translateY(-600px) rotateX(-30deg) scale(0);
+    transform: translateY(-1200px) rotateX(-30deg) scale(0);
     transform-origin: 50% 100%;
     opacity: 0;
   }
@@ -230,6 +243,21 @@ export const nudgeUpSubTitleAnimation = css`
   ${nudgeUpSubTitle} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 `;
 
+export const nudgeDownBodyText = keyframes`
+  0% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(82px);
+    opacity: 1;
+  }
+`;
+
+export const nudgeDownBodyTextAnimation = css`
+  ${nudgeDownBodyText} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+`;
+
 export const nudgeUpBodyText = keyframes`
   0% {
     transform: translateY(56px);
@@ -245,19 +273,32 @@ export const nudgeUpBodyTextAnimation = css`
   ${nudgeUpBodyText} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 `;
 
-export const slideInRight = keyframes`
+export const slideInBottomIntro = keyframes`
   0% {
-    -webkit-transform: translateX(-1000px);
-            transform: translateX(-1000px);
-    opacity: 1;
+    transform: translateY(250px);
+    opacity: 0;
   }
   100% {
-    -webkit-transform: translateX(0px);
-            transform: translateX(0px);
+    transform: translateY(0px);
     opacity: 1;
   }
 `;
 
-export const slideInRightAnimation = css`
-  ${slideInRight} 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+export const slideInBottomIntroAnimation = css`
+  ${slideInBottomIntro} 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
+export const slideOutBottomIntro = keyframes`
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(500px);
+    opacity: 1;
+  }
+`;
+
+export const slideOutBottomIntroAnimation = css`
+  ${slideOutBottomIntro} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 `;
