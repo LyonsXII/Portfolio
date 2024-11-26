@@ -14,7 +14,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [songGuesser, setSongGuesser] = useState(false);
   const [faraday, setFaraday] = useState(false);
   const [bookNotes, setBookNotes] = useState(false);
-  const [current, setCurrent] = useState("Portfolio");
+  const [current, setCurrent] = useState(0);
 
   // Animation states
   const [showSubTitle, setShowSubTitle] = useState(false);
@@ -23,49 +23,50 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [introBodyTextAnimationActive, setIntroBodyTextAnimationActive] = useState("none");
   const [galleryAnimationComplete, setGalleryAnimationComplete] = useState(false);
 
-  function choiceSongGuesser() {
+  // Section Data
+  const sectionData = [
+    { id: 1, title: "Song Guesser A", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "A" },
+    { id: 2, title: "Song Guesser B", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "B" },
+    { id: 3, title: "Song Guesser C", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "C" },
+    { id: 4, title: "Faraday Cage A", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "A" },
+    { id: 5, title: "Faraday Cage B", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B" },
+    { id: 6, title: "Faraday Cage C", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C" },
+    { id: 7, title: "Book Notes A", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "A" },
+    { id: 8, title: "Book Notes B", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "B" },
+    { id: 9, title: "Book Notes C", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "C" },
+  ];
+
+  function imageChoice(event) {
+    const choice = Math.ceil(event.target.dataset.id / 3);
+    const names = {
+      1: "Song Guesser",
+      2: "Faraday Cage",
+      3: "Book Notes"
+    }
+    const functions = {
+      1: setSongGuesser,
+      2: setFaraday,
+      3: setBookNotes
+    }
+
     setTimeout(() => {
-      current === "Song Guesser" ? setInitial(true) : setInitial(false);
-      setSongGuesser(prev => !prev);
-      setFaraday(false);
-      setBookNotes(false);
+      event.target.dataset.id === current ? setInitial(true) : setInitial(false);
+      Object.entries(functions).forEach(([key, func]) => {
+        if (parseInt(key) === choice) {
+          func(true); // Activate the matching state
+        } else {
+          func(false); // Deactivate all others
+        }
+      });
     }, 500)
 
-    if (current === "Song Guesser") {
-      setCurrent("Portfolio"); 
+    const currentChoice = Math.ceil(current / 3);
+    if (currentChoice === choice) {
+      setCurrent(0);
     } else {
-      setCurrent("Song Guesser");
-    } 
-  }
-
-  function choiceFaraday() {
-    setTimeout(() => {
-      current === "Faraday Cage" ? setInitial(true) : setInitial(false);
-      setSongGuesser(false);
-      setFaraday(prev => !prev);
-      setBookNotes(false);
-    }, 500)
-
-    if (current === "Faraday Cage") {
-      setCurrent("Portfolio"); 
-    } else {
-      setCurrent("Faraday Cage");
-    } 
-  }
-
-  function choiceBookNotes() {
-    setTimeout(() => {
-      current === "Book Notes" ? setInitial(true) : setInitial(false);
-      setSongGuesser(false);
-      setFaraday(false);
-      setBookNotes(prev => !prev);
-    }, 500)
-
-    if (current === "Book Notes") {
-      setCurrent("Portfolio"); 
-    } else {
-      setCurrent("Book Notes");
-    } 
+      setCurrent(parseInt(event.target.dataset.id));
+    }
+    
   }
 
   function toggleShowSubTitle() {
@@ -93,20 +94,19 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
 
   return (
     <StyledContentContainer>
-        {initial ?
-          <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive}/>
-          : null
-        }
-        {songGuesser ?
-          <IntroText title="Song Guesser" textA={text.songGuesserTextA} textB={text.songGuesserTextB} current={current}/>
-        : null}
-        {faraday ?
-          <IntroText title="Faraday Cage" textA={text.faradayCageTextA} textB={text.faradayCageTextB} current={current}/>
-        : null}
-        {bookNotes ?
-          <IntroText title="Book Notes" textA={text.bookNotesTextA} textB={text.bookNotesTextB} current={current}/>
-        : null}
-        <IntroGallery choiceSongGuesser={choiceSongGuesser} choiceFaraday={choiceFaraday} choiceBookNotes={choiceBookNotes} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText}/>
+      <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive}/>
+      {sectionData.map((section) => (
+        <IntroText
+          key={section.id}
+          id={section.id}
+          title={section.title}
+          textA={section.textA}
+          textB={section.textB}
+          layout={section.layout}
+          current={current}
+        />
+      ))}
+      <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText}/>
     </StyledContentContainer>
   )
 }
