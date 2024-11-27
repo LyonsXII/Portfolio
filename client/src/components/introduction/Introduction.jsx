@@ -15,6 +15,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [faraday, setFaraday] = useState(false);
   const [bookNotes, setBookNotes] = useState(false);
   const [current, setCurrent] = useState(0);
+  const [tempCurrent, setTempCurrent] = useState(0);
 
   // Animation states
   const [showSubTitle, setShowSubTitle] = useState(false);
@@ -37,36 +38,19 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   ];
 
   function imageChoice(event) {
-    const choice = Math.ceil(event.target.dataset.id / 3);
-    const names = {
-      1: "Song Guesser",
-      2: "Faraday Cage",
-      3: "Book Notes"
-    }
-    const functions = {
-      1: setSongGuesser,
-      2: setFaraday,
-      3: setBookNotes
-    }
+    const choice = parseInt(event.target.dataset.id)
 
-    setTimeout(() => {
-      event.target.dataset.id === current ? setInitial(true) : setInitial(false);
-      Object.entries(functions).forEach(([key, func]) => {
-        if (parseInt(key) === choice) {
-          func(true); // Activate the matching state
-        } else {
-          func(false); // Deactivate all others
-        }
-      });
-    }, 500)
-
-    const currentChoice = Math.ceil(current / 3);
-    if (currentChoice === choice) {
-      setCurrent(0);
+    if (choice === current) {
+      setTempCurrent(0);
+      setTimeout(() => {
+        setCurrent(0);
+      }, 500)
     } else {
-      setCurrent(parseInt(event.target.dataset.id));
+      setTempCurrent(choice);
+      setTimeout(() => {
+        setCurrent(choice);
+      }, 500)
     }
-    
   }
 
   function toggleShowSubTitle() {
@@ -94,7 +78,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
 
   return (
     <StyledContentContainer>
-      <IntroTextInitial title="Portfolio" text={text.introText} current={current} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive}/>
+      <IntroTextInitial id={0} title="Portfolio" text={text.introText} current={current} tempCurrent={tempCurrent} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive}/>
       {sectionData.map((section) => (
         <IntroText
           key={section.id}
@@ -104,6 +88,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
           textB={section.textB}
           layout={section.layout}
           current={current}
+          tempCurrent={tempCurrent}
         />
       ))}
       <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText}/>

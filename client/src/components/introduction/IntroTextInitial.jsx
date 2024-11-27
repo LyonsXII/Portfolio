@@ -5,20 +5,12 @@ import { StyledTitle, StyledMinorTitle, StyledBodyTextInitialText, StyledButtons
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroTextInitial({ title, text, current, showSubTitle, subTitleEntranceComplete, expandIntroText, introBodyTextAnimationActive }) {
+function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle, subTitleEntranceComplete, expandIntroText, introBodyTextAnimationActive }) {
   const { theme } = useContext(ThemeContext);
 
-  const names = {
-    0: "Portfolio",
-    1: "Song Guesser",
-    2: "Faraday Cage",
-    3: "Book Notes"
-  }
-  const currentName = names[Math.ceil(current / 3)];
-
   return (
-    current === 0 ?
-      <StyledIntroContainer $title={title} $current={currentName} $expandIntroText={expandIntroText}>
+    current === id ?
+      <StyledIntroContainer $id={id} $title={title} $current={current} $tempCurrent={tempCurrent} $expandIntroText={expandIntroText}>
         <StyledTitle $showSubTitle={showSubTitle} $expandIntroText={expandIntroText} $subTitleEntranceComplete={subTitleEntranceComplete} $introBodyTextAnimationActive={introBodyTextAnimationActive}>
           {title}
         </StyledTitle>

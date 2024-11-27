@@ -13,21 +13,12 @@ const StyledImage = styled.div`
   margin-top: 30px;
 `;
 
-function IntroText({ title, id, textA, textB, current }) {
+function IntroText({ id, title, textA, textB, current, tempCurrent }) {
   const { theme } = useContext(ThemeContext);
-
-  const names = {
-    0: "Portfolio",
-    1: "Song Guesser",
-    2: "Faraday Cage",
-    3: "Book Notes"
-  }
-  const currentName = names[Math.ceil(current / 3)];
-  console.log("typeof current:", typeof current, "typeof id:", typeof id);
 
   return (
     current === id ?
-      <StyledIntroContainer $current={currentName} $title={title}>
+      <StyledIntroContainer $id={id} $current={current} $tempCurrent={tempCurrent} $title={title}>
         <StyledTitle>{title}</StyledTitle>
         <StyledImage />
         <StyledBodyText style={{ marginTop: "40px" }}>

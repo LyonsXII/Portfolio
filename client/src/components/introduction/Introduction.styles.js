@@ -30,11 +30,9 @@ export const StyledIntroContainer = styled.div`
   margin: 0;
   padding: 0px 40px;
 
-  animation: ${({ $current, $title }) => 
-    $current === $title 
-      ? slideInTopAnimation
-      : slideOutBottomAnimation
-  };
+  animation: ${({ $tempCurrent, $current, $id }) =>
+    $tempCurrent !== $id ? slideOutBottomAnimation : slideInTopAnimation
+  }
 `;
 
 export const StyledGalleryContainer = styled.div`
