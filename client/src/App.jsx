@@ -44,7 +44,7 @@ function App() {
       <AudioProvider>
         <SettingsProvider>
           <Container>
-            {intro === true ? <Introduction activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage}/> : null}
+            {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage}/> : null}
             {songGuesserSection === true ? <SongGuesser/> : null}
             {faradaySection === true ? <FaradayCage/> : null}
             {bookNotesSection === true ? null : null}

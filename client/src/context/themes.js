@@ -1,7 +1,9 @@
 export const colourSchemeA = {
   backgroundColor: "#363b4e",
   primaryColor: " #4f3b78",
+  primaryColorTransparent: "rgba(79, 59, 120, 0.5)",
   secondaryColor: "#927fbf",
+  secondaryColorTransparent: "rgba(146, 127, 191, 0.5)",
   tertiaryColor: "#c4bbf0",
   textColor: "antiquewhite",
   borderColor: "black"

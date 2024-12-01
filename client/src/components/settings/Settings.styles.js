@@ -37,7 +37,7 @@ export const StyledSettingsContainer = styled.div`
     $animationState === "Enter" 
       ? slideInRightSettingsAnimation : 
       $animationState === "Exit" 
-      ? slideOutRightAnimation :
+      ? slideOutRightSettingsAnimation :
       "none"
   };
 `;

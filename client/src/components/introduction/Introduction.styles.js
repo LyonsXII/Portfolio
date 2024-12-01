@@ -20,19 +20,18 @@ export const StyledButtonsContainer = styled.div`
 `;
 
 export const StyledIntroContainer = styled.div`
-  height: 100%;
+  height: 80vh;
   width: 60%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
-  height: 100%;
   margin: 0;
   padding: 0px 40px;
 
-  animation: ${({ $tempCurrent, $current, $id }) =>
+  animation: ${({ $tempCurrent, $id }) =>
     $tempCurrent !== $id ? slideOutBottomAnimation : slideInTopAnimation
-  }
+  };
 `;
 
 export const StyledGalleryContainer = styled.div`
@@ -167,7 +166,41 @@ export const StyledGalleryImage = styled.img`
   }
 `;
 
-export const StyledTitle = styled.h1`
+export const StyledImage = styled.div`
+  height: ${({ $height }) => $height};
+  width: ${({ $width }) => $width};
+  border: 4px solid black;
+  border-radius: 20px;
+`;
+
+export const StyledTitleContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: auto;
+  width: 90%;
+  padding: 20px 40px;
+  border: 6px solid black;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.primaryColorTransparent};
+`;
+
+export const StyledIntroButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: auto;
+  gap: 30px;
+`;
+
+export const StyledSpacer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+`;
+
+export const StyledMainTitle = styled.h1`
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
@@ -175,15 +208,25 @@ export const StyledTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 8rem;
-  animation: ${({ $showSubTitle, $subTitleEntranceComplete, $expandIntroText, $introBodyTextAnimationActive }) => 
+  animation: ${({ $showSubTitle, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
     $showSubTitle && !$subTitleEntranceComplete ? nudgeUpSubTitleAnimation
     : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
     : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
     : "none"
-  }
+  };
 `;
 
-export const StyledMinorTitle = styled.h3`
+export const StyledTitle = styled.h1`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 6rem;
+`;
+
+export const StyledMinorTitleInitial = styled.h3`
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
@@ -198,6 +241,17 @@ export const StyledMinorTitle = styled.h3`
     : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
     : "none"
   };
+`;
+
+export const StyledMinorTitle = styled.h3`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 3rem;
+  white-space: nowrap;
 `;
 
 export const StyledBodyTextInitialText = styled.p`

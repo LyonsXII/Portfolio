@@ -36,7 +36,7 @@ export const slideOutBottom = keyframes`
     opacity: 0;
   }
   100% {
-    transform: translateY(1000px);
+    transform: translateY(1500px);
     opacity: 1;
   }
 `;

@@ -9,11 +9,8 @@ import IntroGallery from "./IntroGallery";
 import { text } from "./text";
 import { StyledContentContainer, StyledButtonsContainer, StyledIntroContainer, StyledTitle, StyledMinorTitle, StyledGallery } from "./Introduction.styles";
 
-function Introduction({ activateSongGuesser, activateFaradayCage }) {
+function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
   const [initial, setInitial] = useState(true);
-  const [songGuesser, setSongGuesser] = useState(false);
-  const [faraday, setFaraday] = useState(false);
-  const [bookNotes, setBookNotes] = useState(false);
   const [current, setCurrent] = useState(0);
   const [tempCurrent, setTempCurrent] = useState(0);
 
@@ -24,17 +21,16 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   const [introBodyTextAnimationActive, setIntroBodyTextAnimationActive] = useState("none");
   const [galleryAnimationComplete, setGalleryAnimationComplete] = useState(false);
 
-  // Section Data
   const sectionData = [
-    { id: 1, title: "Song Guesser A", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "A" },
-    { id: 2, title: "Song Guesser B", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "B" },
-    { id: 3, title: "Song Guesser C", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "C" },
-    { id: 4, title: "Faraday Cage A", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "A" },
-    { id: 5, title: "Faraday Cage B", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B" },
-    { id: 6, title: "Faraday Cage C", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C" },
-    { id: 7, title: "Book Notes A", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "A" },
-    { id: 8, title: "Book Notes B", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "B" },
-    { id: 9, title: "Book Notes C", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "C" },
+    { id: 1, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "A" },
+    { id: 2, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "B" },
+    { id: 3, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "C" },
+    { id: 4, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "A" },
+    { id: 5, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B" },
+    { id: 6, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C" },
+    { id: 7, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "A" },
+    { id: 8, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "B" },
+    { id: 9, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "C" },
   ];
 
   function imageChoice(event) {
@@ -53,6 +49,19 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
     }
   }
 
+  function changeSection(event) {
+    switch(event.currentTarget.dataset.title) {
+      case "Song Guesser":
+        activateSongGuesser();
+        break;
+      case "Faraday Cage":
+        activateFaradayCage();
+        break;
+      default:
+        home();
+    } 
+  }
+
   function toggleShowSubTitle() {
     setShowSubTitle(true);
     setTimeout(() => {setSubTitleEntranceComplete(true)}, 1000);
@@ -60,7 +69,13 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
 
   function toggleExpandIntroText() {
     if (expandIntroText) {
-      setTimeout(() => {setExpandIntroText(false)}, 1000);
+      setTempCurrent(0);
+      setTimeout(() => {
+        setCurrent(0);
+      }, 500)
+      // Avoid end of body text exit animation during transition
+      if (current === 0) {setTimeout(() => {setExpandIntroText(false)}, 1000)} 
+      else {setTimeout(() => {setExpandIntroText(false)}, 500)}
       setIntroBodyTextAnimationActive("Exit");
       setTimeout(() => {setIntroBodyTextAnimationActive("none")}, 1000);
     } else {
@@ -71,10 +86,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
   }
 
   // Time allowed insertion of subtitle to animation completion, avoids jarring title movement
-  useEffect(() => {
-    setTimeout(() => {setGalleryAnimationComplete(true)}, 1000)
-  } 
-  , []);
+  useEffect(() => {setTimeout(() => {setGalleryAnimationComplete(true)}, 1000)}, []);
 
   return (
     <StyledContentContainer>
@@ -89,6 +101,7 @@ function Introduction({ activateSongGuesser, activateFaradayCage }) {
           layout={section.layout}
           current={current}
           tempCurrent={tempCurrent}
+          changeSection={changeSection}
         />
       ))}
       <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText}/>
