@@ -7,6 +7,8 @@ export const StyledContentContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   width: 94vw;
+
+  animation: ${() => "none"};
 `;
 
 export const StyledButtonsContainer = styled.div`
@@ -250,7 +252,7 @@ export const StyledMinorTitle = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 3rem;
+  font-size: 2.5rem;
   white-space: nowrap;
 `;
 
@@ -261,7 +263,7 @@ export const StyledBodyTextInitialText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding: 4% 0px 0px 4%;
   text-align: right;
   animation: ${({ $introBodyTextAnimationActive }) => 
@@ -278,5 +280,5 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 2rem;
+  font-size: 1.5rem;
 `;

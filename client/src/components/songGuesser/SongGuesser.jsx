@@ -3,17 +3,11 @@ import styled from 'styled-components';
 
 import SongGuesserIntro from "./SongGuesserIntro";
 import SongGuesserGame from "./SongGuesserGame";
-
-import { ThemeContext } from "../../context/ThemeContext";
 import GameOver from "./GameOver";
 
-const StyledFlexboxContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { StyledSongGuesserContainer } from "./SongGuesser.styles";
+
+import { ThemeContext } from "../../context/ThemeContext";
 
 function SongGuesser(props) {
   const { theme } = useContext(ThemeContext);
@@ -52,13 +46,13 @@ function SongGuesser(props) {
   }
 
   return (
-    <StyledFlexboxContainer>
+    <StyledSongGuesserContainer>
       {gameOver && <GameOver gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>}
-      {intro === true ? 
+      {intro ? 
         <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
         <SongGuesserGame category={category} difficulty={difficulty} mode={mode} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>
       }
-    </StyledFlexboxContainer>
+    </StyledSongGuesserContainer>
   )
 }
 

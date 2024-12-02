@@ -6,45 +6,10 @@ import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
+import { StyledGameFlexboxContainer, StyledGameContainer, StyledChoiceGrid, StyledTextBox } from "./SongGuesser.styles";
+
 import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
-
-import { slideInLeftAnimation } from '../../context/Animations';
-
-const StyledFlexboxContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  overflow: hidden;
-`;
-
-const StyledContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  margin-top: -2vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-`;
-
-const StyledChoiceGrid = styled.div`
-  height: 20%;
-  width: 80%;
-  margin-top: 3vh;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
-  gap: 25px;
-`;
-
-const StyledTextBox = styled.div`
-  height: 25%;
-  display: flex;
-  align-items: center;
-  animation: ${ slideInLeftAnimation };
-`;
 
 function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOver }) {
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
@@ -215,10 +180,10 @@ function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOv
   }, [volume]);
 
   return (
-    <StyledFlexboxContainer>
+    <StyledGameFlexboxContainer>
       <audio ref={audioRef} src={song}/>
       {mode === "Regular" && <SongGuesserScore score={score}/>}
-      <StyledContainer>
+      <StyledGameContainer>
         {showAnswer === false ? 
           <StyledTextBox>
             <h1 onClick={() => playSong()}>Guess the song...</h1>
@@ -231,8 +196,8 @@ function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOv
             return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer}/>
           })}
         </StyledChoiceGrid>
-      </StyledContainer>
-    </StyledFlexboxContainer>
+      </StyledGameContainer>
+    </StyledGameFlexboxContainer>
   )
 }
 
