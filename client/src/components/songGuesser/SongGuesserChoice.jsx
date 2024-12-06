@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledChoiceButton } from "./SongGuesser.styles";
+import { StyledChoiceButton, StyledLargeText } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
@@ -17,7 +17,7 @@ function SongGuesserChoice({ name, correct, showAnswer, onClick }) {
 
   return (
     <StyledChoiceButton theme={theme} $correct={correct} $showAnswer={showAnswer} onClick={() => {handleOnClick()}}>
-      <h3>{name}</h3>
+      <StyledLargeText>{name}</StyledLargeText>
     </StyledChoiceButton>
   )
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import SongGuesserButton from "./SongGuesserButton";
 
-import { StyledIntroContainer, StyledIntroFlexbox, StyledIntroGrid } from "./SongGuesser.styles";
+import { StyledIntroContainer, StyledMainTitle, StyledIntroFlexbox, StyledIntroGrid } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -12,7 +12,7 @@ function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficul
 
   return (
     <StyledIntroContainer>
-      <h1>Song Guesser</h1>
+      <StyledMainTitle>Song Guesser</StyledMainTitle>
       
       <StyledIntroFlexbox>
         <StyledIntroGrid $position="First">

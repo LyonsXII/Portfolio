@@ -6,7 +6,7 @@ import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
-import { StyledGameFlexboxContainer, StyledGameContainer, StyledChoiceGrid, StyledTextBox } from "./SongGuesser.styles";
+import { StyledGameFlexboxContainer, StyledGameContainer, StyledMainTitle, StyledChoiceGrid, StyledTextBox } from "./SongGuesser.styles";
 
 import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
@@ -186,7 +186,7 @@ function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOv
       <StyledGameContainer>
         {showAnswer === false ? 
           <StyledTextBox>
-            <h1 onClick={() => playSong()}>Guess the song...</h1>
+            <StyledMainTitle onClick={() => playSong()}>Guess the song...</StyledMainTitle>
           </StyledTextBox> 
           : <SongGuesserVideo url={videoURL} nextQuestionButton={nextQuestionButton} playSong={playSong} name={songInfo.song_name} property={songInfo.property}/>
         }

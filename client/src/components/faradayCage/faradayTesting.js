@@ -443,7 +443,7 @@ function Faraday(n, r, sides) {
   const worksheet5 = workbook.addWorksheet("zDisk");
   const worksheet6 = workbook.addWorksheet("disk");
   const worksheet7 = workbook.addWorksheet("uu_heat");
-  const worksheet8 = workbook.addWorksheet("magntiudeGradient");
+  const worksheet8 = workbook.addWorksheet("magnitudeGradient");
   const worksheet9 = workbook.addWorksheet("initialPlot");
 
   uu.forEach((row) => {
