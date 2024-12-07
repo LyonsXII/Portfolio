@@ -156,7 +156,7 @@ function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOv
     setShowAnswer(true);
     audioRef.current.pause();
 
-    if (correct && autoNextQuestion || mode != "Sudden Death") {
+    if (correct && autoNextQuestion && mode != "Sudden Death") {
       if (!userClickedNext) {
         nextQuestionTimeoutRef.current = setTimeout(() => {
           nextQuestion();
