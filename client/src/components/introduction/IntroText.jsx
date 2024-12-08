@@ -16,14 +16,14 @@ const StyledContentContainer = styled.div`
 const StyledContentFlexbox = styled.div`
   display: flex;
   justify-content: center;
-  height: 300px;
-  width: 100%;
-  gap: 20px;
+  height: 340px;
+  width: 90%;
+  gap: 40px;
   margin-top: 30px;
 `;
 
 const layoutMap = {
-  A: ({ containerProps, title, theme, textA, textB, changeSection }) => (
+  A: ({ containerProps, title, theme, textA, textB, changeSection, imgA }) => (
     <StyledIntroContainer {...containerProps}>
       <StyledTitleContainer theme={theme}>
         <StyledTitle>{title}</StyledTitle>
@@ -52,8 +52,10 @@ const layoutMap = {
           {textB}
         </StyledBodyText>
         <StyledContentFlexbox>
-          <StyledImage $height="100%" $width="45%"/>
-          <StyledImage $height="100%" $width="45%"/>
+          <StyledBodyText>
+            {textA}
+          </StyledBodyText>
+          <StyledImage $height="100%" $width="60" src={imgA}/>
         </StyledContentFlexbox>
       </StyledContentContainer>
     </StyledIntroContainer>
@@ -100,7 +102,7 @@ const layoutMap = {
   ),
 };
 
-function IntroText({ id, title, textA, textB, layout, current, tempCurrent, changeSection }) {
+function IntroText({ id, title, textA, textB, layout, current, tempCurrent, changeSection, imgA }) {
   const { theme } = useContext(ThemeContext);
 
   if (current != id) {return null}
@@ -110,7 +112,7 @@ function IntroText({ id, title, textA, textB, layout, current, tempCurrent, chan
   const renderLayout = layoutMap[layout];
 
   return renderLayout
-    ? renderLayout({ containerProps, title, theme, textA, textB, changeSection })
+    ? renderLayout({ containerProps, title, theme, textA, textB, changeSection, imgA })
     : null; // Handle unknown layouts
 }
 

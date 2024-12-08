@@ -22,15 +22,15 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
   const [galleryAnimationComplete, setGalleryAnimationComplete] = useState(false);
 
   const sectionData = [
-    { id: 1, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "A" },
-    { id: 2, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "B" },
-    { id: 3, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "C" },
-    { id: 4, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "A" },
-    { id: 5, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B" },
-    { id: 6, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C" },
-    { id: 7, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "A" },
-    { id: 8, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "B" },
-    { id: 9, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "C" },
+    { id: 1, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "A", imgA: "/images/Song Guesser - 001.jpg" },
+    { id: 2, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 3, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 4, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "A", imgA: "./images/Song Guesser - 002.jpg" },
+    { id: 5, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B", imgA: "./images/Song Guesser - 002.jpg" },
+    { id: 6, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C", imgA: "./images/Song Guesser - 002.jpg" },
+    { id: 7, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "A", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 8, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 9, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
   ];
 
   function imageChoice(event) {
@@ -102,6 +102,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
           current={current}
           tempCurrent={tempCurrent}
           changeSection={changeSection}
+          imgA={"./images/Song Guesser - 001.jpg"}
         />
       ))}
       <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText}/>

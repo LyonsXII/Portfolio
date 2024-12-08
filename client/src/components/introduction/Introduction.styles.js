@@ -168,10 +168,10 @@ export const StyledGalleryImage = styled.img`
   }
 `;
 
-export const StyledImage = styled.div`
+export const StyledImage = styled.img`
   height: ${({ $height }) => $height};
   width: ${({ $width }) => $width};
-  border: 4px solid black;
+  border: 6px solid black;
   border-radius: 20px;
 `;
 

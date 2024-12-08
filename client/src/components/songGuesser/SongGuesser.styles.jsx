@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation } from '../../context/Animations';
+import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 export const StyledSongGuesserContainer = styled.div`
   height: 100vh;
@@ -9,7 +9,7 @@ export const StyledSongGuesserContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  animation: ${() => slideInLeftAnimation};
+  animation: ${() => slideInTopAnimation};
 `;
 
 export const StyledIntroContainer = styled.div`
