@@ -26,8 +26,8 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
     { id: 2, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
     { id: 3, title: "Song Guesser", textA: text.songGuesserTextA, textB: text.songGuesserTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
     { id: 4, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "A", imgA: "./images/Song Guesser - 002.jpg" },
-    { id: 5, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B", imgA: "./images/Song Guesser - 002.jpg" },
-    { id: 6, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C", imgA: "./images/Song Guesser - 002.jpg" },
+    { id: 5, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 6, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
     { id: 7, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "A", imgA: "./images/Song Guesser - 001.jpg" },
     { id: 8, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
     { id: 9, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
@@ -102,10 +102,10 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
           current={current}
           tempCurrent={tempCurrent}
           changeSection={changeSection}
-          imgA={"./images/Song Guesser - 001.jpg"}
+          imgA={section.imgA}
         />
       ))}
-      <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText}/>
+      <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} toggleExpandIntroText={toggleExpandIntroText} sectionData={sectionData}/>
     </StyledContentContainer>
   )
 }

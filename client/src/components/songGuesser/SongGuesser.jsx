@@ -9,7 +9,7 @@ import { StyledSongGuesserContainer } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function SongGuesser(props) {
+function SongGuesser({ transition }) {
   const { theme } = useContext(ThemeContext);
 
   const [intro, setIntro] = useState(true);
@@ -46,7 +46,7 @@ function SongGuesser(props) {
   }
 
   return (
-    <StyledSongGuesserContainer>
+    <StyledSongGuesserContainer $transition={transition}>
       {gameOver && <GameOver gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>}
       {intro ? 
         <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 

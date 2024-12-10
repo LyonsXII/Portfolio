@@ -9,7 +9,7 @@ import FaradaySettingsRow from "./FaradaySettingsRow";
 import { Faraday } from "./faraday.js";
 import { initialData } from "./initialData";  // Faraday output for initial scenario
 
-function FaradayCage(props) {
+function FaradayCage({ transition }) {
   const { theme } = useContext(ThemeContext);
 
   const [plotData, setPlotData] = useState(initialData.uu);
@@ -127,7 +127,7 @@ function FaradayCage(props) {
   }, [plotData]);
 
   return (
-    <StyledFlexboxContainer>
+    <StyledFlexboxContainer $transition={transition}>
       <StyledChartContainer>
         <Plot
           data={[

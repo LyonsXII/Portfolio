@@ -9,7 +9,7 @@ export const StyledSongGuesserContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  animation: ${() => slideInTopAnimation};
+  animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
 
 export const StyledIntroContainer = styled.div`

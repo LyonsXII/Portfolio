@@ -1,5 +1,6 @@
-
 import styled from 'styled-components';
+
+import { slideInTopAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 export const StyledFlexboxContainer = styled.div`
   height: 100vh;
@@ -8,6 +9,8 @@ export const StyledFlexboxContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 40px;
+
+  animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
 
 export const StyledChartContainer = styled.div`

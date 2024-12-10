@@ -16,12 +16,17 @@ function App() {
   const [songGuesserSection, setSongGuesserSection] = useState(false);
   const [faradaySection, setFaradaySection] = useState(false);
   const [bookNotesSection, setBookNotesSection] = useState(false);
+  const [transition, setTransition] = useState(false);
 
   function home() {
-    setSongGuesserSection(false);
-    setFaradaySection(false);
-    setBookNotesSection(false);
-    setIntro(true);
+    setTransition(true);
+    setTimeout(() => {
+      setSongGuesserSection(false);
+      setFaradaySection(false);
+      setBookNotesSection(false);
+      setIntro(true);
+      setTransition(false)
+    }, 500)
   }
 
   function activateSongGuesser() {
@@ -44,9 +49,9 @@ function App() {
       <AudioProvider>
         <SettingsProvider>
           <Container>
-            {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage}/> : null}
-            {songGuesserSection === true ? <SongGuesser/> : null}
-            {faradaySection === true ? <FaradayCage/> : null}
+            {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage} transition={transition}/> : null}
+            {songGuesserSection === true ? <SongGuesser transition={transition}/> : null}
+            {faradaySection === true ? <FaradayCage transition={transition}/> : null}
             {bookNotesSection === true ? null : null}
             <Settings home={home}/>
           </Container>
