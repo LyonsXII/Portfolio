@@ -187,6 +187,7 @@ function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOv
         {showAnswer === false ? 
           <StyledTextBox>
             <StyledMainTitle onClick={() => playSong()}>Guess the song...</StyledMainTitle>
+            <img src="./icons/replay.svg" width="140px"/>
           </StyledTextBox> 
           : <SongGuesserVideo url={videoURL} nextQuestionButton={nextQuestionButton} playSong={playSong} name={songInfo.song_name} property={songInfo.property}/>
         }

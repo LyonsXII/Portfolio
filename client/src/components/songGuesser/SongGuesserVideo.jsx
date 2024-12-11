@@ -32,8 +32,12 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
           <StyledIframe src={url}/>
         </StyledVideoDivLeft>
         <StyledVideoDivRight>
-          <StyledVideoButton theme={theme} $position="Top" onClick={handleNextQuestionButton}/>
-          <StyledVideoButton theme={theme} onClick={handlePlaySong}/>
+          <StyledVideoButton theme={theme} $position="Top" onClick={handleNextQuestionButton}>
+            <img src="./icons/nextSong.svg" width="80%"/>
+          </StyledVideoButton>
+          <StyledVideoButton theme={theme} onClick={handlePlaySong}>
+            <img src="./icons/replay.svg" width="80%"/>
+          </StyledVideoButton>
         </StyledVideoDivRight>
       </StyledVideoContainer>
       <StyledVideoTextContainer $animationState={animationState}>

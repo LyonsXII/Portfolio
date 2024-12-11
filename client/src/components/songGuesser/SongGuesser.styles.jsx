@@ -193,6 +193,9 @@ export const StyledVideoDivRight = styled.div`
 `;
 
 export const StyledVideoButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: calc(50% - 2px);
   width: 100%;
   border-bottom: 4px solid black;

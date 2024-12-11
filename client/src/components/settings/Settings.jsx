@@ -34,7 +34,6 @@ function Settings({ home, changeVolume }) {
 
   function toggleSettingsMenu() {
     setSettingsMenuHidden((prevState) => !prevState);
-    setAnimationState("Enter");
   }
 
   return (

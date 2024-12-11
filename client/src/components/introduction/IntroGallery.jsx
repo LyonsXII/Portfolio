@@ -15,6 +15,7 @@ function IntroGallery({ imageChoice, toggleShowSubTitle, galleryAnimationComplet
         {sectionData.map((section) => (
         <StyledGalleryImage
           theme={theme}
+          key={section.id}
           src={section.imgA}
           alt="a forest after an apocalypse"
           data-id={section.id}
