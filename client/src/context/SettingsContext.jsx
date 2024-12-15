@@ -3,8 +3,8 @@ import { createContext, useState } from 'react';
 const SettingsContext = createContext();
 
 function SettingsProvider({ children }) {
-  const [autoplay, setAutoplay] = useState(true);
-  const [autoNextQuestion, setAutoNextQuestion] = useState(true);
+  const [autoplay, setAutoplay] = useState(false);
+  const [autoNextQuestion, setAutoNextQuestion] = useState(false);
 
   function toggleAutoplay() {
     setAutoplay(prev => !prev);

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation } from '../../context/Animations';
 
@@ -49,7 +49,6 @@ export const StyledGameFlexboxContainer = styled.div`
 export const StyledGameContainer = styled.div`
   height: 100%;
   width: 100%;
-  margin-top: -2vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,10 +67,26 @@ export const StyledChoiceGrid = styled.div`
 `;
 
 export const StyledTextBox = styled.div`
-  height: 25%;
+  height: 15vh;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 20px;
   animation: ${ slideInLeftAnimation };
+`;
+
+export const StyledIcon = styled.svg`
+  height: 15vh;
+
+  path {
+    stroke: ${(props) => props.strokeColor || 'black'}; /* Default to black */
+    fill: ${(props) => props.fillColor || 'none'}; /* Default to none */
+  }
+
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.4 ease;
+  }
 `;
 
 export const StyledButton = styled.button`
@@ -92,6 +107,8 @@ export const StyledButton = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.secondaryColor};
     color: ${({ theme }) => theme.tertiaryColor};
+    transform: scale(1.01);
+    transition: transform 0.2s ease, background-color 0.8s ease;
   }
 `;
 
@@ -130,6 +147,7 @@ export const StyledScoreFlexbox = styled.div`
 
 export const StyledScoreIncrement = styled.div`
   height: calc(100vh / 20);
+  box-sizing: border-box;
   border-bottom: 4px solid black;
   background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
 `
@@ -201,21 +219,36 @@ export const StyledVideoButton = styled.div`
   border-bottom: 4px solid black;
   border-radius: ${({ $position }) => $position === "Top" ? "0px 20px 0px 0px" : "0px 0px 20px 0px"};
   background-color: ${({ theme }) => theme.primaryColor};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    color: ${({ theme }) => theme.tertiaryColor};
+  }
 `;
 
 export const StyledVideoTextContainer = styled.div`
-  width: 100%;
+  width: calc(100% - 40px);
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
   gap: 40px;
-  margin-left: 2vw;
+  position: relative;
+  overflow: hidden;
 
   animation: ${({ $animationState }) => 
     $animationState === "Enter" 
       ? slideInLeftAnimation
       : slideOutRightAnimation
   };
+`;
+
+export const StyledVideoTextBox = styled.div`
+  width: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const StyledMainTitle = styled.h1`
@@ -238,6 +271,22 @@ export const StyledSubTitle = styled.h2`
   font-size: 4rem;
 `;
 
+export const StyledSubTitleScrolling = styled.h2`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 4rem;
+  white-space: nowrap;
+  text-overflow: ${({ $ellipsis }) => $ellipsis ? "ellipsis" : "clip"};
+  overflow: ${({ $ellipsis }) => $ellipsis ? "hidden" : "visible"};
+  transform: translateX(0); /* Default position */
+  transition: transform linear;
+  display: inline-block;
+`;
+
 export const StyledLargeText = styled.h3`
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
@@ -256,6 +305,7 @@ export const StyledMinorTitle = styled.h4`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 2.5rem;
+  white-space: nowrap;
 `;
 
 export const StyledBodyText = styled.p`

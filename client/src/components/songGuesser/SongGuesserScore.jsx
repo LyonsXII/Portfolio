@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledScoreFlexbox, StyledScoreIncrement, StyledScoreBox } from "./SongGuesser.styles";
+import { StyledScoreFlexbox, StyledScoreIncrement, StyledScoreBox, StyledBodyText } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -14,13 +14,13 @@ function SongGuesserScore({ score }) {
         {Array.from({ length: score }, (_, i) => (
           <StyledScoreIncrement theme={theme} key={i}>
             <StyledScoreBox>
-              <h4>{i + 1}</h4>
+              <StyledBodyText>{i + 1}</StyledBodyText>
             </StyledScoreBox>
           </StyledScoreIncrement>
         ))}
-        <StyledScoreIncrement theme={theme} $current={"true"}>
+        <StyledScoreIncrement theme={theme} $current="true">
             <StyledScoreBox>
-              <h4>{score + 1}</h4>
+              <StyledBodyText>{score + 1}</StyledBodyText>
             </StyledScoreBox>
           </StyledScoreIncrement>
       </StyledScoreFlexbox>
