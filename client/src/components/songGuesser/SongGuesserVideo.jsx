@@ -30,7 +30,7 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
     clickSound();
   }
 
-  // Calculate 
+  // Calculate width of text and set animation duration if greater than text box
   useEffect(() => {
     if (textRef.current && containerRef.current) {
       // Calculate the scroll distance and duration dynamically
@@ -46,15 +46,6 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
       setAnimationDuration(duration);
     }
   }, [ellipsis]);
-
-  // useEffect(() => {
-  //   if (textRef.current && containerRef.current) {
-  //     console.log("Text Width:", textRef.current.offsetWidth);
-  //     console.log("Container Width:", containerRef.current.offsetWidth);
-  //   } else {
-  //     console.warn("One of the refs is null");
-  //   }
-  // }, []);
 
   return (
     <StyledVideoMainContainer>
@@ -83,7 +74,7 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
           textRef.current.style.transitionTimingFunction = "linear"; // Ensure smooth scrolling
           // Trigger layout reflow before setting transform
           requestAnimationFrame(() => {
-            textRef.current.style.transform = `translateX(-${textRef.current.scrollWidth - containerRef.current.offsetWidth + 40}px)`;
+            textRef.current.style.transform = `translateX(-${textRef.current.scrollWidth - containerRef.current.offsetWidth}px)`;
           });
         }
         }}
@@ -99,7 +90,7 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
           {name}
         </StyledSubTitleScrolling>
       </StyledVideoTextBox>
-      <StyledVideoTextBox style={{flex: "0 0 auto"}}>
+      <StyledVideoTextBox style={{flex: "0 0 auto", overflow: "visible"}}>
         <StyledMinorTitle style={{marginBottom: "2px"}}>{property}</StyledMinorTitle>
       </StyledVideoTextBox>
       </StyledVideoTextContainer>

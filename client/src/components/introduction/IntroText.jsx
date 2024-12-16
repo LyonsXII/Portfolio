@@ -113,7 +113,7 @@ function IntroText({ id, title, textA, textB, layout, current, tempCurrent, chan
 
   return renderLayout
     ? renderLayout({ containerProps, title, theme, textA, textB, changeSection, imgA })
-    : null; // Handle unknown layouts
+    : null;
 }
 
 export default IntroText

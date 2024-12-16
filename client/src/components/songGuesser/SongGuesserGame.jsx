@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import styled from 'styled-components';
 import axios from "axios";
 
+import SongGuesserEndGameButton from "./SongGuesserEndGameButton";
 import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
@@ -11,7 +12,7 @@ import { StyledGameFlexboxContainer, StyledGameContainer, StyledMainTitle, Style
 import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
 
-function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOver }) {
+function SongGuesserGame({ category, difficulty, mode, endGame, setGameOver, handleGameOver }) {
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
   const { autoplay, autoNextQuestion } = useContext(SettingsContext);
 
@@ -183,6 +184,7 @@ function SongGuesserGame({ category, difficulty, mode, setGameOver, handleGameOv
     <StyledGameFlexboxContainer>
       <audio ref={audioRef} src={song}/>
       {mode === "Regular" && <SongGuesserScore score={score}/>}
+      <SongGuesserEndGameButton endGame={endGame} mode={mode}/>
       <StyledGameContainer>
         {showAnswer === false ? 
           <StyledTextBox>

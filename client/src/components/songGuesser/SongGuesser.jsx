@@ -24,6 +24,10 @@ function SongGuesser({ transition }) {
     setIntro(false);
   }
 
+  function endGame() {
+    setIntro(true);
+  }
+
   function updateCategory(category) {
     setCategory(category);
   }
@@ -50,7 +54,7 @@ function SongGuesser({ transition }) {
       {gameOver && <GameOver gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>}
       {intro ? 
         <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
-        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>
+        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} endGame={endGame} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>
       }
     </StyledSongGuesserContainer>
   )

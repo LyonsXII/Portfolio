@@ -46,6 +46,37 @@ export const StyledGameFlexboxContainer = styled.div`
   overflow: hidden;
 `;
 
+export const StyledEndGameButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  top: 40px;
+  left: ${({ $mode }) => $mode === "Regular" ? "calc(3vw + 44px)" : "40px" };
+  background-color: ${({ theme }) => theme.primaryColor};
+  border-radius: 20px;
+  border: 4px solid black;
+  box-shadow: 0px 0px 10px black;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    transform: scale(1.01);
+    transition: transform 0.2s ease, background-color 0.8s ease;
+  }
+`;
+
+export const StyledEndGameIcon = styled.img`
+  width: 90%;
+  transition: transform 0.5s ease-in-out;
+
+  &:hover {
+    transform: rotate(-360deg);
+  }
+`
+
 export const StyledGameContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -77,10 +108,11 @@ export const StyledTextBox = styled.div`
 
 export const StyledIcon = styled.svg`
   height: 15vh;
+  cursor: pointer;
 
   path {
-    stroke: ${(props) => props.strokeColor || 'black'}; /* Default to black */
-    fill: ${(props) => props.fillColor || 'none'}; /* Default to none */
+    stroke: black;
+    fill: antiquewhite;
   }
 
   &:hover {
@@ -96,6 +128,7 @@ export const StyledButton = styled.button`
   background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 10px;
   border: 4px solid black;
+  cursor: pointer;
   grid-column-start: ${({ $start }) => $start ? $start : "auto"};
   grid-column-end: ${({ $end }) => $end ? $end : "auto"};
   grid-column: ${({ $columns }) => $columns};
@@ -119,6 +152,7 @@ export const StyledChoiceButton = styled.button`
   letter-spacing: 1px;
   border-radius: 10px;
   border: 4px solid black;
+  cursor: pointer;
   transition: margin 10s ease;
   color: ${({ theme }) => theme.textColor};
   box-shadow: 0px 0px 10px black;
