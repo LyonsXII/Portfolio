@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation } from '../../context/Animations';
+import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation, slideInBottomAnimation } from '../../context/Animations';
 
 export const StyledSongGuesserContainer = styled.div`
   height: 100vh;
@@ -73,7 +73,7 @@ export const StyledEndGameIcon = styled.img`
   transition: transform 0.5s ease-in-out;
 
   &:hover {
-    transform: rotate(-360deg);
+    transform: rotate(-36deg);
   }
 `
 
@@ -184,6 +184,8 @@ export const StyledScoreIncrement = styled.div`
   box-sizing: border-box;
   border-bottom: 4px solid black;
   background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
+
+  animation: ${({$current}) => $current ? slideInBottomAnimation : "none"};
 `
 
 export const StyledScoreBox = styled.div`

@@ -50,7 +50,7 @@ function App() {
         <SettingsProvider>
           <Container>
             {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage} transition={transition}/> : null}
-            {songGuesserSection === true ? <SongGuesser transition={transition}/> : null}
+            {songGuesserSection === true ? <SongGuesser transition={transition} setTransition={setTransition}/> : null}
             {faradaySection === true ? <FaradayCage transition={transition}/> : null}
             {bookNotesSection === true ? null : null}
             <Settings home={home}/>

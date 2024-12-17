@@ -9,7 +9,7 @@ import { StyledSongGuesserContainer } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function SongGuesser({ transition }) {
+function SongGuesser({ transition, setTransition }) {
   const { theme } = useContext(ThemeContext);
 
   const [intro, setIntro] = useState(true);
@@ -25,7 +25,11 @@ function SongGuesser({ transition }) {
   }
 
   function endGame() {
-    setIntro(true);
+    setTransition(true);
+    setTimeout(() => {
+      setIntro(true);
+      setTransition(false);
+    }, 500)
   }
 
   function updateCategory(category) {
@@ -54,7 +58,7 @@ function SongGuesser({ transition }) {
       {gameOver && <GameOver gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>}
       {intro ? 
         <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
-        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} endGame={endGame} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>
+        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} endGame={endGame} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver} transition={transition} setTransition={setTransition}/>
       }
     </StyledSongGuesserContainer>
   )
