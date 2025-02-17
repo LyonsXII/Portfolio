@@ -9,7 +9,7 @@ import IntroGallery from "./IntroGallery";
 import { text } from "./text";
 import { StyledContentContainer, StyledButtonsContainer, StyledIntroContainer, StyledTitle, StyledMinorTitle, StyledGallery } from "./Introduction.styles";
 
-function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
+function Introduction({ home, activateSongGuesser, activateFaradayCage, activateAuthorAnalysis }) {
   const [initial, setInitial] = useState(true);
   const [current, setCurrent] = useState(0);
   const [tempCurrent, setTempCurrent] = useState(0);
@@ -28,9 +28,9 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
     { id: 4, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "A", imgA: "./images/Song Guesser - 002.jpg" },
     { id: 5, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
     { id: 6, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 7, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "A", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 8, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 9, title: "Book Notes", textA: text.bookNotesTextA, textB: text.bookNotesTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 7, title: "Author Analysis", textA: text.authorAnalysisTextA, textB: text.authorAnalysisTextTextB, layout: "A", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 8, title: "Author Analysis", textA: text.authorAnalysisTextTextA, textB: text.authorAnalysisTextTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 9, title: "Author Analysis", textA: text.authorAnalysisTextTextA, textB: text.authorAnalysisTextTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
   ];
 
   function imageChoice(event) {
@@ -57,6 +57,9 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage }) {
       case "Faraday Cage":
         activateFaradayCage();
         break;
+      case "Author Analysis":
+        activateAuthorAnalysis();
+        break;  
       default:
         home();
     } 

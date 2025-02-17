@@ -7,6 +7,7 @@ import Container from "./components/Container";
 import Introduction from "./components/introduction/Introduction"
 import SongGuesser from "./components/songGuesser/SongGuesser";
 import FaradayCage from "./components/faradayCage/FaradayCage";
+import AuthorAnalysis from "./components/authorAnalysis/AuthorAnalysis";
 import { ThemeProvider } from "./context/ThemeContext";
 import { AudioProvider } from "./context/AudioContext";
 import { SettingsProvider } from "./context/SettingsContext";
@@ -15,7 +16,7 @@ function App() {
   const [intro, setIntro] = useState(true);
   const [songGuesserSection, setSongGuesserSection] = useState(false);
   const [faradaySection, setFaradaySection] = useState(false);
-  const [bookNotesSection, setBookNotesSection] = useState(false);
+  const [authorAnalysisSection, setAuthorAnalysisSection] = useState(false);
   const [transition, setTransition] = useState(false);
 
   function home() {
@@ -23,7 +24,7 @@ function App() {
     setTimeout(() => {
       setSongGuesserSection(false);
       setFaradaySection(false);
-      setBookNotesSection(false);
+      setAuthorAnalysisSection(false);
       setIntro(true);
       setTransition(false)
     }, 500)
@@ -39,8 +40,8 @@ function App() {
     setIntro(false);
   }
 
-  function activateBookNotes() {
-    setBookNotes(true);
+  function activateAuthorAnalysis() {
+    setAuthorAnalysisSection(true);
     setIntro(false);
   }
 
@@ -49,10 +50,10 @@ function App() {
       <AudioProvider>
         <SettingsProvider>
           <Container>
-            {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage} transition={transition}/> : null}
+            {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage} activateAuthorAnalysis={activateAuthorAnalysis} transition={transition}/> : null}
             {songGuesserSection === true ? <SongGuesser transition={transition} setTransition={setTransition}/> : null}
             {faradaySection === true ? <FaradayCage transition={transition}/> : null}
-            {bookNotesSection === true ? null : null}
+            {authorAnalysisSection === true ? <AuthorAnalysis transition={transition} setTransition={setTransition}/> : null}
             <Settings home={home}/>
           </Container>
         </SettingsProvider>

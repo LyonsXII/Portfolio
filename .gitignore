@@ -133,3 +133,6 @@ dist
 python-server/linux_venv/
 python-server/linux-Mallet-venv/
 python-server/venv
+
+# jupyter notebooks
+python-server/notebooks
