@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "styled-components": "^6.1.12"
+  },
+  "scripts": {
+  "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\" \"cd python-server && npm run dev\""
+}
+}

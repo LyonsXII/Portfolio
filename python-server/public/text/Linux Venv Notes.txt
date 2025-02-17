@@ -1,0 +1,24 @@
+1) Navigate to folder
+cd "/mnt/c/Users/Michael/Desktop/Web Development Projects/Personal Projects/Portfolio/python-server"
+
+2) Activate linux-venv
+source linux_venv/bin/activate
+source linux-Mallet-venv/bin/activate
+
+3) Install through pip as normal
+
+Install TensorFlow 2.15.1
+Install Transformers 4.37.2
+
+4) Run jupyter notebook through linux
+5) Can exit back into venv with crtl + c and then y
+
+rm -rf "/mnt/c/Users/Michael/Desktop/Web\ Development\ Projects/Personal\ Projects/Portfolio/python-server/linux_venv/lib/python3.10/site-packages/__pycache__"
+rm -rf "/mnt/c/Users/Michael/Desktop/Web\ Development\ Projects/Personal\ Projects/Portfolio/python-server/linux_venv/lib/python3.10/site-packages/pip-selfcheck.json"
+
+username: lyons
+password: Serpentarius1859
+
+source linux-Mallet-venv/bin/activate
+
+python -m ipykernel install --user --name=linux-Mallet-venv --display-name "linux-Mallet-venv"
