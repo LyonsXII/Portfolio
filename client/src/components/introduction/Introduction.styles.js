@@ -6,9 +6,7 @@ export const StyledContentContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 94vw;
-
-  animation: ${() => "none"};
+  width: 100vw;
 `;
 
 export const StyledButtonsContainer = styled.div`

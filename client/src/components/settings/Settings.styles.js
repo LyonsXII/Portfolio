@@ -1,19 +1,41 @@
 import styled from 'styled-components';
 
+import { media } from '../../context/media';
+
 import { slideInRightSettingsAnimation, slideOutRightSettingsAnimation, notchSlideLeftAnimation, notchSlideRightAnimation } from '../../context/Animations';
 
 export const StyledNotchContainer = styled.div`
-  height: 100px;
-  width: 1vw;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 4px solid black;
-  border-right: none;
-  border-radius: 20px 0px 0px 20px;
   position: absolute;
-  top: calc(50% - 50px);
-  right: 0px;
   z-index: 3;
   cursor: pointer;
+
+  ${media.mobile`
+    height: 100px;
+    width: 1vw;
+    border-bottom: none;
+    border-radius: 20px 0px 0px 20px;
+    position: absolute;
+    bottom: 0px;
+    left: calc(50% - 50px);
+    left: 1900px;
+  `}
+
+  ${media.desktop`
+    height: 100px;
+    width: 1vw;
+    border-right: none;
+    border-radius: 20px 0px 0px 20px;
+    position: absolute;
+    top: calc(50% - 50px);
+    right: 0px;
+  `}
+
+  &:hover {
+    background-color: ${props => props.theme.secondaryColor};
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+  }
 
   animation: ${({ $animationState }) => 
     $animationState === "Enter" 

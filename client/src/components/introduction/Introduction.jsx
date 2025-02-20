@@ -7,7 +7,7 @@ import IntroText from "./IntroText";
 import IntroGallery from "./IntroGallery";
 
 import { text } from "./text";
-import { StyledContentContainer, StyledButtonsContainer, StyledIntroContainer, StyledTitle, StyledMinorTitle, StyledGallery } from "./Introduction.styles";
+import { StyledContentContainer, StyledButtonsContainer, StyledTitle, StyledMinorTitle, StyledGallery } from "./Introduction.styles";
 
 function Introduction({ home, activateSongGuesser, activateFaradayCage, activateAuthorAnalysis }) {
   const [initial, setInitial] = useState(true);
