@@ -8,6 +8,6 @@
     "dev": "concurrently \"npm run client\" \"npm run server\" \"npm run python-server\"",
     "client": "cd client && npm run dev",
     "server": "cd server && npm run dev | grep 'server now running on port'",
-    "python-server": "cd python-server && flask"
+    "python-server": "cd python-server && python app.py"
   }
 }

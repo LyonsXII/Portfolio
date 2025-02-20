@@ -134,5 +134,6 @@ python-server/linux_venv/
 python-server/linux-Mallet-venv/
 python-server/venv
 
-# jupyter notebooks
+# model folders
 python-server/notebooks
+python-server/models
