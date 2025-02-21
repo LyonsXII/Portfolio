@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { media } from '../../context/media';
+
 import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, slideInBottomIntroAnimation, slideOutBottomIntroAnimation, nudgeDownBodyTextAnimation } from '../../context/Animations';
 
 export const StyledContentContainer = styled.div`
@@ -28,6 +30,11 @@ export const StyledIntroContainer = styled.div`
   justify-content: center;
   margin: 0;
   padding: 0px 40px;
+  border: 1px solid cyan;
+
+  ${media.mobile`
+    display: none;
+  `}
 
   animation: ${({ $tempCurrent, $id }) =>
     $tempCurrent !== $id ? slideOutBottomAnimation : slideInTopAnimation
@@ -36,19 +43,28 @@ export const StyledIntroContainer = styled.div`
 
 export const StyledGalleryContainer = styled.div`
   height: 100vh;
-  width: 30%;
   margin: 0;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  border: 1px solid red;
+
+  ${media.mobile`
+    width: 100%;
+  `}
+
+  ${media.desktop`
+    width: 30%;
+  `}
 `;
 
 // Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/"
 export const StyledGallery = styled.div`
-  --s: 10vw; // Gallery image size
+  --s: 20vh; // Gallery image size
   
   display: grid;
   grid-template-columns: repeat(3,auto);
+  border: 1px solid yellow;
   gap: 10px;
   position: relative;
   animation: ${bounceDownAnimation};
@@ -60,8 +76,6 @@ export const StyledInput = styled.input`
   border-radius: 50%;
   width: calc(var(--s) / 1.25); /* Dynamically size */
   height: calc(var(--s) / 1.25);
-  top: 38%;
-  left: 0;
   cursor: pointer;
   --g: linear-gradient(#000 0 0) no-repeat;
   background: var(--g) 50%/var(--b,0%) 8px,var(--g) 50%/8px var(--b,0%);
@@ -70,6 +84,16 @@ export const StyledInput = styled.input`
   -moz-appearance: none;
   appearance: none;
   background-color: ${({ theme }) => theme.primaryColor};
+
+  ${media.mobile`
+    top: calc(50% - var(--s) / 2.5);
+    left: calc(50% - var(--s) / 2.5);
+  `}
+
+  ${media.desktop`
+    top: calc(50% - var(--s) / 2.5);
+    left: 0;
+  `}
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
@@ -107,7 +131,68 @@ export const StyledGalleryImage = styled.img`
     box-shadow: 0 0px 10px rgba(255, 255, 255, 1);
   }
 
-  &:nth-of-type(1) {
+  ${media.mobile`
+    &:nth-of-type(1) {
+    border-radius: 40px 0px 0px 0px;
+    --i: 1;
+    --x: 150%;
+    --y: 150%;
+  }
+
+  &:nth-of-type(2) {
+    --i: 2;
+    --x: 50%;
+    --y: 150%;
+  }
+
+  &:nth-of-type(3) {
+    border-radius: 0px 40px 0px 0px;
+    --i: 3;
+    --x: -50%;
+    --y: 150%;
+  }
+
+  &:nth-of-type(4) {
+    --i: 4;
+    --x: 150%;
+    --y: 50%;
+  }
+
+  &:nth-of-type(5) {
+    --i: 5;
+    --x: 50%;
+    --y: 50%;
+  }
+
+  &:nth-of-type(6) {
+    --i: 6;
+    --x: -50%;
+    --y: 50%;
+  }
+
+  &:nth-of-type(7) {
+    border-radius: 0px 0px 0px 40px;
+    --i: 7;
+    --x: 150%;
+    --y: -50%;
+  }
+
+  &:nth-of-type(8) {
+    --i: 8;
+    --x: 50%;
+    --y: -50%;
+  }
+
+  &:nth-of-type(9) {
+    border-radius: 0px 0px 40px 0px;
+    --i: 9;
+    --x: -50%;
+    --y: -50%;
+  }
+  `}
+
+  ${media.desktop`
+    &:nth-of-type(1) {
     border-radius: 40px 0px 0px 0px;
     --i: 1;
     --x: 20%;
@@ -164,6 +249,8 @@ export const StyledGalleryImage = styled.img`
     --x: -180%;
     --y: -50%;
   }
+  `}
+
 `;
 
 export const StyledImage = styled.img`
@@ -208,6 +295,11 @@ export const StyledMainTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 8rem;
+
+  ${media.mobile`
+    display: none;
+  `}
+
   animation: ${({ $showSubTitle, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
     $showSubTitle && !$subTitleEntranceComplete ? nudgeUpSubTitleAnimation
     : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
@@ -235,6 +327,11 @@ export const StyledMinorTitleInitial = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 3rem;
   display: ${({ $showSubTitle }) => $showSubTitle ? "auto" : "none"};
+
+  ${media.mobile`
+    display: none;
+  `}
+
   animation: ${({ $showSubTitle, $expandIntroText, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
     $showSubTitle && !$subTitleEntranceComplete ? swingInAnimation
     : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
