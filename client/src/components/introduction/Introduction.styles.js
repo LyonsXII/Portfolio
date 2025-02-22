@@ -8,7 +8,29 @@ export const StyledContentContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  height: 100%;
   width: 100vw;
+
+  ${media.mobile`
+    flex-direction: column;
+  `}
+`;
+
+export const StyledIntroContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 30px;
+`;
+
+export const StyledContentFlexbox = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 340px;
+  width: 90%;
+  gap: 40px;
+  margin-top: 30px;
 `;
 
 export const StyledButtonsContainer = styled.div`
@@ -22,18 +44,27 @@ export const StyledButtonsContainer = styled.div`
 `;
 
 export const StyledIntroContainer = styled.div`
-  height: 80vh;
-  width: 60%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
   margin: 0;
   padding: 0px 40px;
-  border: 1px solid cyan;
+  border: 1px solid red;
 
   ${media.mobile`
-    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+
+    height: 100%;
+    max-height: ${({ $expandIntroText }) => $expandIntroText ? "56%" : "20%"};
+    transition: max-height 0.5s ease-in-out;
+  `}
+
+  ${media.desktop`
+    height: 80vh;
+    width: 60%;
+    align-items: flex-end;
+    justify-content: center;
   `}
 
   animation: ${({ $tempCurrent, $id }) =>
@@ -42,18 +73,17 @@ export const StyledIntroContainer = styled.div`
 `;
 
 export const StyledGalleryContainer = styled.div`
-  height: 100vh;
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid red;
 
   ${media.mobile`
     width: 100%;
   `}
 
   ${media.desktop`
+    height: 100vh;
     width: 30%;
   `}
 `;
@@ -64,9 +94,9 @@ export const StyledGallery = styled.div`
   
   display: grid;
   grid-template-columns: repeat(3,auto);
-  border: 1px solid yellow;
   gap: 10px;
   position: relative;
+
   animation: ${bounceDownAnimation};
 `;
 
@@ -88,11 +118,23 @@ export const StyledInput = styled.input`
   ${media.mobile`
     top: calc(50% - var(--s) / 2.5);
     left: calc(50% - var(--s) / 2.5);
+
+    &:checked {
+      border: 8px solid #000;
+      transform: translateY(calc(0.925 * var(--s))) scale(0.5) rotate(45deg);
+      --b: 70%;
+    }
   `}
 
   ${media.desktop`
     top: calc(50% - var(--s) / 2.5);
     left: 0;
+
+    &:checked {
+      border: 8px solid #000;
+      transform: translateY(calc(1.85 * var(--s))) scale(0.5) rotate(45deg);
+      --b: 70%;
+    }
   `}
 
   &:hover {
@@ -109,15 +151,11 @@ export const StyledInput = styled.input`
 
   &:checked {
     border: 8px solid #000;
-    transform: translateY(calc(1.85 * var(--s))) scale(0.5) rotate(45deg);
-    --b: 70%;
   }
 `;
 
 export const StyledGalleryImage = styled.img`
-  border: 6px solid black;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  width: var(--s);
   aspect-ratio: 1;
   object-fit: cover;
   transform: scale(.1);
@@ -132,6 +170,10 @@ export const StyledGalleryImage = styled.img`
   }
 
   ${media.mobile`
+    border: 3px solid black;
+    width: calc(var(--s) * 0.5);
+    transform: scale(0.2);
+
     &:nth-of-type(1) {
     border-radius: 40px 0px 0px 0px;
     --i: 1;
@@ -192,6 +234,10 @@ export const StyledGalleryImage = styled.img`
   `}
 
   ${media.desktop`
+    border: 6px solid black;
+    width: var(--s);
+    transform: scale(0.1);
+
     &:nth-of-type(1) {
     border-radius: 40px 0px 0px 0px;
     --i: 1;
@@ -294,18 +340,22 @@ export const StyledMainTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 8rem;
 
   ${media.mobile`
-    display: none;
+    margin-top: 4%;
+    font-size: 5rem;
   `}
 
-  animation: ${({ $showSubTitle, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
+  ${media.desktop`
+    font-size: 8rem;
+
+    animation: ${({ $showSubTitle, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
     $showSubTitle && !$subTitleEntranceComplete ? nudgeUpSubTitleAnimation
     : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
     : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
     : "none"
   };
+  `}
 `;
 
 export const StyledTitle = styled.h1`
@@ -325,19 +375,22 @@ export const StyledMinorTitleInitial = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 3rem;
-  display: ${({ $showSubTitle }) => $showSubTitle ? "auto" : "none"};
 
   ${media.mobile`
-    display: none;
+  font-size: 2rem;
   `}
 
-  animation: ${({ $showSubTitle, $expandIntroText, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
+  ${media.desktop`
+    display: ${({ $showSubTitle }) => $showSubTitle ? "auto" : "none"};
+    font-size: 3rem;
+
+    animation: ${({ $showSubTitle, $expandIntroText, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
     $showSubTitle && !$subTitleEntranceComplete ? swingInAnimation
     : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
     : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
     : "none"
   };
+  `}
 `;
 
 export const StyledMinorTitle = styled.h3`
@@ -358,9 +411,20 @@ export const StyledBodyTextInitialText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 1.5rem;
-  padding: 4% 0px 0px 4%;
-  text-align: right;
+
+  ${media.mobile`
+    margin-top: 10%;
+    padding: 0% 4% 0% 4%;
+    text-align: center;
+    font-size: 1.2rem;
+  `}
+
+  ${media.desktop`
+    padding: 4% 0px 0px 4%;
+    text-align: right;
+    font-size: 1.5rem;
+  `}
+
   animation: ${({ $introBodyTextAnimationActive }) => 
     $introBodyTextAnimationActive === "Entrance" ? slideInBottomIntroAnimation 
     : $introBodyTextAnimationActive === "Exit" ? slideOutBottomIntroAnimation

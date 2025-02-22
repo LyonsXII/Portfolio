@@ -3,24 +3,7 @@ import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-import { StyledTitle, StyledMinorTitle, StyledBodyText, StyledImage, StyledTitleContainer, StyledIntroButtonContainer, StyledSpacer, StyledButtonsContainer, StyledIntroContainer } from "./Introduction.styles";
-
-const StyledContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 30px;
-`;
-
-const StyledContentFlexbox = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 340px;
-  width: 90%;
-  gap: 40px;
-  margin-top: 30px;
-`;
+import { StyledIntroContentContainer, StyledContentFlexbox, StyledTitle, StyledMinorTitle, StyledBodyText, StyledImage, StyledTitleContainer, StyledIntroButtonContainer, StyledSpacer, StyledButtonsContainer, StyledIntroContainer } from "./Introduction.styles";
 
 const layoutMap = {
   A: ({ containerProps, title, theme, textA, textB, changeSection, imgA }) => (
@@ -44,7 +27,7 @@ const layoutMap = {
         </StyledIntroButtonContainer>
       </StyledTitleContainer>
 
-      <StyledContentContainer>
+      <StyledIntroContentContainer>
         <StyledBodyText style={{ marginTop: "40px", width: "90%" }}>
           {textA}
           <br />
@@ -57,7 +40,7 @@ const layoutMap = {
           </StyledBodyText>
           <StyledImage $height="100%" $width="60" src={imgA}/>
         </StyledContentFlexbox>
-      </StyledContentContainer>
+      </StyledIntroContentContainer>
     </StyledIntroContainer>
   ),
   B: ({ containerProps, title, theme, textA, textB }) => (
