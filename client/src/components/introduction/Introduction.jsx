@@ -105,6 +105,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
           current={current}
           tempCurrent={tempCurrent}
           changeSection={changeSection}
+          $expandIntroText={expandIntroText}
           imgA={section.imgA}
         />
       ))}

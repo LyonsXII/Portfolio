@@ -5,13 +5,13 @@ export const growInput = keyframes`
     width: 0px;
   }
   100% {
-    width: 800px;
+    width: 80%;
   }
 `;
 
 export const shrinkInput = keyframes`
   0% {
-    width: 800px;
+    width: 80%;
   }
   100% {
     width: 0px;

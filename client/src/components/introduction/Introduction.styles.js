@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 import { media } from '../../context/media';
 
-import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, slideInBottomIntroAnimation, slideOutBottomIntroAnimation, nudgeDownBodyTextAnimation } from '../../context/Animations';
+import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, nudgeDownBodyTextAnimation } from '../../context/Animations';
+
+import { slideInBottomIntroAnimation, slideInBottomIntroAnimationMobile, slideOutBottomIntroAnimation, slideOutBottomIntroAnimationMobile } from './IntroductionAnimations';
 
 export const StyledContentContainer = styled.div`
   display: flex;
@@ -47,15 +49,13 @@ export const StyledIntroContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 0px 40px;
-  border: 1px solid red;
 
   ${media.mobile`
     width: 100%;
     align-items: center;
     justify-content: flex-start;
+    height: 100vh;
 
-    height: 100%;
     max-height: ${({ $expandIntroText }) => $expandIntroText ? "56%" : "20%"};
     transition: max-height 0.5s ease-in-out;
   `}
@@ -73,7 +73,6 @@ export const StyledIntroContainer = styled.div`
 `;
 
 export const StyledGalleryContainer = styled.div`
-  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,6 +84,7 @@ export const StyledGalleryContainer = styled.div`
   ${media.desktop`
     height: 100vh;
     width: 30%;
+    margin-left: 4vw;
   `}
 `;
 
@@ -158,7 +158,7 @@ export const StyledGalleryImage = styled.img`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   aspect-ratio: 1;
   object-fit: cover;
-  transform: scale(.1);
+  transform: scale(0.1);
   filter: brightness(0);
   pointer-events: none;
   transform-origin: var(--x) var(--y);
@@ -300,37 +300,78 @@ export const StyledGalleryImage = styled.img`
 `;
 
 export const StyledImage = styled.img`
-  height: ${({ $height }) => $height};
-  width: ${({ $width }) => $width};
   border: 6px solid black;
   border-radius: 20px;
+
+  ${media.mobile`
+    height: 15%;
+    width: 100%;
+  `}
+
+  ${media.desktop`
+    height: ${({ $height }) => $height};
+    width: ${({ $width }) => $width};
+  `}
 `;
 
 export const StyledTitleContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  height: auto;
-  width: 90%;
-  padding: 20px 40px;
-  border: 6px solid black;
-  border-radius: 20px;
   background-color: ${({ theme }) => theme.primaryColorTransparent};
+
+  ${media.mobile`
+    width: 100%;
+    flex-direction: column;
+    border-bottom: 3px solid black;
+    padding: 4px 0px 8px 0px;
+  `}
+
+  ${media.desktop`
+    width: 90%;
+    border: 6px solid black;
+    border-radius: 20px;
+    padding: 20px 40px;
+  `}
 `;
 
 export const StyledIntroButtonContainer = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  width: auto;
-  gap: 30px;
+
+  ${media.mobile`
+    margin-top: 1vh;
+    gap: 10px;
+  `}
+
+  ${media.desktop`
+    margin-top: 1vh;
+    gap: 30px;
+  `}
 `;
 
 export const StyledSpacer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-grow: 1;
+  ${media.mobile`
+    display: none;
+  `}
+
+  ${media.desktop`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+  `}
+`;
+
+export const StyledSVG = styled.svg`
+  ${media.mobile`
+    height: 40px;
+  `}
+
+  ${media.desktop`
+    height: 80px;
+  `}
 `;
 
 export const StyledMainTitle = styled.h1`
@@ -350,11 +391,11 @@ export const StyledMainTitle = styled.h1`
     font-size: 8rem;
 
     animation: ${({ $showSubTitle, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
-    $showSubTitle && !$subTitleEntranceComplete ? nudgeUpSubTitleAnimation
-    : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
-    : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
-    : "none"
-  };
+      $showSubTitle && !$subTitleEntranceComplete ? nudgeUpSubTitleAnimation
+      : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
+      : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
+      : "none"
+    };
   `}
 `;
 
@@ -365,7 +406,14 @@ export const StyledTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 6rem;
+
+  ${media.mobile`
+    font-size: 3rem;
+  `}
+
+  ${media.desktop`
+    font-size: 6rem;
+  `}
 `;
 
 export const StyledMinorTitleInitial = styled.h3`
@@ -400,8 +448,15 @@ export const StyledMinorTitle = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 2.5rem;
   white-space: nowrap;
+
+  ${media.mobile`
+    font-size: 2rem;
+  `}
+
+  ${media.desktop`
+    font-size: 2.5rem;
+  `}
 `;
 
 export const StyledBodyTextInitialText = styled.p`
@@ -417,19 +472,29 @@ export const StyledBodyTextInitialText = styled.p`
     padding: 0% 4% 0% 4%;
     text-align: center;
     font-size: 1.2rem;
+
+    animation: ${({ $introBodyTextAnimationActive }) => 
+      $introBodyTextAnimationActive === "Entrance" 
+        ? slideInBottomIntroAnimationMobile 
+      : $introBodyTextAnimationActive === "Exit" 
+          ? slideOutBottomIntroAnimationMobile
+      : "none"
+    };
   `}
 
   ${media.desktop`
     padding: 4% 0px 0px 4%;
     text-align: right;
     font-size: 1.5rem;
-  `}
 
-  animation: ${({ $introBodyTextAnimationActive }) => 
-    $introBodyTextAnimationActive === "Entrance" ? slideInBottomIntroAnimation 
-    : $introBodyTextAnimationActive === "Exit" ? slideOutBottomIntroAnimation
-    : "none"
-  };
+    animation: ${({ $introBodyTextAnimationActive }) => 
+      $introBodyTextAnimationActive === "Entrance" 
+        ? slideInBottomIntroAnimation 
+      : $introBodyTextAnimationActive === "Exit" 
+          ? slideOutBottomIntroAnimation
+      : "none"
+    };
+  `}
 `;
 
 export const StyledBodyText = styled.p`
@@ -439,5 +504,16 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 1.5rem;
+
+  ${media.mobile`
+    width: calc(100% - 40px);
+    margin-top: 20px;
+    font-size: 1.2rem;
+  `}
+
+  ${media.desktop`
+    width: 90%;
+    margin-top: 30px;
+    font-size: 1.5rem;
+  `}
 `;

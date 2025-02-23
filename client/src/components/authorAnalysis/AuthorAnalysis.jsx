@@ -48,9 +48,7 @@ function AuthorAnalysis({ transition }) {
         <StyledTextBox theme={theme} $expanded={expanded}>
           <StyledTextField theme={theme} placeholder="Enter your text here..."/>
         </StyledTextBox>
-        <button onClick={predict}>Click me!</button>
       </StyledTextEntryFlexbox>
-      <StyledTextBox>{predictionData["predicted_author"]}</StyledTextBox>
     </StyledFlexboxContainer>
   )
 }

@@ -52,8 +52,15 @@ export const StyledSettingsContainer = styled.div`
   right: -80px;
   color: ${({ theme }) => theme.textColor};
   height: 100vh;
-  display: flex;
-  justify-content: flex-end;
+
+  ${media.mobile`
+    display: none;
+  `}
+
+  ${media.desktop`
+    display: flex;
+    justify-content: flex-end;
+  `}
 
   animation: ${({ $animationState }) => 
     $animationState === "Enter" 
