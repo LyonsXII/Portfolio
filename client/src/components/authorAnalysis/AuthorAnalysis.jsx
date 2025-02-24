@@ -3,25 +3,31 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
 
-  const [requestData, setRequestData] = useState({
-    mode: "Author Analysis - BERT",
-    text: "He is born again! I feel him! The Dragon takes his first breath on the slopes of Dragonmount! He is coming! He is coming! Light help us! Light help the world! He lies in the snow and cries like the thunder! He burns like the sun!"
-  })
-  const [predictionData, setPredictionData] = useState({});
+  const [predictionText, setPredictionText] = useState("");
+  const [predictionData, setPredictionData] = useState("");
 
   const [expanded, setExpanded] = useState(false);
+  const [showData, setShowData] = useState(false);
 
   function toggleExpanded() {
     setExpanded(prev => !prev);
   }
 
+  function handleChange(e) {
+    setPredictionText(e.target.value);
+  };
+
   async function predict() {
     try {
+      const requestData = {
+        mode: "Author Analysis - BERT",
+        text: predictionText
+      }
       const response = await fetch("http://localhost:5000/predict", {
         method: "POST",
         headers: {
@@ -43,12 +49,16 @@ function AuthorAnalysis({ transition }) {
 
   return (
     <StyledFlexboxContainer $transition={transition}>
-      <StyledTextEntryFlexbox>
-        <StyledMainButton theme={theme} onClick={toggleExpanded} $expanded={expanded}/>
+      <StyledTextEntryFlexbox $showData={showData}>
+        <StyledMainButton theme={theme} onClick={expanded ? undefined : toggleExpanded} $expanded={expanded}>
+          <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={expanded} onClick={predict}/>
+          <StyledIcon src="./icons/return.svg" $width="46px" $expanded={expanded} onClick={toggleExpanded}/>
+        </StyledMainButton>
         <StyledTextBox theme={theme} $expanded={expanded}>
-          <StyledTextField theme={theme} placeholder="Enter your text here..."/>
+          <StyledTextField theme={theme} value={predictionText} onChange={handleChange} placeholder="Enter your text here..."/>
         </StyledTextBox>
       </StyledTextEntryFlexbox>
+      {/* <h3>{predictionData["predicted_author"]}</h3> */}
     </StyledFlexboxContainer>
   )
 }

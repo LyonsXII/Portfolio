@@ -5,7 +5,7 @@ export const growInput = keyframes`
     width: 0px;
   }
   100% {
-    width: 80%;
+    width: 85%;
   }
 `;
 

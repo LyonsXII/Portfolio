@@ -11,14 +11,13 @@ export const StyledFlexboxContainer = styled.div`
   width: 100vw;
   display: flex;
   justify-content: center;
-  gap: 40px;
 
   ${media.mobile`
     align-items: flex-start;
   `}
 
   ${media.desktop`
-    align-items: center;
+    align-items: flex-start;
   `}
 
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
@@ -26,26 +25,31 @@ export const StyledFlexboxContainer = styled.div`
 
 export const StyledTextEntryFlexbox = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
+  margin-top: 2vh;
 
   ${media.mobile`
     height: 100vh;
-    max-height: calc(50vh + 17vw);
-    width: 100vw;
-    align-items: flex-end;
+    max-height: ${({ $showData }) => $showData ? "34vw" : "calc(100vh - 40px)"};
+    width: 94vw;
   `}
 
   ${media.desktop`
-    height: 200px;
+    height: 100vh;
+    max-height: ${({ $showData }) => $showData ? "200px" : "calc(100vh - 40px)"};
     width: 80%;
-    align-items: center;
   `}
 `
 
 export const StyledMainButton = styled.button`
-  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
   z-index: 1;
+  transition: border-radius 1s ease;
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
@@ -54,14 +58,20 @@ export const StyledMainButton = styled.button`
 
   ${media.mobile`
     height: 34vw;
-    width: 34vw;
+    width: ${({ $expanded }) => $expanded ? "15%" : "34vw"};
     border: 3px solid black;
+    margin-left: ${({ $expanded }) => $expanded ? "0px" : "-10vw"};
+    border-radius: ${({ $expanded }) => $expanded ? "40px" : "50%"};
+    transition: border-radius 1s ease, margin-left 1s ease, width 1s ease;
   `}
 
   ${media.desktop`
     height: 200px;
-    width: 200px;
+    width: ${({ $expanded }) => $expanded ? "100px" : "200px"};
     border: 6px solid black;
+    margin-left: ${({ $expanded }) => $expanded ? "0px" : "-75px"};
+    border-radius: ${({ $expanded }) => $expanded ? "40px" : "50%"};
+    transition: border-radius 1s ease, margin-left 1s ease, width 1s ease;
   `}
 `
 
@@ -74,16 +84,14 @@ export const StyledTextBox = styled.div`
   background-color: ${({ theme }) => theme.secondaryColor};
 
   ${media.mobile`
-    height: calc(34vw - 6px);
-    margin-left: -17vw;
-    // Need to add a temp variable to handle the transition, until animation done can't be none
-    display: ${({$expanded}) => $expanded ? "auto" : "none"};
+    height: calc(34vw - 26px);
+    margin-left: -10vw;
     border: 3px solid black;
   `}
 
   ${media.desktop`
     height: 160px;
-    margin-left: -100px;
+    margin-left: -75px;
     border: 6px solid black;
   `}
 
@@ -121,4 +129,13 @@ export const StyledTextField = styled.textarea`
 
   /* Hide scrollbar for IE & Edge */
   -ms-overflow-style: none;
+`
+export const StyledIcon = styled.img`
+  display: ${({ $expanded }) => $expanded ? "auto" : "none"};
+  width: ${({ $width }) => $width};
+
+  &:hover {
+    background-color: ${props => props.theme.secondaryColor};
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+  }
 `
