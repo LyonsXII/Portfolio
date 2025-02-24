@@ -10,15 +10,9 @@ export const StyledFlexboxContainer = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
-
-  ${media.mobile`
-    align-items: flex-start;
-  `}
-
-  ${media.desktop`
-    align-items: flex-start;
-  `}
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
@@ -27,17 +21,19 @@ export const StyledTextEntryFlexbox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2vh;
+  margin: 2vh 0vh;
 
   ${media.mobile`
     height: 100vh;
     max-height: ${({ $showData }) => $showData ? "34vw" : "calc(100vh - 40px)"};
-    width: 94vw;
+    transition: max-height 1s ease;
+    width: 100vw;
   `}
 
   ${media.desktop`
     height: 100vh;
     max-height: ${({ $showData }) => $showData ? "200px" : "calc(100vh - 40px)"};
+    transition: max-height 1s ease;
     width: 80%;
   `}
 `
@@ -138,4 +134,17 @@ export const StyledIcon = styled.img`
     background-color: ${props => props.theme.secondaryColor};
     box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
   }
+`
+export const StyledDataFlexbox = styled.div`
+  height: 100%;
+  max-height: ${({ $showData }) => $showData ? "100%" : "0%"};
+  transition: max-height 1s ease;
+  width: 100%;
+`
+
+export const StyledDataBox = styled.div`
+  height: 10%;
+  width: 50%;
+  background-color: ${({ theme }) => theme.primaryColor};
+  border: 3px solid black;
 `

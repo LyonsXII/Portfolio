@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledDataFlexbox, StyledDataBox } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
@@ -16,6 +16,9 @@ function AuthorAnalysis({ transition }) {
 
   function toggleExpanded() {
     setExpanded(prev => !prev);
+    if (expanded) {
+      setShowData(false);
+    }
   }
 
   function handleChange(e) {
@@ -42,6 +45,7 @@ function AuthorAnalysis({ transition }) {
 
       const data = await response.json();
       setPredictionData(data);
+      setShowData(true);
     } catch (err) {
       console.error("Error sending request:", err);
     }
@@ -58,7 +62,12 @@ function AuthorAnalysis({ transition }) {
           <StyledTextField theme={theme} value={predictionText} onChange={handleChange} placeholder="Enter your text here..."/>
         </StyledTextBox>
       </StyledTextEntryFlexbox>
-      {/* <h3>{predictionData["predicted_author"]}</h3> */}
+
+      <StyledDataFlexbox $showData={showData}>
+        <StyledDataBox theme={theme}>
+          {predictionData["predicted_author"]}
+        </StyledDataBox>
+      </StyledDataFlexbox>
     </StyledFlexboxContainer>
   )
 }
