@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledDataFlexbox, StyledDataBox } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledDataGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
@@ -12,7 +12,7 @@ function AuthorAnalysis({ transition }) {
   const [predictionData, setPredictionData] = useState("");
 
   const [expanded, setExpanded] = useState(false);
-  const [showData, setShowData] = useState(false);
+  const [showData, setShowData] = useState(true);
 
   function toggleExpanded() {
     setExpanded(prev => !prev);
@@ -63,11 +63,18 @@ function AuthorAnalysis({ transition }) {
         </StyledTextBox>
       </StyledTextEntryFlexbox>
 
-      <StyledDataFlexbox $showData={showData}>
+      <StyledDataGrid $showData={showData}>
         <StyledDataBox theme={theme}>
-          {predictionData["predicted_author"]}
+          <StyledBodyText>
+            Predicted Author:
+            <br/>
+            {predictionData["predicted_author"]}
+          </StyledBodyText>
         </StyledDataBox>
-      </StyledDataFlexbox>
+        <StyledPlotContainer theme={theme}>
+          <StyledIFrame src="/lda_vis.html" title="pyLDAvis Visualisation"/>
+        </StyledPlotContainer>
+      </StyledDataGrid>
     </StyledFlexboxContainer>
   )
 }

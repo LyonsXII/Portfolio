@@ -107,6 +107,12 @@ export const StyledTextField = styled.textarea`
   outline: none;
   color: ${({ theme }) => theme.textColor};
   font-size: 1.2rem;
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),               
+              0px 0px 6px rgba(0, 0, 0, 1);
   white-space: normal;
   overflow-wrap: break-word;
   overflow: hidden;
@@ -135,16 +141,62 @@ export const StyledIcon = styled.img`
     box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
   }
 `
-export const StyledDataFlexbox = styled.div`
+export const StyledDataGrid = styled.div`
+  display: grid;
   height: 100%;
   max-height: ${({ $showData }) => $showData ? "100%" : "0%"};
   transition: max-height 1s ease;
-  width: 100%;
+  width: 90%;
 `
 
 export const StyledDataBox = styled.div`
-  height: 10%;
-  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  width: fit-content;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 3px solid black;
+  border-radius: 20px;
+  padding: 10px;
 `
+
+export const StyledPlotContainer = styled.div`
+  margin-top: 20px;
+  width: 500px;
+  border: 3px solid black;
+  overflow: hidden;
+  background-color: white;
+
+  ${media.mobile`
+    height: 460px;
+  `}
+
+  ${media.desktop`
+    height: 860px;
+  `}
+`
+
+export const StyledIFrame = styled.iframe`
+  width: 100%;    /* Increase iframe size to compensate for the scale down */
+  height: 100%;
+  transform: scale(1);     /* Scale down the content */
+  transform-origin: 0 0;      /* Anchor the scaling at the top-left corner */
+`;
+
+export const StyledBodyText = styled.p`
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),               
+              0px 0px 6px rgba(0, 0, 0, 1);
+
+  ${media.mobile`
+    font-size: 1.2rem;
+  `}
+
+  ${media.desktop`
+    font-size: 1.5rem;
+  `}
+`;
