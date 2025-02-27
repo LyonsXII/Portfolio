@@ -4,7 +4,7 @@ import { keyframes, css } from 'styled-components';
 import { media } from '../../context/media';
 
 import { slideInTopAnimation, slideOutRightAnimation, bounceDownAnimation } from '../../context/Animations';
-import { growInput, shrinkInput } from './AuthorAnalysisAnimations';
+import { fadeInAnimation, fadeOutAnimation } from './AuthorAnalysisAnimations';
 
 export const StyledFlexboxContainer = styled.div`
   height: 100vh;
@@ -72,7 +72,9 @@ export const StyledMainButton = styled.button`
 `
 
 export const StyledTextBox = styled.div`
-  width: 0px;
+  width: 90%;
+  max-width: ${({$expanded}) => $expanded ? "100%" : "0%"};
+  transition: max-width 1s ease;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,11 +92,6 @@ export const StyledTextBox = styled.div`
     margin-left: -75px;
     border: 6px solid black;
   `}
-
-  animation: ${({$expanded}) => $expanded ? 
-  css`${growInput} 1s ease-in-out forwards` : 
-  css`${shrinkInput} 1s ease-in-out forwards`
-  };
 `
 
 export const StyledTextField = styled.textarea`
@@ -133,28 +130,37 @@ export const StyledTextField = styled.textarea`
   -ms-overflow-style: none;
 `
 export const StyledIcon = styled.img`
-  display: ${({ $expanded }) => $expanded ? "auto" : "none"};
+  display: ${({ $expanded, $main }) => 
+    $main && $expanded ? "none"
+    : $main && !$expanded ? "auto" 
+    : !$main && $expanded ? "auto"
+    : "none"
+  };
   width: ${({ $width }) => $width};
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
     box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
   }
+
+  animation: ${fadeInAnimation};
 `
-export const StyledDataGrid = styled.div`
-  display: grid;
+export const StyledFlexbox = styled.div`
+  display: ${({ $showData }) => $showData ? "flex" : "none"};
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
   height: 100%;
   max-height: ${({ $showData }) => $showData ? "100%" : "0%"};
   transition: max-height 1s ease;
-  width: 90%;
+  width: 100%;
 `
 
 export const StyledDataBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: fit-content;
-  width: fit-content;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 3px solid black;
   border-radius: 20px;
@@ -162,14 +168,21 @@ export const StyledDataBox = styled.div`
 `
 
 export const StyledPlotContainer = styled.div`
-  margin-top: 20px;
-  width: 500px;
+  width: 50%;
   border: 3px solid black;
+  border-radius: 20px;
   overflow: hidden;
   background-color: white;
+  color: antiquewhite;
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 1),
+            0px 0px 6px rgba(0, 0, 0, 1),
+            0px 0px 6px rgba(0, 0, 0, 1),
+            0px 0px 6px rgba(0, 0, 0, 1),
+            0px 0px 6px rgba(0, 0, 0, 1),               
+            0px 0px 6px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    height: 460px;
+    height: 300px;
   `}
 
   ${media.desktop`
@@ -178,10 +191,12 @@ export const StyledPlotContainer = styled.div`
 `
 
 export const StyledIFrame = styled.iframe`
-  width: 100%;    /* Increase iframe size to compensate for the scale down */
+  width: 100%;
   height: 100%;
-  transform: scale(1);     /* Scale down the content */
-  transform-origin: 0 0;      /* Anchor the scaling at the top-left corner */
+  border: none;
+  transform: scale(1.2);
+  transform-origin: 0 0;
+  translate(-40%, -60%)
 `;
 
 export const StyledBodyText = styled.p`
