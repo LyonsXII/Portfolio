@@ -164,11 +164,20 @@ export const StyledDataBox = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
   border: 3px solid black;
   border-radius: 20px;
-  padding: 10px;
+
+  ${media.mobile`
+    width: 30%;
+    padding: 10px;
+
+  `}
+
+  ${media.desktop`
+    width: fit-content;
+    padding: 20px;
+  `}
 `
 
 export const StyledPlotContainer = styled.div`
-  width: 50%;
   border: 3px solid black;
   border-radius: 20px;
   overflow: hidden;
@@ -183,10 +192,12 @@ export const StyledPlotContainer = styled.div`
 
   ${media.mobile`
     height: 300px;
+    width: 50%
   `}
 
   ${media.desktop`
-    height: 860px;
+    height: 420px;
+    width: 30%
   `}
 `
 
@@ -198,6 +209,19 @@ export const StyledIFrame = styled.iframe`
   transform-origin: 0 0;
   translate(-40%, -60%)
 `;
+
+export const StyledWordcloud = styled.img`
+  border: 3px solid black;
+  border-radius: 20px;
+
+  ${media.mobile`
+    width: 90%
+  `}
+
+  ${media.desktop`
+    width: 40%
+  `}
+`
 
 export const StyledBodyText = styled.p`
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 1),

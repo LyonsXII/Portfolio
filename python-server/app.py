@@ -1,28 +1,49 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = "3"
+
+import re
+import string
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-
+import base64
 import numpy as np
 import pandas as pd
+import nltk
+from nltk.corpus import stopwords
+from nltk.corpus import cmudict
+from nltk.stem.porter import PorterStemmer
+import spacy
 import tensorflow as tf
 import tensorflow_hub as hub
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
-from BERT import predict
+from author_predict import predict_author
+from emotion_predict import predict_emotion
+from text_metrics import calculate_metrics
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/predict', methods=['POST'])
-def predict_author():
-    # Get JSON data from the request
-    data = request.get_json()
+def text_analysis():
+  data = request.get_json()
 
-    # Predict author of text
-    prediction_data = predict(data["text"])
+  if not data or "text" not in data:
+     return jsonify({"error": "No valid text input received"}, 400)
 
-    # Example response
-    response = prediction_data
+  response = {}
+  user_text = data["text"]
+  response["predicted_authors"] = predict_author(user_text)
+  response["predicted_emotions"] = predict_emotion(user_text)
+  response["metrics"] = calculate_metrics(user_text)
 
-    return jsonify(response)
+  with open('./output/wordcloud.png', 'rb') as image_file:
+    encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+  response["wordcloud"] = encoded_image
+
+  return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5001, debug=True)

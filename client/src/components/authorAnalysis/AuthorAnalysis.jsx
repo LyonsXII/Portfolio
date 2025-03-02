@@ -3,15 +3,36 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledFlexbox, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledBodyText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledFlexbox, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
 
+  const [expanded, setExpanded] = useState(false);
+  const [showData, setShowData] = useState(true);
+
   const [predictionText, setPredictionText] = useState("");
   const [predictionData, setPredictionData] = useState({
-    predicted_author: "Example 1",
-    author_weights: [[0.5, "Example 1"], [0.3, "Example 2"], [0.1, "Example 3"], [0.05, "Example 4"], [0.05, "Example 5"]]
+    predicted_authors: [[0.5, "Example 1"], [0.3, "Example 2"], [0.1, "Example 3"], [0.05, "Example 4"], [0.05, "Example 5"]],
+    predicted_emotions: {
+      valence: 3,
+      arousal: 3,
+      dominance: 3
+    },
+    metrics: {
+    "total_words": 0,
+    "total_sentences": 0,
+    "total_syllables": 0,
+    "fk_score": 0,
+    "fk_grade": "Professional",
+    "average_word_length": 0,
+    "average_sentence_length": 0,
+    "lexical_diversity": 0,
+    "tense": "past",
+    "person": "third",
+    "voice": "passive"
+    },
+    wordcloud: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAFhALX4XiAfAAAAABJRU5ErkJggg=="
   });
 
   const [predictedAuthorsPlotData, setPredictedAuthorsPlotData] = useState({
@@ -27,35 +48,22 @@ function AuthorAnalysis({ transition }) {
       },
     },
     textfont: {
-      color: 'antiquewhite' // Default color if you don't specify inside/outside
+      color: theme.textColor,
+      size: 12
     },
     insidetextfont: {
-      color: 'antiquewhite' // Text color for labels drawn inside the bar
+      color: theme.textColor,
+      size: 12
     },
     outsidetextfont: {
-      color: 'antiquewhite' // Text color for labels drawn outside the bar
+      color: theme.textColor,
+      size: 12
     },
     text: ["Example 1", "Example 2", "Example 3", "Example 4", "Example 5"],
     textposition: ["inside", "inside", "outside", "outside", "outside"],
     hoverinfo: 'none',
     autosize: true
   });
-
-  // Update plot data when predictions come in from backend
-  useEffect(() => {
-    setPredictedAuthorsPlotData(prevData => ({
-      ...prevData,
-      x: predictionData["author_weights"].slice(0, 5).map(([weight]) => weight),
-      y: predictionData["author_weights"].slice(0, 5).map(([weight, name]) => name),
-      text: predictionData["author_weights"].slice(0, 5).map(([weight, name]) => name),
-      textposition: predictionData["author_weights"].slice(0, 5).map(([weight, name]) => 
-        weight > 0.15 ? "inside" : "outside"
-    )
-    }));
-  }, [predictionData]);
-
-  const [expanded, setExpanded] = useState(false);
-  const [showData, setShowData] = useState(true);
 
   function toggleExpanded() {
     setExpanded(prev => !prev);
@@ -71,15 +79,14 @@ function AuthorAnalysis({ transition }) {
   async function predict() {
     try {
       const requestData = {
-        mode: "Author Analysis - BERT",
         text: predictionText
       }
-      const response = await fetch("http://localhost:5000/predict", {
+      const response = await fetch("http://localhost:5001/predict", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json" // Tell Flask we're sending JSON
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(requestData) // Convert JS object to JSON string
+        body: JSON.stringify(requestData)
       });
 
       if (!response.ok) {
@@ -87,12 +94,26 @@ function AuthorAnalysis({ transition }) {
       }
 
       const data = await response.json();
+      data["wordcloud"] = `data:image/png;base64,${data["wordcloud"]}`
       setPredictionData(data);
       setShowData(true);
     } catch (err) {
       console.error("Error sending request:", err);
     }
   }
+
+  // Update plot data when predictions come in from backend
+  useEffect(() => {
+    setPredictedAuthorsPlotData(prevData => ({
+      ...prevData,
+      x: predictionData["predicted_authors"].slice(0, 5).map(([weight]) => weight),
+      y: predictionData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
+      text: predictionData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
+      textposition: predictionData["predicted_authors"].slice(0, 5).map(([weight, name]) => 
+        weight > 0.15 ? "inside" : "outside"
+    )
+    }));
+  }, [predictionData]);
 
   return (
     <StyledFlexboxContainer $transition={transition}>
@@ -110,9 +131,31 @@ function AuthorAnalysis({ transition }) {
       <StyledFlexbox $showData={showData}>
         <StyledDataBox theme={theme}>
           <StyledBodyText>
-            Predicted Author:
+            Total Words: {predictionData["metrics"]["total_words"]}
             <br/>
-            {predictionData["predicted_author"]}
+            Average Word Length: {predictionData["metrics"]["average_word_length"]}
+            <br/>
+            Total Sentences: {predictionData["metrics"]["total_sentences"]}
+            <br/>
+            Average Sentence Length: {predictionData["metrics"]["average_sentence_length"]}
+            <br/>
+            <br/>
+            Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
+            <br/>
+            <br/>
+            Tense: {predictionData["metrics"]["tense"]}
+            <br/>
+            Person: {predictionData["metrics"]["person"]}
+            <br/>
+            Voice: {predictionData["metrics"]["voice"]}
+            <br/>
+            <br/>
+            Valence: {predictionData["predicted_emotions"]["valence"]}
+            <br/>
+            Arousal: {predictionData["predicted_emotions"]["arousal"]}
+            <br/>
+            Dominance: {predictionData["predicted_emotions"]["dominance"]}
+            <br/>
           </StyledBodyText>
         </StyledDataBox>
         {/* <StyledPlotContainer theme={theme}>
@@ -145,6 +188,7 @@ function AuthorAnalysis({ transition }) {
             style={{ width: '100%', height: '100%' }}
           />
         </StyledPlotContainer>
+        <StyledWordcloud src={predictionData["wordcloud"]}/>
       </StyledFlexbox>
     </StyledFlexboxContainer>
   )
