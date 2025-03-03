@@ -37,11 +37,10 @@ def text_analysis():
   user_text = data["text"]
   response["predicted_authors"] = predict_author(user_text)
   response["predicted_emotions"] = predict_emotion(user_text)
-  response["metrics"] = calculate_metrics(user_text)
-
-  with open('./output/wordcloud.png', 'rb') as image_file:
-    encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-  response["wordcloud"] = encoded_image
+  
+  text_wordcloud, text_metrics = calculate_metrics(user_text)
+  response["wordcloud"] = text_wordcloud
+  response["metrics"] = text_metrics
 
   return jsonify(response)
 

@@ -76,8 +76,8 @@ export const StyledTextBox = styled.div`
   max-width: ${({$expanded}) => $expanded ? "100%" : "0%"};
   transition: max-width 1s ease;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   border-radius: 0px 20px 20px 0px;
   background-color: ${({ theme }) => theme.secondaryColor};
 
@@ -96,9 +96,9 @@ export const StyledTextBox = styled.div`
 
 export const StyledTextField = styled.textarea`
   height: calc(100% - 40px);
-  width: calc(80% - 20px);
-  margin-left: 20%;
-  padding: 20px 20px 20px 0px;
+  width: calc(100% - 110px);
+  margin: 20px 0px 0px 90px;
+  padding: 0xp;
   background: transparent;
   border: none;
   outline: none;
@@ -221,6 +221,21 @@ export const StyledWordcloud = styled.img`
   ${media.desktop`
     width: 40%
   `}
+`
+
+export const StyledTopicButton = styled.button`
+  height: fit-content;
+  width: fit-content;
+  padding: 20px;
+  color: ${({ theme }) => theme.textColor};
+  background-color: ${({ theme }) => theme.primaryColor};
+  border: 3px solid black;
+  border-radius: 20px;
+
+  &:hover {
+  background-color: ${props => props.theme.secondaryColor};
+  box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+  }
 `
 
 export const StyledBodyText = styled.p`

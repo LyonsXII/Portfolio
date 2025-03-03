@@ -3,13 +3,14 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledFlexbox, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledBodyText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledFlexbox, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
 
   const [expanded, setExpanded] = useState(false);
-  const [showData, setShowData] = useState(true);
+  const [showData, setShowData] = useState(false);
+  const [showTopicGraph, setShowTopicGraph] = useState(false);
 
   const [predictionText, setPredictionText] = useState("");
   const [predictionData, setPredictionData] = useState({
@@ -75,6 +76,10 @@ function AuthorAnalysis({ transition }) {
   function handleChange(e) {
     setPredictionText(e.target.value);
   };
+
+  function toggleTopicGraph() {
+    setShowTopicGraph(prev => !prev);
+  }
 
   async function predict() {
     try {
@@ -142,6 +147,8 @@ function AuthorAnalysis({ transition }) {
             <br/>
             Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
             <br/>
+            Reading Level: {predictionData["metrics"]["fk_grade"]}
+            <br/>
             <br/>
             Tense: {predictionData["metrics"]["tense"]}
             <br/>
@@ -189,6 +196,11 @@ function AuthorAnalysis({ transition }) {
           />
         </StyledPlotContainer>
         <StyledWordcloud src={predictionData["wordcloud"]}/>
+        <StyledTopicButton theme={theme}>
+          <StyledBodyText>
+            Show Topic Graph
+          </StyledBodyText>
+        </StyledTopicButton>
       </StyledFlexbox>
     </StyledFlexboxContainer>
   )
