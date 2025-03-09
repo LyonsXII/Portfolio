@@ -3,15 +3,15 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, PyLDAvisContainer, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
-  const [ chartFontSize, setChartFontSize ] = useState(12);
+  const [ chartFontSize, setChartFontSize ] = useState("16");
 
   const [expanded, setExpanded] = useState(false);
   const [showData, setShowData] = useState(true);
-  const [showTopicGraph, setShowTopicGraph] = useState(false);
+  const [showTopicGraph, setShowTopicGraph] = useState(true);
 
   const [predictionText, setPredictionText] = useState("");
   const [predictionData, setPredictionData] = useState({
@@ -82,13 +82,13 @@ function AuthorAnalysis({ transition }) {
     setShowTopicGraph(prev => !prev);
   }
 
-  const updateLayout = () => {
+  function updateLayout() {
     const width = window.innerWidth;
     let fontSize;
     if (width < 768) {
-      fontSize = 12;
+      fontSize = "30";
     } else {
-      fontSize = 18;
+      fontSize = "30";
     }
     setChartFontSize(fontSize);
   };
@@ -140,6 +140,8 @@ function AuthorAnalysis({ transition }) {
 
   return (
     <StyledFlexboxContainer $transition={transition}>
+      {showTopicGraph && <PyLDAvisContainer/>}
+
       <StyledTextEntryFlexbox $showData={showData}>
         <StyledMainButton theme={theme} onClick={expanded ? undefined : toggleExpanded} $expanded={expanded}>
           <StyledIcon src="./icons/book.svg" $width="72px" $expanded={expanded} $main={true}/>
@@ -152,7 +154,7 @@ function AuthorAnalysis({ transition }) {
       </StyledTextEntryFlexbox>
 
       <StyledGrid $showData={showData}>
-        <StyledDataBox theme={theme} spanCol="span 2" spanRow="span 1">
+        <StyledDataBox theme={theme} span="span 2">
           <StyledBodyText>
             Total Words: {predictionData["metrics"]["total_words"]}
             <br/>
@@ -172,16 +174,7 @@ function AuthorAnalysis({ transition }) {
             Voice: {predictionData["metrics"]["voice"]}
           </StyledBodyText>
         </StyledDataBox>
-        <StyledDataBox theme={theme} spanCol="span 1" spanRow="span 1">
-          <StyledBodyText>
-            Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
-            <br/>
-            Reading Level: {predictionData["metrics"]["fk_grade"]}
-            <br/>
-            Lexical Diversity: {predictionData["metrics"]["lexical_diversity"]}
-          </StyledBodyText>
-        </StyledDataBox>
-        <StyledDataBox theme={theme} spanCol="span 1" spanRow="span 1">
+        <StyledDataBox theme={theme}>
             <StyledBodyText>
               Valence: {predictionData["predicted_emotions"]["valence"]}
               <br/>
@@ -191,12 +184,7 @@ function AuthorAnalysis({ transition }) {
               <br/>
             </StyledBodyText>
         </StyledDataBox>
-        <StyledTopicButton theme={theme}>
-          <StyledBodyText>
-            Show Topic Graph
-          </StyledBodyText>
-        </StyledTopicButton>
-        <StyledPlotContainer spanCol="span 1" spanRow="span 1">
+        <StyledPlotContainer>
           <Plot 
             data={[predictedAuthorsPlotData]}
             layout={{
@@ -223,7 +211,21 @@ function AuthorAnalysis({ transition }) {
             style={{ width: '100%', height: '100%' }}
           />
         </StyledPlotContainer>
-        <StyledWordcloud src={predictionData["wordcloud"]} spanCol="span 1" spanRow="span 1"/>
+        <StyledDataBox theme={theme} span="span 2">
+          <StyledBodyText>
+            Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
+            <br/>
+            Reading Level: {predictionData["metrics"]["fk_grade"]}
+            <br/>
+            Lexical Diversity: {predictionData["metrics"]["lexical_diversity"]}
+          </StyledBodyText>
+        </StyledDataBox>
+        <StyledTopicButton theme={theme}>
+          <StyledBodyText>
+            Show Topic Graph
+          </StyledBodyText>
+        </StyledTopicButton>
+        <StyledWordcloud src={predictionData["wordcloud"]}/>
       </StyledGrid>
     </StyledFlexboxContainer>
   )

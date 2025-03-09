@@ -64,7 +64,7 @@ export const StyledMainButton = styled.button`
   ${media.desktop`
     height: 200px;
     width: ${({ $expanded }) => $expanded ? "100px" : "200px"};
-    border: 6px solid black;
+    border: 4px solid black;
     margin-left: ${({ $expanded }) => $expanded ? "0px" : "-75px"};
     border-radius: ${({ $expanded }) => $expanded ? "40px" : "50%"};
     transition: border-radius 1s ease, margin-left 1s ease, width 1s ease;
@@ -90,7 +90,7 @@ export const StyledTextBox = styled.div`
   ${media.desktop`
     height: 160px;
     margin-left: -75px;
-    border: 6px solid black;
+    border: 4px solid black;
   `}
 `
 
@@ -153,16 +153,16 @@ export const StyledIcon = styled.img`
 
 export const StyledGrid = styled.div`
   display: ${({ $showData }) => $showData ? "grid" : "none"};
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-auto-flow: dense;
+
   justify-items: stretch;
-  align-items: center;
+  align-items: stretch;
   column-gap: 10px;
   row-gap: 20px;
-  height: 2000px;
+
   max-height: ${({ $showData }) => $showData ? "100%" : "0%"};
   transition: max-height 1s ease;
-  width: 100%;
+  margin-bottom: 20px;
   padding: 0% 3%;
   box-sizing: border-box;
   overflow-y: scroll;
@@ -175,35 +175,42 @@ export const StyledGrid = styled.div`
   -ms-overflow-style: none;
 
   ${media.mobile`
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-auto-rows: minmax(100px, auto);
   `}
 
   ${media.desktop`
+    width: 90%;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-rows: minmax(150px, auto);
   `}
 `
 
 export const StyledDataBox = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
-  border: 3px solid black;
   border-radius: 20px;
-
-  grid-column: ${({ spanCol }) => spanCol}
-  grid-row: ${({ spanRow }) => spanRow}
+  box-sizing: border-box;
+  grid-column: ${({ span }) => span};
 
   ${media.mobile`
     padding: 10px;
+    border: 3px solid black;
   `}
 
   ${media.desktop`
     padding: 20px;
+    border: 4px solid black;
   `}
 `
 
 export const StyledPlotContainer = styled.div`
   grid-column: ${({ span }) => span};
-  border: 3px solid black;
   border-radius: 20px;
   overflow: hidden;
   background-color: white;
@@ -215,15 +222,15 @@ export const StyledPlotContainer = styled.div`
             0px 0px 6px rgba(0, 0, 0, 1),               
             0px 0px 6px rgba(0, 0, 0, 1);
 
-  grid-column: ${({ spanCol }) => spanCol}
-  grid-row: ${({ spanRow }) => spanRow}
+  grid-column: span 2;
+  grid-row: span 2;
 
   ${media.mobile`
-    height: 100%;
+    order: 3px solid black;
   `}
 
   ${media.desktop`
-    height: 100%;
+    border: 4px solid black;
   `}
 `
 
@@ -237,17 +244,18 @@ export const StyledIFrame = styled.iframe`
 `;
 
 export const StyledWordcloud = styled.img`
-  border: 3px solid black;
   border-radius: 20px;
-
-  grid-column: ${({ spanCol }) => spanCol}
-  grid-row: ${({ spanRow }) => spanRow}
+  grid-row: span 2;
 
   ${media.mobile`
+    border: 3px solid black;
+    grid-column: span 2;
     pointer-events: none;
   `}
 
   ${media.desktop`
+    border: 4px solid black;
+    grid-column: span 4;
   `}
 `
 
@@ -255,16 +263,32 @@ export const StyledTopicButton = styled.button`
   padding: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
-  border: 3px solid black;
   border-radius: 20px;
 
-  grid-column: ${({ spanCol }) => spanCol}
-  grid-row: ${({ spanRow }) => spanRow}
+  ${media.mobile`
+    border: 3px solid black;
+    pointer-events: none;
+  `}
+
+  ${media.desktop`
+    border: 4px solid black;
+  `}
 
   &:hover {
   background-color: ${props => props.theme.secondaryColor};
   box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
   }
+`
+
+export const PyLDAvisContainer = styled.div`
+  position: absolute;
+  height: 90%;
+  width: 90%;
+  top: 5%;
+  border: 6px solid black;
+  border-radius: 20px;
+  background-color: grey;
+  z-index: 1000;
 `
 
 export const StyledBodyText = styled.p`
