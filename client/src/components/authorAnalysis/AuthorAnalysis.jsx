@@ -7,9 +7,10 @@ import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, Style
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
+  const [ chartFontSize, setChartFontSize ] = useState(12);
 
   const [expanded, setExpanded] = useState(false);
-  const [showData, setShowData] = useState(false);
+  const [showData, setShowData] = useState(true);
   const [showTopicGraph, setShowTopicGraph] = useState(false);
 
   const [predictionText, setPredictionText] = useState("");
@@ -33,7 +34,7 @@ function AuthorAnalysis({ transition }) {
     "person": "third",
     "voice": "passive"
     },
-    wordcloud: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAFhALX4XiAfAAAAABJRU5ErkJggg=="
+    wordcloud: "images/Placeholder Wordcloud.png"
   });
 
   const [predictedAuthorsPlotData, setPredictedAuthorsPlotData] = useState({
@@ -50,15 +51,15 @@ function AuthorAnalysis({ transition }) {
     },
     textfont: {
       color: theme.textColor,
-      size: 12
+      size: chartFontSize
     },
     insidetextfont: {
       color: theme.textColor,
-      size: 12
+      size: chartFontSize
     },
     outsidetextfont: {
       color: theme.textColor,
-      size: 12
+      size: chartFontSize
     },
     text: ["Example 1", "Example 2", "Example 3", "Example 4", "Example 5"],
     textposition: ["inside", "inside", "outside", "outside", "outside"],
@@ -80,6 +81,17 @@ function AuthorAnalysis({ transition }) {
   function toggleTopicGraph() {
     setShowTopicGraph(prev => !prev);
   }
+
+  const updateLayout = () => {
+    const width = window.innerWidth;
+    let fontSize;
+    if (width < 768) {
+      fontSize = 12;
+    } else {
+      fontSize = 18;
+    }
+    setChartFontSize(fontSize);
+  };
 
   async function predict() {
     try {
@@ -120,6 +132,12 @@ function AuthorAnalysis({ transition }) {
     }));
   }, [predictionData]);
 
+  useEffect(() => {
+    updateLayout(); // Initial layout update
+    window.addEventListener('resize', updateLayout);
+    return () => window.removeEventListener('resize', updateLayout);
+  }, []);
+
   return (
     <StyledFlexboxContainer $transition={transition}>
       <StyledTextEntryFlexbox $showData={showData}>
@@ -134,7 +152,7 @@ function AuthorAnalysis({ transition }) {
       </StyledTextEntryFlexbox>
 
       <StyledGrid $showData={showData}>
-        <StyledDataBox theme={theme} spanMobile="span 8" spanDesktop="span 3">
+        <StyledDataBox theme={theme} spanCol="span 2" spanRow="span 1">
           <StyledBodyText>
             Total Words: {predictionData["metrics"]["total_words"]}
             <br/>
@@ -145,7 +163,7 @@ function AuthorAnalysis({ transition }) {
             Average Sentence Length: {predictionData["metrics"]["average_sentence_length"]}
           </StyledBodyText>
         </StyledDataBox>
-        <StyledDataBox theme={theme} spanMobile="span 4" spanDesktop="span 2">
+        <StyledDataBox theme={theme}>
           <StyledBodyText>
             Tense: {predictionData["metrics"]["tense"]}
             <br/>
@@ -154,7 +172,7 @@ function AuthorAnalysis({ transition }) {
             Voice: {predictionData["metrics"]["voice"]}
           </StyledBodyText>
         </StyledDataBox>
-        <StyledDataBox theme={theme} spanMobile="span 7" spanDesktop="span 2">
+        <StyledDataBox theme={theme} spanCol="span 1" spanRow="span 1">
           <StyledBodyText>
             Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
             <br/>
@@ -163,7 +181,7 @@ function AuthorAnalysis({ transition }) {
             Lexical Diversity: {predictionData["metrics"]["lexical_diversity"]}
           </StyledBodyText>
         </StyledDataBox>
-        <StyledDataBox theme={theme} spanMobile="span 5" spanDesktop="span 2">
+        <StyledDataBox theme={theme} spanCol="span 1" spanRow="span 1">
             <StyledBodyText>
               Valence: {predictionData["predicted_emotions"]["valence"]}
               <br/>
@@ -173,12 +191,12 @@ function AuthorAnalysis({ transition }) {
               <br/>
             </StyledBodyText>
         </StyledDataBox>
-        <StyledTopicButton theme={theme} spanMobile="span 4" spanDesktop="span 2">
+        <StyledTopicButton theme={theme}>
           <StyledBodyText>
             Show Topic Graph
           </StyledBodyText>
         </StyledTopicButton>
-        <StyledPlotContainer spanMobile="span 12" spanDesktop="span 4">
+        <StyledPlotContainer spanCol="span 1" spanRow="span 1">
           <Plot 
             data={[predictedAuthorsPlotData]}
             layout={{
@@ -205,7 +223,7 @@ function AuthorAnalysis({ transition }) {
             style={{ width: '100%', height: '100%' }}
           />
         </StyledPlotContainer>
-        <StyledWordcloud src={predictionData["wordcloud"]} spanMobile="span 12" spanDesktop="span 6"/>
+        <StyledWordcloud src={predictionData["wordcloud"]} spanCol="span 1" spanRow="span 1"/>
       </StyledGrid>
     </StyledFlexboxContainer>
   )

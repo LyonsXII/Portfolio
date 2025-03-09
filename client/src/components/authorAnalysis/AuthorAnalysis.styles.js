@@ -150,12 +150,15 @@ export const StyledIcon = styled.img`
 
   animation: ${fadeInAnimation};
 `
+
 export const StyledGrid = styled.div`
   display: ${({ $showData }) => $showData ? "grid" : "none"};
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-auto-flow: dense;
   justify-items: stretch;
-  align-items: stretch;
-  gap: 10px;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 20px;
   height: 2000px;
   max-height: ${({ $showData }) => $showData ? "100%" : "0%"};
   transition: max-height 1s ease;
@@ -170,14 +173,11 @@ export const StyledGrid = styled.div`
   }
   scrollbar-width: none;
   -ms-overflow-style: none;
-`
-const responsiveGridColumn = (spanMobile, spanDesktop) => css`
+
   ${media.mobile`
-    grid-column: ${ spanMobile };
   `}
 
   ${media.desktop`
-    grid-column: ${spanDesktop };
   `}
 `
 
@@ -189,7 +189,8 @@ export const StyledDataBox = styled.div`
   border: 3px solid black;
   border-radius: 20px;
 
-  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
+  grid-column: ${({ spanCol }) => spanCol}
+  grid-row: ${({ spanRow }) => spanRow}
 
   ${media.mobile`
     padding: 10px;
@@ -214,15 +215,15 @@ export const StyledPlotContainer = styled.div`
             0px 0px 6px rgba(0, 0, 0, 1),               
             0px 0px 6px rgba(0, 0, 0, 1);
 
-  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
+  grid-column: ${({ spanCol }) => spanCol}
+  grid-row: ${({ spanRow }) => spanRow}
 
   ${media.mobile`
     height: 100%;
   `}
 
   ${media.desktop`
-    height: 400px;
-    width: 100%
+    height: 100%;
   `}
 `
 
@@ -239,16 +240,14 @@ export const StyledWordcloud = styled.img`
   border: 3px solid black;
   border-radius: 20px;
 
-  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
+  grid-column: ${({ spanCol }) => spanCol}
+  grid-row: ${({ spanRow }) => spanRow}
 
   ${media.mobile`
-    height: 240px;
     pointer-events: none;
   `}
 
   ${media.desktop`
-    height: fit-content;
-    width: 100%
   `}
 `
 
@@ -259,7 +258,8 @@ export const StyledTopicButton = styled.button`
   border: 3px solid black;
   border-radius: 20px;
 
-  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
+  grid-column: ${({ spanCol }) => spanCol}
+  grid-row: ${({ spanRow }) => spanRow}
 
   &:hover {
   background-color: ${props => props.theme.secondaryColor};
