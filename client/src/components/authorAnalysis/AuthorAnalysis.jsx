@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledFlexbox, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
@@ -133,8 +133,8 @@ function AuthorAnalysis({ transition }) {
         </StyledTextBox>
       </StyledTextEntryFlexbox>
 
-      <StyledFlexbox $showData={showData}>
-        <StyledDataBox theme={theme}>
+      <StyledGrid $showData={showData}>
+        <StyledDataBox theme={theme} spanMobile="span 8" spanDesktop="span 3">
           <StyledBodyText>
             Total Words: {predictionData["metrics"]["total_words"]}
             <br/>
@@ -143,32 +143,42 @@ function AuthorAnalysis({ transition }) {
             Total Sentences: {predictionData["metrics"]["total_sentences"]}
             <br/>
             Average Sentence Length: {predictionData["metrics"]["average_sentence_length"]}
-            <br/>
-            <br/>
-            Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
-            <br/>
-            Reading Level: {predictionData["metrics"]["fk_grade"]}
-            <br/>
-            <br/>
+          </StyledBodyText>
+        </StyledDataBox>
+        <StyledDataBox theme={theme} spanMobile="span 4" spanDesktop="span 2">
+          <StyledBodyText>
             Tense: {predictionData["metrics"]["tense"]}
             <br/>
             Person: {predictionData["metrics"]["person"]}
             <br/>
             Voice: {predictionData["metrics"]["voice"]}
-            <br/>
-            <br/>
-            Valence: {predictionData["predicted_emotions"]["valence"]}
-            <br/>
-            Arousal: {predictionData["predicted_emotions"]["arousal"]}
-            <br/>
-            Dominance: {predictionData["predicted_emotions"]["dominance"]}
-            <br/>
           </StyledBodyText>
         </StyledDataBox>
-        {/* <StyledPlotContainer theme={theme}>
-          <StyledIFrame src="/lda_vis.html" title="pyLDAvis Visualisation"/>
-        </StyledPlotContainer> */}
-        <StyledPlotContainer>
+        <StyledDataBox theme={theme} spanMobile="span 7" spanDesktop="span 2">
+          <StyledBodyText>
+            Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
+            <br/>
+            Reading Level: {predictionData["metrics"]["fk_grade"]}
+            <br/>
+            Lexical Diversity: {predictionData["metrics"]["lexical_diversity"]}
+          </StyledBodyText>
+        </StyledDataBox>
+        <StyledDataBox theme={theme} spanMobile="span 5" spanDesktop="span 2">
+            <StyledBodyText>
+              Valence: {predictionData["predicted_emotions"]["valence"]}
+              <br/>
+              Arousal: {predictionData["predicted_emotions"]["arousal"]}
+              <br/>
+              Dominance: {predictionData["predicted_emotions"]["dominance"]}
+              <br/>
+            </StyledBodyText>
+        </StyledDataBox>
+        <StyledTopicButton theme={theme} spanMobile="span 4" spanDesktop="span 2">
+          <StyledBodyText>
+            Show Topic Graph
+          </StyledBodyText>
+        </StyledTopicButton>
+        <StyledPlotContainer spanMobile="span 12" spanDesktop="span 4">
           <Plot 
             data={[predictedAuthorsPlotData]}
             layout={{
@@ -195,13 +205,8 @@ function AuthorAnalysis({ transition }) {
             style={{ width: '100%', height: '100%' }}
           />
         </StyledPlotContainer>
-        <StyledWordcloud src={predictionData["wordcloud"]}/>
-        <StyledTopicButton theme={theme}>
-          <StyledBodyText>
-            Show Topic Graph
-          </StyledBodyText>
-        </StyledTopicButton>
-      </StyledFlexbox>
+        <StyledWordcloud src={predictionData["wordcloud"]} spanMobile="span 12" spanDesktop="span 6"/>
+      </StyledGrid>
     </StyledFlexboxContainer>
   )
 }

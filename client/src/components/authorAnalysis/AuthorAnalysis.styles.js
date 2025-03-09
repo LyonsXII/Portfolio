@@ -95,9 +95,6 @@ export const StyledTextBox = styled.div`
 `
 
 export const StyledTextField = styled.textarea`
-  height: calc(100% - 40px);
-  width: calc(100% - 110px);
-  margin: 20px 0px 0px 90px;
   padding: 0xp;
   background: transparent;
   border: none;
@@ -118,16 +115,24 @@ export const StyledTextField = styled.textarea`
   overflow-y: auto; 
   overflow-x: hidden;
 
-  /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+  /* Hide scrollbar, covers various browsers */
   &::-webkit-scrollbar {
     display: none;
   }
-
-  /* Hide scrollbar for Firefox */
   scrollbar-width: none;
-
-  /* Hide scrollbar for IE & Edge */
   -ms-overflow-style: none;
+
+  ${media.mobile`
+    height: calc(100% - 40px);
+    width: calc(100% - 80px);
+    margin: 20px 0px 0px 56px;
+  `}
+
+  ${media.desktop`
+    height: calc(100% - 40px);
+    width: calc(100% - 110px);
+    margin: 20px 0px 0px 90px;
+  `}
 `
 export const StyledIcon = styled.img`
   display: ${({ $expanded, $main }) => 
@@ -145,16 +150,35 @@ export const StyledIcon = styled.img`
 
   animation: ${fadeInAnimation};
 `
-export const StyledFlexbox = styled.div`
-  display: ${({ $showData }) => $showData ? "flex" : "none"};
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: center;
+export const StyledGrid = styled.div`
+  display: ${({ $showData }) => $showData ? "grid" : "none"};
+  grid-template-columns: repeat(12, 1fr);
+  justify-items: stretch;
+  align-items: stretch;
   gap: 10px;
-  height: 100%;
+  height: 2000px;
   max-height: ${({ $showData }) => $showData ? "100%" : "0%"};
   transition: max-height 1s ease;
   width: 100%;
+  padding: 0% 3%;
+  box-sizing: border-box;
+  overflow-y: scroll;
+
+  /* Hide scrollbar, covers various browsers */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+`
+const responsiveGridColumn = (spanMobile, spanDesktop) => css`
+  ${media.mobile`
+    grid-column: ${ spanMobile };
+  `}
+
+  ${media.desktop`
+    grid-column: ${spanDesktop };
+  `}
 `
 
 export const StyledDataBox = styled.div`
@@ -165,19 +189,19 @@ export const StyledDataBox = styled.div`
   border: 3px solid black;
   border-radius: 20px;
 
-  ${media.mobile`
-    width: 30%;
-    padding: 10px;
+  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
 
+  ${media.mobile`
+    padding: 10px;
   `}
 
   ${media.desktop`
-    width: fit-content;
     padding: 20px;
   `}
 `
 
 export const StyledPlotContainer = styled.div`
+  grid-column: ${({ span }) => span};
   border: 3px solid black;
   border-radius: 20px;
   overflow: hidden;
@@ -190,14 +214,15 @@ export const StyledPlotContainer = styled.div`
             0px 0px 6px rgba(0, 0, 0, 1),               
             0px 0px 6px rgba(0, 0, 0, 1);
 
+  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
+
   ${media.mobile`
-    height: 300px;
-    width: 50%
+    height: 100%;
   `}
 
   ${media.desktop`
-    height: 420px;
-    width: 30%
+    height: 400px;
+    width: 100%
   `}
 `
 
@@ -214,23 +239,27 @@ export const StyledWordcloud = styled.img`
   border: 3px solid black;
   border-radius: 20px;
 
+  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
+
   ${media.mobile`
-    width: 90%
+    height: 240px;
+    pointer-events: none;
   `}
 
   ${media.desktop`
-    width: 40%
+    height: fit-content;
+    width: 100%
   `}
 `
 
 export const StyledTopicButton = styled.button`
-  height: fit-content;
-  width: fit-content;
   padding: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
   border: 3px solid black;
   border-radius: 20px;
+
+  ${({ spanMobile, spanDesktop }) => responsiveGridColumn(spanMobile, spanDesktop)}
 
   &:hover {
   background-color: ${props => props.theme.secondaryColor};
@@ -247,7 +276,8 @@ export const StyledBodyText = styled.p`
               0px 0px 6px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    font-size: 1.2rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
   `}
 
   ${media.desktop`
