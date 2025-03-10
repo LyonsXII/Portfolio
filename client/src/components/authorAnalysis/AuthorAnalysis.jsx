@@ -2,16 +2,22 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
+import TopicAnalysis from "./TopicAnalysis.jsx";
+import Wordcloud from "./Wordcloud.jsx";
+
 import { ThemeContext } from "../../context/ThemeContext.jsx";
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, PyLDAvisContainer, StyledBodyText } from './AuthorAnalysis.styles';
+
+import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
   const [ chartFontSize, setChartFontSize ] = useState("16");
 
   const [expanded, setExpanded] = useState(false);
-  const [showData, setShowData] = useState(true);
-  const [showTopicGraph, setShowTopicGraph] = useState(true);
+  const [showData, setShowData] = useState(false);
+  const [showTopicGraph, setShowTopicGraph] = useState(false);
+  const [showWordcloud, setShowWordcloud] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   const [predictionText, setPredictionText] = useState("");
   const [predictionData, setPredictionData] = useState({
@@ -82,6 +88,10 @@ function AuthorAnalysis({ transition }) {
     setShowTopicGraph(prev => !prev);
   }
 
+  function toggleWordcloud() {
+    setShowWordcloud(prev => !prev);
+  }
+
   function updateLayout() {
     const width = window.innerWidth;
     let fontSize;
@@ -139,9 +149,11 @@ function AuthorAnalysis({ transition }) {
   }, []);
 
   return (
-    <StyledFlexboxContainer $transition={transition}>
-      {showTopicGraph && <PyLDAvisContainer/>}
+    <div>
+      {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph}/>}
+      {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={predictionData["wordcloud"]}/>}
 
+    <StyledFlexboxContainer $transition={transition}>
       <StyledTextEntryFlexbox $showData={showData}>
         <StyledMainButton theme={theme} onClick={expanded ? undefined : toggleExpanded} $expanded={expanded}>
           <StyledIcon src="./icons/book.svg" $width="72px" $expanded={expanded} $main={true}/>
@@ -220,14 +232,15 @@ function AuthorAnalysis({ transition }) {
             Lexical Diversity: {predictionData["metrics"]["lexical_diversity"]}
           </StyledBodyText>
         </StyledDataBox>
-        <StyledTopicButton theme={theme}>
+        <StyledTopicButton theme={theme} onClick={toggleTopicGraph}>
           <StyledBodyText>
             Show Topic Graph
           </StyledBodyText>
         </StyledTopicButton>
-        <StyledWordcloud src={predictionData["wordcloud"]}/>
+        <StyledWordcloud src={predictionData["wordcloud"]} onClick={toggleWordcloud}/>
       </StyledGrid>
     </StyledFlexboxContainer>
+    </div>
   )
 }
 

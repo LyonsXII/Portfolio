@@ -46,10 +46,13 @@ export const StyledMainButton = styled.button`
   background-color: ${({ theme }) => theme.primaryColor};
   z-index: 1;
   transition: border-radius 1s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
     box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+    transition: transform 0.2s ease, background-color 0.8s ease;
   }
 
   ${media.mobile`
@@ -226,7 +229,7 @@ export const StyledPlotContainer = styled.div`
   grid-row: span 2;
 
   ${media.mobile`
-    order: 3px solid black;
+    border: 3px solid black;
   `}
 
   ${media.desktop`
@@ -234,16 +237,9 @@ export const StyledPlotContainer = styled.div`
   `}
 `
 
-export const StyledIFrame = styled.iframe`
-  width: 100%;
-  height: 100%;
-  border: none;
-  transform: scale(1.2);
-  transform-origin: 0 0;
-  translate(-40%, -60%)
-`;
-
 export const StyledWordcloud = styled.img`
+  height: 100%;
+  width: 100%;
   border-radius: 20px;
   grid-row: span 2;
 
@@ -280,16 +276,45 @@ export const StyledTopicButton = styled.button`
   }
 `
 
-export const PyLDAvisContainer = styled.div`
+export const FullScreenBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  z-index: 1;
+  opacity: 0.8;
+`
+
+export const FullScreenContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   height: 90%;
-  width: 90%;
-  top: 5%;
+  top: 5vh;
+  left: 5vw;
   border: 6px solid black;
   border-radius: 20px;
-  background-color: grey;
-  z-index: 1000;
+  background-color: white;
+  z-index: 2;
+  
+  ${media.mobile`
+    width: 90%;
+  `}
+
+  ${media.desktop`
+    width: calc(90% - 180px);
+  `}
 `
+
+export const StyledIFrame = styled.iframe`
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: hidden;
+`;
 
 export const StyledBodyText = styled.p`
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 1),

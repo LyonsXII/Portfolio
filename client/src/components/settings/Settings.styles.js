@@ -12,19 +12,18 @@ export const StyledNotchContainer = styled.div`
   cursor: pointer;
 
   ${media.mobile`
+    display: none;
     height: 100px;
-    width: 1vw;
+    width: 20px
     border-bottom: none;
     border-radius: 20px 0px 0px 20px;
     position: absolute;
     bottom: 0px;
-    left: calc(50% - 50px);
-    left: 1900px;
   `}
 
   ${media.desktop`
     height: 100px;
-    width: 1vw;
+    width: 20px;
     border-right: none;
     border-radius: 20px 0px 0px 20px;
     position: absolute;
@@ -52,6 +51,7 @@ export const StyledSettingsContainer = styled.div`
   right: -80px;
   color: ${({ theme }) => theme.textColor};
   height: 100vh;
+  z-index: 2;
 
   ${media.mobile`
     display: none;
@@ -80,6 +80,7 @@ export const StyledHoverTextContainer = styled.div`
   flex-direction: column;
   align-items: flex-end;
   z-index: 2;
+  pointer-events: none;
 `;
 
 export const StyledButtonContainer = styled.div`
