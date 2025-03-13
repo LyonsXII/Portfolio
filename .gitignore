@@ -137,3 +137,4 @@ python-server/venv
 # model folders
 python-server/notebooks
 python-server/models
+python-server/public/gutenberg/books

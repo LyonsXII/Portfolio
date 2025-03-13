@@ -15,6 +15,7 @@ from nltk.corpus import cmudict
 from nltk.stem.porter import PorterStemmer
 import spacy
 import tensorflow as tf
+import tensorflow_addons as tfa
 import tensorflow_hub as hub
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
