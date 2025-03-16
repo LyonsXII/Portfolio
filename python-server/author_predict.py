@@ -5,8 +5,6 @@ import numpy as np
 import pandas as pd
 import re
 import matplotlib.pyplot as plt
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 import tensorflow as tf
 from tensorflow.keras import mixed_precision
 from tensorflow.keras.layers import Dense, Dropout
@@ -19,19 +17,21 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import StratifiedKFold, cross_val_score
 import pickle
 
-# Enable keras mixed precision (improve training speed)
+# Enable keras mixed precision (improves training speed)
 mixed_precision.set_global_policy('mixed_float16')
 
 # Dataset fragmentation parameters
-fragment_size = 200
-overlap = 50
+fragment_size = [200] # Provide in descending order to avoid overlap issues
 # Model parameters
 learning_rate = 2e-5
 dropout_rate = 0.4
-freeze = 4
-epochs = 50
+unfreeze = 4  # Bert_base has 12 layers total
+epochs = 100  # Early stopping will end prematurely after improvement stops
 batch_size = 8
 
 # Fundamental functions
@@ -40,90 +40,63 @@ def import_dataset():
   root = os.path.join(current_dir, "public/books")
 
   data = []
-
   # Loop through author and book folders, adding .txt file contents to data with matching labels
   for author in os.listdir(root):
-      author_path = os.path.join(root, author)
+    author_path = os.path.join(root, author)
 
-      for book in os.listdir(author_path):
-          book_path = os.path.join(author_path, book)
+    for book in os.listdir(author_path):
+        book_path = os.path.join(author_path, book)
 
-          with open(book_path, 'r', encoding='utf-8') as file:
+        for chapter in os.listdir(book_path):
+            chapter_path = os.path.join(book_path, chapter)
+            
+            with open(chapter_path, 'r', encoding='utf-8') as file:
               text = file.read()
-              
-          data.append({
+                
+            data.append({
               'Author': author,
-              'Title': book[:-4],
+              'Title': book,
               'Text': text
-          })
+            })
 
   return pd.DataFrame(data)
 
-def import_dataset_extended():
-  # Extended training data (project gutenberg download)
-  # Doesn't work well due to issues with dataset composition / time needed to train
-  current_dir = os.path.dirname(os.path.realpath(__file__))
-  root = os.path.join(current_dir, "public/gutenberg/")
-
-  dataset = pd.read_csv(root + "gutenberg_updated_metadata.csv")
-
-  for key, row in dataset.iloc[:50].iterrows():
-    book_text_filepath = row["Text File"]
-
-    try:
-      with open(root + book_text_filepath, 'r', encoding='utf-8') as file:
-        book_text = file.read()
-
-      dataset.at[key, "Text"] = book_text
-      
-    except:
-      print("File not found.")
-      dataset.at[key, "Text"] = None
-
-  return dataset[dataset["Text"].str.len() > 20000]
-
-def clean_text(text, ps, all_stopwords):
+def clean_text(text):
   # Clean text
   text = text.lower()  # Lowercase
   text = re.sub(r'\n', " ", text)  # Newlines
   text = re.sub(r'[^a-zA-Z\s]', " ", text)  # Punctuation and special characters
   text = re.sub(r'\s+', ' ', text).strip()  # Extra spaces
 
-  # Apply corpus
-  words = text.split()
-  words = [ps.stem(word) for word in words if word not in all_stopwords]
-  processed_text = " ".join(words)
+  return text
 
-  return processed_text
-
-def fragment_text(text, fragment_size, overlap):
+def fragment_text(text, fragment_size):
   # Split text into fragments of fragment_size length, returns array of fragments
   words = text.split()
   current_text_fragments = []
 
-  step_size = fragment_size - overlap  
+  pos = 0
+  count = 0
 
-  for i in range(0, len(words), step_size):
-      current_fragment = " ".join(words[i:i + fragment_size])
-      current_text_fragments.append(current_fragment)
+  while pos < len(words):
+    curr_count = count % len(fragment_size)
+    if pos > 0:
+      pos -= min(fragment_size[curr_count] // 4, 10)
+    current_fragment = " ".join(words[pos:pos + fragment_size[curr_count]])
+    current_text_fragments.append(current_fragment)
+    
+    pos += fragment_size[curr_count]
+    count += 1
 
-      # Handle situation where final chapter fragment is already contained in the previous fragment
-      if len(words) - i < fragment_size:
-          break
-      
   return current_text_fragments
 
-def preprocess_text(dataset, fragment_size, overlap):
-  ps = PorterStemmer()
-  all_stopwords = stopwords.words('english')
-  all_stopwords.remove('not')
-
+def preprocess_text(dataset, fragment_size):
   # Apply our cleaning and create a new dataset to replace our previous one, this time with processed text
   text_fragments = []
   for index, row in dataset.iterrows():
       text = row["Text"]
-      text = clean_text(text, ps, all_stopwords)
-      current_text_fragments = fragment_text(text, fragment_size, overlap)
+      text = clean_text(text)
+      current_text_fragments = fragment_text(text, fragment_size)
       
       for text_fragment in current_text_fragments:
           text_fragments.append({
@@ -187,12 +160,12 @@ def tokenize(X, y_encoded):
 
   return X_tokenized, X_test_tokenized, y_train, y_test, tokenizer
 
-def prepare_training_data(fragment_size, overlap):
+def prepare_training_data(fragment_size):
     # Import Dataset
     dataset = import_dataset()
 
     # Preprocess text
-    dataset = preprocess_text(dataset, fragment_size, overlap)
+    dataset = preprocess_text(dataset, fragment_size)
 
     # Encode & tokenize
     X = dataset["Text"].values
@@ -205,15 +178,15 @@ def prepare_training_data(fragment_size, overlap):
 
 # Primary functions
 # Build model using dataset
-def build_model(fragment_size, overlap, epochs, batch_size):
-  def create_model(dataset, learning_rate=2e-5, dropout_rate=0.3, freeze=4):
+def build_model(fragment_size, epochs, batch_size):
+  def create_model(dataset, learning_rate=2e-5, dropout_rate=0.3, unfreeze=4):
     # Create base model
     bert_model = TFBertModel.from_pretrained('bert-base-uncased')
 
     # Freeze all layers, then unfreeze the number provided
     for layer in bert_model.layers:
         layer.trainable = False
-    for layer in bert_model.layers[-freeze:]:  
+    for layer in bert_model.layers[-unfreeze:]:  
         layer.trainable = True
 
     # Define input layers
@@ -231,16 +204,17 @@ def build_model(fragment_size, overlap, epochs, batch_size):
     num_authors = len(dataset['Author'].unique())
     output = Dense(num_authors, activation="softmax")(dropout)
 
-    # # Create model
+    # # Create model and define optmizer
     model = Model(inputs=[input_ids, attention_mask], outputs=output)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
 
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+        optimizer=optimizer,
         loss="categorical_crossentropy",
         metrics=["accuracy"]
     )
 
-    return model
+    return model, optimizer
 
   def train_model(model, class_weight_dict, epochs=50, batch_size=8):
     # Define early stopping, reverts back to last epoch with improvement after hitting a wall
@@ -269,10 +243,10 @@ def build_model(fragment_size, overlap, epochs, batch_size):
 
     return model
 
-  dataset, X_tokenized, X_test_tokenized, y_train, y_test, tokenizer, class_weight_dict = prepare_training_data(fragment_size, overlap)
+  dataset, X_tokenized, X_test_tokenized, y_train, y_test, tokenizer, class_weight_dict = prepare_training_data(fragment_size)
 
   # Create the BERT model
-  model = create_model(dataset, learning_rate=learning_rate, dropout_rate=dropout_rate, freeze=freeze)
+  model, optimizer = create_model(dataset, learning_rate=learning_rate, dropout_rate=dropout_rate, unfreeze=unfreeze)
 
   # Train model
   model = train_model(model=model, class_weight_dict=class_weight_dict, epochs=epochs, batch_size=batch_size)
@@ -292,6 +266,8 @@ def predict_author(text):
     model = tf.keras.models.load_model(model_path)
   with open(tokenizer_path, "rb") as f:
       tokenizer = pickle.load(f)
+
+  text = clean_text(text)
 
   new_text_tokenized = tokenizer(
     text, 
@@ -317,25 +293,24 @@ def predict_author(text):
   return author_weights
 
 # Plot token distribution, useful if changing fragment size
-def token_distribution():
+  # Need to change tokenizer to not use padding, set padding to False and remove tf definition line in Tokenizer
+def token_distribution(fragment_size):
   # Import Dataset
   dataset = import_dataset()
 
   # Preprocess text
-  fragment_size = 50
-  overlap = 10
-  dataset = preprocess_text(dataset, fragment_size, overlap)
+  dataset = preprocess_text(dataset, fragment_size)
 
   # Encode & tokenize
   X = dataset["Text"].values
   y = dataset["Author"].values
 
-  y_encoded = encode(y)
-  X_tokenized = tokenize(X, y_encoded)
+  y_encoded, class_weight_dict = encode(y)
+  X_tokenized, X_test_tokenized, y_train, y_test, tokenizer = tokenize(X, y_encoded)
 
   token_counts = []
   for fragment in X_tokenized["input_ids"]:
-     token_counts.append(len(fragment))
+    token_counts.append(len(fragment))
 
   # Plotting the token distribution
   plt.figure(figsize=(10, 6))
@@ -347,14 +322,14 @@ def token_distribution():
   plt.close()
 
 # Evaluate model and then perform a quick sanity check
-def evaluate(fragment_size, overlap):
+def evaluate(fragment_size):
   curr_dir = os.path.dirname(os.path.abspath(__file__))
   model_path = os.path.join(curr_dir, "models", "Author Analysis - BERT.h5")
 
   with custom_object_scope({"TFBertModel": TFBertModel}):
     model = tf.keras.models.load_model(model_path)
 
-  dataset, X_tokenized, X_test_tokenized, y_train, y_test, tokenizer, class_weight_dict = prepare_training_data(fragment_size, overlap)
+  dataset, X_tokenized, X_test_tokenized, y_train, y_test, tokenizer, class_weight_dict = prepare_training_data(fragment_size)
 
   # Write evaluated metrics to file
   with open("./models/Evalutation Report.txt", "w") as f:
@@ -381,7 +356,7 @@ def evaluate(fragment_size, overlap):
     f.write(f"Test Accuracy: {accuracy}\n\n")
 
     # Testing model on data not contained within original dataset
-    tests_path = os.path.join(curr_dir, "./public/Tests")
+    tests_path = os.path.join(curr_dir, "./public/tests (gutenberg-bulk)")
 
     num_correct = 0
     total = 0
@@ -391,10 +366,7 @@ def evaluate(fragment_size, overlap):
         with open(test_file_path, 'r', encoding='utf-8') as file:
             new_text = file.read()
 
-        ps = PorterStemmer()
-        all_stopwords = stopwords.words('english')
-        all_stopwords.remove('not')
-        processed_new_text = clean_text(new_text, ps, all_stopwords)
+        processed_new_text = clean_text(new_text)
         
         new_text_tokenized = tokenizer(
           processed_new_text, 
@@ -426,5 +398,75 @@ def evaluate(fragment_size, overlap):
     print(f"Test Accuracy: {accuracy}")
     print(f"Sanity check: {round(num_correct / total, 2)}")
 
-build_model(fragment_size, overlap, epochs, batch_size)
-evaluate(fragment_size, overlap)
+# Naive bayes model, useful as a benchmark
+  # Works well at 8 authors but collapses at 24
+def build_naive_bayes():
+  # Import Dataset
+  dataset = import_dataset()
+
+  # Preprocess text
+  dataset = preprocess_text(dataset, fragment_size)
+
+  X = dataset["Text"].values
+  y = dataset["Author"].values
+
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 1)
+
+  vectorizer = TfidfVectorizer(
+    stop_words='english',    # Remove common stopwords if they don't carry stylistic information
+    max_df=0.95,             # Optionally ignore words that appear in too many documents
+    min_df=5                 # Optionally ignore rare words that might be noise
+  )
+
+  X_train_vec = vectorizer.fit_transform(X_train)
+  X_test_vec = vectorizer.transform(X_test)
+
+  # Create the model instance
+  nb_model = MultinomialNB()
+
+  # Create Stratified K-Fold object
+  cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+  # Evaluate the model using K-fold cross-validation
+  author_names = dataset['Author']
+  scores = cross_val_score(nb_model, X_train_vec, y_train, cv=cv, scoring='accuracy')
+  print("Mean Accuracy: {:.2f}%".format(scores.mean() * 100))
+
+  # Fit model
+  nb_model.fit(X_train_vec, y_train)
+
+  # Evaluate on the hold-out test set
+  test_accuracy = nb_model.score(X_test_vec, y_test)
+  print("Test Accuracy: {:.2f}%".format(test_accuracy * 100))
+
+  # Save model and vectorizer
+  with open('./models/Author Analysis - Naive Bayes.pkl', 'wb') as file:
+    pickle.dump(nb_model, file)
+  with open('./models/Author Analysis - Naive Bayes - Vectorizer.pkl', 'wb') as file:
+    pickle.dump(vectorizer, file)
+
+def evaluate_naive_bayes():
+  curr_dir = os.path.dirname(os.path.abspath(__file__))
+  model_path = os.path.join(curr_dir, "models", "Author Analysis - Naive Bayes.pkl")
+  vectorizer_path = os.path.join(curr_dir, "models", "Author Analysis - Naive Bayes - Vectorizer.pkl")
+
+  with open(model_path, "rb") as file:
+    nb_model = pickle.load(file)
+  with open(vectorizer_path, "rb") as file:
+    vectorizer = pickle.load(file)
+
+  # Sanity check, complete set of tests, one for each author, using text not in dataset
+  tests_path = os.path.join(curr_dir, "public", "tests")
+
+  for author in os.listdir(tests_path):
+    test_file_path = os.path.join(tests_path, author)
+    
+    with open(test_file_path, 'r', encoding='utf-8') as file:
+        new_text = file.read()
+
+    # Process text, apply tf-idf, and use model to predict author
+    processed_new_text = clean_text(new_text)
+    encoded_new_text = vectorizer.transform([processed_new_text])
+    predicted_author = nb_model.predict(encoded_new_text)
+    
+    print(f"Predicted: {predicted_author} vs Actual: {author[:-4]}")

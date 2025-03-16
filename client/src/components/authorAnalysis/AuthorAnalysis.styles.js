@@ -17,24 +17,35 @@ export const StyledFlexboxContainer = styled.div`
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
 
+export const StyledButtonsFlexbox = styled.div`
+  height: 100vh;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid yellow;
+`
+
 export const StyledTextEntryFlexbox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 2vh 0vh;
+  border: 1px solid cyan;
 
   ${media.mobile`
-    height: 100vh;
+    height: 100%;
     max-height: ${({ $showData }) => $showData ? "34vw" : "calc(100vh - 40px)"};
     transition: max-height 1s ease;
-    width: 100vw;
+    width: 100%;
   `}
 
   ${media.desktop`
-    height: 100vh;
+    height: 100%;
     max-height: ${({ $showData }) => $showData ? "200px" : "calc(100vh - 40px)"};
-    transition: max-height 1s ease;
-    width: 80%;
+    max-width: ${({ $expanded }) => $expanded ? "80%" : "fit-content"};
+    transition: max-height 1s ease, max-width 1s ease;
+    width: 100%;
   `}
 `
 

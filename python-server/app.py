@@ -22,19 +22,20 @@ import matplotlib.pyplot as plt
 from author_predict import predict_author
 from emotion_predict import predict_emotion
 from text_metrics import calculate_metrics
+from generate_report import fetch_author_report
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/predict', methods=['POST'])
 def text_analysis():
-  data = request.get_json()
+  request_data = request.get_json()
 
-  if not data or "text" not in data:
+  if not request_data or "text" not in request_data:
      return jsonify({"error": "No valid text input received"}, 400)
 
   response = {}
-  user_text = data["text"]
+  user_text = request_data.get("text")
   response["predicted_authors"] = predict_author(user_text)
   response["predicted_emotions"] = predict_emotion(user_text)
   
@@ -43,6 +44,14 @@ def text_analysis():
   response["metrics"] = text_metrics
 
   return jsonify(response)
+
+@app.route('/read_report', methods=['POST'])
+def serve_author_report():
+  request_data = request.get_json()
+  author = request_data.get("Author")
+  author_report = fetch_author_report(author)
+
+  return jsonify(author_report)
 
 if __name__ == '__main__':
     app.run(port=5001, debug=True)

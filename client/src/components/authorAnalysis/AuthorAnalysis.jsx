@@ -7,7 +7,7 @@ import Wordcloud from "./Wordcloud.jsx";
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
 
-import { StyledFlexboxContainer, StyledMainButton, StyledTextEntryFlexbox, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledButtonsFlexbox, StyledTextEntryFlexbox, StyledMainButton, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
@@ -154,16 +154,24 @@ function AuthorAnalysis({ transition }) {
       {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={predictionData["wordcloud"]}/>}
 
     <StyledFlexboxContainer $transition={transition}>
-      <StyledTextEntryFlexbox $showData={showData}>
-        <StyledMainButton theme={theme} onClick={expanded ? undefined : toggleExpanded} $expanded={expanded}>
+      <StyledButtonsFlexbox>
+        <StyledMainButton theme={theme}>
           <StyledIcon src="./icons/book.svg" $width="72px" $expanded={expanded} $main={true}/>
           <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={expanded} onClick={predict}/>
           <StyledIcon src="./icons/return.svg" $width="46px" $expanded={expanded} onClick={toggleExpanded}/>
         </StyledMainButton>
-        <StyledTextBox theme={theme} $expanded={expanded}>
-          <StyledTextField theme={theme} value={predictionText} onChange={handleChange} placeholder="Enter your text here..."/>
-        </StyledTextBox>
-      </StyledTextEntryFlexbox>
+
+        <StyledTextEntryFlexbox $showData={showData} $expanded={expanded}>
+          <StyledMainButton theme={theme} onClick={expanded ? undefined : toggleExpanded} $expanded={expanded}>
+            <StyledIcon src="./icons/book.svg" $width="72px" $expanded={expanded} $main={true}/>
+            <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={expanded} onClick={predict}/>
+            <StyledIcon src="./icons/return.svg" $width="46px" $expanded={expanded} onClick={toggleExpanded}/>
+          </StyledMainButton>
+          <StyledTextBox theme={theme} $expanded={expanded}>
+            <StyledTextField theme={theme} value={predictionText} onChange={handleChange} placeholder="Enter your text here..."/>
+          </StyledTextBox>
+        </StyledTextEntryFlexbox>
+      </StyledButtonsFlexbox>
 
       <StyledGrid $showData={showData}>
         <StyledDataBox theme={theme} span="span 2">
@@ -177,6 +185,7 @@ function AuthorAnalysis({ transition }) {
             Average Sentence Length: {predictionData["metrics"]["average_sentence_length"]}
           </StyledBodyText>
         </StyledDataBox>
+
         <StyledDataBox theme={theme}>
           <StyledBodyText>
             Tense: {predictionData["metrics"]["tense"]}
@@ -186,6 +195,7 @@ function AuthorAnalysis({ transition }) {
             Voice: {predictionData["metrics"]["voice"]}
           </StyledBodyText>
         </StyledDataBox>
+
         <StyledDataBox theme={theme}>
             <StyledBodyText>
               Valence: {predictionData["predicted_emotions"]["valence"]}
@@ -196,6 +206,7 @@ function AuthorAnalysis({ transition }) {
               <br/>
             </StyledBodyText>
         </StyledDataBox>
+
         <StyledPlotContainer>
           <Plot 
             data={[predictedAuthorsPlotData]}
@@ -223,6 +234,7 @@ function AuthorAnalysis({ transition }) {
             style={{ width: '100%', height: '100%' }}
           />
         </StyledPlotContainer>
+
         <StyledDataBox theme={theme} span="span 2">
           <StyledBodyText>
             Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
@@ -232,11 +244,13 @@ function AuthorAnalysis({ transition }) {
             Lexical Diversity: {predictionData["metrics"]["lexical_diversity"]}
           </StyledBodyText>
         </StyledDataBox>
+
         <StyledTopicButton theme={theme} onClick={toggleTopicGraph}>
           <StyledBodyText>
             Show Topic Graph
           </StyledBodyText>
         </StyledTopicButton>
+
         <StyledWordcloud src={predictionData["wordcloud"]} onClick={toggleWordcloud}/>
       </StyledGrid>
     </StyledFlexboxContainer>

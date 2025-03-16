@@ -1,0 +1,369 @@
+[33mcommit 8ec5100bf31c9cffc3be72fe940669ac59698938[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Michael Lyons <michael.lyons1112@gmail.com>
+Date:   Sun Mar 16 22:30:46 2025 +0000
+
+    Testin git ignore update
+
+ .gitignore                  |   3 [32m++[m[31m-[m
+ python-server/wordcloud.png | Bin [31m242208[m -> [32m0[m bytes
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+[33mcommit 6d452a4819e18bf20304570b2570489aff27adef[m
+Author: Michael Lyons <michael.lyons1112@gmail.com>
+Date:   Sun Mar 16 22:22:38 2025 +0000
+
+    Removing eroneous models folder
+
+ models/Author Analysis - BERT.h5  | Bin [31m1314703672[m -> [32m0[m bytes
+ models/Author Analysis - BERT.pkl | Bin [31m467366[m -> [32m0[m bytes
+ models/Evalutation Report.txt     |  61 [31m--------------------------------------[m
+ 3 files changed, 61 deletions(-)
+
+[33mcommit da5af9a271e498f53431ad3991529d6fa214f37c[m
+Author: Michael Lyons <michael.lyons1112@gmail.com>
+Date:   Sun Mar 16 22:21:01 2025 +0000
+
+    Adding backend request to retrieve author reports / starting to add implementation to frontend
+
+ .../components/authorAnalysis/AuthorAnalysis.jsx   |   28 [32m+[m[31m-[m
+ .../authorAnalysis/AuthorAnalysis.styles.js        |   21 [32m+[m[31m-[m
+ models/Author Analysis - BERT.h5                   |  Bin [31m0[m -> [32m1314703672[m bytes
+ models/Author Analysis - BERT.pkl                  |  Bin [31m0[m -> [32m467366[m bytes
+ models/Evalutation Report.txt                      |   61 [32m+[m
+ .../__pycache__/author_predict.cpython-310.pyc     |  Bin [31m7448[m -> [32m11880[m bytes
+ .../__pycache__/emotion_predict.cpython-310.pyc    |  Bin [31m4425[m -> [32m4425[m bytes
+ .../__pycache__/generate_report.cpython-310.pyc    |  Bin [31m0[m -> [32m2952[m bytes
+ .../__pycache__/text_metrics.cpython-310.pyc       |  Bin [31m5486[m -> [32m5486[m bytes
+ python-server/app.py                               |   15 [32m+[m[31m-[m
+ python-server/author_predict.py                    |  218 [32m+[m[31m--[m
+ python-server/generate_report.py                   |   96 [32m++[m
+ .../Agatha Christie/The Man in the Brown Suit.txt  |    1 [32m+[m
+ .../The Murder of Roger Ackroyd.txt                |    0
+ .../Agatha Christie/The Murder on the Links.txt    |    1 [32m+[m
+ .../Camille (La Dame aux Camilias).txt             |    1 [32m+[m
+ .../Alexandre Dumas/The Count of Monte Cristo.txt  |    0
+ .../Alexandre Dumas/The Man in the Iron Mask .txt  |    1 [32m+[m
+ .../The Adventures of Sherlock Holmes.txt          |    0
+ .../Arthur Conan Doyle/The Valley of Fear.txt      |    1 [32m+[m
+ .../Arthur Conan Doyle/The White Company.txt       |    1 [32m+[m
+ .../Brandon Sanderson - WOT/Towers of Midnight.txt |    0
+ .../Brandon Sanderson/The Way of Kings.txt         |    0
+ .../Charles Dickens/A Tale of Two Cities.txt       |    0
+ .../Charles Dickens/American Notes.txt             |    1 [32m+[m
+ .../Charles Dickens/Our Mutual Friend.txt          |    1 [32m+[m
+ .../Emily Bront\303\253/Wuthering Heights .txt"    |    0
+ .../F Scott Fitzgerald/All the Sad Young Men.txt   |    1 [32m+[m
+ .../The Beautiful and Damned.txt                   |    1 [32m+[m
+ .../F Scott Fitzgerald/The Great Gatsby.txt        |    0
+ .../Fyodor Dostoyevsky/Crime and Punishment.txt    |    0
+ .../Notes from the Underground.txt                 |    1 [32m+[m
+ .../White Nights and Other Stories.txt             |    1 [32m+[m
+ ...The Country of the Blind, and Other Stories.txt |    1 [32m+[m
+ .../The Invisible Man A Grotesque Romance.txt      |    1 [32m+[m
+ .../HG Wells/The War of the Worlds.txt             |    0
+ ...tleby, the Scrivener A Story of Wall-Street.txt |    1 [32m+[m
+ .../Battle-Pieces and Aspects of the War.txt       |    1 [32m+[m
+ .../Herman Melville/Moby Dick.txt                  |    0
+ .../Jack London/Martin Eden.txt                    |    1 [32m+[m
+ .../Jack London/The Call of the Wild.txt           |    0
+ .../Jack London/The Iron Heel.txt                  |    1 [32m+[m
+ .../A Portrait of the Artist as a Young Man.txt    |    1 [32m+[m
+ .../James Joyce/Exiles A Play in Three Acts.txt    |    1 [32m+[m
+ .../James Joyce/Ulysses.txt                        |    0
+ .../Joseph Conrad/Heart of Darkness.txt            |    0
+ .../Joseph Conrad/Tales of Unrest.txt              |    1 [32m+[m
+ .../Joseph Conrad/Youth, a Narrative.txt           |    1 [32m+[m
+ .../Jules Vern/Around the World in Eighty Days.txt |    1 [32m+[m
+ .../Jules Vern/Five Weeks in a Balloon.txt         |    1 [32m+[m
+ .../Jules Vern/The Myterious Island.txt            |    0
+ .../L Frank Baum/Dorothy and the Wizard in Oz.txt  |    1 [32m+[m
+ .../L Frank Baum/The Emerald City of Oz.txt        |    1 [32m+[m
+ .../L Frank Baum/The Wonderful Wizard of Oz.txt    |    0
+ .../Mark Twain/Adventures of Huckleberry Finn.txt  |    0
+ .../Mark Twain/Roughing It.txt                     |    1 [32m+[m
+ .../The Tragedy of Pudd'nhead Wilson.txt           |    1 [32m+[m
+ .../Mary Shelley/Frankenstein.txt                  |    0
+ .../Mary Shelley/Mathilda.txt                      |    1 [32m+[m
+ .../Mary Shelley/The Last Man.txt                  |    1 [32m+[m
+ .../Nathaniel Hawthorne/Tanglewood Tales.txt       |    1 [32m+[m
+ .../Nathaniel Hawthorne/The Scarlet Letter.txt     |    0
+ .../Nathaniel Hawthorne/Twice-told Tales.txt       |    1 [32m+[m
+ .../Oscar Wilde/Intentions.txt                     |    1 [32m+[m
+ .../Oscar Wilde/The Canterville Ghost.txt          |    1 [32m+[m
+ .../Oscar Wilde/The Picture of Dorian Gray.txt     |    0
+ .../Robert Jordan/The Shadow Rising.txt            |    0
+ .../Robert Louis Stevenson/Kidnapped.txt           |    1 [32m+[m
+ .../The Strange Case of Dr Jekyll and Mr Hyde.txt  |    1 [32m+[m
+ .../Robert Louis Stevenson/Treasure Island.txt     |    0
+ .../The Brothers Grim/Grimm's Fairy Stories.txt    |    1 [32m+[m
+ .../The Brothers Grim/Grimms' Fairy Tales.txt      |    0
+ .../The Brothers Grim/Household Tales.txt          |    1 [32m+[m
+ .../William Shakespeare/Hamlet.txt                 |    1 [32m+[m
+ .../William Shakespeare/Julius Caesar.txt          |    1 [32m+[m
+ .../William Shakespeare/The Tempest.txt            |    1 [32m+[m
+ .../Towers of Midnight/18.txt                      |  311 [32m++++[m
+ .../Towers of Midnight/2.txt                       |  543 [32m+++++++[m
+ .../Towers of Midnight/24.txt                      |  842 [32m+++++++++++[m
+ .../Towers of Midnight/30.txt                      |  604 [32m++++++++[m
+ .../Towers of Midnight/35.txt                      |  474 [32m++++++[m
+ .../books/Brandon Sanderson/The Way of Kings/1.txt |  443 [32m++++++[m
+ .../Brandon Sanderson/The Way of Kings/10.txt      |  219 [32m+++[m
+ .../books/Brandon Sanderson/The Way of Kings/2.txt |  470 [32m++++++[m
+ .../books/Brandon Sanderson/The Way of Kings/3.txt |  493 [32m+++++++[m
+ .../books/Brandon Sanderson/The Way of Kings/4.txt |  394 [32m+++++[m
+ .../books/Brandon Sanderson/The Way of Kings/5.txt |  401 [32m+++++[m
+ .../books/Brandon Sanderson/The Way of Kings/6.txt |  695 [32m+++++++++[m
+ .../books/Brandon Sanderson/The Way of Kings/7.txt |  587 [32m++++++++[m
+ .../books/Brandon Sanderson/The Way of Kings/8.txt |  676 [32m+++++++++[m
+ .../books/Brandon Sanderson/The Way of Kings/9.txt |  216 [32m+++[m
+ .../The Way of Kings/Prologue.txt                  |  561 [32m+++++++[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 1.txt |   11 [32m+[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 2.txt |  117 [32m++[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 3.txt |   67 [32m+[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 4.txt |  199 [32m+++[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 5.txt |  157 [32m++[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 6.txt |  213 [32m+++[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 1.txt |   69 [32m+[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 2.txt |  109 [32m++[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 3.txt |  261 [32m++++[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 4.txt |  149 [32m++[m
+ .../F Scott Fitzgerald/The Great Gatsby/1.txt      |  303 [32m++++[m
+ .../F Scott Fitzgerald/The Great Gatsby/2.txt      |  273 [32m++++[m
+ .../F Scott Fitzgerald/The Great Gatsby/3.txt      |  341 [32m+++++[m
+ .../F Scott Fitzgerald/The Great Gatsby/4.txt      |  654 [32m+++++++++[m
+ .../F Scott Fitzgerald/The Great Gatsby/5.txt      |  310 [32m++++[m
+ .../F Scott Fitzgerald/The Great Gatsby/6.txt      |  269 [32m++++[m
+ .../F Scott Fitzgerald/The Great Gatsby/7.txt      |  829 [32m+++++++++++[m
+ .../F Scott Fitzgerald/The Great Gatsby/8.txt      |  225 [32m+++[m
+ .../F Scott Fitzgerald/The Great Gatsby/9.txt      |  332 [32m+++++[m
+ .../Crime and Punishment/1 - 1.txt                 |  105 [32m++[m
+ .../Crime and Punishment/1 - 2.txt                 |  109 [32m++[m
+ .../Crime and Punishment/1 - 3.txt                 |   85 [32m++[m
+ .../Crime and Punishment/1 - 4.txt                 |  103 [32m++[m
+ .../Crime and Punishment/1 - 5.txt                 |  151 [32m++[m
+ .../Crime and Punishment/1 - 6.txt                 |  121 [32m++[m
+ .../Crime and Punishment/1 - 7.txt                 |  177 [32m+++[m
+ .../Crime and Punishment/2 - 1.txt                 |  347 [32m+++++[m
+ .../Crime and Punishment/2 - 2.txt                 |  137 [32m++[m
+ .../Crime and Punishment/2 - 3.txt                 |  243 [32m+++[m
+ .../public/books/Herman Melville/Moby Dick/1.txt   |   29 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/10.txt  |   19 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/2.txt   |   23 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/3.txt   |  147 [32m++[m
+ .../public/books/Herman Melville/Moby Dick/4.txt   |   13 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/5.txt   |   17 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/6.txt   |   17 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/7.txt   |   19 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/8.txt   |   13 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/9.txt   |   69 [32m+[m
+ .../public/books/James Joyce/Ulysses/1-1.txt       |  752 [32m++++++++++[m
+ .../public/books/James Joyce/Ulysses/1-2.txt       |  423 [32m++++++[m
+ .../public/books/James Joyce/Ulysses/1-3.txt       |  207 [32m+++[m
+ .../public/books/James Joyce/Ulysses/2-1.txt       |  354 [32m+++++[m
+ .../public/books/James Joyce/Ulysses/2-2.txt       |  314 [32m++++[m
+ .../public/books/James Joyce/Ulysses/2-3.txt       |  809 [32m++++++++++[m
+ .../public/books/James Joyce/Ulysses/2-4.txt       | 1027 [32m+++++++++++++[m
+ .../public/books/James Joyce/Ulysses/2-5.txt       |  781 [32m++++++++++[m
+ .../public/books/James Joyce/Ulysses/2-6.txt       | 1027 [32m+++++++++++++[m
+ .../public/books/James Joyce/Ulysses/2-7.txt       | 1097 [32m++++++++++++++[m
+ .../Adventures of Huckleberry Finn/1.txt           |   17 [32m+[m
+ .../Adventures of Huckleberry Finn/10.txt          |   25 [32m+[m
+ .../Adventures of Huckleberry Finn/2.txt           |   83 [32m++[m
+ .../Adventures of Huckleberry Finn/3.txt           |   33 [32m+[m
+ .../Adventures of Huckleberry Finn/4.txt           |   47 [32m+[m
+ .../Adventures of Huckleberry Finn/5.txt           |   69 [32m+[m
+ .../Adventures of Huckleberry Finn/6.txt           |   35 [32m+[m
+ .../Adventures of Huckleberry Finn/7.txt           |   59 [32m+[m
+ .../Adventures of Huckleberry Finn/8.txt           |  171 [32m+++[m
+ .../Adventures of Huckleberry Finn/9.txt           |   41 [32m+[m
+ .../Mary Shelley/Frankenstein/0 - Letter 1.txt     |   24 [32m+[m
+ .../Mary Shelley/Frankenstein/0 - Letter 2.txt     |   20 [32m+[m
+ .../Mary Shelley/Frankenstein/0 - Letter 3.txt     |   17 [32m+[m
+ .../Mary Shelley/Frankenstein/0 - Letter 4.txt     |   77 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/1.txt   |   21 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/10.txt  |   40 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/2.txt   |   31 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/3.txt   |   41 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/4.txt   |   27 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/5.txt   |   60 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/6.txt   |   45 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/7.txt   |  100 [32m++[m
+ .../public/books/Mary Shelley/Frankenstein/8.txt   |   65 [32m+[m
+ .../public/books/Mary Shelley/Frankenstein/9.txt   |   31 [32m+[m
+ .../Oscar Wilde/The Picture of Dorian Gray/1.txt   |  161 [32m++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/10.txt  |   97 [32m++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/2.txt   |  271 [32m++++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/3.txt   |  197 [32m+++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/4.txt   |  213 [32m+++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/5.txt   |  197 [32m+++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/6.txt   |  115 [32m++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/7.txt   |  128 [32m++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/8.txt   |  155 [32m++[m
+ .../Oscar Wilde/The Picture of Dorian Gray/9.txt   |  129 [32m++[m
+ .../books/Robert Jordan/The Shadow Rising/1.txt    | 1547 [32m++++++++++++++++++++[m
+ .../books/Robert Jordan/The Shadow Rising/2.txt    | 1484 [32m+++++++++++++++++++[m
+ .../books/Robert Jordan/The Shadow Rising/3.txt    |  723 [32m+++++++++[m
+ .../1.txt                                          |   55 [32m+[m
+ .../10.txt                                         |   55 [32m+[m
+ .../2.txt                                          |   99 [32m++[m
+ .../3.txt                                          |   33 [32m+[m
+ .../4.txt                                          |   35 [32m+[m
+ .../5.txt                                          |   75 [32m+[m
+ .../6.txt                                          |   25 [32m+[m
+ .../7.txt                                          |   27 [32m+[m
+ .../8.txt                                          |  197 [32m+++[m
+ .../9.txt                                          |   67 [32m+[m
+ .../books/William Shakespeare/The Tempest.txt      |    1 [31m-[m
+ .../gutenberg/gutenberg_download_specific.py       |    2 [32m+[m[31m-[m
+ python-server/public/output/Dataset Metrics.csv    |   13 [32m+[m
+ .../Agatha Christie.txt                            |    0
+ .../Alexandre Dumas.txt                            |    0
+ .../Arthur Conan Doyle.txt                         |    0
+ .../Brandon Sanderson - WOT.txt                    |   19 [32m+[m
+ .../tests (gutenberg-bulk)/Brandon Sanderson.txt   |    7 [32m+[m
+ .../tests (gutenberg-bulk)/Charles Dickens.txt     |   17 [32m+[m
+ .../Emily Bront\303\253.txt"                       |    0
+ .../tests (gutenberg-bulk)/F Scott Fitzgerald.txt  |   15 [32m+[m
+ .../tests (gutenberg-bulk)/Fyodor Dostoyevsky.txt  |   18 [32m+[m
+ .../{tests => tests (gutenberg-bulk)}/HG Wells.txt |    0
+ .../tests (gutenberg-bulk)/Herman Melville.txt     |   17 [32m+[m
+ .../Jack London.txt                                |    0
+ .../public/tests (gutenberg-bulk)/James Joyce.txt  |   13 [32m+[m
+ .../Joseph Conrad.txt                              |    0
+ .../Jules Vern.txt                                 |    0
+ .../L Frank Baum.txt                               |    0
+ .../public/tests (gutenberg-bulk)/Mark Twain.txt   |   20 [32m+[m
+ .../public/tests (gutenberg-bulk)/Mary Shelley.txt |   22 [32m+[m
+ .../Nathaniel Hawthorne.txt                        |    0
+ .../public/tests (gutenberg-bulk)/Oscar Wilde.txt  |   18 [32m+[m
+ .../tests (gutenberg-bulk)/Robert Jordan.txt       |   12 [32m+[m
+ .../Robert Louis Stevenson.txt                     |    0
+ .../The Brothers Grim.txt                          |    0
+ .../William Shakespeare.txt                        |    0
+ .../public/tests/Brandon Sanderson - WOT.txt       |   49 [32m+[m[31m-[m
+ python-server/public/tests/Brandon Sanderson.txt   |   32 [32m+[m[31m-[m
+ python-server/public/tests/Charles Dickens.txt     |   20 [32m+[m[31m-[m
+ python-server/public/tests/F Scott Fitzgerald.txt  |   20 [32m+[m[31m-[m
+ python-server/public/tests/Fyodor Dostoyevsky.txt  |   41 [32m+[m[31m-[m
+ python-server/public/tests/Herman Melville.txt     |   20 [32m+[m[31m-[m
+ python-server/public/tests/James Joyce.txt         |   14 [32m+[m[31m-[m
+ python-server/public/tests/Mark Twain.txt          |   39 [32m+[m[31m-[m
+ python-server/public/tests/Mary Shelley.txt        |   31 [32m+[m[31m-[m
+ python-server/public/tests/Oscar Wilde.txt         |   21 [32m+[m[31m-[m
+ python-server/public/tests/Robert Jordan.txt       |   36 [32m+[m[31m-[m
+ .../public/tests/Robert Louise Stevenson.txt       |    1 [32m+[m
+ python-server/token_distribution.png               |  Bin [31m91840[m -> [32m0[m bytes
+ 228 files changed, 29532 insertions(+), 282 deletions(-)
+
+[33mcommit fe0c40df476c802fc196d29734fd1b0454b01991[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Michael Lyons <michael.lyons1112@gmail.com>
+Date:   Fri Mar 14 21:42:01 2025 +0000
+
+    Added evaluation functionality to author prediction model
+
+ python-server/app.py                               |    1 [31m-[m
+ python-server/author_predict.py                    |  447 [32m++[m[31m-[m
+ .../The Strange Case of Dr Jekyll and Mr Hyde.txt  |    1 [31m-[m
+ python-server/public/datasets/Author Dataset.csv   | 3624 [31m--------------------[m
+ python-server/public/tests/Agatha Christie.txt     |   21 [32m+[m
+ python-server/public/tests/Alexandre Dumas.txt     |   25 [32m+[m
+ python-server/public/tests/Arthur Conan Doyle.txt  |   20 [32m+[m
+ .../public/tests/Brandon Sanderson - WOT.txt       |   19 [32m+[m
+ python-server/public/tests/Brandon Sanderson.txt   |    7 [32m+[m
+ python-server/public/tests/Charles Dickens.txt     |   17 [32m+[m
+ .../public/tests/Emily Bront\303\253.txt"          |   13 [32m+[m
+ python-server/public/tests/F Scott Fitzgerald.txt  |   15 [32m+[m
+ python-server/public/tests/Fyodor Dostoyevsky.txt  |   18 [32m+[m
+ python-server/public/tests/HG Wells.txt            |   15 [32m+[m
+ python-server/public/tests/Herman Melville.txt     |   17 [32m+[m
+ python-server/public/tests/Jack London.txt         |   12 [32m+[m
+ python-server/public/tests/James Joyce.txt         |   13 [32m+[m
+ python-server/public/tests/Joseph Conrad.txt       |   28 [32m+[m
+ python-server/public/tests/Jules Vern.txt          |   12 [32m+[m
+ python-server/public/tests/L Frank Baum.txt        |   11 [32m+[m
+ python-server/public/tests/Mark Twain.txt          |   20 [32m+[m
+ python-server/public/tests/Mary Shelley.txt        |   22 [32m+[m
+ python-server/public/tests/Nathaniel Hawthorne.txt |   24 [32m+[m
+ python-server/public/tests/Oscar Wilde.txt         |   18 [32m+[m
+ python-server/public/tests/Robert Jordan.txt       |   12 [32m+[m
+ .../public/tests/Robert Louis Stevenson.txt        |    1 [32m+[m
+ python-server/public/tests/The Brothers Grim.txt   |   22 [32m+[m
+ python-server/public/tests/William Shakespeare.txt |   38 [32m+[m
+ 28 files changed, 633 insertions(+), 3860 deletions(-)
+
+[33mcommit b4dabd1299228164143192059cf53fa9b7292828[m
+Author: Michael Lyons <michael.lyons1112@gmail.com>
+Date:   Thu Mar 13 22:44:56 2025 +0000
+
+    Adding to author analysis dataset / working on model implementation to improve accuracy
+
+ .gitignore                                         |     3 [32m+[m[31m-[m
+ python-server/app.py                               |     1 [32m+[m
+ python-server/author_predict.py                    |   231 [32m+[m[31m-[m
+ .../The Murder of Roger Ackroyd.txt                |     1 [32m+[m
+ .../Alexandre Dumas/The Count of Monte Cristo.txt  |     1 [32m+[m
+ .../The Adventures of Sherlock Holmes.txt          |     1 [32m+[m
+ .../Brandon Sanderson - WOT/Towers of Midnight.txt |  3875 [32m+++++[m
+ .../Towers of Midnight/18.txt                      |   311 [31m-[m
+ .../Towers of Midnight/2.txt                       |   543 [31m-[m
+ .../Towers of Midnight/24.txt                      |   842 [31m-[m
+ .../Towers of Midnight/30.txt                      |   604 [31m-[m
+ .../Towers of Midnight/35.txt                      |   474 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings.txt   |  5165 [32m+++++++[m
+ .../books/Brandon Sanderson/The Way of Kings/1.txt |   443 [31m-[m
+ .../Brandon Sanderson/The Way of Kings/10.txt      |   219 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/2.txt |   470 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/3.txt |   493 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/4.txt |   394 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/5.txt |   401 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/6.txt |   695 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/7.txt |   587 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/8.txt |   676 [31m-[m
+ .../books/Brandon Sanderson/The Way of Kings/9.txt |   216 [31m-[m
+ .../The Way of Kings/Prologue.txt                  |   561 [31m-[m
+ .../books/Charles Dickens/A Tale of Two Cities.txt |     1 [32m+[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 1.txt |    11 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 2.txt |   117 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 3.txt |    67 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 4.txt |   199 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 5.txt |   157 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/1 - 6.txt |   213 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 1.txt |    69 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 2.txt |   109 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 3.txt |   261 [31m-[m
+ .../Charles Dickens/A Tale of Two Cities/2 - 4.txt |   149 [31m-[m
+ .../Emily Bront\303\253/Wuthering Heights .txt"    |     1 [32m+[m
+ .../books/F Scott Fitzgerald/The Great Gatsby.txt  |     1 [32m+[m
+ .../F Scott Fitzgerald/The Great Gatsby/1.txt      |   303 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/2.txt      |   273 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/3.txt      |   341 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/4.txt      |   654 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/5.txt      |   310 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/6.txt      |   269 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/7.txt      |   829 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/8.txt      |   225 [31m-[m
+ .../F Scott Fitzgerald/The Great Gatsby/9.txt      |   332 [31m-[m
+ .../Fyodor Dostoyevsky/Crime and Punishment.txt    |     1 [32m+[m
+ .../Crime and Punishment/1 - 1.txt                 |   105 [31m-[m
+ .../Crime and Punishment/1 - 2.txt                 |   109 [31m-[m
+ .../Crime and Punishment/1 - 3.txt                 |    85 [31m-[m
+ .../Crime and Punishment/1 - 4.txt                 |   103 [31m-[m
+ .../Crime and Punishment/1 - 5.txt                 |   151 [31m-[m
+ .../Crime and Punishment/1 - 6.txt                 |   121 [31m-[m
+ .../Crime and Punishment/1 - 7.txt                 |   177 [31m-[m
+ .../Crime and Punishment/2 - 1.txt                 |   347 [31m-[m
+ .../Crime and Punishment/2 - 2.txt                 |   137 [31m-[m
+ .../Crime and Punishment/2 - 3.txt                 |   243 [31m-[m
+ .../books/HG Wells/The War of the Worlds.txt       |     1 [32m+[m
+ .../public/books/Herman Melville/Moby Dick.txt     |     1 [32m+[m
+ .../public/books/Herman Melville/Moby Dick/1.txt   |    29 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/10.txt  |    19 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/2.txt   |    23 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/3.txt   |   147 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/4.txt   |    13 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/5.txt   |    17 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/6.txt   |    17 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/7.txt   |    19 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/8.txt   |    13 [31m-[m
+ .../public/books/Herman Melville/Moby Dick/9.txt   |    69 [31m-[m
+ .../books/Jack London/The Call of th

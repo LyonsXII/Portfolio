@@ -138,3 +138,4 @@ python-server/venv
 python-server/notebooks
 python-server/models
 python-server/public/gutenberg/books
+python-server/public/books\ (gutenberg-bulk)
