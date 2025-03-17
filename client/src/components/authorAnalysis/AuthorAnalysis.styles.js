@@ -23,6 +23,7 @@ export const StyledButtonsFlexbox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 100px;
   border: 1px solid yellow;
 `
 
@@ -31,7 +32,6 @@ export const StyledTextEntryFlexbox = styled.div`
   align-items: center;
   justify-content: center;
   margin: 2vh 0vh;
-  border: 1px solid cyan;
 
   ${media.mobile`
     height: 100%;
@@ -43,7 +43,7 @@ export const StyledTextEntryFlexbox = styled.div`
   ${media.desktop`
     height: 100%;
     max-height: ${({ $showData }) => $showData ? "200px" : "calc(100vh - 40px)"};
-    max-width: ${({ $expanded }) => $expanded ? "80%" : "fit-content"};
+    max-width: ${({ $expanded }) => $expanded ? "80%" : "200px"};
     transition: max-height 1s ease, max-width 1s ease;
     width: 100%;
   `}

@@ -6,6 +6,7 @@ import re
 import numpy as np
 import pandas as pd
 import pickle
+import json
 
 from emotion_predict import predict_emotion
 from text_metrics import calculate_metrics
@@ -91,6 +92,4 @@ def fetch_author_report(author):
   filtered_dataset = dataset[dataset["Author"] == author]
   json_dataset = filtered_dataset.to_json(orient="records")
 
-  return json_dataset
-
-
+  return json.loads(json_dataset)

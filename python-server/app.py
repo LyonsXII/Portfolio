@@ -45,10 +45,10 @@ def text_analysis():
 
   return jsonify(response)
 
-@app.route('/read_report', methods=['POST'])
+@app.route('/read_author_report', methods=['POST'])
 def serve_author_report():
   request_data = request.get_json()
-  author = request_data.get("Author")
+  author = request_data.get("author")
   author_report = fetch_author_report(author)
 
   return jsonify(author_report)

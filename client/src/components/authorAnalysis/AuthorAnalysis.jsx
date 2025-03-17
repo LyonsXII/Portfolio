@@ -15,12 +15,14 @@ function AuthorAnalysis({ transition }) {
 
   const [expanded, setExpanded] = useState(false);
   const [showData, setShowData] = useState(false);
+  const [showAuthorData, setShowAuthorData] = useState(false);
   const [showTopicGraph, setShowTopicGraph] = useState(false);
   const [showWordcloud, setShowWordcloud] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
 
   const [predictionText, setPredictionText] = useState("");
-  const [predictionData, setPredictionData] = useState({
+  const [selectedAuthor, setSelectedAuthor] = useState("Robert Jordan")
+  const [reportData, setReportData] = useState({
     predicted_authors: [[0.5, "Example 1"], [0.3, "Example 2"], [0.1, "Example 3"], [0.05, "Example 4"], [0.05, "Example 5"]],
     predicted_emotions: {
       valence: 3,
@@ -42,7 +44,6 @@ function AuthorAnalysis({ transition }) {
     },
     wordcloud: "images/Placeholder Wordcloud.png"
   });
-
   const [predictedAuthorsPlotData, setPredictedAuthorsPlotData] = useState({
     x: [0.5, 0.3, 0.1, 0.05, 0.05],
     y: ["Example 1", "Example 2", "Example 3", "Example 4" ,"Example 5"],
@@ -122,25 +123,53 @@ function AuthorAnalysis({ transition }) {
 
       const data = await response.json();
       data["wordcloud"] = `data:image/png;base64,${data["wordcloud"]}`
-      setPredictionData(data);
+      setReportData(data);
       setShowData(true);
     } catch (err) {
       console.error("Error sending request:", err);
     }
   }
 
+  async function fetch_author_report(author) {
+    try {
+      const requestData = {
+        author: selectedAuthor
+      }
+      const response = await fetch("http://localhost:5001/read_author_report", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log(data[0]);
+      // setReportData(data[0]);
+      // setShowAuthorData(true);
+    } catch(err) {
+      console.error("Error sending request:", err);
+    }
+  }
+
   // Update plot data when predictions come in from backend
   useEffect(() => {
-    setPredictedAuthorsPlotData(prevData => ({
-      ...prevData,
-      x: predictionData["predicted_authors"].slice(0, 5).map(([weight]) => weight),
-      y: predictionData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
-      text: predictionData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
-      textposition: predictionData["predicted_authors"].slice(0, 5).map(([weight, name]) => 
-        weight > 0.15 ? "inside" : "outside"
-    )
-    }));
-  }, [predictionData]);
+    if (reportData.hasOwnProperty("predicted_authors")) {
+      setPredictedAuthorsPlotData(prevData => ({
+        ...prevData,
+        x: reportData["predicted_authors"].slice(0, 5).map(([weight]) => weight),
+        y: reportData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
+        text: reportData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
+        textposition: reportData["predicted_authors"].slice(0, 5).map(([weight, name]) => 
+          weight > 0.15 ? "inside" : "outside"
+      )
+      }));
+    }
+  }, [reportData]);
 
   useEffect(() => {
     updateLayout(); // Initial layout update
@@ -151,11 +180,11 @@ function AuthorAnalysis({ transition }) {
   return (
     <div>
       {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph}/>}
-      {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={predictionData["wordcloud"]}/>}
+      {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={reportData["wordcloud"]}/>}
 
     <StyledFlexboxContainer $transition={transition}>
       <StyledButtonsFlexbox>
-        <StyledMainButton theme={theme}>
+        <StyledMainButton theme={theme} onClick={fetch_author_report}>
           <StyledIcon src="./icons/book.svg" $width="72px" $expanded={expanded} $main={true}/>
           <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={expanded} onClick={predict}/>
           <StyledIcon src="./icons/return.svg" $width="46px" $expanded={expanded} onClick={toggleExpanded}/>
@@ -176,33 +205,33 @@ function AuthorAnalysis({ transition }) {
       <StyledGrid $showData={showData}>
         <StyledDataBox theme={theme} span="span 2">
           <StyledBodyText>
-            Total Words: {predictionData["metrics"]["total_words"]}
+            Total Words: {reportData["metrics"]["total_words"]}
             <br/>
-            Average Word Length: {predictionData["metrics"]["average_word_length"]}
+            Average Word Length: {reportData["metrics"]["average_word_length"]}
             <br/>
-            Total Sentences: {predictionData["metrics"]["total_sentences"]}
+            Total Sentences: {reportData["metrics"]["total_sentences"]}
             <br/>
-            Average Sentence Length: {predictionData["metrics"]["average_sentence_length"]}
+            Average Sentence Length: {reportData["metrics"]["average_sentence_length"]}
           </StyledBodyText>
         </StyledDataBox>
 
         <StyledDataBox theme={theme}>
           <StyledBodyText>
-            Tense: {predictionData["metrics"]["tense"]}
+            Tense: {reportData["metrics"]["tense"]}
             <br/>
-            Person: {predictionData["metrics"]["person"]}
+            Person: {reportData["metrics"]["person"]}
             <br/>
-            Voice: {predictionData["metrics"]["voice"]}
+            Voice: {reportData["metrics"]["voice"]}
           </StyledBodyText>
         </StyledDataBox>
 
         <StyledDataBox theme={theme}>
             <StyledBodyText>
-              Valence: {predictionData["predicted_emotions"]["valence"]}
+              Valence: {reportData["predicted_emotions"]["valence"]}
               <br/>
-              Arousal: {predictionData["predicted_emotions"]["arousal"]}
+              Arousal: {reportData["predicted_emotions"]["arousal"]}
               <br/>
-              Dominance: {predictionData["predicted_emotions"]["dominance"]}
+              Dominance: {reportData["predicted_emotions"]["dominance"]}
               <br/>
             </StyledBodyText>
         </StyledDataBox>
@@ -237,11 +266,11 @@ function AuthorAnalysis({ transition }) {
 
         <StyledDataBox theme={theme} span="span 2">
           <StyledBodyText>
-            Flesch-Kincaid: {predictionData["metrics"]["fk_score"]}
+            Flesch-Kincaid: {reportData["metrics"]["fk_score"]}
             <br/>
-            Reading Level: {predictionData["metrics"]["fk_grade"]}
+            Reading Level: {reportData["metrics"]["fk_grade"]}
             <br/>
-            Lexical Diversity: {predictionData["metrics"]["lexical_diversity"]}
+            Lexical Diversity: {reportData["metrics"]["lexical_diversity"]}
           </StyledBodyText>
         </StyledDataBox>
 
@@ -251,7 +280,7 @@ function AuthorAnalysis({ transition }) {
           </StyledBodyText>
         </StyledTopicButton>
 
-        <StyledWordcloud src={predictionData["wordcloud"]} onClick={toggleWordcloud}/>
+        <StyledWordcloud src={reportData["wordcloud"]} onClick={toggleWordcloud}/>
       </StyledGrid>
     </StyledFlexboxContainer>
     </div>
