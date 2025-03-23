@@ -86,6 +86,11 @@ function AuthorAnalysis({ transition }) {
       setSelectedAuthor("Robert Jordan")
     }
 
+    if (authorExpanded) {
+      setAuthorExpanded(false);
+      setShowData(false);
+    }
+
     setPredictionExpanded(prev => !prev);
   }
 
@@ -94,6 +99,11 @@ function AuthorAnalysis({ transition }) {
       setShowData(false);
     } else {
       setPredictionText("")
+    }
+
+    if (predictionExpanded) {
+      setPredictionExpanded(false);
+      setShowData(false);
     }
 
     setAuthorExpanded(prev => !prev);
@@ -142,8 +152,10 @@ function AuthorAnalysis({ transition }) {
       const data = await response.json();
       setReportData(data);
       setShowData(true);
-      setLoading(prev => prev - 1);
-      
+      if (loading > 0) {
+        setLoading(prev => prev - 1);
+      }
+
     } catch (err) {
       console.error("Error sending request:", err);
     }
@@ -170,7 +182,6 @@ function AuthorAnalysis({ transition }) {
       setReportData(data);
       setShowData(true);
       setShowAuthorData(true);
-      setLoading(prev => prev - 1);
 
     } catch(err) {
       console.error("Error sending request:", err);
@@ -198,7 +209,9 @@ function AuthorAnalysis({ transition }) {
       const blob = await response.blob();
       const wordcloudUrl = URL.createObjectURL(blob)
       setWordcloudUrl(wordcloudUrl)
-      setLoading(prev => prev - 1);
+      if (loading > 0) {
+        setLoading(prev => prev - 1);
+      }
 
     } catch(err) {
       console.error("Error sending request:", err);
@@ -212,7 +225,6 @@ function AuthorAnalysis({ transition }) {
   }
 
   function handleAuthorReport() {
-    setLoading(2);
     fetch_author_report();
     fetch_wordcloud();
   }
@@ -239,10 +251,6 @@ function AuthorAnalysis({ transition }) {
     return () => window.removeEventListener('resize', updateLayout);
   }, []);
 
-  useEffect(()=> {
-    console.log(loading);
-  }, [loading]);
-
   return (
     <div>
       {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph}/>}
@@ -250,12 +258,16 @@ function AuthorAnalysis({ transition }) {
       {loading > 0 && <LoadingIcon/>}
 
       <StyledFlexboxContainer $transition={transition}>
-        <StyledButtonsFlexbox>
-          <StyledMainButton theme={theme} onClick={handleAuthorReport}>
-            <StyledIcon src="./icons/book.svg" $width="72px" $expanded={authorExpanded} $main={true}/>
-            <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={authorExpanded}/>
-            <StyledIcon src="./icons/return.svg" $width="46px" $expanded={authorExpanded} onClick={toggleAuthorExpanded}/>
-          </StyledMainButton>
+        <StyledButtonsFlexbox $showData={showData}>
+          <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
+            <StyledMainButton theme={theme} onClick={authorExpanded ? undefined : toggleAuthorExpanded} $expanded={authorExpanded}>
+              <StyledIcon src="./icons/book.svg" $width="72px" $expanded={authorExpanded} $main={true}/>
+              <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={authorExpanded} onClick={handleAuthorReport}/>
+              <StyledIcon src="./icons/return.svg" $width="46px" $expanded={authorExpanded} onClick={toggleAuthorExpanded}/>
+            </StyledMainButton>
+            <StyledTextBox theme={theme} $expanded={authorExpanded}>
+            </StyledTextBox>
+          </StyledTextEntryFlexbox>
 
           <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
             <StyledMainButton theme={theme} onClick={predictionExpanded ? undefined : togglePredictionExpanded} $expanded={predictionExpanded}>
@@ -268,7 +280,6 @@ function AuthorAnalysis({ transition }) {
             </StyledTextBox>
           </StyledTextEntryFlexbox>
         </StyledButtonsFlexbox>
-
         <StyledGrid $showData={showData}>
           <StyledDataBox theme={theme} span="span 2">
             <StyledBodyText>
@@ -350,6 +361,7 @@ function AuthorAnalysis({ transition }) {
           <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud}/>
         </StyledGrid>
       </StyledFlexboxContainer>
+
     </div>
   )
 }

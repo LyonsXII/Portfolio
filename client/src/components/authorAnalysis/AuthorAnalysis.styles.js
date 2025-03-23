@@ -3,27 +3,29 @@ import { keyframes, css } from 'styled-components';
 
 import { media } from '../../context/media';
 
-import { slideInTopAnimation, slideOutRightAnimation, bounceDownAnimation } from '../../context/Animations';
-import { fadeInAnimation, fadeOutAnimation } from './AuthorAnalysisAnimations';
+import { slideInTopAnimation, slideOutRightAnimation } from '../../context/Animations';
+import { fadeInAnimation, fadeOutAnimation, slideInBottomAnimation, slideOutBottomAnimation } from './AuthorAnalysisAnimations';
 
 export const StyledFlexboxContainer = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
 
 export const StyledButtonsFlexbox = styled.div`
-  height: 40vh;
+  height: 100vh;
   width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 100px;
+  max-height: ${({ $showData }) => $showData ? "32vh" : "100vh"};
+  transition: max-height 1s ease;
 `
 
 export const StyledTextEntryFlexbox = styled.div`
@@ -55,14 +57,14 @@ export const StyledMainButton = styled.button`
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
   z-index: 1;
-  transition: border-radius 1s ease;
   cursor: pointer;
+
+  transition: border-radius 1s ease, margin-left 1s ease, width 1s ease, transform 0.2s ease, background-color 0.8s ease;
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
     box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
     transform: scale(1.02);
-    transition: transform 0.2s ease, background-color 0.8s ease;
   }
 
   ${media.mobile`
@@ -71,7 +73,6 @@ export const StyledMainButton = styled.button`
     border: 3px solid black;
     margin-left: ${({ $expanded }) => $expanded ? "0px" : "-10vw"};
     border-radius: ${({ $expanded }) => $expanded ? "40px" : "50%"};
-    transition: border-radius 1s ease, margin-left 1s ease, width 1s ease;
   `}
 
   ${media.desktop`
@@ -80,7 +81,6 @@ export const StyledMainButton = styled.button`
     border: 4px solid black;
     margin-left: ${({ $expanded }) => $expanded ? "0px" : "-75px"};
     border-radius: ${({ $expanded }) => $expanded ? "40px" : "50%"};
-    transition: border-radius 1s ease, margin-left 1s ease, width 1s ease;
   `}
 `
 
@@ -165,7 +165,8 @@ export const StyledIcon = styled.img`
 `
 
 export const StyledGrid = styled.div`
-  display: ${({ $showData }) => $showData ? "grid" : "none"};
+  // display: ${({ $showData }) => $showData ? "grid" : "none"};
+  display: grid;
   grid-auto-flow: dense;
 
   justify-items: stretch;
@@ -173,9 +174,9 @@ export const StyledGrid = styled.div`
   column-gap: 10px;
   row-gap: 20px;
 
-  max-height: ${({ $showData }) => $showData ? "100%" : "0%"};
-  transition: max-height 1s ease;
-  margin-bottom: 20px;
+  max-height: ${({ $showData }) => $showData ? "100vh" : "0vh"};
+  margin-bottom: ${({ $showData }) => $showData ? "20px" : "0px"};
+  transition: max-height 1s ease, margin-bottom 1s ease;
   padding: 0% 3%;
   box-sizing: border-box;
   overflow-y: scroll;
@@ -198,6 +199,10 @@ export const StyledGrid = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-auto-rows: minmax(150px, auto);
   `}
+
+  animation: ${({ $showData }) => 
+    $showData ? slideInBottomAnimation : slideOutBottomAnimation
+  }
 `
 
 export const StyledDataBox = styled.div`
