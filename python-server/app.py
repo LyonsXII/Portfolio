@@ -4,11 +4,11 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = "3"
 import re
 import string
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-import base64
 import numpy as np
 import pandas as pd
+import json
 import nltk
 from nltk.corpus import stopwords
 from nltk.corpus import cmudict
@@ -21,8 +21,7 @@ import matplotlib.pyplot as plt
 
 from author_predict import predict_author
 from emotion_predict import predict_emotion
-from text_metrics import calculate_metrics
-from generate_report import fetch_author_report
+from text_metrics import generate_word_cloud, calculate_metrics
 
 app = Flask(__name__)
 CORS(app)
@@ -39,19 +38,45 @@ def text_analysis():
   response["predicted_authors"] = predict_author(user_text)
   response["predicted_emotions"] = predict_emotion(user_text)
   
-  text_wordcloud, text_metrics = calculate_metrics(user_text)
-  response["wordcloud"] = text_wordcloud
+  text_metrics = calculate_metrics(user_text, "Custom")
   response["metrics"] = text_metrics
 
   return jsonify(response)
 
-@app.route('/read_author_report', methods=['POST'])
+@app.route('/author_report', methods=['POST'])
 def serve_author_report():
   request_data = request.get_json()
   author = request_data.get("author")
-  author_report = fetch_author_report(author)
+
+  if not author:
+     return jsonify({"error": "No author provided"}), 400
+
+  curr_dir = os.path.dirname(os.path.abspath(__file__))
+  author_report_path = os.path.join(curr_dir, f"public/author reports/{author}.json")
+  with open(author_report_path, "r") as f:
+    author_report = json.load(f)
 
   return jsonify(author_report)
+
+@app.route('/wordcloud', methods=['POST'])
+def serve_wordcloud():
+  request_data = request.get_json()
+  author = request_data.get("author")
+  text = request_data.get("text")
+
+  if not author:
+     return jsonify({"error": "No author provided"}), 400
+  
+  elif author == "Custom":
+    generate_word_cloud(author, text)
+
+  curr_dir = os.path.dirname(os.path.abspath(__file__))
+  wordcloud_path = os.path.join(curr_dir, f"public/author reports/{author} - Wordcloud.jpg")
+  if not os.path.exists(wordcloud_path):
+      
+      return jsonify({"error": "Image not found"}), 404
+
+  return send_file(wordcloud_path, mimetype='image/jpeg')
 
 if __name__ == '__main__':
     app.run(port=5001, debug=True)

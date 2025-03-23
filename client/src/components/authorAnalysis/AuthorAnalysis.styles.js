@@ -18,13 +18,12 @@ export const StyledFlexboxContainer = styled.div`
 `;
 
 export const StyledButtonsFlexbox = styled.div`
-  height: 100vh;
+  height: 40vh;
   width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 100px;
-  border: 1px solid yellow;
 `
 
 export const StyledTextEntryFlexbox = styled.div`

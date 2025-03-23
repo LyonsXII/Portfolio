@@ -8,12 +8,10 @@ from nltk.corpus import stopwords
 from nltk.corpus import cmudict
 from nltk.stem.porter import PorterStemmer
 import spacy
-import io
-import base64
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
-def word_cloud(text):
+def generate_word_cloud(text, author):
   # Create stopwords object and extend as needed
   # Add more words to update if seeing any frequently missed by stopwords, e.g. "said"
   stop_words = set(stopwords.words('english'))
@@ -36,17 +34,11 @@ def word_cloud(text):
   plt.imshow(wordcloud, interpolation="bilinear")
   plt.axis("off")
 
-  # Encode produced plot
-  buffer = io.BytesIO()
-  plt.savefig(buffer, format="png", bbox_inches="tight")
-  buffer.seek(0)
-  encoded_image = base64.b64encode(buffer.read()).decode('utf-8')
-
-  # Close buffer and plot
-  buffer.close()
+  # Save plot
+  curr_dir = os.path.dirname(os.path.abspath(__file__))
+  wordcloud_path = os.path.join(curr_dir, f"public/author reports/{author} - Wordcloud.jpg")
+  plt.savefig(wordcloud_path)
   plt.close()
-
-  return encoded_image
 
 def metrics(text):
   nltk.download("cmudict", quiet=True)
@@ -209,8 +201,8 @@ def metrics(text):
 
   return metrics
 
-def calculate_metrics(text):
-  text_wordcloud = word_cloud(text)
+def calculate_metrics(text, author):
+  generate_word_cloud(text, author)
   text_metrics = metrics(text)
 
-  return text_wordcloud, text_metrics
+  return text_metrics

@@ -5,8 +5,6 @@ import re
 
 import numpy as np
 import pandas as pd
-import pickle
-import json
 
 from emotion_predict import predict_emotion
 from text_metrics import calculate_metrics
@@ -31,9 +29,9 @@ def generate_report():
                   text = file.read()
                   
               data.append({
-                  'Author': author,
-                  'Title': book,
-                  'Text': text
+                  'author': author,
+                  'title': book,
+                  'text': text
               })
 
     return pd.DataFrame(data)
@@ -51,45 +49,30 @@ def generate_report():
   dataset = import_dataset()
 
   # Clean text
-  dataset["Text"] = dataset["Text"].apply(lambda text: clean_text(text))
-  dataset = dataset.groupby(['Title', 'Author'])['Text'].apply(' '.join).reset_index()
+  dataset["text"] = dataset["text"].apply(lambda text: clean_text(text))
+
+  # Merge text together for rows with the same title and author
+  dataset = dataset.groupby(['title', 'author'])['text'].apply(' '.join).reset_index()
 
   # Create new metrics dataframe (average word length, etc), and then concatenate it onto our original
   # Apply calculate_metrics to get both outputs (image and metrics object)
-  dataset[["Wordcloud", "Metrics"]] = dataset["Text"].apply(lambda text: pd.Series(calculate_metrics(text)))
-  dataset['Wordcloud'] = dataset['Wordcloud'].astype(str)
+  dataset["metrics"] = dataset.apply(lambda row: calculate_metrics(row["text"], row["author"]), axis=1)
 
-  # # Now split the 'Metrics' object into individual columns
-  metrics_dataset = dataset["Metrics"].apply(pd.Series)
+  # Create new column including emotional analysis results
+  dataset["predicted_emotions"] = dataset["text"].apply(predict_emotion)
 
-  # # Join the metrics DataFrame back to the original dataset
-  dataset = pd.concat([dataset, metrics_dataset], axis=1)
+  # Drop the text column as no longer needed
+  dataset = dataset.drop(columns=["text"])
 
-  # Drop the original 'Metrics' column if you don't need it
-  dataset = dataset.drop(columns=["Text", "Metrics"])
-  dataset.to_pickle('data.pkl')
-
+  # Save as series of JSON files, one per author
   curr_dir = os.path.dirname(os.path.abspath(__file__))
-  output_path = os.path.join(curr_dir, "models", "Dataset Report.pkl")
-  with open(output_path, 'wb') as file:
-    pickle.dump(dataset, file)
+  output_dir = os.path.join(curr_dir, "./public/author reports")
+  os.makedirs(output_dir, exist_ok=True)
 
-def check_report():
-  curr_dir = os.path.dirname(os.path.abspath(__file__))
-  output_path = os.path.join(curr_dir, "models", "Dataset Report.pkl")
-  with open(output_path, "rb") as f:
-    dataset = pickle.load(f)
-  print(dataset.head)
-  print(dataset.shape)
-  print(dataset.columns)
+  for index, row in dataset.iterrows():
+    author_json = row.to_json()
+    output_path = os.path.join(output_dir, f"{row['author']}.json")
+    with open(output_path, "w") as f:
+      f.write(author_json)
 
-def fetch_author_report(author):
-  curr_dir = os.path.dirname(os.path.abspath(__file__))
-  output_path = os.path.join(curr_dir, "models", "Dataset Report.pkl")
-  with open(output_path, "rb") as f:
-    dataset = pickle.load(f)
-  
-  filtered_dataset = dataset[dataset["Author"] == author]
-  json_dataset = filtered_dataset.to_json(orient="records")
-
-  return json.loads(json_dataset)
+generate_report()
