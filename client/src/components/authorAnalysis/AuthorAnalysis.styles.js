@@ -23,7 +23,7 @@ export const StyledButtonsFlexbox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 100px;
+  gap: 60px;
   max-height: ${({ $showData }) => $showData ? "32vh" : "100vh"};
   transition: max-height 1s ease;
 `
@@ -32,7 +32,6 @@ export const StyledTextEntryFlexbox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2vh 0vh;
 
   ${media.mobile`
     height: 100%;
@@ -85,7 +84,7 @@ export const StyledMainButton = styled.button`
 `
 
 export const StyledTextBox = styled.div`
-  width: 90%;
+  width: 100%;
   max-width: ${({$expanded}) => $expanded ? "100%" : "0%"};
   transition: max-width 1s ease;
   display: flex;
@@ -147,6 +146,63 @@ export const StyledTextField = styled.textarea`
     margin: 20px 0px 0px 90px;
   `}
 `
+
+export const StyledAuthorButtonContainer = styled.div`
+  width: 100%;
+  max-width: ${({$expanded}) => $expanded ? "100%" : "0%"};
+  transition: max-width 1s ease;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 10px;
+  grid-auto-rows: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: ${({ theme }) => theme.secondaryColor};
+  border-radius: 0px 20px 20px 0px;
+
+  box-sizing: border-box;
+
+  ${media.mobile`
+    height: calc(34vw - 26px);
+    margin-left: -10vw;
+    border: 3px solid black;
+  `}
+
+  ${media.desktop`
+    height: 160px;
+    margin-left: -75px;
+    padding: ${({$expanded}) => $expanded ? "10px 20px 10px 90px" : "0px"};
+    transition: max-width 1s ease, padding 1s ease;
+    border: 4px solid black;
+  `}
+`
+
+export const StyledAuthorButton = styled.button`
+  display: ${({ $authorExpandedButtonAnimation }) => $authorExpandedButtonAnimation ? "flex" : "none"};
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: ${({ theme, $selectedAuthor, $value }) => $selectedAuthor === $value ? theme.tertiaryColor : theme.primaryColor};
+  border: 3px solid black;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.textColor};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.theme.secondaryColor};
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+    transition: transform 0.2s ease, background-color 0.8s ease;
+  }
+
+  animation: ${({ $authorExpandedButtonAnimation }) => 
+    $authorExpandedButtonAnimation ? fadeInAnimation : "none"
+  };
+`
+
 export const StyledIcon = styled.img`
   display: ${({ $expanded, $main }) => 
     $main && $expanded ? "none"
@@ -346,5 +402,23 @@ export const StyledBodyText = styled.p`
 
   ${media.desktop`
     font-size: 1.5rem;
+  `}
+`;
+
+export const StyledButtonText = styled.p`
+  text-shadow: 0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),
+              0px 0px 6px rgba(0, 0, 0, 1),               
+              0px 0px 6px rgba(0, 0, 0, 1);
+
+  ${media.mobile`
+    font-size: 0.9rem;
+    line-height: 1.4;
+  `}
+
+  ${media.desktop`
+    font-size: 1rem;
   `}
 `;

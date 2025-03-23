@@ -43,6 +43,17 @@ def text_analysis():
 
   return jsonify(response)
 
+@app.route('/list_authors', methods=['GET'])
+def list_authors():
+  curr_dir = os.path.dirname(os.path.abspath(__file__))
+  author_path = os.path.join(curr_dir, f"public/books")
+
+  authors = []
+  for author in os.listdir(author_path):
+   authors.append(author)
+
+  return jsonify(authors)
+
 @app.route('/author_report', methods=['POST'])
 def serve_author_report():
   request_data = request.get_json()

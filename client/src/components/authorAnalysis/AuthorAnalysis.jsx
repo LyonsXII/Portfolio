@@ -8,7 +8,7 @@ import LoadingIcon from "../general/LoadingIcon.jsx"
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
 
-import { StyledFlexboxContainer, StyledButtonsFlexbox, StyledTextEntryFlexbox, StyledMainButton, StyledTextBox, StyledTextField, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledButtonsFlexbox, StyledTextEntryFlexbox, StyledMainButton, StyledTextBox, StyledTextField, StyledAuthorButtonContainer, StyledAuthorButton, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText, StyledButtonText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
@@ -16,6 +16,7 @@ function AuthorAnalysis({ transition }) {
 
   const [predictionExpanded, setPredictionExpanded] = useState(false);
   const [authorExpanded, setAuthorExpanded] = useState(false);
+  const [authorExpandedButtonAnimation, setAuthorExpandedButtonAnimation] = useState(false);
   const [showData, setShowData] = useState(false);
   const [showAuthorData, setShowAuthorData] = useState(false);
   const [showTopicGraph, setShowTopicGraph] = useState(false);
@@ -23,8 +24,9 @@ function AuthorAnalysis({ transition }) {
   const [showLoading, setShowLoading] = useState(false);
 
   const [predictionText, setPredictionText] = useState("");
-  const [selectedAuthor, setSelectedAuthor] = useState("Robert Jordan")
+  const [selectedAuthor, setSelectedAuthor] = useState("Custom");
 
+  const [authorList, setAuthorList] = useState(["Robert Jordan"]);
   const [reportData, setReportData] = useState({
     predicted_authors: [[0.5, "Example 1"], [0.3, "Example 2"], [0.1, "Example 3"], [0.05, "Example 4"], [0.05, "Example 5"]],
     predicted_emotions: {
@@ -77,18 +79,19 @@ function AuthorAnalysis({ transition }) {
     autosize: true
   });
 
-  const [loading, setLoading] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   function togglePredictionExpanded() {
     if (predictionExpanded) {
       setShowData(false);
     } else {
-      setSelectedAuthor("Robert Jordan")
+      setSelectedAuthor("Custom")
     }
 
     if (authorExpanded) {
       setAuthorExpanded(false);
       setShowData(false);
+      setSelectedAuthor("Custom");
     }
 
     setPredictionExpanded(prev => !prev);
@@ -112,6 +115,10 @@ function AuthorAnalysis({ transition }) {
   function handleChange(e) {
     setPredictionText(e.target.value);
   };
+
+  function changeSelectedAuthor(author) {
+    setSelectedAuthor(author);
+  }
 
   function toggleTopicGraph() {
     setShowTopicGraph(prev => !prev);
@@ -152,9 +159,7 @@ function AuthorAnalysis({ transition }) {
       const data = await response.json();
       setReportData(data);
       setShowData(true);
-      if (loading > 0) {
-        setLoading(prev => prev - 1);
-      }
+      setLoading(false);
 
     } catch (err) {
       console.error("Error sending request:", err);
@@ -209,9 +214,6 @@ function AuthorAnalysis({ transition }) {
       const blob = await response.blob();
       const wordcloudUrl = URL.createObjectURL(blob)
       setWordcloudUrl(wordcloudUrl)
-      if (loading > 0) {
-        setLoading(prev => prev - 1);
-      }
 
     } catch(err) {
       console.error("Error sending request:", err);
@@ -219,7 +221,7 @@ function AuthorAnalysis({ transition }) {
   }
 
   function handlePrediction() {
-    setLoading(2);
+    setLoading(true);
     predict(predictionText)
     fetch_wordcloud("Custom", predictionText)
   }
@@ -251,22 +253,62 @@ function AuthorAnalysis({ transition }) {
     return () => window.removeEventListener('resize', updateLayout);
   }, []);
 
+  // Retrieve list of authors from backend on page load
+  useEffect(() => {
+    async function list_authors() {
+      try {
+        const response = await fetch("http://localhost:5001/list_authors", {
+          method: "GET"
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setAuthorList(data);
+      } catch(err) {
+        setError(err.message);
+      }
+    }
+
+    list_authors();
+  }, []);
+
+  // Trigger button entrance for author expanded once box fully expanded
+  useEffect(() => {
+    if (authorExpanded) {
+      setTimeout(() => {
+        setAuthorExpandedButtonAnimation(true);
+      }, 600);
+    } else {
+      setAuthorExpandedButtonAnimation(false);
+    }
+  }, [authorExpanded]);
+
   return (
     <div>
       {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph}/>}
       {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={wordcloudUrl}/>}
-      {loading > 0 && <LoadingIcon/>}
+      {loading && <LoadingIcon/>}
 
       <StyledFlexboxContainer $transition={transition}>
         <StyledButtonsFlexbox $showData={showData}>
-          <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
+          <StyledTextEntryFlexbox $showData={showData} $expanded={authorExpanded}>
             <StyledMainButton theme={theme} onClick={authorExpanded ? undefined : toggleAuthorExpanded} $expanded={authorExpanded}>
               <StyledIcon src="./icons/book.svg" $width="72px" $expanded={authorExpanded} $main={true}/>
               <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={authorExpanded} onClick={handleAuthorReport}/>
               <StyledIcon src="./icons/return.svg" $width="46px" $expanded={authorExpanded} onClick={toggleAuthorExpanded}/>
             </StyledMainButton>
-            <StyledTextBox theme={theme} $expanded={authorExpanded}>
-            </StyledTextBox>
+            <StyledAuthorButtonContainer theme={theme} $expanded={authorExpanded}>
+              {authorList.map((author, index) => {
+                  return (
+                    <StyledAuthorButton theme={theme} key={index} $value={author} $selectedAuthor={selectedAuthor} $authorExpandedButtonAnimation={authorExpandedButtonAnimation} onClick={() => changeSelectedAuthor(author)}>
+                      <StyledButtonText>{author}</StyledButtonText>
+                    </StyledAuthorButton>
+                  )
+              })}
+            </StyledAuthorButtonContainer>
           </StyledTextEntryFlexbox>
 
           <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
@@ -280,6 +322,7 @@ function AuthorAnalysis({ transition }) {
             </StyledTextBox>
           </StyledTextEntryFlexbox>
         </StyledButtonsFlexbox>
+
         <StyledGrid $showData={showData}>
           <StyledDataBox theme={theme} span="span 2">
             <StyledBodyText>
@@ -314,33 +357,36 @@ function AuthorAnalysis({ transition }) {
               </StyledBodyText>
           </StyledDataBox>
 
-          <StyledPlotContainer>
-            <Plot 
-              data={[predictedAuthorsPlotData]}
-              layout={{
-                xaxis: {
-                  title: "",
-                  showgrid: false,
-                  zeroline: false,
-                  showticklabels: false
-                },
-                yaxis: {
-                  title: "",
-                  showgrid: false,
-                  zeroline: false,
-                  showticklabels: false,
-                  type: 'category', 
-                  autorange: 'reversed'
-                },
-                margin: { t: 10, b: 10, l: 10, r: 10 },
-                paper_bgcolor: theme.secondaryColor,
-                plot_bgcolor: theme.secondaryColor
-              }}
-              config={{ displayModeBar: false, responsive: true }}
-              useResizeHandler={true}
-              style={{ width: '100%', height: '100%' }}
-            />
-          </StyledPlotContainer>
+          { 
+            predictionExpanded &&
+            <StyledPlotContainer>
+              <Plot 
+                data={[predictedAuthorsPlotData]}
+                layout={{
+                  xaxis: {
+                    title: "",
+                    showgrid: false,
+                    zeroline: false,
+                    showticklabels: false
+                  },
+                  yaxis: {
+                    title: "",
+                    showgrid: false,
+                    zeroline: false,
+                    showticklabels: false,
+                    type: 'category', 
+                    autorange: 'reversed'
+                  },
+                  margin: { t: 10, b: 10, l: 10, r: 10 },
+                  paper_bgcolor: theme.secondaryColor,
+                  plot_bgcolor: theme.secondaryColor
+                }}
+                config={{ displayModeBar: false, responsive: true }}
+                useResizeHandler={true}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </StyledPlotContainer>
+          }
 
           <StyledDataBox theme={theme} span="span 2">
             <StyledBodyText>
