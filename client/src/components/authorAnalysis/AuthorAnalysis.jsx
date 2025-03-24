@@ -78,6 +78,19 @@ function AuthorAnalysis({ transition }) {
     hoverinfo: 'none',
     autosize: true
   });
+  const [fleschVsLexicalPlotData, setFleschVsLexicalPlotData] = useState({
+    x: [70, 50, 85, 40, 60],
+    y: [0.65, 0.75, 0.58, 0.80, 0.70],
+    text: ["Author A", "Author B", "Author C", "Author D", "Author E"],
+    hoverinfo: "text",
+    mode: "markers",
+    marker: {
+      size: 10,
+      color: ["red", "blue", "green", "purple", "orange"],
+    },
+    type: "scatter",
+    autosize: true
+  });
 
   const [loading, setLoading] = useState(false);
 
@@ -226,7 +239,7 @@ function AuthorAnalysis({ transition }) {
     fetch_wordcloud("Custom", predictionText)
   }
 
-  function handleAuthorReport() {
+  async function handleAuthorReport() {
     fetch_author_report();
     fetch_wordcloud();
   }
@@ -359,7 +372,7 @@ function AuthorAnalysis({ transition }) {
 
           { 
             predictionExpanded &&
-            <StyledPlotContainer>
+            <StyledPlotContainer span="span 2">
               <Plot 
                 data={[predictedAuthorsPlotData]}
                 layout={{
@@ -405,6 +418,46 @@ function AuthorAnalysis({ transition }) {
           </StyledTopicButton>
 
           <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud}/>
+
+          <StyledPlotContainer span="span 3">
+              <Plot 
+                data={[fleschVsLexicalPlotData]}
+                layout={{
+                  title: {
+                    text: "Flesch-Kincaid Readability vs Lexical Diversity",
+                    font: {
+                      color: theme.textColor,
+                      size: 22
+                    }
+                  },
+                  xaxis: {
+                    title: {
+                      text: "Flesch-Kincaid Readability Score",
+                      font: {
+                        color: theme.textColor,
+                        size: 16
+                      }
+                    }
+                  },
+                  yaxis: {
+                    title: {
+                      text: "Lexical Diversity",
+                      font: {
+                        color: theme.textColor,
+                        size: 16
+                      }
+                    }
+                  },
+                  paper_bgcolor: theme.secondaryColor,
+                  plot_bgcolor: theme.secondaryColor,
+                  autosize: true,
+                  height: "100%"
+                }}
+                config={{ displayModeBar: false, responsive: true }}
+                useResizeHandler={true}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </StyledPlotContainer>
         </StyledGrid>
       </StyledFlexboxContainer>
 

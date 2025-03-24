@@ -84,7 +84,6 @@ def serve_wordcloud():
   curr_dir = os.path.dirname(os.path.abspath(__file__))
   wordcloud_path = os.path.join(curr_dir, f"public/author reports/{author} - Wordcloud.jpg")
   if not os.path.exists(wordcloud_path):
-      
       return jsonify({"error": "Image not found"}), 404
 
   return send_file(wordcloud_path, mimetype='image/jpeg')

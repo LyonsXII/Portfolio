@@ -284,7 +284,6 @@ export const StyledDataBox = styled.div`
 `
 
 export const StyledPlotContainer = styled.div`
-  grid-column: ${({ span }) => span};
   border-radius: 20px;
   overflow: hidden;
   background-color: white;
@@ -296,7 +295,7 @@ export const StyledPlotContainer = styled.div`
             0px 0px 6px rgba(0, 0, 0, 1),               
             0px 0px 6px rgba(0, 0, 0, 1);
 
-  grid-column: span 2;
+  grid-column: ${({ span }) => span};;
   grid-row: span 2;
 
   ${media.mobile`
@@ -313,6 +312,7 @@ export const StyledWordcloud = styled.img`
   width: 100%;
   border-radius: 20px;
   grid-row: span 2;
+  box-sizing: border-box;
 
   ${media.mobile`
     border: 3px solid black;
