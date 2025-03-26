@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
+import MainButtons from "./MainButtons.jsx";
 import TopicAnalysis from "./TopicAnalysis.jsx";
 import Wordcloud from "./Wordcloud.jsx";
 import LoadingIcon from "../general/LoadingIcon.jsx"
@@ -14,14 +15,14 @@ function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
   const [ chartFontSize, setChartFontSize ] = useState("16");
 
-  const [predictionExpanded, setPredictionExpanded] = useState(false);
-  const [authorExpanded, setAuthorExpanded] = useState(false);
-  const [authorExpandedButtonAnimation, setAuthorExpandedButtonAnimation] = useState(false);
   const [showData, setShowData] = useState(false);
   const [showAuthorData, setShowAuthorData] = useState(false);
   const [showTopicGraph, setShowTopicGraph] = useState(false);
   const [showWordcloud, setShowWordcloud] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+
+  const [predictionExpanded, setPredictionExpanded] = useState(false);
+  const [authorExpanded, setAuthorExpanded] = useState(false);
 
   const [predictionText, setPredictionText] = useState("");
   const [selectedAuthor, setSelectedAuthor] = useState("Custom");
@@ -94,6 +95,14 @@ function AuthorAnalysis({ transition }) {
 
   const [loading, setLoading] = useState(false);
 
+  function handleChange(e) {
+    setPredictionText(e.target.value);
+  };
+
+  function changeSelectedAuthor(author) {
+    setSelectedAuthor(author);
+  }
+
   function togglePredictionExpanded() {
     if (predictionExpanded) {
       setShowData(false);
@@ -125,14 +134,6 @@ function AuthorAnalysis({ transition }) {
     setAuthorExpanded(prev => !prev);
   }
 
-  function handleChange(e) {
-    setPredictionText(e.target.value);
-  };
-
-  function changeSelectedAuthor(author) {
-    setSelectedAuthor(author);
-  }
-
   function toggleTopicGraph() {
     setShowTopicGraph(prev => !prev);
   }
@@ -140,17 +141,6 @@ function AuthorAnalysis({ transition }) {
   function toggleWordcloud() {
     setShowWordcloud(prev => !prev);
   }
-
-  function updateLayout() {
-    const width = window.innerWidth;
-    let fontSize;
-    if (width < 768) {
-      fontSize = "30";
-    } else {
-      fontSize = "30";
-    }
-    setChartFontSize(fontSize);
-  };
 
   async function predict() {
     try {
@@ -240,9 +230,36 @@ function AuthorAnalysis({ transition }) {
   }
 
   async function handleAuthorReport() {
+    function update_marker_colours(){
+      let marker_colours = Array(authorList.length).fill("rgba(218, 49, 40, 0.6)");
+      marker_colours = authorList.map((author) => {
+        return author == selectedAuthor ? "rgba(40, 218, 94, 0.6)" : "rgba(218, 49, 40, 0.6)"
+      })
+
+      setFleschVsLexicalPlotData(prevData => ({
+        ...prevData,
+        marker: {
+          ...prevData.marker,
+          color: marker_colours
+        }
+      }))
+    }
+
     fetch_author_report();
     fetch_wordcloud();
+    update_marker_colours()
   }
+
+  function updateLayout() {
+    const width = window.innerWidth;
+    let fontSize;
+    if (width < 768) {
+      fontSize = "30";
+    } else {
+      fontSize = "30";
+    }
+    setChartFontSize(fontSize);
+  };
 
   // Update plot data when predictions come in from backend
   useEffect(() => {
@@ -256,7 +273,34 @@ function AuthorAnalysis({ transition }) {
           weight > 0.15 ? "inside" : "outside"
       )
       }));
+
+    let marker_colours = Array(authorList.length).fill("rgba(218, 49, 40, 0.6)");
+    marker_colours.push("rgba(40, 218, 94, 0.6)");
+    if (authorList.length == fleschVsLexicalPlotData["text"].length) {
+      setFleschVsLexicalPlotData(prevData => ({
+        ...prevData,
+        x: [...prevData.x, reportData["metrics"]["fk_score"]],
+        y: [...prevData.y, reportData["metrics"]["lexical_diversity"]],
+        text: [...prevData.text, "Your Text"],
+        marker: {
+          ...prevData.marker,
+          color: marker_colours
+        }
+      }))
+    } else {
+      setFleschVsLexicalPlotData(prevData => ({
+        ...prevData,
+        x: [...prevData.x.slice(0, -1), reportData["metrics"]["fk_score"]],
+        y: [...prevData.y.slice(0, -1), reportData["metrics"]["lexical_diversity"]],
+        text: [...prevData.text, "Your Text"],
+        marker: {
+          ...prevData.marker,
+          color: marker_colours
+        }
+      }))
     }
+    }
+
   }, [reportData]);
 
   // Change plot fontsize when window size changes
@@ -270,7 +314,7 @@ function AuthorAnalysis({ transition }) {
   useEffect(() => {
     async function list_authors() {
       try {
-        const response = await fetch("http://localhost:5001/list_authors", {
+        const response = await fetch("http://localhost:5001/author_details", {
           method: "GET"
         });
     
@@ -279,25 +323,21 @@ function AuthorAnalysis({ transition }) {
         }
 
         const data = await response.json();
-        setAuthorList(data);
+        setAuthorList(data["authors"]);
+        setFleschVsLexicalPlotData(prevData => ({
+          ...prevData,
+          x: data["fk_score"],
+          y: data["lexical_diversity"],
+          text: data["authors"]
+        }
+        ));
       } catch(err) {
-        setError(err.message);
+        console.error("Fetch error:", err);
       }
     }
 
     list_authors();
   }, []);
-
-  // Trigger button entrance for author expanded once box fully expanded
-  useEffect(() => {
-    if (authorExpanded) {
-      setTimeout(() => {
-        setAuthorExpandedButtonAnimation(true);
-      }, 600);
-    } else {
-      setAuthorExpandedButtonAnimation(false);
-    }
-  }, [authorExpanded]);
 
   return (
     <div>
@@ -306,35 +346,23 @@ function AuthorAnalysis({ transition }) {
       {loading && <LoadingIcon/>}
 
       <StyledFlexboxContainer $transition={transition}>
-        <StyledButtonsFlexbox $showData={showData}>
-          <StyledTextEntryFlexbox $showData={showData} $expanded={authorExpanded}>
-            <StyledMainButton theme={theme} onClick={authorExpanded ? undefined : toggleAuthorExpanded} $expanded={authorExpanded}>
-              <StyledIcon src="./icons/book.svg" $width="72px" $expanded={authorExpanded} $main={true}/>
-              <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={authorExpanded} onClick={handleAuthorReport}/>
-              <StyledIcon src="./icons/return.svg" $width="46px" $expanded={authorExpanded} onClick={toggleAuthorExpanded}/>
-            </StyledMainButton>
-            <StyledAuthorButtonContainer theme={theme} $expanded={authorExpanded}>
-              {authorList.map((author, index) => {
-                  return (
-                    <StyledAuthorButton theme={theme} key={index} $value={author} $selectedAuthor={selectedAuthor} $authorExpandedButtonAnimation={authorExpandedButtonAnimation} onClick={() => changeSelectedAuthor(author)}>
-                      <StyledButtonText>{author}</StyledButtonText>
-                    </StyledAuthorButton>
-                  )
-              })}
-            </StyledAuthorButtonContainer>
-          </StyledTextEntryFlexbox>
-
-          <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
-            <StyledMainButton theme={theme} onClick={predictionExpanded ? undefined : togglePredictionExpanded} $expanded={predictionExpanded}>
-              <StyledIcon src="./icons/book.svg" $width="72px" $expanded={predictionExpanded} $main={true}/>
-              <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={predictionExpanded} onClick={handlePrediction}/>
-              <StyledIcon src="./icons/return.svg" $width="46px" $expanded={predictionExpanded} onClick={togglePredictionExpanded}/>
-            </StyledMainButton>
-            <StyledTextBox theme={theme} $expanded={predictionExpanded}>
-              <StyledTextField theme={theme} value={predictionText} onChange={handleChange} placeholder="Enter your text here..."/>
-            </StyledTextBox>
-          </StyledTextEntryFlexbox>
-        </StyledButtonsFlexbox>
+        <MainButtons 
+          showData={showData} 
+          authorProps={{
+            authorList,
+            selectedAuthor,
+            changeSelectedAuthor,
+            authorExpanded,
+            toggleAuthorExpanded,
+            handleAuthorReport
+          }}
+          predictionProps={{
+            predictionExpanded,
+            togglePredictionExpanded,
+            handleChange,
+            handlePrediction,
+            predictionText
+          }}/>
 
         <StyledGrid $showData={showData}>
           <StyledDataBox theme={theme} span="span 2">
@@ -427,8 +455,12 @@ function AuthorAnalysis({ transition }) {
                     text: "Flesch-Kincaid Readability vs Lexical Diversity",
                     font: {
                       color: theme.textColor,
-                      size: 22
-                    }
+                      size: 20
+                    },
+                    x: 0.5, // Title horizontal position
+                    y: 0.91, // Title vertical position (increase for more space)
+                    xanchor: "center", // Align title horizontally
+                    yanchor: "bottom", // Align title vertically
                   },
                   xaxis: {
                     title: {
@@ -436,8 +468,18 @@ function AuthorAnalysis({ transition }) {
                       font: {
                         color: theme.textColor,
                         size: 16
-                      }
-                    }
+                      },
+                      standoff: 16
+                    },
+                    tickfont: {
+                      color: theme.textColor,
+                      size: 14
+                    },
+                    ticklen: 10,
+                    autorange: "reversed",
+                    gridcolor: "rgba(36, 36, 36, 0.2)",
+                    gridwidth: 1,
+                    showline: true
                   },
                   yaxis: {
                     title: {
@@ -445,13 +487,49 @@ function AuthorAnalysis({ transition }) {
                       font: {
                         color: theme.textColor,
                         size: 16
-                      }
+                      },
+                      standoff: 10
+                    },
+                    tickfont: {
+                      color: theme.textColor,
+                      size: 14
+                    },
+                    ticklen: 10,
+                    gridcolor: "rgba(36, 36, 36, 0.2)",
+                    gridwidth: 1,
+                    showline: true
+                  },
+                  paper_bgcolor: theme.primaryColor,
+                  plot_bgcolor: "white",
+                  hoverlabel: {
+                    font: {
+                      color: theme.textColor
                     }
                   },
-                  paper_bgcolor: theme.secondaryColor,
-                  plot_bgcolor: theme.secondaryColor,
                   autosize: true,
-                  height: "100%"
+                  height: "100%",
+                  margin: {
+                    t: 65,
+                    b: 90,
+                    l: 75,
+                    r: 35
+                  },
+                  // Plot region border box
+                  shapes: [
+                    {
+                      type: "rect",
+                      x0: 0,
+                      y0: 0,
+                      x1: 1,
+                      y1: 1,
+                      xref: "paper",
+                      yref: "paper",
+                      line: {
+                        color: "black",
+                        width: 3
+                      }
+                    }
+                  ]
                 }}
                 config={{ displayModeBar: false, responsive: true }}
                 useResizeHandler={true}

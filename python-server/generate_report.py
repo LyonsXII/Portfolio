@@ -5,6 +5,7 @@ import re
 
 import numpy as np
 import pandas as pd
+import json
 
 from emotion_predict import predict_emotion
 from text_metrics import calculate_metrics
@@ -48,14 +49,11 @@ def generate_report():
   # Import Dataset
   dataset = import_dataset()
 
-  # Clean text
-  dataset["text"] = dataset["text"].apply(lambda text: clean_text(text))
-
-  # Merge text together for rows with the same title and author
+  # Merge together text for rows with the same title and author
   dataset = dataset.groupby(['title', 'author'])['text'].apply(' '.join).reset_index()
 
   # Create new metrics dataframe (average word length, etc), and then concatenate it onto our original
-  # Apply calculate_metrics to get both outputs (image and metrics object)
+  # Apply calculate_metrics to using text and author columns
   dataset["metrics"] = dataset.apply(lambda row: calculate_metrics(row["text"], row["author"]), axis=1)
 
   # Create new column including emotional analysis results
@@ -75,4 +73,24 @@ def generate_report():
     with open(output_path, "w") as f:
       f.write(author_json)
 
-generate_report()
+  # Save metrics for plots
+  plot_metrics_output_path = os.path.join(output_dir, "Plot Metrics.json")
+  plot_metrics_object = {
+    "authors": [],
+    "fk_score": [],
+    "lexical_diversity": []
+  }
+
+  for index, row in dataset.iterrows():
+    plot_metrics_object["authors"].append(row["author"])
+    plot_metrics_object["fk_score"].append(row["metrics"]["fk_score"])
+    plot_metrics_object["lexical_diversity"].append(row["metrics"]["lexical_diversity"])
+
+  with open(plot_metrics_output_path, "w") as f:
+    json.dump(plot_metrics_object, f, indent=4)
+
+  # Save dataframe as a JSON
+  dataframe_output_path = os.path.join(output_dir, "Overall Report.json")
+  dataset.to_json(dataframe_output_path, orient="records", indent=4)
+
+# generate_report()

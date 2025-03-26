@@ -54,6 +54,16 @@ def list_authors():
 
   return jsonify(authors)
 
+@app.route('/author_details', methods=['GET'])
+def fetch_author_details():
+  curr_dir = os.path.dirname(os.path.abspath(__file__))
+  author_overall_path = os.path.join(curr_dir, f"public/author reports/Plot Metrics.json")
+
+  with open(author_overall_path, "r") as f:
+    author_details = json.load(f)
+
+  return jsonify(author_details)
+
 @app.route('/author_report', methods=['POST'])
 def serve_author_report():
   request_data = request.get_json()
@@ -79,7 +89,7 @@ def serve_wordcloud():
      return jsonify({"error": "No author provided"}), 400
   
   elif author == "Custom":
-    generate_word_cloud(author, text)
+    generate_word_cloud(text, author)
 
   curr_dir = os.path.dirname(os.path.abspath(__file__))
   wordcloud_path = os.path.join(curr_dir, f"public/author reports/{author} - Wordcloud.jpg")

@@ -8,6 +8,7 @@ from nltk.corpus import stopwords
 from nltk.corpus import cmudict
 from nltk.stem.porter import PorterStemmer
 import spacy
+from collections import Counter
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
@@ -206,3 +207,26 @@ def calculate_metrics(text, author):
   text_metrics = metrics(text)
 
   return text_metrics
+
+nlp = spacy.load("en_core_web_sm")
+
+def pos_distribution(text):
+    doc = nlp(text)
+    
+    # Count POS tags
+    pos_counts = Counter(token.pos_ for token in doc)
+    
+    # Convert spaCy POS tags to readable labels
+    pos_labels = { "NOUN": "Nouns", "VERB": "Verbs", "ADJ": "Adjectives", 
+                   "ADV": "Adverbs", "PRON": "Pronouns", "DET": "Determiners",
+                   "ADP": "Prepositions", "CONJ": "Conjunctions", "INTJ": "Interjections",
+                   "NUM": "Numbers", "PART": "Particles", "PUNCT": "Punctuation"}
+    
+    # Map POS tags to human-readable labels and filter relevant ones
+    filtered_counts = {pos_labels.get(pos, pos): count for pos, count in pos_counts.items() if pos in pos_labels}
+
+    return filtered_counts
+
+# Example usage
+text = "The quick brown fox jumps over the lazy dog. It was a beautiful day."
+print(pos_distribution(text))

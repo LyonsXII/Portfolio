@@ -230,7 +230,7 @@ export const StyledGrid = styled.div`
   column-gap: 10px;
   row-gap: 20px;
 
-  max-height: ${({ $showData }) => $showData ? "100vh" : "0vh"};
+  max-height: ${({ $showData }) => $showData ? "1000vh" : "0vh"};
   margin-bottom: ${({ $showData }) => $showData ? "20px" : "0px"};
   transition: max-height 1s ease, margin-bottom 1s ease;
   padding: 0% 3%;
@@ -296,7 +296,7 @@ export const StyledPlotContainer = styled.div`
             0px 0px 6px rgba(0, 0, 0, 1);
 
   grid-column: ${({ span }) => span};;
-  grid-row: span 2;
+  grid-row: span 3;
 
   ${media.mobile`
     border: 3px solid black;
@@ -311,7 +311,7 @@ export const StyledWordcloud = styled.img`
   height: 100%;
   width: 100%;
   border-radius: 20px;
-  grid-row: span 2;
+  grid-row: span 3;
   box-sizing: border-box;
 
   ${media.mobile`

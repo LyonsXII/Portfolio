@@ -1,0 +1,266 @@
+[
+    {
+        "title":"A Tale of Two Cities",
+        "author":"Charles Dickens",
+        "metrics":{
+            "total_words":29124,
+            "total_sentences":1784,
+            "total_syllables":40176,
+            "fk_score":73.56,
+            "fk_grade":"Year 8",
+            "average_word_length":4.55,
+            "average_sentence_length":16.33,
+            "lexical_diversity":15.63,
+            "tense":"past",
+            "person":"third",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.69,
+            "arousal":3.07,
+            "dominance":2.93
+        }
+    },
+    {
+        "title":"Adventures of Huckleberry Finn",
+        "author":"Mark Twain",
+        "metrics":{
+            "total_words":21619,
+            "total_sentences":1190,
+            "total_syllables":25931,
+            "fk_score":86.92,
+            "fk_grade":"Year 7",
+            "average_word_length":3.97,
+            "average_sentence_length":18.17,
+            "lexical_diversity":11.85,
+            "tense":"past",
+            "person":"second",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.99,
+            "arousal":3.04,
+            "dominance":3.18
+        }
+    },
+    {
+        "title":"Crime and Punishment",
+        "author":"Fyodor Dostoyevsky",
+        "metrics":{
+            "total_words":51485,
+            "total_sentences":3533,
+            "total_syllables":69818,
+            "fk_score":77.32,
+            "fk_grade":"Year 8",
+            "average_word_length":4.45,
+            "average_sentence_length":14.57,
+            "lexical_diversity":10.26,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.92,
+            "arousal":2.95,
+            "dominance":3.03
+        }
+    },
+    {
+        "title":"Frankenstein",
+        "author":"Mary Shelley",
+        "metrics":{
+            "total_words":30994,
+            "total_sentences":1439,
+            "total_syllables":45226,
+            "fk_score":61.53,
+            "fk_grade":"Year 9 to 10",
+            "average_word_length":4.62,
+            "average_sentence_length":21.54,
+            "lexical_diversity":15.41,
+            "tense":"past",
+            "person":"first",
+            "voice":"active"
+        },
+        "predicted_emotions":{
+            "valence":2.85,
+            "arousal":3.17,
+            "dominance":3.11
+        }
+    },
+    {
+        "title":"Moby Dick",
+        "author":"Herman Melville",
+        "metrics":{
+            "total_words":19549,
+            "total_sentences":852,
+            "total_syllables":27221,
+            "fk_score":65.74,
+            "fk_grade":"Year 9 to 10",
+            "average_word_length":4.58,
+            "average_sentence_length":22.94,
+            "lexical_diversity":22.44,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.94,
+            "arousal":2.97,
+            "dominance":3.07
+        }
+    },
+    {
+        "title":"The Great Gatsby",
+        "author":"F Scott Fitzgerald",
+        "metrics":{
+            "total_words":52287,
+            "total_sentences":3857,
+            "total_syllables":71988,
+            "fk_score":76.6,
+            "fk_grade":"Year 8",
+            "average_word_length":4.53,
+            "average_sentence_length":13.56,
+            "lexical_diversity":12.08,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.62,
+            "arousal":3.2,
+            "dominance":3.12
+        }
+    },
+    {
+        "title":"The Picture of Dorian Gray",
+        "author":"Oscar Wilde",
+        "metrics":{
+            "total_words":44505,
+            "total_sentences":3900,
+            "total_syllables":60106,
+            "fk_score":81.0,
+            "fk_grade":"Year 7",
+            "average_word_length":4.4,
+            "average_sentence_length":11.41,
+            "lexical_diversity":10.93,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":3.24,
+            "arousal":3.04,
+            "dominance":3.06
+        }
+    },
+    {
+        "title":"The Shadow Rising",
+        "author":"Robert Jordan",
+        "metrics":{
+            "total_words":38349,
+            "total_sentences":3236,
+            "total_syllables":49537,
+            "fk_score":85.53,
+            "fk_grade":"Year 7",
+            "average_word_length":4.38,
+            "average_sentence_length":11.85,
+            "lexical_diversity":12.04,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.88,
+            "arousal":2.93,
+            "dominance":2.97
+        }
+    },
+    {
+        "title":"The Strange Case of Dr Jekyll and Mr Hyde",
+        "author":"Robert Louise Stevenson",
+        "metrics":{
+            "total_words":25529,
+            "total_sentences":1347,
+            "total_syllables":34528,
+            "fk_score":73.18,
+            "fk_grade":"Year 8",
+            "average_word_length":4.4,
+            "average_sentence_length":18.95,
+            "lexical_diversity":15.9,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.55,
+            "arousal":2.94,
+            "dominance":2.82
+        }
+    },
+    {
+        "title":"The Way of Kings",
+        "author":"Brandon Sanderson",
+        "metrics":{
+            "total_words":54096,
+            "total_sentences":5204,
+            "total_syllables":74476,
+            "fk_score":79.81,
+            "fk_grade":"Year 8",
+            "average_word_length":4.77,
+            "average_sentence_length":10.4,
+            "lexical_diversity":12.25,
+            "tense":"past",
+            "person":"second",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.06,
+            "arousal":3.78,
+            "dominance":3.21
+        }
+    },
+    {
+        "title":"Towers of Midnight",
+        "author":"Brandon Sanderson - WOT",
+        "metrics":{
+            "total_words":25004,
+            "total_sentences":2662,
+            "total_syllables":33299,
+            "fk_score":84.64,
+            "fk_grade":"Year 7",
+            "average_word_length":4.64,
+            "average_sentence_length":9.39,
+            "lexical_diversity":14.74,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":2.45,
+            "arousal":3.54,
+            "dominance":2.99
+        }
+    },
+    {
+        "title":"Ulysses",
+        "author":"James Joyce",
+        "metrics":{
+            "total_words":87092,
+            "total_sentences":11350,
+            "total_syllables":119200,
+            "fk_score":83.26,
+            "fk_grade":"Year 7",
+            "average_word_length":4.65,
+            "average_sentence_length":7.67,
+            "lexical_diversity":15.44,
+            "tense":"past",
+            "person":"first",
+            "voice":"passive"
+        },
+        "predicted_emotions":{
+            "valence":3.05,
+            "arousal":2.9,
+            "dominance":3.05
+        }
+    }
+]
