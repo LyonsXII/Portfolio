@@ -93,4 +93,4 @@ def generate_report():
   dataframe_output_path = os.path.join(output_dir, "Overall Report.json")
   dataset.to_json(dataframe_output_path, orient="records", indent=4)
 
-# generate_report()
+generate_report()

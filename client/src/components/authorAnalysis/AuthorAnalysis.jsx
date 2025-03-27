@@ -46,7 +46,8 @@ function AuthorAnalysis({ transition }) {
     "lexical_diversity": 0,
     "tense": "past",
     "person": "third",
-    "voice": "passive"
+    "voice": "passive",
+    "word_types": {"Adjectives": 5, "Nouns": 3}
     }
   });
   const [wordcloudUrl, setWordcloudUrl] = useState("");
@@ -92,6 +93,12 @@ function AuthorAnalysis({ transition }) {
     type: "scatter",
     autosize: true
   });
+  const [wordTypesPlotData, setWordTypesPlotData] = useState({
+    values: [1, 2],
+    labels: ["Noun", "Adjective"],
+    type: "pie",
+    hole: 0.3
+  })
 
   const [loading, setLoading] = useState(false);
 
@@ -261,7 +268,7 @@ function AuthorAnalysis({ transition }) {
     setChartFontSize(fontSize);
   };
 
-  // Update plot data when predictions come in from backend
+  // Update plot data when report data updated (prediction or selected author)
   useEffect(() => {
     if (reportData.hasOwnProperty("predicted_authors")) {
       setPredictedAuthorsPlotData(prevData => ({
@@ -274,6 +281,8 @@ function AuthorAnalysis({ transition }) {
       )
       }));
 
+    // Flesch Kincaid vs lexical diversity plot
+    // If there's a previous prediction then replace it with the new marker from the new prediction metrics
     let marker_colours = Array(authorList.length).fill("rgba(218, 49, 40, 0.6)");
     marker_colours.push("rgba(40, 218, 94, 0.6)");
     if (authorList.length == fleschVsLexicalPlotData["text"].length) {
@@ -287,7 +296,10 @@ function AuthorAnalysis({ transition }) {
           color: marker_colours
         }
       }))
+
     } else {
+      // Flesch Kincaid vs lexical diversity plot
+      // If no previous prediction add prediction metrics as new marker to plot
       setFleschVsLexicalPlotData(prevData => ({
         ...prevData,
         x: [...prevData.x.slice(0, -1), reportData["metrics"]["fk_score"]],
@@ -301,6 +313,15 @@ function AuthorAnalysis({ transition }) {
     }
     }
 
+    const word_types = Object.keys(reportData["metrics"]["word_types"]);
+    const word_type_counts = Object.values(reportData["metrics"]["word_types"]);
+
+    setWordTypesPlotData(prevData => ({
+      ...prevData,
+      values: word_type_counts,
+      labels: word_types
+    }))
+
   }, [reportData]);
 
   // Change plot fontsize when window size changes
@@ -310,7 +331,7 @@ function AuthorAnalysis({ transition }) {
     return () => window.removeEventListener('resize', updateLayout);
   }, []);
 
-  // Retrieve list of authors from backend on page load
+  // Retrieve author report data from backend on page load and update plot
   useEffect(() => {
     async function list_authors() {
       try {
@@ -448,94 +469,106 @@ function AuthorAnalysis({ transition }) {
           <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud}/>
 
           <StyledPlotContainer span="span 3">
-              <Plot 
-                data={[fleschVsLexicalPlotData]}
-                layout={{
+            <Plot 
+              data={[fleschVsLexicalPlotData]}
+              layout={{
+                title: {
+                  text: "Flesch-Kincaid Readability vs Lexical Diversity",
+                  font: {
+                    color: theme.textColor,
+                    size: 20
+                  },
+                  x: 0.5, // Title horizontal position
+                  y: 0.91, // Title vertical position (increase for more space)
+                  xanchor: "center", // Align title horizontally
+                  yanchor: "bottom", // Align title vertically
+                },
+                xaxis: {
                   title: {
-                    text: "Flesch-Kincaid Readability vs Lexical Diversity",
+                    text: "Flesch-Kincaid Readability Score",
                     font: {
                       color: theme.textColor,
-                      size: 20
+                      size: 16
                     },
-                    x: 0.5, // Title horizontal position
-                    y: 0.91, // Title vertical position (increase for more space)
-                    xanchor: "center", // Align title horizontally
-                    yanchor: "bottom", // Align title vertically
+                    standoff: 16
                   },
-                  xaxis: {
-                    title: {
-                      text: "Flesch-Kincaid Readability Score",
-                      font: {
-                        color: theme.textColor,
-                        size: 16
-                      },
-                      standoff: 16
-                    },
-                    tickfont: {
-                      color: theme.textColor,
-                      size: 14
-                    },
-                    ticklen: 10,
-                    autorange: "reversed",
-                    gridcolor: "rgba(36, 36, 36, 0.2)",
-                    gridwidth: 1,
-                    showline: true
+                  tickfont: {
+                    color: theme.textColor,
+                    size: 14
                   },
-                  yaxis: {
-                    title: {
-                      text: "Lexical Diversity",
-                      font: {
-                        color: theme.textColor,
-                        size: 16
-                      },
-                      standoff: 10
-                    },
-                    tickfont: {
-                      color: theme.textColor,
-                      size: 14
-                    },
-                    ticklen: 10,
-                    gridcolor: "rgba(36, 36, 36, 0.2)",
-                    gridwidth: 1,
-                    showline: true
-                  },
-                  paper_bgcolor: theme.primaryColor,
-                  plot_bgcolor: "white",
-                  hoverlabel: {
+                  ticklen: 10,
+                  autorange: "reversed",
+                  gridcolor: "rgba(36, 36, 36, 0.2)",
+                  gridwidth: 1,
+                  showline: true
+                },
+                yaxis: {
+                  title: {
+                    text: "Lexical Diversity",
                     font: {
-                      color: theme.textColor
-                    }
+                      color: theme.textColor,
+                      size: 16
+                    },
+                    standoff: 10
                   },
-                  autosize: true,
-                  height: "100%",
-                  margin: {
-                    t: 65,
-                    b: 90,
-                    l: 75,
-                    r: 35
+                  tickfont: {
+                    color: theme.textColor,
+                    size: 14
                   },
-                  // Plot region border box
-                  shapes: [
-                    {
-                      type: "rect",
-                      x0: 0,
-                      y0: 0,
-                      x1: 1,
-                      y1: 1,
-                      xref: "paper",
-                      yref: "paper",
-                      line: {
-                        color: "black",
-                        width: 3
-                      }
+                  ticklen: 10,
+                  gridcolor: "rgba(36, 36, 36, 0.2)",
+                  gridwidth: 1,
+                  showline: true
+                },
+                paper_bgcolor: theme.primaryColor,
+                plot_bgcolor: "white",
+                hoverlabel: {
+                  font: {
+                    color: theme.textColor
+                  }
+                },
+                autosize: true,
+                height: "100%",
+                margin: {
+                  t: 65,
+                  b: 90,
+                  l: 75,
+                  r: 35
+                },
+                // Plot region border box
+                shapes: [
+                  {
+                    type: "rect",
+                    x0: 0,
+                    y0: 0,
+                    x1: 1,
+                    y1: 1,
+                    xref: "paper",
+                    yref: "paper",
+                    line: {
+                      color: "black",
+                      width: 3
                     }
-                  ]
-                }}
-                config={{ displayModeBar: false, responsive: true }}
-                useResizeHandler={true}
-                style={{ width: '100%', height: '100%' }}
-              />
-            </StyledPlotContainer>
+                  }
+                ]
+              }}
+              config={{ displayModeBar: false, responsive: true }}
+              useResizeHandler={true}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </StyledPlotContainer>
+
+          <StyledPlotContainer span="span 3">
+            <Plot 
+              data={[wordTypesPlotData]}
+              layout={{
+                title: "Word Types Pie Chart"
+              }}
+              config={{ displayModeBar: false, responsive: true }}
+              useResizeHandler={true}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </StyledPlotContainer>
         </StyledGrid>
       </StyledFlexboxContainer>
 

@@ -132,6 +132,24 @@ def metrics(text):
     voice = "active" if freq >= 0.5 else "passive"
     return voice
 
+  def word_type_breakdown(text):
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(text)
+    
+    # Count POS tags
+    word_type_counts = Counter(token.pos_ for token in doc)
+    
+    # Convert spaCy POS tags to readable labels
+    word_type_labels = { "NOUN": "Nouns", "VERB": "Verbs", "ADJ": "Adjectives", 
+                    "ADV": "Adverbs", "PRON": "Pronouns", "DET": "Determiners",
+                    "ADP": "Prepositions", "CONJ": "Conjunctions", "INTJ": "Interjections",
+                    "NUM": "Numbers", "PART": "Particles", "PUNCT": "Punctuation"}
+    
+    # Map POS tags to human-readable labels and filter relevant ones
+    filtered_counts = {word_type_labels.get(pos, pos): count for pos, count in word_type_counts.items() if pos in word_type_labels}
+
+    return filtered_counts
+
   text = text.lower()
   # Count words and sentences
   total_letters, total_words, total_sentences = count(text)
@@ -183,7 +201,10 @@ def metrics(text):
   # Tense, person, and voice
   text = " ".join(text)
   tense, person = determine_tense_and_person(text)
-  voice = determine_voice(text)  
+  voice = determine_voice(text)
+
+  # Word type breakdown (e.g. noun, verb, etc)
+  word_types = word_type_breakdown(text)
 
   # Return calculated metrics
   metrics = {
@@ -197,7 +218,8 @@ def metrics(text):
       "lexical_diversity": round(lexical_diversity, 2),
       "tense": tense,
       "person": person,
-      "voice": voice
+      "voice": voice,
+      "word_types": word_types
   }
 
   return metrics
@@ -207,26 +229,3 @@ def calculate_metrics(text, author):
   text_metrics = metrics(text)
 
   return text_metrics
-
-nlp = spacy.load("en_core_web_sm")
-
-def pos_distribution(text):
-    doc = nlp(text)
-    
-    # Count POS tags
-    pos_counts = Counter(token.pos_ for token in doc)
-    
-    # Convert spaCy POS tags to readable labels
-    pos_labels = { "NOUN": "Nouns", "VERB": "Verbs", "ADJ": "Adjectives", 
-                   "ADV": "Adverbs", "PRON": "Pronouns", "DET": "Determiners",
-                   "ADP": "Prepositions", "CONJ": "Conjunctions", "INTJ": "Interjections",
-                   "NUM": "Numbers", "PART": "Particles", "PUNCT": "Punctuation"}
-    
-    # Map POS tags to human-readable labels and filter relevant ones
-    filtered_counts = {pos_labels.get(pos, pos): count for pos, count in pos_counts.items() if pos in pos_labels}
-
-    return filtered_counts
-
-# Example usage
-text = "The quick brown fox jumps over the lazy dog. It was a beautiful day."
-print(pos_distribution(text))
