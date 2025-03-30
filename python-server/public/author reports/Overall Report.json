@@ -15,17 +15,10 @@
             "person":"third",
             "voice":"passive",
             "word_types":{
-                "Pronouns":3785,
-                "Determiners":3100,
                 "Adjectives":1972,
-                "Prepositions":3764,
                 "Nouns":5515,
                 "Verbs":3747,
-                "Adverbs":1618,
-                "Numbers":264,
-                "Particles":772,
-                "Punctuation":13,
-                "Interjections":69
+                "Adverbs":1618
             }
         },
         "predicted_emotions":{
@@ -50,17 +43,10 @@
             "person":"second",
             "voice":"passive",
             "word_types":{
-                "Pronouns":3609,
-                "Particles":686,
                 "Verbs":3666,
-                "Prepositions":2249,
-                "Determiners":1928,
                 "Nouns":3336,
-                "Numbers":225,
                 "Adverbs":1554,
-                "Adjectives":1030,
-                "Interjections":113,
-                "Punctuation":187
+                "Adjectives":1030
             }
         },
         "predicted_emotions":{
@@ -85,17 +71,10 @@
             "person":"first",
             "voice":"passive",
             "word_types":{
-                "Prepositions":5891,
-                "Determiners":4594,
                 "Adverbs":3703,
                 "Adjectives":3088,
                 "Nouns":8473,
-                "Verbs":7544,
-                "Pronouns":8256,
-                "Particles":1457,
-                "Interjections":228,
-                "Numbers":418,
-                "Punctuation":83
+                "Verbs":7544
             }
         },
         "predicted_emotions":{
@@ -120,17 +99,10 @@
             "person":"first",
             "voice":"active",
             "word_types":{
-                "Prepositions":3541,
-                "Numbers":153,
-                "Pronouns":4890,
                 "Verbs":4128,
-                "Particles":783,
-                "Determiners":2861,
                 "Nouns":5946,
                 "Adjectives":2289,
-                "Adverbs":1555,
-                "Punctuation":6,
-                "Interjections":28
+                "Adverbs":1555
             }
         },
         "predicted_emotions":{
@@ -156,16 +128,9 @@
             "voice":"passive",
             "word_types":{
                 "Verbs":2547,
-                "Pronouns":2293,
-                "Determiners":2255,
                 "Nouns":3871,
                 "Adverbs":1263,
-                "Adjectives":1573,
-                "Prepositions":2450,
-                "Particles":464,
-                "Interjections":39,
-                "Numbers":128,
-                "Punctuation":36
+                "Adjectives":1573
             }
         },
         "predicted_emotions":{
@@ -190,17 +155,10 @@
             "person":"first",
             "voice":"passive",
             "word_types":{
-                "Prepositions":6346,
-                "Pronouns":8054,
                 "Adjectives":3642,
                 "Adverbs":3265,
                 "Nouns":9569,
-                "Verbs":7989,
-                "Determiners":5069,
-                "Particles":1366,
-                "Numbers":445,
-                "Interjections":175,
-                "Punctuation":68
+                "Verbs":7989
             }
         },
         "predicted_emotions":{
@@ -225,17 +183,10 @@
             "person":"first",
             "voice":"passive",
             "word_types":{
-                "Determiners":3620,
                 "Nouns":7106,
                 "Verbs":6434,
-                "Prepositions":4596,
                 "Adjectives":3399,
-                "Pronouns":7946,
-                "Adverbs":2423,
-                "Particles":1350,
-                "Interjections":156,
-                "Numbers":263,
-                "Punctuation":13
+                "Adverbs":2423
             }
         },
         "predicted_emotions":{
@@ -260,17 +211,10 @@
             "person":"first",
             "voice":"passive",
             "word_types":{
-                "Determiners":3520,
                 "Nouns":7155,
-                "Prepositions":3905,
                 "Verbs":6117,
-                "Pronouns":5482,
                 "Adverbs":2352,
-                "Numbers":353,
-                "Adjectives":2223,
-                "Particles":1558,
-                "Interjections":61,
-                "Punctuation":17
+                "Adjectives":2223
             }
         },
         "predicted_emotions":{
@@ -295,17 +239,10 @@
             "person":"first",
             "voice":"passive",
             "word_types":{
-                "Determiners":2729,
                 "Nouns":4681,
-                "Prepositions":3111,
                 "Adjectives":1655,
-                "Pronouns":3453,
                 "Adverbs":1575,
-                "Verbs":3374,
-                "Particles":644,
-                "Numbers":155,
-                "Interjections":63,
-                "Punctuation":12
+                "Verbs":3374
             }
         },
         "predicted_emotions":{
@@ -330,17 +267,10 @@
             "person":"second",
             "voice":"passive",
             "word_types":{
-                "Pronouns":6978,
                 "Verbs":9316,
                 "Nouns":11259,
-                "Determiners":5413,
                 "Adverbs":3007,
-                "Adjectives":3687,
-                "Prepositions":5827,
-                "Numbers":513,
-                "Particles":1842,
-                "Punctuation":21,
-                "Interjections":130
+                "Adjectives":3687
             }
         },
         "predicted_emotions":{
@@ -367,15 +297,8 @@
             "word_types":{
                 "Nouns":5218,
                 "Verbs":4531,
-                "Prepositions":2554,
-                "Determiners":2388,
                 "Adjectives":1423,
-                "Pronouns":3472,
-                "Adverbs":1349,
-                "Particles":851,
-                "Numbers":145,
-                "Interjections":41,
-                "Punctuation":15
+                "Adverbs":1349
             }
         },
         "predicted_emotions":{
@@ -403,14 +326,7 @@
                 "Adjectives":5865,
                 "Nouns":20152,
                 "Verbs":13269,
-                "Prepositions":10065,
-                "Determiners":8175,
-                "Pronouns":10994,
-                "Adverbs":3987,
-                "Particles":2125,
-                "Interjections":441,
-                "Numbers":725,
-                "Punctuation":106
+                "Adverbs":3987
             }
         },
         "predicted_emotions":{

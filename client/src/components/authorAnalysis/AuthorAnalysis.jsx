@@ -7,19 +7,24 @@ import TopicAnalysis from "./TopicAnalysis.jsx";
 import Wordcloud from "./Wordcloud.jsx";
 import LoadingIcon from "../general/LoadingIcon.jsx"
 
+import { toolTipText } from "./toolTipText.js";
+
 import { ThemeContext } from "../../context/ThemeContext.jsx";
 
-import { StyledFlexboxContainer, StyledButtonsFlexbox, StyledTextEntryFlexbox, StyledMainButton, StyledTextBox, StyledTextField, StyledAuthorButtonContainer, StyledAuthorButton, StyledIcon, StyledGrid, StyledDataBox, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText, StyledButtonText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledButtonsFlexbox, StyledTextEntryFlexbox, StyledMainButton, StyledTextBox, StyledTextField, StyledAuthorButtonContainer, StyledAuthorButton, StyledIcon, StyledSVG, StyledGrid, StyledDataBox, StyledInfoButton, StyledToolTipWrapper, StyledToolTip, StyledBackdrop, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText, StyledButtonText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
-  const [ chartFontSize, setChartFontSize ] = useState("16");
 
   const [showData, setShowData] = useState(false);
   const [showAuthorData, setShowAuthorData] = useState(false);
   const [showTopicGraph, setShowTopicGraph] = useState(false);
   const [showWordcloud, setShowWordcloud] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [hoverText, setHoverText] = useState({
+    text: "",
+    position: { x: 0, y: 0 }
+  });
 
   const [predictionExpanded, setPredictionExpanded] = useState(false);
   const [authorExpanded, setAuthorExpanded] = useState(false);
@@ -65,15 +70,15 @@ function AuthorAnalysis({ transition }) {
     },
     textfont: {
       color: theme.textColor,
-      size: chartFontSize
+      size: 16
     },
     insidetextfont: {
       color: theme.textColor,
-      size: chartFontSize
+      size: 16
     },
     outsidetextfont: {
       color: theme.textColor,
-      size: chartFontSize
+      size: 16
     },
     text: ["Example 1", "Example 2", "Example 3", "Example 4", "Example 5"],
     textposition: ["inside", "inside", "outside", "outside", "outside"],
@@ -97,7 +102,19 @@ function AuthorAnalysis({ transition }) {
     values: [1, 2],
     labels: ["Noun", "Adjective"],
     type: "pie",
-    hole: 0.3
+    hole: 0,
+    textinfo: "percent",
+    textfont: {
+      size: 18, // Change font size
+      color: theme.textColor, // Change font color
+    },
+    marker: {
+      line: {
+        color: "black",
+        width: 3
+      }
+    },
+    autosize: true
   })
 
   const [loading, setLoading] = useState(false);
@@ -105,6 +122,22 @@ function AuthorAnalysis({ transition }) {
   function handleChange(e) {
     setPredictionText(e.target.value);
   };
+
+  function handleHoverText(e) {
+    if (hoverText.text == "") {
+      const rect = e.target.getBoundingClientRect();
+      setHoverText({
+        text: e.target.value,
+        position: { x: rect.right / 2, y: rect.top / 2},
+      });
+    } else {
+      setHoverText({
+        text: "",
+        position: { x: 0, y: 0 }
+      });
+    }
+
+  }
 
   function changeSelectedAuthor(author) {
     setSelectedAuthor(author);
@@ -257,17 +290,6 @@ function AuthorAnalysis({ transition }) {
     update_marker_colours()
   }
 
-  function updateLayout() {
-    const width = window.innerWidth;
-    let fontSize;
-    if (width < 768) {
-      fontSize = "30";
-    } else {
-      fontSize = "30";
-    }
-    setChartFontSize(fontSize);
-  };
-
   // Update plot data when report data updated (prediction or selected author)
   useEffect(() => {
     if (reportData.hasOwnProperty("predicted_authors")) {
@@ -313,8 +335,9 @@ function AuthorAnalysis({ transition }) {
     }
     }
 
-    const word_types = Object.keys(reportData["metrics"]["word_types"]);
-    const word_type_counts = Object.values(reportData["metrics"]["word_types"]);
+    // Update pie chart
+    let word_types = Object.keys(reportData["metrics"]["word_types"]);
+    let word_type_counts = Object.values(reportData["metrics"]["word_types"]);
 
     setWordTypesPlotData(prevData => ({
       ...prevData,
@@ -324,12 +347,13 @@ function AuthorAnalysis({ transition }) {
 
   }, [reportData]);
 
-  // Change plot fontsize when window size changes
+  // Resize plots to correct size on load
   useEffect(() => {
-    updateLayout(); // Initial layout update
-    window.addEventListener('resize', updateLayout);
-    return () => window.removeEventListener('resize', updateLayout);
-  }, []);
+    const plotElement = document.getElementById("fleschVsLexicalPlot");
+    if (plotElement) {
+      Plotly.Plots.resize(plotElement);
+    }
+  }, [reportData]);
 
   // Retrieve author report data from backend on page load and update plot
   useEffect(() => {
@@ -365,6 +389,18 @@ function AuthorAnalysis({ transition }) {
       {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph}/>}
       {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={wordcloudUrl}/>}
       {loading && <LoadingIcon/>}
+      {hoverText.text != "" && 
+      <div>
+        <StyledToolTipWrapper>
+          <StyledToolTip theme={theme} $hoverText={hoverText}>
+            <StyledBodyText>
+              {toolTipText[hoverText.text]}
+            </StyledBodyText>
+          </StyledToolTip>
+        </StyledToolTipWrapper>
+        <StyledBackdrop/>
+      </div>
+      }
 
       <StyledFlexboxContainer $transition={transition}>
         <MainButtons 
@@ -408,7 +444,7 @@ function AuthorAnalysis({ transition }) {
             </StyledBodyText>
           </StyledDataBox>
 
-          <StyledDataBox theme={theme}>
+          <StyledDataBox theme={theme} $hoverText={hoverText} $value="emotion">
               <StyledBodyText>
                 Valence: {reportData["predicted_emotions"]["valence"]}
                 <br/>
@@ -417,6 +453,16 @@ function AuthorAnalysis({ transition }) {
                 Dominance: {reportData["predicted_emotions"]["dominance"]}
                 <br/>
               </StyledBodyText>
+              <StyledInfoButton theme={theme} value="emotion" onMouseOver={handleHoverText} onMouseLeave={handleHoverText}>
+                <StyledSVG
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="-1 0 32 32" 
+                >
+                  <path fill="none" stroke="black" strokeWidth="4px" strokeLinejoin="round" strokeLinecap="round" d="M12 7C12.8284 7 13.5 6.32843 13.5 5.5C13.5 4.67157 12.8284 4 12 4C11.1716 4 10.5 4.67157 10.5 5.5C10.5 6.32843 11.1716 7 12 7ZM11 9C10.4477 9 10 9.44772 10 10C10 10.5523 10.4477 11 11 11V19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19V10C13 9.44772 12.5523 9 12 9H11Z"/>
+
+                  <path fill="white" d="M12 7C12.8284 7 13.5 6.32843 13.5 5.5C13.5 4.67157 12.8284 4 12 4C11.1716 4 10.5 4.67157 10.5 5.5C10.5 6.32843 11.1716 7 12 7ZM11 9C10.4477 9 10 9.44772 10 10C10 10.5523 10.4477 11 11 11V19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19V10C13 9.44772 12.5523 9 12 9H11Z"/>
+                </StyledSVG>
+              </StyledInfoButton>
           </StyledDataBox>
 
           { 
@@ -469,7 +515,8 @@ function AuthorAnalysis({ transition }) {
           <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud}/>
 
           <StyledPlotContainer span="span 3">
-            <Plot 
+            <Plot
+              id="fleschVsLexicalPlot"
               data={[fleschVsLexicalPlotData]}
               layout={{
                 title: {
@@ -558,11 +605,39 @@ function AuthorAnalysis({ transition }) {
             />
           </StyledPlotContainer>
 
-          <StyledPlotContainer span="span 3">
-            <Plot 
+          <StyledPlotContainer span="span 2">
+            <Plot
+              id="wordTypesPlot"
               data={[wordTypesPlotData]}
               layout={{
-                title: "Word Types Pie Chart"
+                title: {
+                  text: ""
+                }, 
+                legend: {
+                  x: 0,
+                  y: -0.25,
+                  xanchor: "left",
+                  yanchor: "bottom",
+                  font: {
+                    color: theme.textColor,
+                    size: 14
+                  }
+                },
+                hoverlabel: {
+                  font: {
+                    color: theme.textColor,
+                    size: 14
+                  }
+                },
+                paper_bgcolor: theme.primaryColor,
+                autosize: true,
+                height: "100%",
+                margin: {
+                  t: 20,
+                  b: 40,
+                  l: 20,
+                  r: 20
+                },
               }}
               config={{ displayModeBar: false, responsive: true }}
               useResizeHandler={true}

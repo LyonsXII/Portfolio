@@ -107,7 +107,7 @@ export const StyledTextBox = styled.div`
 `
 
 export const StyledTextField = styled.textarea`
-  padding: 0xp;
+  padding: 0px;
   background: transparent;
   border: none;
   outline: none;
@@ -127,7 +127,7 @@ export const StyledTextField = styled.textarea`
   overflow-y: auto; 
   overflow-x: hidden;
 
-  /* Hide scrollbar, covers various browsers */
+  /* Hide scrollbar for different browsers */
   &::-webkit-scrollbar {
     display: none;
   }
@@ -221,9 +221,9 @@ export const StyledIcon = styled.img`
 `
 
 export const StyledGrid = styled.div`
-  // display: ${({ $showData }) => $showData ? "grid" : "none"};
   display: grid;
   grid-auto-flow: dense;
+  position: relative;
 
   justify-items: stretch;
   align-items: stretch;
@@ -264,6 +264,7 @@ export const StyledGrid = styled.div`
 export const StyledDataBox = styled.div`
   height: 100%;
   width: 100%;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -271,6 +272,7 @@ export const StyledDataBox = styled.div`
   border-radius: 20px;
   box-sizing: border-box;
   grid-column: ${({ span }) => span};
+  z-index: 2;
 
   ${media.mobile`
     padding: 10px;
@@ -282,6 +284,70 @@ export const StyledDataBox = styled.div`
     border: 4px solid black;
   `}
 `
+
+export const StyledInfoButton = styled.button`
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 3px solid black;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.secondaryColor};
+  box-sizing: border-box;
+  z-index: 1000;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.tertiaryColor};
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+  }
+`
+
+export const StyledSVG = styled.svg`
+  pointer-events: none;
+
+  ${media.mobile`
+    height: 30px;
+  `}
+
+  ${media.desktop`
+    height: 30px;
+  `}
+`;
+
+export const StyledToolTipWrapper = styled.div`
+  position: relative;
+`
+
+export const StyledToolTip = styled.div`
+  height: fit-content;
+  width: 800px;
+  border: 4px solid black;
+  border-radius: 20px;
+  position: absolute;
+  top: ${({ $hoverText }) => $hoverText.position.x}px;
+  left: ${({ $hoverText }) => $hoverText.position.y}px;
+  background-color: ${({ theme }) => theme.primaryColor};
+  padding: 20px;
+  color: ${({ theme }) => theme.textColor};
+  box-sizing: border-box;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  z-index: 2;
+`
+
+export const StyledBackdrop = styled.div`
+  position: absolute;
+  height: 100vh;
+  width: 112vw;
+  background-color: black; 
+  z-index: 1;
+  opacity: 0.8;
+  pointer-events: none;
+`;
 
 export const StyledPlotContainer = styled.div`
   border-radius: 20px;
@@ -342,7 +408,7 @@ export const StyledTopicButton = styled.button`
   `}
 
   &:hover {
-  background-color: ${props => props.theme.secondaryColor};
+  background-color: ${({ theme }) => theme.secondaryColor};
   box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
   }
 `

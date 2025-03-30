@@ -141,9 +141,7 @@ def metrics(text):
     
     # Convert spaCy POS tags to readable labels
     word_type_labels = { "NOUN": "Nouns", "VERB": "Verbs", "ADJ": "Adjectives", 
-                    "ADV": "Adverbs", "PRON": "Pronouns", "DET": "Determiners",
-                    "ADP": "Prepositions", "CONJ": "Conjunctions", "INTJ": "Interjections",
-                    "NUM": "Numbers", "PART": "Particles", "PUNCT": "Punctuation"}
+                    "ADV": "Adverbs" }
     
     # Map POS tags to human-readable labels and filter relevant ones
     filtered_counts = {word_type_labels.get(pos, pos): count for pos, count in word_type_counts.items() if pos in word_type_labels}

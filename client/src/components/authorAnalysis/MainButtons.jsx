@@ -59,7 +59,7 @@ function MainButtons({ showData, authorProps, predictionProps}) {
 
       <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
         <StyledMainButton theme={theme} onClick={predictionExpanded ? undefined : togglePredictionExpanded} $expanded={predictionExpanded}>
-          <StyledIcon src="./icons/book.svg" $width="72px" $expanded={predictionExpanded} $main={true}/>
+          <StyledIcon src="./icons/search.svg" $width="72px" $expanded={predictionExpanded} $main={true}/>
           <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={predictionExpanded} onClick={handlePrediction}/>
           <StyledIcon src="./icons/return.svg" $width="46px" $expanded={predictionExpanded} onClick={togglePredictionExpanded}/>
         </StyledMainButton>
