@@ -286,24 +286,30 @@ export const StyledDataBox = styled.div`
 `
 
 export const StyledInfoButton = styled.button`
-  height: 30px;
-  width: 30px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: 3px solid black;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.secondaryColor};
-  box-sizing: border-box;
-  z-index: 1000;
-  cursor: pointer;
+  ${media.mobile`
+    display: none;
+  `}
 
-  &:hover {
-    background-color: ${({ theme }) => theme.tertiaryColor};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-    transition: transform 0.2s ease;
-  }
+  ${media.desktop`
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 3px solid black;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.secondaryColor};
+    box-sizing: border-box;
+    z-index: 1000;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.tertiaryColor};
+      box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+      transition: transform 0.2s ease;
+    }
+  `}
 `
 
 export const StyledSVG = styled.svg`
@@ -318,18 +324,14 @@ export const StyledSVG = styled.svg`
   `}
 `;
 
-export const StyledToolTipWrapper = styled.div`
-  position: relative;
-`
-
 export const StyledToolTip = styled.div`
   height: fit-content;
   width: 800px;
   border: 4px solid black;
   border-radius: 20px;
   position: absolute;
-  top: ${({ $hoverText }) => $hoverText.position.x}px;
-  left: ${({ $hoverText }) => $hoverText.position.y}px;
+  top: ${({ $hoverText }) => $hoverText.position.y}px;
+  left: ${({ $hoverText }) => $hoverText.position.x}px;
   background-color: ${({ theme }) => theme.primaryColor};
   padding: 20px;
   color: ${({ theme }) => theme.textColor};
@@ -337,6 +339,7 @@ export const StyledToolTip = styled.div`
   opacity: 1;
   transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
   z-index: 2;
+  white-space: pre-line
 `
 
 export const StyledBackdrop = styled.div`
