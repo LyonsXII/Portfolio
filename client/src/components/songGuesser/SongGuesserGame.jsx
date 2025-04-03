@@ -46,7 +46,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, setGameOver, han
   async function fetchData() {
     function shuffle(array) {
       // Fisher-Yates shuffle algorithm
-      var m = array.length, t, i;
+      let m = array.length, t, i;
 
       while (m) {
         i = Math.floor(Math.random() * m--);

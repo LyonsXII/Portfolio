@@ -11,7 +11,7 @@ import { toolTipText } from "./toolTipText.js";
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
 
-import { StyledFlexboxContainer, StyledButtonsFlexbox, StyledTextEntryFlexbox, StyledMainButton, StyledTextBox, StyledTextField, StyledAuthorButtonContainer, StyledAuthorButton, StyledIcon, StyledSVG, StyledGrid, StyledDataBox, StyledInfoButton, StyledToolTip, StyledBackdrop, StyledPlotContainer, StyledIFrame, StyledWordcloud, StyledTopicButton, StyledBodyText, StyledButtonText } from './AuthorAnalysis.styles';
+import { StyledFlexboxContainer, StyledToolTip, StyledBackdrop, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition }) {
   const { theme } = useContext(ThemeContext);
@@ -56,6 +56,7 @@ function AuthorAnalysis({ transition }) {
     }
   });
   const [wordcloudUrl, setWordcloudUrl] = useState("");
+  const [topicAnalysisFile, setTopicAnalysisFile] = useState("");
   const [predictedAuthorsPlotData, setPredictedAuthorsPlotData] = useState({
     x: [0.5, 0.3, 0.1, 0.05, 0.05],
     y: ["Example 1", "Example 2", "Example 3", "Example 4" ,"Example 5"],
@@ -266,6 +267,33 @@ function AuthorAnalysis({ transition }) {
     }
   }
 
+  async function fetch_topic_analysis() {
+    try {
+      const requestData = {
+        author: selectedAuthor,
+        text: predictionText
+      }
+      const response = await fetch("http://localhost:5001/topic_analysis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const htmlText =  URL.createObjectURL(blob);
+      setTopicAnalysisFile(htmlText)
+
+    } catch(err) {
+      console.error("Error sending request:", err);
+    }
+  }
+
   function handlePrediction() {
     setLoading(true);
     predict(predictionText)
@@ -290,11 +318,13 @@ function AuthorAnalysis({ transition }) {
 
     fetch_author_report();
     fetch_wordcloud();
+    fetch_topic_analysis();
     update_marker_colours()
   }
 
-  // Update plot data when report data updated (prediction or selected author)
+  // Update data for plots when report data updated
   useEffect(() => {
+    // Update prediction bar plot only if user making a prediction
     if (reportData.hasOwnProperty("predicted_authors")) {
       setPredictedAuthorsPlotData(prevData => ({
         ...prevData,
@@ -306,42 +336,44 @@ function AuthorAnalysis({ transition }) {
       )
       }));
 
-    // Flesch Kincaid vs lexical diversity plot
-    // If there's a previous prediction then replace it with the new marker from the new prediction metrics
-    let marker_colours = Array(authorList.length).fill("rgba(218, 49, 40, 0.6)");
-    marker_colours.push("rgba(40, 218, 94, 0.6)");
-    if (authorList.length == fleschVsLexicalPlotData["text"].length) {
-      setFleschVsLexicalPlotData(prevData => ({
-        ...prevData,
-        x: [...prevData.x, reportData["metrics"]["fk_score"]],
-        y: [...prevData.y, reportData["metrics"]["lexical_diversity"]],
-        text: [...prevData.text, "Your Text"],
-        marker: {
-          ...prevData.marker,
-          color: marker_colours
-        }
-      }))
+      function updateFleschVsLexicalPlotData() {
+        // Flesch Kincaid vs lexical diversity plot
+        // If there's a previous prediction then replace it with the new marker from the new prediction metrics
+        let marker_colours = Array(authorList.length).fill("rgba(218, 49, 40, 0.6)");
+        marker_colours.push("rgba(40, 218, 94, 0.6)");
+        if (authorList.length == fleschVsLexicalPlotData["text"].length) {
+          setFleschVsLexicalPlotData(prevData => ({
+            ...prevData,
+            x: [...prevData.x, reportData["metrics"]["fk_score"]],
+            y: [...prevData.y, reportData["metrics"]["lexical_diversity"]],
+            text: [...prevData.text, "Your Text"],
+            marker: {
+              ...prevData.marker,
+              color: marker_colours
+            }
+          }))
 
-    } else {
-      // Flesch Kincaid vs lexical diversity plot
-      // If no previous prediction add prediction metrics as new marker to plot
-      setFleschVsLexicalPlotData(prevData => ({
-        ...prevData,
-        x: [...prevData.x.slice(0, -1), reportData["metrics"]["fk_score"]],
-        y: [...prevData.y.slice(0, -1), reportData["metrics"]["lexical_diversity"]],
-        text: [...prevData.text, "Your Text"],
-        marker: {
-          ...prevData.marker,
-          color: marker_colours
+        } else {
+          // Flesch Kincaid vs lexical diversity plot
+          // If no previous prediction add prediction metrics as new marker to plot
+          setFleschVsLexicalPlotData(prevData => ({
+            ...prevData,
+            x: [...prevData.x.slice(0, -1), reportData["metrics"]["fk_score"]],
+            y: [...prevData.y.slice(0, -1), reportData["metrics"]["lexical_diversity"]],
+            text: [...prevData.text, "Your Text"],
+            marker: {
+              ...prevData.marker,
+              color: marker_colours
+            }
+          }))
         }
-      }))
-    }
+      }
+      updateFleschVsLexicalPlotData()
     }
 
     // Update pie chart
     let word_types = Object.keys(reportData["metrics"]["word_types"]);
     let word_type_counts = Object.values(reportData["metrics"]["word_types"]);
-
     setWordTypesPlotData(prevData => ({
       ...prevData,
       values: word_type_counts,
@@ -389,7 +421,7 @@ function AuthorAnalysis({ transition }) {
 
   return (
     <div>
-      {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph}/>}
+      {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph} topicAnalysisFile={topicAnalysisFile}/>}
       {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={wordcloudUrl}/>}
       {loading && <LoadingIcon/>}
       {hoverText.text != "" && 
@@ -420,9 +452,26 @@ function AuthorAnalysis({ transition }) {
             handleChange,
             handlePrediction,
             predictionText
-          }}/>
+          }}
+        />
 
-        <Dashboard showData={showData} reportData={reportData} predictedAuthorsPlotData={predictedAuthorsPlotData} toggleTopicGraph={toggleTopicGraph} toggleWordcloud={toggleWordcloud} fleschVsLexicalPlotData={fleschVsLexicalPlotData} wordTypesPlotData={wordTypesPlotData} hoverText={hoverText} handleHoverText={handleHoverText} predictionExpanded={predictionExpanded} wordcloudUrl={wordcloudUrl}/>
+        <Dashboard
+          data={{
+            showData,
+            reportData,
+            predictedAuthorsPlotData,
+            fleschVsLexicalPlotData,
+            wordTypesPlotData,
+            wordcloudUrl
+          }}
+          functional={{
+            toggleTopicGraph,
+            toggleWordcloud,
+            hoverText,
+            handleHoverText,
+            predictionExpanded
+          }}
+        />
       </StyledFlexboxContainer>
 
     </div>

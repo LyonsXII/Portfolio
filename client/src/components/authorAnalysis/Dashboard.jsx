@@ -9,8 +9,25 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 import { StyledGrid, StyledDataBox, StyledBodyText, StyledInfoButton, StyledSVG, StyledPlotContainer, StyledTopicButton, StyledWordcloud } from './AuthorAnalysis.styles';
 
-function Dashboard({ showData, reportData, predictedAuthorsPlotData, toggleTopicGraph, toggleWordcloud, fleschVsLexicalPlotData, wordTypesPlotData, hoverText, handleHoverText, predictionExpanded, wordcloudUrl }) {
+function Dashboard({data, functional}) {
   const { theme } = useContext(ThemeContext);
+
+  const {	
+    showData,
+    reportData,
+    predictedAuthorsPlotData,
+    fleschVsLexicalPlotData,
+    wordTypesPlotData,
+    wordcloudUrl
+  } = data
+
+  const {	
+    toggleTopicGraph,
+    toggleWordcloud,
+    hoverText,
+    handleHoverText,
+    predictionExpanded
+  } = functional
 
   return (
     <StyledGrid $showData={showData}>

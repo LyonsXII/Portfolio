@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 
-import IntroButton from "./IntroButton";
 import IntroTextInitial from "./IntroTextInitial";
 import IntroText from "./IntroText";
 import IntroGallery from "./IntroGallery";

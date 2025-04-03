@@ -159,6 +159,7 @@ export const StyledAuthorButtonContainer = styled.div`
   align-items: flex-start;
   background-color: ${({ theme }) => theme.secondaryColor};
   border-radius: 0px 20px 20px 0px;
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
 
   box-sizing: border-box;
 
@@ -190,6 +191,7 @@ export const StyledAuthorButton = styled.button`
   box-sizing: border-box;
   color: ${({ theme }) => theme.textColor};
   cursor: pointer;
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
@@ -215,6 +217,8 @@ export const StyledIcon = styled.img`
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
     box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
   }
 
   animation: ${fadeInAnimation};
