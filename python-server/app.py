@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 from author_predict import predict_author
 from emotion_predict import predict_emotion
 from text_metrics import generate_word_cloud, calculate_metrics
+from pyLDAvis_model import generateTopicAnalysis
 
 app = Flask(__name__)
 CORS(app)
@@ -108,8 +109,7 @@ def serve_topic_analysis():
     return jsonify({"error": "No author provided"}), 400
   
   elif author == "Custom":
-    print("not included yet")
-    # Insert generate topic analysis function here
+    generateTopicAnalysis([text], author, 12)
 
   curr_dir = os.path.dirname(os.path.abspath(__file__))
   topic_analysis_path = os.path.join(curr_dir, f"public/author reports/{author} - Topic Analysis.html")
