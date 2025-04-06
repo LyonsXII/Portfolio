@@ -93,6 +93,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
   return (
     <StyledContentContainer>
       <IntroTextInitial id={0} title="Portfolio" text={text.introText} current={current} tempCurrent={tempCurrent} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive}/>
+      
       {sectionData.map((section) => (
         <IntroText
           key={section.id}
@@ -108,6 +109,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
           imgA={section.imgA}
         />
       ))}
+
       <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} $expandIntroText={expandIntroText} toggleExpandIntroText={toggleExpandIntroText} sectionData={sectionData}/>
     </StyledContentContainer>
   )

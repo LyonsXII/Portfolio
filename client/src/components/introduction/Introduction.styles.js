@@ -22,17 +22,22 @@ export const StyledIntroContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 90%;
   gap: 30px;
 `;
 
 export const StyledContentFlexbox = styled.div`
   display: flex;
   justify-content: center;
-  height: 340px;
-  width: 90%;
+  height: 100%;
+  width: 100%;
   gap: 40px;
-  margin-top: 30px;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.primaryColor};
+  border: 6px solid black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+  box-sizing: border-box;
 `;
 
 export const StyledButtonsContainer = styled.div`
@@ -49,11 +54,12 @@ export const StyledIntroContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
+  box-sizing: border-box;
 
   ${media.mobile`
     width: 100%;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-start;
+    justify-content: center;
     height: 100vh;
 
     max-height: ${({ $expandIntroText }) => $expandIntroText ? "56%" : "20%"};
@@ -61,10 +67,11 @@ export const StyledIntroContainer = styled.div`
   `}
 
   ${media.desktop`
-    height: 80vh;
+    margin-top: 10vh;
+    height: 90vh;
     width: 60%;
-    align-items: flex-end;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-start;
   `}
 
   animation: ${({ $tempCurrent, $id }) =>
@@ -114,6 +121,7 @@ export const StyledInput = styled.input`
   -moz-appearance: none;
   appearance: none;
   background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
 
   ${media.mobile`
     top: calc(50% - var(--s) / 2.5);
@@ -132,7 +140,7 @@ export const StyledInput = styled.input`
 
     &:checked {
       border: 8px solid #000;
-      transform: translateY(calc(1.85 * var(--s))) scale(0.5) rotate(45deg);
+      transform: translateX(calc(1.25 * var(--s))) translateY(calc(1.85 * var(--s))) scale(0.5) rotate(45deg);
       --b: 70%;
     }
   `}
@@ -318,7 +326,23 @@ export const StyledTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.primaryColorTransparent};
+  background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  background-image: repeating-linear-gradient(
+    45deg,
+    #f5f5f5,
+    #f5f5f5 1px,
+    #ffffff 1px,
+    #ffffff 10px
+  );
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+
+
 
   ${media.mobile`
     width: 100%;
@@ -330,8 +354,10 @@ export const StyledTitleContainer = styled.div`
   ${media.desktop`
     width: 90%;
     border: 6px solid black;
+    box-sizing: border-box;
     border-radius: 20px;
     padding: 20px 40px;
+    margin-bottom: 30px;
   `}
 `;
 
@@ -371,6 +397,11 @@ export const StyledSVG = styled.svg`
 
   ${media.desktop`
     height: 80px;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.4s ease;
+    }
   `}
 `;
 
@@ -512,8 +543,6 @@ export const StyledBodyText = styled.p`
   `}
 
   ${media.desktop`
-    width: 90%;
-    margin-top: 30px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   `}
 `;

@@ -27,17 +27,19 @@ const layoutMap = {
       </StyledTitleContainer>
 
       <StyledIntroContentContainer>
-        <StyledBodyText>
-          {textA}
-          <br />
-          <br />
-          {textB}
-        </StyledBodyText>
-        <StyledContentFlexbox>
+        <StyledContentFlexbox theme={theme}>
+          <StyledBodyText>
+            {textA}
+            <br />
+            <br />
+            {textB}
+          </StyledBodyText>
+        </StyledContentFlexbox>
+        <StyledContentFlexbox theme={theme}>
           <StyledBodyText>
             {textA}
           </StyledBodyText>
-          <StyledImage $height="100%" $width="60" src={imgA}/>
+          <StyledImage $height="100" $width="60" src={imgA}/>
         </StyledContentFlexbox>
       </StyledIntroContentContainer>
     </StyledIntroContainer>
