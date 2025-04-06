@@ -2,12 +2,14 @@
   "dependencies": {
     "concurrently": "^9.1.2",
     "exceljs": "^4.4.0",
+    "flask": "^0.2.10",
     "styled-components": "^6.1.12"
   },
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\" \"npm run python-server\"",
+    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\" \"npm run python-server\" \"npm run mallet-server\" ",
     "client": "cd client && npm run dev",
     "server": "cd server && npm run dev",
-    "python-server": "bash -c '/mnt/c/Users/Michael/Desktop/Web\\ Development\\ Projects/Personal\\ Projects/Portfolio/python-server/linux_venv/bin/python python-server/app.py'"
+    "python-server": "bash -c '/mnt/c/Users/Michael/Desktop/Web\\ Development\\ Projects/Personal\\ Projects/Portfolio/python-server/linux_venv/bin/python python-server/app.py'",
+    "mallet-server": "bash -c '/mnt/c/Users/Michael/Desktop/Web\\ Development\\ Projects/Personal\\ Projects/Portfolio/mallet-server/linux_mallet_venv/bin/python mallet-server/app.py'"
   }
 }

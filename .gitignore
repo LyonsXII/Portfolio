@@ -131,11 +131,11 @@ dist
 
 # virtual environments
 python-server/linux_venv/
-python-server/linux-Mallet-venv/
+mallet-server/linux_mallet_venv/
 python-server/venv
 
 # model folders
 python-server/notebooks
 python-server/models
-python-server/public/gutenberg/books
-python-server/public/books\ (gutenberg-bulk)
+python-server/public/
+mallet-server/public/

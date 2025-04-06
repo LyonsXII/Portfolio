@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import pg from "pg";
 import env from "dotenv";
+import path from 'path';
 
 const app = express();
 const port = 5000;
@@ -13,7 +14,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const db = new pg.Client({
   user: "postgres",
-  host: "localhost",
+  host: "172.31.192.1",
   database: "Song_Data",
   password: "Serpentarius1859",
   port: 5432
@@ -81,7 +82,8 @@ app.post("/choices", async (req, res) => {
 
 app.post("/mp3", async (req, res) => {
   const location = req.body.location;
-  const filePath = __dirname + "\\public\\" + location;
+  const relativeLocation = location.replace(/\\/g, '/');
+  const filePath = path.join(__dirname, 'public', relativeLocation);
   res.sendFile(filePath);
 });
 

@@ -22,7 +22,6 @@ import matplotlib.pyplot as plt
 from author_predict import predict_author
 from emotion_predict import predict_emotion
 from text_metrics import generate_word_cloud, calculate_metrics
-from pyLDAvis_model import generateTopicAnalysis
 
 app = Flask(__name__)
 CORS(app)
