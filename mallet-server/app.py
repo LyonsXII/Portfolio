@@ -8,16 +8,15 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import numpy as np
 import pandas as pd
-import json
 import nltk
 from nltk.corpus import stopwords
-from nltk.corpus import cmudict
-from nltk.stem.porter import PorterStemmer
 import spacy
-import tensorflow as tf
-import tensorflow_hub as hub
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
+import gensim
+from gensim.corpora import Dictionary
+from gensim.models import LdaModel
+from gensim.utils import simple_preprocess
+import pyLDAvis
+import pyLDAvis.gensim as gensimvis
 
 from pyLDAvis_model import generateTopicAnalysis
 

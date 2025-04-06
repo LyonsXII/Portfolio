@@ -273,7 +273,7 @@ function AuthorAnalysis({ transition }) {
         author: selectedAuthor,
         text: predictionText
       }
-      const response = await fetch("http://localhost:5001/topic_analysis", {
+      const response = await fetch("http://localhost:5002/topic_analysis", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -298,6 +298,7 @@ function AuthorAnalysis({ transition }) {
     setLoading(true);
     predict(predictionText)
     fetch_wordcloud("Custom", predictionText)
+    fetch_topic_analysis();
   }
 
   async function handleAuthorReport() {

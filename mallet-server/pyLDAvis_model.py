@@ -47,20 +47,33 @@ def prepare_text(texts):
   return output_text
 
 # Expects a list of strings, can pass in multiple authors as separate strings
-def generateTopicAnalysis(texts, author, num_topics):
+def generateTopicAnalysis(texts, author, num_topics=0):
   def create_model(gensim_text, num_topics):
     # Prepare model arguments
     id2word = Dictionary(gensim_text)
     corpus = [id2word.doc2bow(chapter) for chapter in gensim_text]
 
+    # Automatically choose number of topics
+    total_length = sum(len(text) for text in texts)
+    if total_length < 500:
+      num_topics = 3
+    elif total_length < 1000:
+      num_topics = 5
+    else:
+      num_topics = 10
+
     # Create model
-    num_topics = num_topics
-    mallet_path = "./public/mallet-2.0.8/bin/mallet"
+    # Had an issue with WSL and the file path having spaces, solved by copying mallet model folder to the linux subsystem and using that path
+    curr_dir = os.path.dirname(os.path.abspath(__file__))
+    mallet_home = os.path.join(curr_dir, "public", "mallet-2.0.8")
+    mallet_path = mallet_path = os.path.expanduser("~/mallet/mallet-2.0.8/bin/mallet")
+
+    os.chdir(mallet_home)
     ldamallet = gensim.models.wrappers.LdaMallet(
-      mallet_path, 
-      corpus=corpus, 
-      num_topics=num_topics, 
-      id2word=id2word
+        f'"{mallet_path}"', 
+        corpus=corpus, 
+        num_topics=num_topics, 
+        id2word=id2word
     )
 
     return id2word, corpus, ldamallet

@@ -98,25 +98,5 @@ def serve_wordcloud():
 
   return send_file(wordcloud_path, mimetype='image/jpeg')
 
-@app.route('/topic_analysis', methods=['POST'])
-def serve_topic_analysis():
-  request_data = request.get_json()
-  author = request_data.get("author")
-  text = request_data.get("text")
-
-  if not author:
-    return jsonify({"error": "No author provided"}), 400
-  
-  elif author == "Custom":
-    generateTopicAnalysis([text], author, 12)
-
-  curr_dir = os.path.dirname(os.path.abspath(__file__))
-  topic_analysis_path = os.path.join(curr_dir, f"public/author reports/{author} - Topic Analysis.html")
-
-  if not os.path.exists(topic_analysis_path):
-      return jsonify({"error": "Topic analysis not found"}), 404
-
-  return send_file(topic_analysis_path, mimetype='text/html')
-  
 if __name__ == '__main__':
     app.run(port=5001, debug=True)
