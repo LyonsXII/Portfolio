@@ -36,7 +36,9 @@ export const StyledContentFlexbox = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
   border: 6px solid black;
   border-radius: 20px;
-  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);  /* Drop Shadow */
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
 `;
 
@@ -328,21 +330,21 @@ export const StyledTitleContainer = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.primaryColor};
   box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(10px);
-  background-image: repeating-linear-gradient(
-    45deg,
-    #f5f5f5,
-    #f5f5f5 1px,
-    #ffffff 1px,
-    #ffffff 10px
-  );
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  position: relative;
 
-
-
+  &::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  z-index: 1;
+  background-image: url("https://www.transparenttextures.com/patterns/subtle-grey.png");
+  background-repeat: repeat;
+  background-size: cover;
+  pointer-events: none;
+}
 
   ${media.mobile`
     width: 100%;
@@ -360,6 +362,28 @@ export const StyledTitleContainer = styled.div`
     margin-bottom: 30px;
   `}
 `;
+
+export const StyledGridOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(80, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 1;
+  padding: 20px;
+`
+
+export const StyledGridCell = styled.div`
+  background: ${({ $flicker }) => $flicker ? 'rgba(255, 255, 255, 0.3)' : 'none'};
+  transition: background 0.3s ease;
+
+  ${({ $flicker }) => $flicker && `
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 80px rgba(255, 255, 255, 1);
+  `}
+`
 
 export const StyledIntroButtonContainer = styled.div`
   display: flex;
