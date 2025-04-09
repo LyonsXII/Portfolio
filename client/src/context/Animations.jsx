@@ -309,7 +309,7 @@ export const slideOutBottomIntro = keyframes`
     opacity: 0;
   }
   100% {
-    transform: translateY(500px);
+    transform: translateY(250px);
     opacity: 1;
   }
 `;

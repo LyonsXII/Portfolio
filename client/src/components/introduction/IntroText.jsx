@@ -55,11 +55,15 @@ function IntroText({ id, title, textA, textB, layout, current, tempCurrent, chan
     };
   }, []);
 
+  useEffect(() => {
+
+  }, [])
+
   if (current != id) {return null}
 
   const layoutMap = {
-    A: ({ containerProps, title, theme, textA, textB, changeSection, imgA, $expandIntroText }) => (
-      <StyledIntroContainer {...containerProps} $expandIntroText={$expandIntroText}>
+    A: ({ containerProps, title, theme, textA, textB, changeSection, imgA, $expandIntroText, current }) => (
+      <StyledIntroContainer {...containerProps} $expandIntroText={$expandIntroText} $current={current}>
         <StyledTitleContainer theme={theme}>
           <StyledGridOverlay>
           {[...Array(400)].map((_, index) => (

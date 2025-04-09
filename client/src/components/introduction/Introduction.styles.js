@@ -36,7 +36,7 @@ export const StyledContentFlexbox = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
   border: 6px solid black;
   border-radius: 20px;
-  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);  /* Drop Shadow */
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
@@ -57,6 +57,7 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   margin: 0;
   box-sizing: border-box;
+  border: 1px solid cyan;
 
   ${media.mobile`
     width: 100%;
@@ -69,11 +70,10 @@ export const StyledIntroContainer = styled.div`
   `}
 
   ${media.desktop`
-    margin-top: 10vh;
-    height: 90vh;
-    width: 60%;
-    align-items: center;
-    justify-content: flex-start;
+    height: 84vh;
+    width: 100%;
+    align-items: ${({ $current }) => $current == 0 ? "flex-end" : "center"};
+    justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
   `}
 
   animation: ${({ $tempCurrent, $id }) =>
@@ -84,7 +84,9 @@ export const StyledIntroContainer = styled.div`
 export const StyledGalleryContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  border: 1px solid yellow;
+  margin-right: 130px;
 
   ${media.mobile`
     width: 100%;
@@ -92,19 +94,20 @@ export const StyledGalleryContainer = styled.div`
 
   ${media.desktop`
     height: 100vh;
-    width: 30%;
-    margin-left: 4vw;
+    width: fit-content;
+    margin-left: ${({ $current }) => $current == 0 ? "2vw" : "0vw"};
   `}
 `;
 
-// Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/"
+/* Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/" */
 export const StyledGallery = styled.div`
-  --s: 20vh; // Gallery image size
+  --s: 18vh; // Gallery image size
   
   display: grid;
   grid-template-columns: repeat(3,auto);
   gap: 10px;
   position: relative;
+  border: 1px solid red;
 
   animation: ${bounceDownAnimation};
 `;
@@ -124,6 +127,9 @@ export const StyledInput = styled.input`
   appearance: none;
   background-color: ${({ theme }) => theme.primaryColor};
   box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+  inset 0 -4px 4px rgba(0, 0, 0, 0.6);
 
   ${media.mobile`
     top: calc(50% - var(--s) / 2.5);

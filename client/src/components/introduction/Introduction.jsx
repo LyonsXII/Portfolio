@@ -110,7 +110,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
         />
       ))}
 
-      <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} $expandIntroText={expandIntroText} toggleExpandIntroText={toggleExpandIntroText} sectionData={sectionData}/>
+      <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} current={current} toggleExpandIntroText={toggleExpandIntroText} sectionData={sectionData}/>
     </StyledContentContainer>
   )
 }

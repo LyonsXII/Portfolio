@@ -33,11 +33,11 @@ export const slideInBottomIntroAnimationMobile = css`
 const slideOutBottomIntro = keyframes`
   0% {
     transform: translateY(0px);
-    opacity: 0;
+    opacity: 1;
   }
   100% {
-    transform: translateY(500px);
-    opacity: 1;
+    transform: translateY(125px);
+    opacity: 0;
   }
 `;
 

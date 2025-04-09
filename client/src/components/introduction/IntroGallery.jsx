@@ -5,13 +5,13 @@ import { StyledGalleryContainer, StyledGallery, StyledInput, StyledGalleryImage 
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroGallery({ imageChoice, toggleShowSubTitle, galleryAnimationComplete, toggleExpandIntroText, sectionData }) {
+function IntroGallery({ imageChoice, toggleShowSubTitle, galleryAnimationComplete, current, toggleExpandIntroText, sectionData }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledGalleryContainer>
+    <StyledGalleryContainer $current={current}>
       <StyledGallery>
-        <StyledInput theme={theme} type="checkbox" onMouseOver={galleryAnimationComplete ? toggleShowSubTitle : null} onClick={toggleExpandIntroText}/>
+        <StyledInput theme={theme} type="checkbox" onMouseOver={galleryAnimationComplete ? toggleShowSubTitle : null}  onClick={toggleExpandIntroText}/>
         {sectionData.map((section) => (
         <StyledGalleryImage
           theme={theme}

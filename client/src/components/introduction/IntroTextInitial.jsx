@@ -17,6 +17,7 @@ function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle,
         <StyledMinorTitleInitial $showSubTitle={showSubTitle} $subTitleEntranceComplete={subTitleEntranceComplete} $expandIntroText={expandIntroText} $introBodyTextAnimationActive={introBodyTextAnimationActive}>
           Michael Lyons
         </StyledMinorTitleInitial>
+        
         {expandIntroText ?
           <StyledBodyTextInitialText $introBodyTextAnimationActive={introBodyTextAnimationActive}>
             {text}
