@@ -74,17 +74,9 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
       setTempCurrent(0);
       setTimeout(() => {
         setCurrent(0);
-      }, 500)
-      // Avoid end of body text exit animation during transition
-      if (current === 0) {setTimeout(() => {setExpandIntroText(false)}, 1000)} 
-      else {setTimeout(() => {setExpandIntroText(false)}, 500)}
-      setIntroBodyTextAnimationActive("Exit");
-      setTimeout(() => {setIntroBodyTextAnimationActive("none")}, 1000);
-    } else {
-      setExpandIntroText(true);
-      setIntroBodyTextAnimationActive("Entrance");
-      setTimeout(() => {setIntroBodyTextAnimationActive("none")}, 1000);
+      }, 500);
     }
+    setExpandIntroText(prev => !prev)
   }
 
   // Time allowed insertion of subtitle to animation completion, avoids jarring title movement

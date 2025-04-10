@@ -26,6 +26,84 @@ export const StyledIntroContentContainer = styled.div`
   gap: 30px;
 `;
 
+export const StyledIntroInitialContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
+  opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
+  transition: max-height 2s ease, opacity 2s ease;
+  overflow: hidden;
+`;
+
+export const StyledTechIcon = styled.div`
+  width: 50px;
+  height: 50px;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+export const StyledSectionHeadingsFlexbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 230px;
+  width: 100%;
+  gap: 20px;
+  padding-top: 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  direction: ltr;
+  scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
+  scrollbar-width: thin;
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: #8070d4;
+  }
+`
+
+export const StyledSectionRowFlexbox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  height: fit-content;
+  width: 90%;
+  row-gap: 20px;
+  column-gap: 40px;
+  margin-bottom: 20px;
+`
+
+export const StyledTechPairFlexbox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  gap: 20px;
+`
+
 export const StyledContentFlexbox = styled.div`
   display: flex;
   justify-content: center;
@@ -57,7 +135,6 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   margin: 0;
   box-sizing: border-box;
-  border: 1px solid cyan;
 
   ${media.mobile`
     width: 100%;
@@ -451,10 +528,8 @@ export const StyledMainTitle = styled.h1`
   ${media.desktop`
     font-size: 8rem;
 
-    animation: ${({ $showSubTitle, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
-      $showSubTitle && !$subTitleEntranceComplete ? nudgeUpSubTitleAnimation
-      : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
-      : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
+    animation: ${({ $showSubTitle }) => 
+      $showSubTitle  ? nudgeUpSubTitleAnimation
       : "none"
     };
   `}
@@ -493,10 +568,8 @@ export const StyledMinorTitleInitial = styled.h3`
     display: ${({ $showSubTitle }) => $showSubTitle ? "auto" : "none"};
     font-size: 3rem;
 
-    animation: ${({ $showSubTitle, $expandIntroText, $subTitleEntranceComplete, $introBodyTextAnimationActive }) => 
+    animation: ${({ $showSubTitle, $subTitleEntranceComplete }) => 
     $showSubTitle && !$subTitleEntranceComplete ? swingInAnimation
-    : $introBodyTextAnimationActive === "Entrance" ? nudgeUpBodyTextAnimation 
-    : $introBodyTextAnimationActive === "Exit" ? nudgeDownBodyTextAnimation
     : "none"
   };
   `}
@@ -518,6 +591,17 @@ export const StyledMinorTitle = styled.h3`
   ${media.desktop`
     font-size: 2.5rem;
   `}
+`;
+
+export const StyledHeadingText = styled.h3`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+
+  font-size: 2rem;
 `;
 
 export const StyledBodyTextInitialText = styled.p`
@@ -547,14 +631,6 @@ export const StyledBodyTextInitialText = styled.p`
     padding: 4% 0px 0px 4%;
     text-align: right;
     font-size: 1.5rem;
-
-    animation: ${({ $introBodyTextAnimationActive }) => 
-      $introBodyTextAnimationActive === "Entrance" 
-        ? slideInBottomIntroAnimation 
-      : $introBodyTextAnimationActive === "Exit" 
-          ? slideOutBottomIntroAnimation
-      : "none"
-    };
   `}
 `;
 
