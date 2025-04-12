@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { StyledSectionHeadingsFlexbox, StyledSectionRowFlexbox, StyledTechPairFlexbox, StyledTechIcon, StyledHeadingText, StyledBodyText } from "./Introduction.styles";
 
-import { StyledPythonIcon, StyledJavascriptIcon, StyledHTMLIcon, StyledCSSIcon, StyledReactIcon, StyledEJSIcon, StyledBootstrapIcon, StyledMaterialUIIcon, StyledNodeJSIcon, StyledExpressIcon, StyledFlaskIcon, StyledGitIcon, StyledPostgresqlIcon } from "./TechStack.styles";
+import { StyledPythonIcon, StyledJavascriptIcon, StyledHTMLIcon, StyledCSSIcon, StyledReactIcon, StyledEJSIcon, StyledBootstrapIcon, StyledMaterialUIIcon, StyledNodeJSIcon, StyledExpressIcon, StyledFlaskIcon, StyledGitIcon, StyledPostgresqlIcon, StyledVSCodeIcon, StyledPyCharmIcon, StyledPostmanIcon, StyledJupyterIcon } from "./TechStack.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -39,16 +39,16 @@ function TechStack() {
           <StyledReactIcon/>
         </StyledTechPairFlexbox>
         <StyledTechPairFlexbox>
-          <StyledBodyText>EJS</StyledBodyText>
-          <StyledEJSIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
           <StyledBodyText>Bootstrap</StyledBodyText>
           <StyledBootstrapIcon/>
         </StyledTechPairFlexbox>
         <StyledTechPairFlexbox>
           <StyledBodyText>Material UI</StyledBodyText>
           <StyledMaterialUIIcon/>
+        </StyledTechPairFlexbox>
+        <StyledTechPairFlexbox>
+          <StyledBodyText>EJS</StyledBodyText>
+          <StyledEJSIcon/>
         </StyledTechPairFlexbox>
       </StyledSectionRowFlexbox>
 
@@ -79,20 +79,20 @@ function TechStack() {
           <StyledPostgresqlIcon/>
         </StyledTechPairFlexbox>
         <StyledTechPairFlexbox>
-          <StyledBodyText>VS Code</StyledBodyText>
-          <StyledPythonIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>PyCharm</StyledBodyText>
-          <StyledPythonIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
           <StyledBodyText>Postman</StyledBodyText>
-          <StyledPythonIcon/>
+          <StyledPostmanIcon/>
         </StyledTechPairFlexbox>
         <StyledTechPairFlexbox>
           <StyledBodyText>Jupyter Notebook</StyledBodyText>
-          <StyledPythonIcon/>
+          <StyledJupyterIcon style={{height:"60px", width:"60px"}}/>
+        </StyledTechPairFlexbox>
+        <StyledTechPairFlexbox>
+          <StyledBodyText>VS Code</StyledBodyText>
+          <StyledVSCodeIcon/>
+        </StyledTechPairFlexbox>
+        <StyledTechPairFlexbox>
+          <StyledBodyText>PyCharm</StyledBodyText>
+          <StyledPyCharmIcon/>
         </StyledTechPairFlexbox>
       </StyledSectionRowFlexbox>
     </StyledSectionHeadingsFlexbox>

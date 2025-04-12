@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const createStyledIcon = (IconComponent) => styled(IconComponent)`
-  width: 50px;
   height: 50px;
+  width: 50px;
   transition: transform 0.2s;
 
   &:hover {
@@ -27,6 +27,10 @@ import ExpressIcon from "./icons/express.svg?react";
 import FlaskIcon from "./icons/flask.svg?react";
 import GitIcon from "./icons/git.svg?react";
 import PostgresqlIcon from "./icons/postgresql.svg?react";
+import VSCodeIcon from "./icons/vs-code.svg?react";
+import PyCharmIcon from "./icons/pycharm.svg?react";
+import PostmanIcon from "./icons/postman.svg?react";
+import JupyterIcon from "./icons/jupyter-notebook.svg?react";
 
 // Export styled component for each icon
 export const StyledPythonIcon = createStyledIcon(PythonIcon);
@@ -42,3 +46,7 @@ export const StyledExpressIcon = createStyledIcon(ExpressIcon);
 export const StyledFlaskIcon = createStyledIcon(FlaskIcon);
 export const StyledGitIcon = createStyledIcon(GitIcon);
 export const StyledPostgresqlIcon = createStyledIcon(PostgresqlIcon);
+export const StyledVSCodeIcon = createStyledIcon(VSCodeIcon);
+export const StyledPyCharmIcon = createStyledIcon(PyCharmIcon);
+export const StyledPostmanIcon = createStyledIcon(PostmanIcon);
+export const StyledJupyterIcon = createStyledIcon(JupyterIcon);

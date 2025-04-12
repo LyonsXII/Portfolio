@@ -30,8 +30,9 @@ export const StyledIntroInitialContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
+  margin-top: 40px;
   gap: 20px;
   max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
   opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
@@ -53,17 +54,19 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   height: 230px;
   width: 100%;
-  gap: 20px;
-  padding-top: 20px;
+  margin-top: 20px;
+  gap: 30px;
   overflow-y: scroll;
   overflow-x: hidden;
+
   scroll-behavior: smooth;
   direction: ltr;
   scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
   scrollbar-width: thin;
+  border: 1px solid cyan;
 
   ::-webkit-scrollbar {
     width: 20px;
@@ -89,10 +92,12 @@ export const StyledSectionRowFlexbox = styled.div`
   align-items: center;
   flex-wrap: wrap;
   height: fit-content;
+  margin-top: ${({ $marginTop }) => $marginTop || "0px"};
+  margin-right: ${({ $marginRight }) => $marginRight || "20px"};
   width: 90%;
   row-gap: 20px;
   column-gap: 40px;
-  margin-bottom: 20px;
+  border: 1px solid pink;
 `
 
 export const StyledTechPairFlexbox = styled.div`
@@ -135,6 +140,7 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   margin: 0;
   box-sizing: border-box;
+  border: 1px solid white;
 
   ${media.mobile`
     width: 100%;
@@ -158,6 +164,21 @@ export const StyledIntroContainer = styled.div`
   };
 `;
 
+export const StyledIntroButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.primaryColor};
+  border: 6px solid black;
+  border-radius: 20px;
+  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+`
+
 export const StyledGalleryContainer = styled.div`
   display: flex;
   align-items: center;
@@ -172,7 +193,7 @@ export const StyledGalleryContainer = styled.div`
   ${media.desktop`
     height: 100vh;
     width: fit-content;
-    margin-left: ${({ $current }) => $current == 0 ? "2vw" : "0vw"};
+    margin-left: ${({ $current }) => $current == 0 ? "3vw" : "0vw"};
   `}
 `;
 
@@ -602,6 +623,8 @@ export const StyledHeadingText = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   font-size: 2rem;
+  color: ${({ theme }) => theme.textColor};
+  pointer-events: none;
 `;
 
 export const StyledBodyTextInitialText = styled.p`
@@ -628,7 +651,7 @@ export const StyledBodyTextInitialText = styled.p`
   `}
 
   ${media.desktop`
-    padding: 4% 0px 0px 4%;
+    padding-left: 40px;
     text-align: right;
     font-size: 1.5rem;
   `}
