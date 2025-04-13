@@ -12,6 +12,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
   const [initial, setInitial] = useState(true);
   const [current, setCurrent] = useState(0);
   const [tempCurrent, setTempCurrent] = useState(0);
+  const [initialSection, setInitialSection] = useState("None");
 
   // Animation states
   const [showSubTitle, setShowSubTitle] = useState(false);
@@ -33,8 +34,12 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
   ];
 
   function imageChoice(event) {
-    const choice = parseInt(event.target.dataset.id)
+    // Reset any expanded text in initial section
+    setTimeout(() => {
+      setInitialSection("None");
+    }, 500);
 
+    const choice = parseInt(event.target.dataset.id)
     if (choice === current) {
       setTempCurrent(0);
       setTimeout(() => {
@@ -74,9 +79,21 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
       setTempCurrent(0);
       setTimeout(() => {
         setCurrent(0);
+        setInitialSection("None");
       }, 500);
     }
     setExpandIntroText(prev => !prev)
+  }
+
+  function changeInitialSection(e) {
+    if (initialSection == "None") {
+      setInitialSection(e.target.value)
+    } else {
+      setInitialSection("None");
+      if (initialSection != e.target.value) {
+        setTimeout(() => {setInitialSection(e.target.value)}, 800);
+      }
+    }
   }
 
   // Time allowed insertion of subtitle to animation completion, avoids jarring title movement
@@ -84,7 +101,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
 
   return (
     <StyledContentContainer>
-      <IntroTextInitial id={0} title="Portfolio" text={text.introText} current={current} tempCurrent={tempCurrent} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive}/>
+      <IntroTextInitial id={0} title="Portfolio" text={text.introText} current={current} tempCurrent={tempCurrent} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive} initialSection={initialSection} setInitialSection={setInitialSection} changeInitialSection={changeInitialSection}/>
       
       {sectionData.map((section) => (
         <IntroText
@@ -102,7 +119,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
         />
       ))}
 
-      <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} galleryAnimationComplete={galleryAnimationComplete} current={current} toggleExpandIntroText={toggleExpandIntroText} sectionData={sectionData}/>
+      <IntroGallery imageChoice={imageChoice} toggleShowSubTitle={toggleShowSubTitle} toggleExpandIntroText={toggleExpandIntroText} galleryAnimationComplete={galleryAnimationComplete} current={current} sectionData={sectionData}/>
     </StyledContentContainer>
   )
 }

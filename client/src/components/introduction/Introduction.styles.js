@@ -50,6 +50,16 @@ export const StyledTechIcon = styled.div`
   }
 `;
 
+export const StyledSectionFlexbox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "250px" : "0px"};
+  opacity: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1" : "0"};
+  transition: max-height 1s ease, opacity 1s ease;
+  overflow: hidden;
+`
+
 export const StyledSectionHeadingsFlexbox = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,7 +76,6 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   direction: ltr;
   scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
   scrollbar-width: thin;
-  border: 1px solid cyan;
 
   ::-webkit-scrollbar {
     width: 20px;
@@ -97,7 +106,53 @@ export const StyledSectionRowFlexbox = styled.div`
   width: 90%;
   row-gap: 20px;
   column-gap: 40px;
-  border: 1px solid pink;
+  padding-right: 10px;
+`
+
+export const StyledSectionRowTextFlexbox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 200px;
+  margin-top: ${({ $marginTop }) => $marginTop || "0px"};
+  margin-right: ${({ $marginRight }) => $marginRight || "20px"};
+  width: 90%;
+  row-gap: 20px;
+  column-gap: 40px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+  direction: ltr;
+  scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
+  scrollbar-width: thin;
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: #8070d4;
+  }
+`
+
+export const StyledInitialSectionFlexbox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
 `
 
 export const StyledTechPairFlexbox = styled.div`
@@ -140,7 +195,6 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   margin: 0;
   box-sizing: border-box;
-  border: 1px solid white;
 
   ${media.mobile`
     width: 100%;
@@ -171,19 +225,26 @@ export const StyledIntroButton = styled.button`
   justify-content: center;
   padding: 20px;
   background-color: ${({ theme }) => theme.primaryColor};
-  border: 6px solid black;
+  border: 3px solid black;
   border-radius: 20px;
-  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(7, 3, 3, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.theme.secondaryColor};
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  }
 `
 
 export const StyledGalleryContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  border: 1px solid yellow;
   margin-right: 130px;
 
   ${media.mobile`
@@ -205,7 +266,6 @@ export const StyledGallery = styled.div`
   grid-template-columns: repeat(3,auto);
   gap: 10px;
   position: relative;
-  border: 1px solid red;
 
   animation: ${bounceDownAnimation};
 `;
@@ -253,7 +313,9 @@ export const StyledInput = styled.input`
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   }
 
   &:checked ~ img {

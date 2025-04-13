@@ -2,20 +2,15 @@ import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
 import TechStack from "./TechStack";
+import AboutMe from "./AboutMe";
+import Interests from "./Interests";
 
-import { StyledMainTitle, StyledMinorTitleInitial, StyledBodyTextInitialText, StyledButtonsContainer, StyledIntroContainer, StyledIntroButton, StyledIntroInitialContentContainer,StyledSectionRowFlexbox, StyledHeadingText } from "./Introduction.styles";
+import { StyledMainTitle, StyledMinorTitleInitial, StyledBodyTextInitialText, StyledButtonsContainer, StyledIntroContainer, StyledIntroButton, StyledIntroInitialContentContainer,StyledSectionRowFlexbox, StyledInitialSectionFlexbox, StyledHeadingText } from "./Introduction.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle, subTitleEntranceComplete, expandIntroText, introBodyTextAnimationActive }) {
+function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle, subTitleEntranceComplete, expandIntroText, introBodyTextAnimationActive, initialSection, setInitialSection, changeInitialSection }) {
   const { theme } = useContext(ThemeContext);
-
-  const [initialSection, setInitialSection] = useState("None");
-
-  function changeSection(e) {
-    if (initialSection == e.target.value) {setInitialSection("None")}
-    else {setInitialSection(e.target.value)}
-  }
 
   return (
     current === id ?
@@ -28,21 +23,29 @@ function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle,
         </StyledMinorTitleInitial>
         
         <StyledIntroInitialContentContainer $expandIntroText={expandIntroText}>
-          <StyledBodyTextInitialText $introBodyTextAnimationActive={introBodyTextAnimationActive}>
-            {text}
-          </StyledBodyTextInitialText>
+          <StyledSectionRowFlexbox $marginRight="0px">
+            <StyledBodyTextInitialText>
+              {text}
+            </StyledBodyTextInitialText>
+          </StyledSectionRowFlexbox>
           <StyledSectionRowFlexbox $marginTop="20px" $marginRight="0px">
-            <StyledIntroButton theme={theme} value="About Me" onClick={changeSection}>
+            <StyledIntroButton theme={theme} value="About Me" onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>About Me</StyledHeadingText>
             </StyledIntroButton>
-            <StyledIntroButton theme={theme} value="Tech Stack" onClick={changeSection}>
+            <StyledIntroButton theme={theme} value="Tech Stack" onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>Tech Stack</StyledHeadingText>
             </StyledIntroButton>
-            <StyledIntroButton theme={theme} value="Interests" onClick={changeSection}>
+            <StyledIntroButton theme={theme} value="Interests" onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>Interests</StyledHeadingText>
             </StyledIntroButton>
           </StyledSectionRowFlexbox>
-          {initialSection == "Tech Stack" && <TechStack/>}
+
+          <StyledInitialSectionFlexbox>
+            <AboutMe initialSection={initialSection}/>
+            <TechStack initialSection={initialSection}/>
+            <Interests initialSection={initialSection}/>
+          </StyledInitialSectionFlexbox>
+
         </StyledIntroInitialContentContainer>
       </StyledIntroContainer>
     : null

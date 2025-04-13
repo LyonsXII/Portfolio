@@ -1,101 +1,103 @@
 import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledSectionHeadingsFlexbox, StyledSectionRowFlexbox, StyledTechPairFlexbox, StyledTechIcon, StyledHeadingText, StyledBodyText } from "./Introduction.styles";
+import { StyledSectionFlexbox, StyledSectionHeadingsFlexbox, StyledSectionRowFlexbox, StyledTechPairFlexbox, StyledTechIcon, StyledHeadingText, StyledBodyText } from "./Introduction.styles";
 
 import { StyledPythonIcon, StyledJavascriptIcon, StyledHTMLIcon, StyledCSSIcon, StyledReactIcon, StyledEJSIcon, StyledBootstrapIcon, StyledMaterialUIIcon, StyledNodeJSIcon, StyledExpressIcon, StyledFlaskIcon, StyledGitIcon, StyledPostgresqlIcon, StyledVSCodeIcon, StyledPyCharmIcon, StyledPostmanIcon, StyledJupyterIcon } from "./TechStack.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function TechStack() {
+function TechStack({ initialSection }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledSectionHeadingsFlexbox theme={theme}>
-      <StyledSectionRowFlexbox>
-        <StyledHeadingText>Languages:</StyledHeadingText>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Javascript</StyledBodyText>
-          <StyledJavascriptIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Python</StyledBodyText>
-          <StyledPythonIcon/>
-        </StyledTechPairFlexbox>
-      </StyledSectionRowFlexbox>
+    <StyledSectionFlexbox $initialSection={initialSection} $sectionName="Tech Stack">
+      <StyledSectionHeadingsFlexbox theme={theme}>
+        <StyledSectionRowFlexbox>
+          <StyledHeadingText>Languages:</StyledHeadingText>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Javascript</StyledBodyText>
+            <StyledJavascriptIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Python</StyledBodyText>
+            <StyledPythonIcon/>
+          </StyledTechPairFlexbox>
+        </StyledSectionRowFlexbox>
 
-      <StyledSectionRowFlexbox>
-        <StyledHeadingText>Front End:</StyledHeadingText>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>HTML</StyledBodyText>
-          <StyledHTMLIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>CSS</StyledBodyText>
-          <StyledCSSIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>React</StyledBodyText>
-          <StyledReactIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Bootstrap</StyledBodyText>
-          <StyledBootstrapIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Material UI</StyledBodyText>
-          <StyledMaterialUIIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>EJS</StyledBodyText>
-          <StyledEJSIcon/>
-        </StyledTechPairFlexbox>
-      </StyledSectionRowFlexbox>
+        <StyledSectionRowFlexbox>
+          <StyledHeadingText>Front End:</StyledHeadingText>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>HTML</StyledBodyText>
+            <StyledHTMLIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>CSS</StyledBodyText>
+            <StyledCSSIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>React</StyledBodyText>
+            <StyledReactIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Bootstrap</StyledBodyText>
+            <StyledBootstrapIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Material UI</StyledBodyText>
+            <StyledMaterialUIIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>EJS</StyledBodyText>
+            <StyledEJSIcon/>
+          </StyledTechPairFlexbox>
+        </StyledSectionRowFlexbox>
 
-      <StyledSectionRowFlexbox>
-        <StyledHeadingText>Back End:</StyledHeadingText>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Node.js</StyledBodyText>
-          <StyledNodeJSIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Express</StyledBodyText>
-          <StyledExpressIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Flask</StyledBodyText>
-          <StyledFlaskIcon/>
-        </StyledTechPairFlexbox>
-      </StyledSectionRowFlexbox>
+        <StyledSectionRowFlexbox>
+          <StyledHeadingText>Back End:</StyledHeadingText>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Node.js</StyledBodyText>
+            <StyledNodeJSIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Express</StyledBodyText>
+            <StyledExpressIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Flask</StyledBodyText>
+            <StyledFlaskIcon/>
+          </StyledTechPairFlexbox>
+        </StyledSectionRowFlexbox>
 
-      <StyledSectionRowFlexbox>
-        <StyledHeadingText>Tools & Platforms:</StyledHeadingText>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Git</StyledBodyText>
-          <StyledGitIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>PostgreSQL</StyledBodyText>
-          <StyledPostgresqlIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Postman</StyledBodyText>
-          <StyledPostmanIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>Jupyter Notebook</StyledBodyText>
-          <StyledJupyterIcon style={{height:"60px", width:"60px"}}/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>VS Code</StyledBodyText>
-          <StyledVSCodeIcon/>
-        </StyledTechPairFlexbox>
-        <StyledTechPairFlexbox>
-          <StyledBodyText>PyCharm</StyledBodyText>
-          <StyledPyCharmIcon/>
-        </StyledTechPairFlexbox>
-      </StyledSectionRowFlexbox>
-    </StyledSectionHeadingsFlexbox>
+        <StyledSectionRowFlexbox>
+          <StyledHeadingText>Tools & Platforms:</StyledHeadingText>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Git</StyledBodyText>
+            <StyledGitIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>PostgreSQL</StyledBodyText>
+            <StyledPostgresqlIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Postman</StyledBodyText>
+            <StyledPostmanIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>Jupyter Notebook</StyledBodyText>
+            <StyledJupyterIcon style={{height:"60px", width:"60px"}}/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>VS Code</StyledBodyText>
+            <StyledVSCodeIcon/>
+          </StyledTechPairFlexbox>
+          <StyledTechPairFlexbox>
+            <StyledBodyText>PyCharm</StyledBodyText>
+            <StyledPyCharmIcon/>
+          </StyledTechPairFlexbox>
+        </StyledSectionRowFlexbox>
+      </StyledSectionHeadingsFlexbox>
+    </StyledSectionFlexbox>
   )
 }
 

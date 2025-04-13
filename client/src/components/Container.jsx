@@ -30,6 +30,8 @@ const StyledBackground = styled.div`
   pointer-events: none;
   height: 100vh;
   width: 100vw;
+  box-shadow: inset 0px 0px 40px rgba(0, 0, 0, 1),
+              inset 0px 0px 80px rgba(0, 0, 0, 0.6);
 `;
 
 const StyledBackgroundGif = styled.div`
