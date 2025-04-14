@@ -20,7 +20,7 @@ export const StyledContentContainer = styled.div`
 
 export const StyledIntroContentContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ $flexDirection }) => $flexDirection || "column"};
   align-items: center;
   width: 90%;
   gap: 30px;
@@ -166,17 +166,20 @@ export const StyledTechPairFlexbox = styled.div`
 
 export const StyledContentFlexbox = styled.div`
   display: flex;
+  flex-direction: ${({ $flexDirection }) => $flexDirection || "row"};
+  justify-content: center;
+  height: 100%;
+  width: ${({ $width }) => $width || "100%"};
+  gap: 40px;
+  padding: 0px 20px;
+  box-sizing: border-box;
+`;
+
+export const StyledContentInteriorFlexbox = styled.div`
+  display: flex;
   justify-content: center;
   height: 100%;
   width: 100%;
-  gap: 40px;
-  padding: 20px;
-  background-color: ${({ theme }) => theme.primaryColor};
-  border: 6px solid black;
-  border-radius: 20px;
-  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
 `;
 
