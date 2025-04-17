@@ -1,10 +1,12 @@
-import styled from "styled-components";
+import { styled, css } from "styled-components";
 
 import { media } from '../../context/media';
 
 import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, nudgeDownBodyTextAnimation } from '../../context/Animations';
 
 import { slideInBottomIntroAnimation, slideInBottomIntroAnimationMobile, slideOutBottomIntroAnimation, slideOutBottomIntroAnimationMobile } from './IntroductionAnimations';
+
+import NextIcon from "../../../public/icons/nextSong.svg?react";
 
 export const StyledContentContainer = styled.div`
   display: flex;
@@ -212,8 +214,9 @@ export const StyledIntroContainer = styled.div`
   ${media.desktop`
     height: 84vh;
     width: 100%;
-    align-items: ${({ $current }) => $current == 0 ? "flex-end" : "center"};
+    align-items: ${({ $current }) => $current == 0 ? "flex-end" : "flex-start"};
     justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
+    padding-left: ${({ $current }) => $current == 0 ? "0px" : "5%"};
   `}
 
   animation: ${({ $tempCurrent, $id }) =>
@@ -493,27 +496,34 @@ export const StyledImage = styled.img`
   `}
 `;
 
-export const StyledTitleContainer = styled.div`
+export const StyledTitleFlexbox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  height: fit-content;
   background-color: ${({ theme }) => theme.primaryColor};
   box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-  position: relative;
 
-  &::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.2;
-  z-index: 1;
-  background-image: url("https://www.transparenttextures.com/patterns/subtle-grey.png");
-  background-repeat: repeat;
-  background-size: cover;
-  pointer-events: none;
-}
+  ${media.desktop`
+    width: 90%;
+    border: 6px solid black;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin-bottom: 30px;
+  `}
+`
+
+export const StyledTitleContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
 
   ${media.mobile`
     width: 100%;
@@ -521,37 +531,30 @@ export const StyledTitleContainer = styled.div`
     border-bottom: 3px solid black;
     padding: 4px 0px 8px 0px;
   `}
-
-  ${media.desktop`
-    width: 90%;
-    border: 6px solid black;
-    box-sizing: border-box;
-    border-radius: 20px;
-    padding: 20px 40px;
-    margin-bottom: 30px;
-  `}
 `;
 
-export const StyledGridOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(80, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-  z-index: 1;
-  pointer-events: none;
-  opacity: 1;
-  padding: 20px;
-`
+export const StyledTitleButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100px;
+  max-width: 60px;
+  border-left: 6px solid black;
+  border-radius: 0px 20px 20px 0px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
 
-export const StyledGridCell = styled.div`
-  background: ${({ $flicker }) => $flicker ? 'rgba(255, 255, 255, 0.3)' : 'none'};
-  transition: background 0.3s ease;
+  transition: max-width 0.6s ease;
 
-  ${({ $flicker }) => $flicker && `
-    box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
-    box-shadow: 0 0 80px rgba(255, 255, 255, 1);
-  `}
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+          inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+    max-width: 100px;
+  }
 `
 
 export const StyledIntroButtonContainer = styled.div`
@@ -567,19 +570,6 @@ export const StyledIntroButtonContainer = styled.div`
   ${media.desktop`
     margin-top: 1vh;
     gap: 30px;
-  `}
-`;
-
-export const StyledSpacer = styled.div`
-  ${media.mobile`
-    display: none;
-  `}
-
-  ${media.desktop`
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-grow: 1;
   `}
 `;
 
@@ -634,7 +624,7 @@ export const StyledTitle = styled.h1`
   `}
 
   ${media.desktop`
-    font-size: 6rem;
+    font-size: 4rem;
   `}
 `;
 
@@ -740,3 +730,15 @@ export const StyledBodyText = styled.p`
     font-size: 1.3rem;
   `}
 `;
+
+const createStyledIcon = (IconComponent) => styled(IconComponent)`
+  height: 50px;
+  width: 50px;
+  transition: transform 0.4s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+export const StyledNextIcon = createStyledIcon(NextIcon);
