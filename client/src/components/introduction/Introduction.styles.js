@@ -25,7 +25,9 @@ export const StyledIntroContentContainer = styled.div`
   flex-direction: ${({ $flexDirection }) => $flexDirection || "column"};
   align-items: center;
   width: 90%;
-  gap: 30px;
+  padding: 0px 20px;
+  gap: ${({ $gap }) => $gap || "20px"};
+  box-sizing: border-box;
 `;
 
 export const StyledIntroInitialContentContainer = styled.div`
@@ -169,12 +171,15 @@ export const StyledTechPairFlexbox = styled.div`
 export const StyledContentFlexbox = styled.div`
   display: flex;
   flex-direction: ${({ $flexDirection }) => $flexDirection || "row"};
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   height: 100%;
   width: ${({ $width }) => $width || "100%"};
-  gap: 40px;
-  padding: 0px 20px;
+  gap: ${({ $gap }) => $gap || "10px"};
   box-sizing: border-box;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 `;
 
 export const StyledContentInteriorFlexbox = styled.div`
@@ -481,19 +486,50 @@ export const StyledGalleryImage = styled.img`
 
 `;
 
-export const StyledImage = styled.img`
+export const StyledImageWrapper = styled.div`
+  position: relative;
+  width: ${({ $width }) => $width || "100%"};
+  margin: ${({ $margin }) => $margin || "0px"};
   border: 6px solid black;
-  border-radius: 20px;
+  border-radius: 20px 20px 0px 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4);
+`
 
-  ${media.mobile`
-    height: 15%;
-    width: 100%;
-  `}
+export const StyledCaptionContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: ${({ theme }) => theme.primaryColor};
+  border: 6px solid black;
+  border-radius: 0px 0px 20px 20px;
+  margin-top: -6px;
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  z-index: 1;
+`
 
-  ${media.desktop`
-    height: ${({ $height }) => $height};
-    width: ${({ $width }) => $width};
-  `}
+export const StyledShadowOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 0px 40px rgba(7, 3, 3, 0.5), 
+              inset 0 0px 20px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  z-index: 1;
+`;
+
+export const StyledImage = styled.img`
+  display: block;
+  height: 100%;
+  width: 100%;
 `;
 
 export const StyledTitleFlexbox = styled.div`
@@ -502,9 +538,10 @@ export const StyledTitleFlexbox = styled.div`
   align-items: center;
   height: fit-content;
   background-color: ${({ theme }) => theme.primaryColor};
-  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
 
   ${media.desktop`
     width: 90%;
@@ -542,9 +579,9 @@ export const StyledTitleButtonContainer = styled.div`
   width: 100px;
   max-width: 60px;
   border-left: 6px solid black;
-  border-radius: 0px 20px 20px 0px;
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
 
   transition: max-width 0.6s ease;
 
@@ -728,6 +765,7 @@ export const StyledBodyText = styled.p`
 
   ${media.desktop`
     font-size: 1.3rem;
+    padding: ${({ $padding }) => $padding || "0px"};
   `}
 `;
 
@@ -735,6 +773,7 @@ const createStyledIcon = (IconComponent) => styled(IconComponent)`
   height: 50px;
   width: 50px;
   transition: transform 0.4s;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.2);

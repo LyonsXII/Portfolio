@@ -3,15 +3,17 @@ import styled from 'styled-components';
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-import { StyledIntroContentContainer, StyledContentFlexbox, StyledContentInteriorFlexbox, StyledTitle, StyledMinorTitle, StyledBodyText, StyledImage, StyledTitleFlexbox, StyledTitleContainer, StyledTitleButtonContainer, StyledIntroButtonContainer, StyledButtonsContainer, StyledIntroContainer, StyledSVG, StyledNextIcon } from "./Introduction.styles";
+import IntroImage from "./IntroImage";
 
-function IntroText({ id, title, textA, textB, textC, textD, layout, current, tempCurrent, changeSection, $expandIntroText, imgA }) {
+import { StyledIntroContentContainer, StyledContentFlexbox, StyledContentInteriorFlexbox, StyledTitle, StyledMinorTitle, StyledBodyText, StyledImageWrapper, StyledShadowOverlay, StyledImage, StyledTitleFlexbox, StyledTitleContainer, StyledTitleButtonContainer, StyledIntroButtonContainer, StyledButtonsContainer, StyledIntroContainer, StyledSVG, StyledNextIcon } from "./Introduction.styles";
+
+function IntroText({ id, title, textA, textB, textC, textD, textImgA, textImgB, layout, current, tempCurrent, changeSection, $expandIntroText, imgA }) {
   const { theme } = useContext(ThemeContext);
 
   if (current != id) {return null}
 
   const layoutMap = {
-    A: ({ containerProps, title, theme, textA, textB, textC, textD, changeSection, imgA, $expandIntroText, current }) => (
+    A: ({ containerProps, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, $expandIntroText, current }) => (
       <StyledIntroContainer {...containerProps} $expandIntroText={$expandIntroText} $current={current}>
         <StyledTitleFlexbox theme={theme}>
           <StyledTitleContainer>
@@ -32,15 +34,22 @@ function IntroText({ id, title, textA, textB, textC, textD, layout, current, tem
             </StyledBodyText>
           </StyledContentFlexbox>
           <StyledContentFlexbox>
-            <StyledBodyText>
-              {textC}
-            </StyledBodyText>
-            <StyledImage $height="100" $width="60" src={imgA}/>
+            <StyledContentFlexbox $width="40%">
+              <StyledBodyText $padding="0px 20px 0px 0px">
+                {textC}
+                <br />
+                <br />
+                {textD}
+              </StyledBodyText>
+            </StyledContentFlexbox>
+            <StyledContentFlexbox $flexDirection="column" $width="60%">
+              <IntroImage src={imgA} textPadding="0px 0px 0px 20px" caption={textImgA}/>
+            </StyledContentFlexbox>
           </StyledContentFlexbox>
         </StyledIntroContentContainer>
       </StyledIntroContainer>
     ),
-    B: ({ containerProps, title, theme, textA, textB, textC, textD, changeSection, imgA, $expandIntroText, current }) => (
+    B: ({ containerProps, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, $expandIntroText, current }) => (
       <StyledIntroContainer {...containerProps} $expandIntroText={$expandIntroText} $current={current}>
         <StyledTitleFlexbox theme={theme}>
           <StyledTitleContainer>
@@ -51,8 +60,8 @@ function IntroText({ id, title, textA, textB, textC, textD, layout, current, tem
           </StyledTitleButtonContainer>
         </StyledTitleFlexbox>
 
-      <StyledIntroContentContainer $flexDirection="row">
-        <StyledContentFlexbox $flexDirection="column" $width="50%">
+      <StyledIntroContentContainer $flexDirection="row" $gap="30px">
+        <StyledContentFlexbox $flexDirection="column" $width="60%">
           <StyledBodyText>
             {textA}
             <br />
@@ -63,14 +72,14 @@ function IntroText({ id, title, textA, textB, textC, textD, layout, current, tem
             {textC}
           </StyledBodyText>
         </StyledContentFlexbox>
-        <StyledContentFlexbox $flexDirection="column" $width="50%">
-          <StyledImage $height="50%" $width="100%" src={imgA}/>
-          <StyledImage $height="50%" $width="100%" src={imgA}/>
+        <StyledContentFlexbox $flexDirection="column" $width="40%" $padding="0px" $gap="20px">
+          <IntroImage src={imgA} caption={textImgA} paddingText="0px 0px 0px 20px"/>
+          <IntroImage src={imgA} caption={textImgA} paddingText="0px 0px 0px 20px"/>
         </StyledContentFlexbox>
       </StyledIntroContentContainer>
     </StyledIntroContainer>
     ),
-    C: ({ containerProps, title, theme, textA, $expandIntroText }) => (
+    C: ({ containerProps, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, $expandIntroText, current }) => (
       <StyledIntroContainer {...containerProps} $expandIntroText={$expandIntroText}>
         <StyledTitleFlexbox theme={theme}>
           <StyledTitleContainer>
@@ -80,6 +89,26 @@ function IntroText({ id, title, textA, textB, textC, textD, layout, current, tem
             <StyledNextIcon/>
           </StyledTitleButtonContainer>
         </StyledTitleFlexbox>
+        <StyledIntroContentContainer>
+          <StyledContentFlexbox $width="100%">
+            <StyledContentFlexbox $width="70%" $padding="0px" $flexDirection="column">
+              <IntroImage src={imgA} caption={textImgA} paddingText="0px 0px 0px 20px"/>
+            </StyledContentFlexbox>
+            <StyledContentFlexbox $width="30%">
+              <StyledBodyText $padding="0px 0px 0px 20px">
+                {textA}
+              </StyledBodyText>
+            </StyledContentFlexbox>
+          </StyledContentFlexbox>
+          <StyledContentFlexbox>
+            <StyledBodyText>
+              {textA}
+              <br />
+              <br />
+              {textB}
+            </StyledBodyText>
+          </StyledContentFlexbox>
+        </StyledIntroContentContainer>
       </StyledIntroContainer>
     ),
   };
@@ -88,7 +117,7 @@ function IntroText({ id, title, textA, textB, textC, textD, layout, current, tem
   const renderLayout = layoutMap[layout];
 
   return renderLayout
-    ? renderLayout({ containerProps, title, theme, textA, textB, textC, textD, changeSection, $expandIntroText, imgA })
+    ? renderLayout({ containerProps, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, $expandIntroText, imgA })
     : null;
 }
 
