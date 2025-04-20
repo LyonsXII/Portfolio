@@ -22,15 +22,15 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
   const [galleryAnimationComplete, setGalleryAnimationComplete] = useState(false);
 
   const sectionData = [
-    { id: 1, title: "Song Guesser", textA: text.songGuesserText1A, textB: text.songGuesserText1B, textC: text.songGuesserText1C, textD: text.songGuesserText1D, textImgA: text.songGuesserText1ImgA, textImgB: text.songGuesserText1ImgB, layout: "A", imgA: "/images/Song Guesser - 001.jpg" },
-    { id: 2, title: "Song Guesser", textA: text.songGuesserText2A, textB: text.songGuesserText2B, textC: text.songGuesserText2C, textD: text.songGuesserText2D, textImgA: text.songGuesserText2ImgA, textImgB: text.songGuesserText2ImgB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 3, title: "Song Guesser", textA: text.songGuesserText3A, textB: text.songGuesserText3B, textC: text.songGuesserText3C, textD: text.songGuesserText3D, textImgA: text.songGuesserText3ImgA, textImgB: text.songGuesserText3ImgB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 4, title: "Faraday Cage", textA: text.faradayCageText1A, textB: text.faradayCageText1B, textC: text.faradayCageText1C, textD: text.songGuesserText3D, textImgA: text.songGuesserText3ImgA, textImgB: text.songGuesserText3ImgB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 5, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 6, title: "Faraday Cage", textA: text.faradayCageTextA, textB: text.faradayCageTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 7, title: "Author Analysis", textA: text.authorAnalysisTextA, textB: text.authorAnalysisTextTextB, layout: "A", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 8, title: "Author Analysis", textA: text.authorAnalysisTextTextA, textB: text.authorAnalysisTextTextB, layout: "B", imgA: "./images/Song Guesser - 001.jpg" },
-    { id: 9, title: "Author Analysis", textA: text.authorAnalysisTextTextA, textB: text.authorAnalysisTextTextB, layout: "C", imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 1, title: "Song Guesser", textA: text.songGuesserText1A, textB: text.songGuesserText1B, textC: text.songGuesserText1C, textD: text.songGuesserText1D, textImgA: text.songGuesserText1ImgA, textImgB: text.songGuesserText1ImgB, layout: "A", reverse: false, imgA: "/images/Song Guesser - 001.jpg" },
+    { id: 2, title: "Song Guesser", textA: text.songGuesserText2A, textB: text.songGuesserText2B, textC: text.songGuesserText2C, textD: text.songGuesserText2D, textImgA: text.songGuesserText2ImgA, textImgB: text.songGuesserText2ImgB, layout: "B", reverse: false, imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 3, title: "Song Guesser", textA: text.songGuesserText3A, textB: text.songGuesserText3B, textC: text.songGuesserText3C, textD: text.songGuesserText3D, textImgA: text.songGuesserText3ImgA, textImgB: text.songGuesserText3ImgB, layout: "C", reverse: false, imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 4, title: "Faraday Cage", textA: text.faradayCageText1A, textB: text.faradayCageText1B, textC: text.faradayCageText1C, textD: text.faradayCageText1D, textImgA: text.faradayCageText1ImgA, textImgB: text.faradadayCage1ImgB, layout: "C", reverse: true, imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 5, title: "Faraday Cage", textA: text.faradayCageText2A, textB: text.faradayCageText2B, textC: text.faradayCageText2C, textD: text.faradayCageText2D, textImgA: text.faradayCageText2ImgA, textImgB: text.faradadayCage2ImgB, layout: "A", reverse: false, imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 6, title: "Faraday Cage", textA: text.faradayCageText3A, textB: text.faradayCageText3B, textC: text.faradayCageText3C, textD: text.faradayCageText3D, textImgA: text.faradayCageText3ImgA, textImgB: text.faradayCageText3ImgB, layout: "B", reverse: true, links: true, imgA: "./images/Faraday Cage - 003.jpg" },
+    { id: 7, title: "Author Analysis", textA: text.authorAnalysisText1A, textB: text.authorAnalysisText1B, textC: text.authorAnalysisText1C, textD: text.authorAnalysisText1D, textImgA: text.authorAnalysisText1ImgA, textImgB: text.authorAnalysis1ImgB, layout: "C", reverse: true, imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 8, title: "Author Analysis", textA: text.authorAnalysisText2A, textB: text.authorAnalysisText2B, textC: text.authorAnalysisText2C, textD: text.authorAnalysisText2D, textImgA: text.authorAnalysisText2ImgA, textImgB: text.authorAnalysisText2ImgB, layout: "B", reverse: false, imgA: "./images/Song Guesser - 001.jpg" },
+    { id: 9, title: "Author Analysis", textA: text.authorAnalysisText3A, textB: text.authorAnalysisText3B, textC: text.authorAnalysisText3C, textD: text.authorAnalysisText3D, textImgA: text.authorAnalysisText3ImgA, textImgB: text.authorAnalysisText3ImgB, layout: "A", reverse: true, imgA: "./images/Song Guesser - 001.jpg" },
   ];
 
   function imageChoice(event) {
@@ -115,6 +115,8 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
           textImgA={section.textImgA}
           textImgB={section.textImgB}
           layout={section.layout}
+          reverse={section.reverse}
+          links={section.links}
           current={current}
           tempCurrent={tempCurrent}
           changeSection={changeSection}

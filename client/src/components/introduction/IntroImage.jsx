@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledContentFlexbox, StyledImageWrapper, StyledImage, StyledShadowOverlay, StyledCaptionContainer, StyledBodyText } from "./Introduction.styles";
+import { StyledContentFlexbox, StyledImageWrapper, StyledImage, StyledShadowOverlay, StyledCaptionContainer, StyledBodyText, StyledImageContainer } from "./Introduction.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroImage({ src, caption, width, margin, textPadding }) {
+function IntroImage({ src, caption, width, margin, textPadding, float }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledContentFlexbox $flexDirection="column" $width={width} $gap="0px">
+    <StyledImageContainer $width={width} $margin={margin} $float={float}>
       <StyledImageWrapper>
         <StyledImage src={src}/>
         <StyledShadowOverlay/>
@@ -19,7 +19,7 @@ function IntroImage({ src, caption, width, margin, textPadding }) {
           {caption}
         </StyledBodyText>
       </StyledCaptionContainer>
-    </StyledContentFlexbox>
+    </StyledImageContainer>
   )
 }
 

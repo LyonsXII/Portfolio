@@ -7,6 +7,7 @@ import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swin
 import { slideInBottomIntroAnimation, slideInBottomIntroAnimationMobile, slideOutBottomIntroAnimation, slideOutBottomIntroAnimationMobile } from './IntroductionAnimations';
 
 import NextIcon from "../../../public/icons/nextSong.svg?react";
+import DownloadIcon from "../../../public/icons/download.svg?react";
 
 export const StyledContentContainer = styled.div`
   display: flex;
@@ -23,11 +24,39 @@ export const StyledContentContainer = styled.div`
 export const StyledIntroContentContainer = styled.div`
   display: flex;
   flex-direction: ${({ $flexDirection }) => $flexDirection || "column"};
-  align-items: center;
+  align-items: flex-start;
+  height: 100%;
+  max-height: 10000px;
   width: 90%;
   padding: 0px 20px;
   gap: ${({ $gap }) => $gap || "20px"};
   box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+  direction: ltr;
+  scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
+  scrollbar-width: thin;
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    margin-right: 200px;
+    background-color: #e4e4e4;
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: #8070d4;
+  }
 `;
 
 export const StyledIntroInitialContentContainer = styled.div`
@@ -173,7 +202,7 @@ export const StyledContentFlexbox = styled.div`
   flex-direction: ${({ $flexDirection }) => $flexDirection || "row"};
   justify-content: flex-start;
   align-items: flex-start;
-  height: 100%;
+  height: fit-content;
   width: ${({ $width }) => $width || "100%"};
   gap: ${({ $gap }) => $gap || "10px"};
   box-sizing: border-box;
@@ -189,6 +218,19 @@ export const StyledContentInteriorFlexbox = styled.div`
   width: 100%;
   box-sizing: border-box;
 `;
+
+export const StyledDownloadButtonContainer = styled.div`
+  display: inline-block;
+  margin-top: 20px;
+`
+
+export const StyledDownloadButtonFlexbox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+`
 
 export const StyledButtonsContainer = styled.div`
   display: flex;
@@ -486,15 +528,45 @@ export const StyledGalleryImage = styled.img`
 
 `;
 
-export const StyledImageWrapper = styled.div`
-  position: relative;
+export const StyledRowContainer = styled.div`
+  height: fit-content;
+  width: ${({ $width }) => $width || "100%"};
+  gap: ${({ $gap }) => $gap || "10px"};
+  box-sizing: border-box;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+`
+
+export const StyledFloatContainer = styled.div`
+  float: ${({ $float }) => $float || "left"};
+  height: fit-content;
   width: ${({ $width }) => $width || "100%"};
   margin: ${({ $margin }) => $margin || "0px"};
+  box-sizing: border-box;
+`
+
+export const StyledImageContainer = styled.div`
+  float: ${({ $float }) => $float || "none"};
+  height: fit-content;
+  width: ${({ $width }) => $width || "100%"};
+  margin: ${({ $margin }) => $margin || "0px"};
+  box-sizing: border-box;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+          inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+`
+
+export const StyledImageWrapper = styled.div`
+  position: relative;
   border: 6px solid black;
   border-radius: 20px 20px 0px 0px;
   box-sizing: border-box;
   overflow: hidden;
-  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4);
 `
 
 export const StyledCaptionContainer = styled.div`
@@ -502,14 +574,14 @@ export const StyledCaptionContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  padding: 10px 20px;
+  padding: 20px;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 6px solid black;
   border-radius: 0px 0px 20px 20px;
   margin-top: -6px;
-  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
-  z-index: 1;
 `
 
 export const StyledShadowOverlay = styled.div`
@@ -541,7 +613,7 @@ export const StyledTitleFlexbox = styled.div`
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
               inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
+  overflow: hidden;
 
   ${media.desktop`
     width: 90%;
@@ -582,6 +654,7 @@ export const StyledTitleButtonContainer = styled.div`
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   overflow: hidden;
+  cursor: pointer;
 
   transition: max-width 0.6s ease;
 
@@ -750,6 +823,7 @@ export const StyledBodyTextInitialText = styled.p`
 `;
 
 export const StyledBodyText = styled.p`
+  display: block;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
@@ -781,3 +855,4 @@ const createStyledIcon = (IconComponent) => styled(IconComponent)`
 `;
 
 export const StyledNextIcon = createStyledIcon(NextIcon);
+export const StyledDownloadIcon = createStyledIcon(DownloadIcon);
