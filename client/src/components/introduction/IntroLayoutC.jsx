@@ -31,6 +31,9 @@ function IntroLayoutC({ title, theme, textA, textB, textC, textD, textImgA, text
             <br />
             <br />
             {textC}
+            <br />
+            <br />
+            {textD}
           </StyledBodyText>
         </StyledRowContainer>
       </StyledIntroContentContainer>

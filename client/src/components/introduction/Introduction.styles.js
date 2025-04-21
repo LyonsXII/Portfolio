@@ -631,7 +631,7 @@ export const StyledTitleContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
-  padding: 20px 40px;
+  padding: 30px 40px;
   box-sizing: border-box;
 
   ${media.mobile`

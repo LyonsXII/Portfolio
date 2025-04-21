@@ -48,6 +48,7 @@ function Settings({ home, changeVolume }) {
           <SettingsText text="Theme" curr={hoverText}/>
           <SettingsText text="Colour" curr={hoverText}/>
           <Spacer/>
+          <SettingsText text="CV" curr={hoverText}/>
           <SettingsText text="GitHub" curr={hoverText}/>
           <SettingsText text="LinkedIn" curr={hoverText}/>
           <SettingsText text="LeetCode" curr={hoverText} position="Bottom"/>
@@ -59,6 +60,7 @@ function Settings({ home, changeVolume }) {
           <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>
           <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg"/>
           <Spacer background="true"/>
+          <SettingsButton value="CV" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/cv.svg" link="https://github.com/LyonsXII" type="Lower"/>
           <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/github.svg" link="https://github.com/LyonsXII" type="Lower"/>
           <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/linkedin.svg" link="https://www.linkedin.com/in/michael-lyons-60186b170/" type="Lower"/>
           <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" link="https://leetcode.com/u/MichaelLyons/" type="Lower"/>

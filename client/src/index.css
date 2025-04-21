@@ -1,8 +1,12 @@
+@font-face {
+  font-family: "Liberty";
+  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/907368/liberty.otf');
+}
+
 * {
   margin: 0px;
   padding: 0px;          
   font-family: Anta;
-  /* border: 1px solid cyan; */
 }
 
 body {

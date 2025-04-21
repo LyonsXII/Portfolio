@@ -35,6 +35,9 @@ function IntroLayoutB({ title, theme, textA, textB, textC, textD, textImgA, text
             <br/>
             <br/>
             {textC}
+            <br/>
+            <br/>
+            {textD}
           </StyledBodyText>
 
           {links && 

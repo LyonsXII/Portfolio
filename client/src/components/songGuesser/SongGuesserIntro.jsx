@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import SongGuesserButton from "./SongGuesserButton";
 
-import { StyledIntroContainer, StyledMainTitle, StyledIntroFlexbox, StyledIntroGrid } from "./SongGuesser.styles";
+import { StyledIntroContainer, StyledMainTitle, StyledMainTitleLetter, StyledIntroFlexbox, StyledIntroGrid } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -12,7 +12,12 @@ function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficul
 
   return (
     <StyledIntroContainer>
-      <StyledMainTitle>Song Guesser</StyledMainTitle>
+        <StyledMainTitle>
+          {"Song Guesser".split("").map((letter, index) => {
+            return <StyledMainTitleLetter theme={theme} key={index} $index={index}>{letter}</StyledMainTitleLetter>
+          })
+          }
+        </StyledMainTitle>
       
       <StyledIntroFlexbox>
         <StyledIntroGrid $position="First">
