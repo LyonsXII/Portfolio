@@ -41,6 +41,7 @@ function Settings({ home, changeVolume }) {
       <SettingsMenu settingsMenuHidden={settingsMenuHidden} toggleSettingsMenu={toggleSettingsMenu} changeVolume={changeVolume}/>
 
       <SettingsNotch settingsHidden={settingsHidden} toggleButtonsVisible={toggleButtonsVisible} clickedRef={clickedRef}/>
+
       <SettingsContainer settingsHidden={settingsHidden} clickedRef={clickedRef}>
         <SettingsHoverTextContainer>
           <SettingsText text="Home" curr={hoverText} position="Top"/>
@@ -55,7 +56,7 @@ function Settings({ home, changeVolume }) {
         </SettingsHoverTextContainer>
 
         <SettingsButtonContainer>
-          <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={home} svgPath="./icons/home.svg"/>
+          <SettingsButton value="Home" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={home} position="Top" svgPath="./icons/home.svg"/>
           <SettingsButton value="Settings" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleSettingsMenu} svgPath="./icons/settings.svg"/>
           <SettingsButton value="Theme" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleBg} svgPath="./icons/theme.svg"/>
           <SettingsButton value="Colour" updateHoverText={updateHoverText} resetHoverText={resetHoverText} onClick={toggleTheme} svgPath="./icons/colour.svg"/>
@@ -63,7 +64,7 @@ function Settings({ home, changeVolume }) {
           <SettingsButton value="CV" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/cv.svg" link="https://github.com/LyonsXII" type="Lower"/>
           <SettingsButton value="GitHub" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/github.svg" link="https://github.com/LyonsXII" type="Lower"/>
           <SettingsButton value="LinkedIn" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/linkedin.svg" link="https://www.linkedin.com/in/michael-lyons-60186b170/" type="Lower"/>
-          <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" link="https://leetcode.com/u/MichaelLyons/" type="Lower"/>
+          <SettingsButton value="LeetCode" updateHoverText={updateHoverText} resetHoverText={resetHoverText} svgPath="./icons/leetcode.svg" link="https://leetcode.com/u/MichaelLyons/" position="Bottom" type="Lower"/>
         </SettingsButtonContainer>
       </SettingsContainer>
     </div>

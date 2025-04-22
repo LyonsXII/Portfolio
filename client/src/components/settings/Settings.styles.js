@@ -27,8 +27,8 @@ export const StyledNotchContainer = styled.div`
   ${media.desktop`
     height: 100px;
     width: 20px;
-    border-right: none;
     border-radius: 20px 0px 0px 20px;
+    border-right: none;
     position: absolute;
     top: calc(50% - 50px);
     right: 0px;
@@ -50,7 +50,7 @@ export const StyledNotchContainer = styled.div`
 export const StyledSettingsContainer = styled.div`
   position: absolute;
   top: 0px;
-  right: -80px;
+  right: -84px;
   color: ${({ theme }) => theme.textColor};
   height: 100vh;
   z-index: 2;
@@ -105,15 +105,16 @@ export const StyledSettingsButton = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
-  border-top: ${({ type }) => type === "Lower" ? "4px solid black" : "none"};
-  border-bottom: ${({ type }) => type === "Lower" ? "none" : "4px solid black"};
+  border-top: ${({ $position }) => $position === "Top" ? "none" : "4px solid black"};
+  border-bottom: ${({ $position }) => $position === "Bottom" ? "none" : "4px solid black"};
+  margin-top: -4px;
   box-sizing: border-box;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
             inset 0 2px 4px rgba(255, 255, 255, 0.3), 
             inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
-  :hover {
+  &:hover {
     background-color: ${({ theme }) => theme.secondaryColor};
     box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
             inset 0 2px 4px rgba(255, 255, 255, 0.3), 
@@ -121,8 +122,13 @@ export const StyledSettingsButton = styled.div`
   }
 `;
 
+export const StyledSVG = styled.img`
+  height: 70px;
+  width: 70px;
+`
+
 export const StyledSettingsText = styled.div`
-  height: 84px;
+  height: 80px;
   width: fit-content;
   padding: 0px 20px;
   display: flex;
@@ -132,7 +138,7 @@ export const StyledSettingsText = styled.div`
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
           inset 0 2px 4px rgba(255, 255, 255, 0.3), 
           inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-  visibility: ${({ $curr, $text }) => $curr === $text ? "visible" : "visible"};
+  visibility: ${({ $curr, $text }) => $curr === $text ? "visible" : "hidden"};
   margin-top: -4px;
   border-left: 4px solid black;
   border-right: none;
@@ -151,8 +157,118 @@ export const StyledSpacer = styled.div`
   justify-content: flex-end;
   flex-grow: 1;
   width: 100%;
-  border: 1px solid green;
   background-color: ${({ theme, $background }) => $background === "true" ? theme.secondaryColor : "none"};
+`;
+
+export const StyledSettingsMenuBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  z-index: 1;
+  opacity: 0.8;
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "inline"};
+`;
+
+export const StyledSettingsMenuFlexbox = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+`;
+
+export const StyledSettingsMenuHeader = styled.div`
+  height: 10vh;
+  width: 100%;
+  background-color: ${({ theme }) => theme.secondaryColor};
+  border-radius: 20px 20px 0px 0px;
+  border-bottom: 4px solid black;
+  z-index: 4;
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
+  justify-self: center;
+  align-self: flex-start;
+  box-sizing: border-box;
+`;
+
+export const StyledSettingsMenuContainer = styled.div`
+  height: 60vh;
+  width: 70vw;
+  background-color: ${({ theme }) => theme.primaryColor};
+  border: 4px solid black;
+  border-radius: 20px;
+  z-index: 3;
+  display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+`;
+
+export const StyledSettingsMenuTextContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+  background-color: ${({ theme }) => theme.secondaryColor};
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+`;
+
+export const SettingsMenuSlider = styled.input`
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+  border-radius: 20px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+
+  &:hover {
+    opacity: 1;
+  }
+
+  //Webkit browsers
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: ${({ theme }) => theme.primaryColor};
+    cursor: pointer;
+  }
+
+  //Firefox
+  &::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: ${({ theme }) => theme.primaryColor};
+    border: 4px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(7, 3, 3, 0.3), 
+                inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  }
+
+  // Custom thumb styling for internet explorer and edge
+  &::-ms-thumb {
+    width: 25px;
+    height: 25px;
+    background: ${({ theme }) => theme.primaryColor};
+    cursor: pointer;
+  }
 `;
 
 export const StyledH4 = styled.h4`
@@ -162,4 +278,25 @@ export const StyledH4 = styled.h4`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);   
+`;
+
+export const StyledSettingsMenuHeadingText = styled.h3`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 2rem;
+`;
+
+export const StyledBodyText = styled.p`
+  display: block;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+  font-size: 1.3rem;
 `;

@@ -82,8 +82,8 @@ export const slideInRightSettings = keyframes`
     opacity: 1;
   }
   100% {
-    -webkit-transform: translateX(-80px);
-            transform: translateX(-80px);
+    -webkit-transform: translateX(-84px);
+            transform: translateX(-84px);
     opacity: 1;
   }
 `;
@@ -94,8 +94,8 @@ export const slideInRightSettingsAnimation = css`
 
 export const slideOutRightSettings = keyframes`
   0% {
-    -webkit-transform: translateX(-80px);
-            transform: translateX(-80px);
+    -webkit-transform: translateX(-84px);
+            transform: translateX(-84px);
     opacity: 1;
   }
   100% {
@@ -116,8 +116,8 @@ export const notchSlideLeft = keyframes`
     opacity: 1;
   }
   100% {
-    -webkit-transform: translateX(-80px);
-            transform: translateX(-80px);
+    -webkit-transform: translateX(-84px);
+            transform: translateX(-84px);
     opacity: 1;
   }
 `;
@@ -128,8 +128,8 @@ export const notchSlideLeftAnimation = css`
 
 export const notchSlideRight = keyframes`
   0% {
-    -webkit-transform: translateX(-80px);
-            transform: translateX(-80px);
+    -webkit-transform: translateX(-84px);
+            transform: translateX(-84px);
     opacity: 1;
   }
   100% {

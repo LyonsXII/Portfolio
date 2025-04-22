@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
-import { ThemeContext } from "../../context/ThemeContext";
-
 import { StyledSettingsText, StyledH4 } from "./Settings.styles";
+
+import { ThemeContext } from "../../context/ThemeContext";
 
 function SettingsText({ text, curr, position}) {
   const { theme } = useContext(ThemeContext);
