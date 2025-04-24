@@ -9,7 +9,7 @@ import { AudioContext } from "../../context/AudioContext";
 const StyledElement = styled.div`
   flex: 1;
   width: 100%;
-  min-width: 0;
+  min-width: fit-content;
   white-space: nowrap;
   padding: 0px 20px 0px 20px;
   border-radius: ${({ $position }) => $position === "First" ? "16px 0px 0px 0px" :

@@ -198,8 +198,9 @@ export const StyledSettingsMenuHeader = styled.div`
 `;
 
 export const StyledSettingsMenuContainer = styled.div`
-  height: 60vh;
-  width: 70vw;
+  height: 50vh;
+  width: fit-content;
+  min-width: 70vw;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 4px solid black;
   border-radius: 20px;
@@ -222,15 +223,32 @@ export const StyledSettingsMenuTextContainer = styled.div`
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
 `;
 
+export const StyledSettingsMenuSectionFlexbox= styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  box-sizing: border-box;
+`;
+
+export const StyledSettingsMenuSectionRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: ${({ $width }) => $width || "25%"};
+  gap: 40px;
+`;
+
 export const SettingsMenuSlider = styled.input`
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
+  min-width: 80px;
   height: 25px;
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
   border-radius: 20px;
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
@@ -259,7 +277,7 @@ export const SettingsMenuSlider = styled.input`
     cursor: pointer;
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
                 inset 0 2px 4px rgba(7, 3, 3, 0.3), 
-                inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+                inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   }
 
   // Custom thumb styling for internet explorer and edge
@@ -268,6 +286,61 @@ export const SettingsMenuSlider = styled.input`
     height: 25px;
     background: ${({ theme }) => theme.primaryColor};
     cursor: pointer;
+  }
+`;
+
+export const SettingsMenuCheckbox = styled.input`
+  // Hide default tickbox
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 60px;
+  min-width: 60px;
+  height: 30px;
+  background-color: ${({ theme }) => theme.tertiaryColor};
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+              inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+
+  // Knob settings
+  &::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 19px;
+    height: 19px;
+    background-color: ${({ theme }) => theme.primaryColor};
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 
+                inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+                inset 0 -4px 2px rgba(0, 0, 0, 0.6);
+    border: 1px solid black;
+    border-radius: 50%;
+    transition: 0.3s ease;
+  }
+
+  // State when toggled off
+  &:not(:checked) {
+    opacity: 0.8;
+  }
+
+  // State changes when toggled on
+  &:checked {
+    background-color: ${({ theme }) => theme.tertiaryColor};
+    &::after {
+      left: calc(100% - 27px);
+      opacity: 1;
+    }
+  }
+
+  // Hover effect
+  &:hover {
+    transform: scale(1.02);
   }
 `;
 
@@ -290,13 +363,14 @@ export const StyledSettingsMenuHeadingText = styled.h3`
   font-size: 2rem;
 `;
 
-export const StyledBodyText = styled.p`
-  display: block;
+export const StyledSettingsMenuBodyText = styled.p`
+  flex-grow: 1;
+  text-align: right;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 `;

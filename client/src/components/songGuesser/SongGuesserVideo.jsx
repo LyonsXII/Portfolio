@@ -37,9 +37,6 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
       const textWidth = textRef.current.scrollWidth;
       const containerWidth = containerRef.current.offsetWidth;
       const scrollDistance = textWidth - containerWidth;
-      console.log("Text Width:", textWidth);
-      console.log("Container Width:", containerWidth);
-      console.log("Scroll Distance:", scrollDistance);
 
       // Set the duration based on the text length (e.g., 50px per second)
       const duration = scrollDistance > 0 ? scrollDistance / 100 : 0; // Adjust speed (50px/sec)
@@ -62,37 +59,34 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
           </StyledVideoButton>
         </StyledVideoDivRight>
       </StyledVideoContainer>
-      <StyledVideoTextContainer 
-        $animationState={animationState}
-      >
-      <StyledVideoTextBox style={{flex: "0 1 auto"}}
-        ref={containerRef} 
-        onMouseEnter={() => {
-          if (textRef.current) {
-          setEllipsis(false);
-          textRef.current.style.transitionDuration = `${animationDuration}s`; // Apply transition
-          textRef.current.style.transitionTimingFunction = "linear"; // Ensure smooth scrolling
-          // Trigger layout reflow before setting transform
-          requestAnimationFrame(() => {
-            textRef.current.style.transform = `translateX(-${textRef.current.scrollWidth - containerRef.current.offsetWidth}px)`;
-          });
-        }
-        }}
-        onMouseLeave={() => {
-          if (textRef.current) {
-            setEllipsis(true);
-            textRef.current.style.transform = 'translateX(0)';
-            textRef.current.style.transitionDuration = '0.5s'; // Smooth return to the start
-          }
-        }}
-      >
-        <StyledSubTitleScrolling ref={textRef} $ellipsis={ellipsis}>
-          {name}
-        </StyledSubTitleScrolling>
-      </StyledVideoTextBox>
-      <StyledVideoTextBox style={{flex: "0 0 auto", overflow: "visible"}}>
-        <StyledMinorTitle style={{marginBottom: "2px"}}>{property}</StyledMinorTitle>
-      </StyledVideoTextBox>
+      <StyledVideoTextContainer $animationState={animationState}>
+        <StyledVideoTextBox style={{flex: "0 1 auto"}}
+          ref={containerRef} 
+          onMouseEnter={() => {
+            if (!textRef.current) {return}
+            setEllipsis(false);
+            textRef.current.style.transitionDuration = `${animationDuration}s`; // Apply transition
+            textRef.current.style.transitionTimingFunction = "linear"; // Ensure smooth scrolling
+            // Trigger layout reflow before setting transform
+            requestAnimationFrame(() => {
+              textRef.current.style.transform = `translateX(-${textRef.current.scrollWidth - containerRef.current.offsetWidth}px)`;
+            });
+          }}
+          onMouseLeave={() => {
+            if (textRef.current) {
+              setEllipsis(true);
+              textRef.current.style.transform = 'translateX(0)';
+              textRef.current.style.transitionDuration = '0.5s';
+            }
+          }}
+        >
+          <StyledSubTitleScrolling ref={textRef} $ellipsis={ellipsis}>
+            {name}
+          </StyledSubTitleScrolling>
+        </StyledVideoTextBox>
+        <StyledVideoTextBox style={{flex: "0 0 auto", overflow: "visible"}}>
+          <StyledMinorTitle style={{marginBottom: "2px"}}>{property}</StyledMinorTitle>
+        </StyledVideoTextBox>
       </StyledVideoTextContainer>
     </StyledVideoMainContainer>
   )

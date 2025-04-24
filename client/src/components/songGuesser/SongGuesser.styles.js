@@ -4,6 +4,8 @@ import { flicker } from "./SongGuesserAnimations";
 
 import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation, slideInBottomAnimation } from '../../context/Animations';
 
+import ReplayIcon from "../../../public/icons/replay.svg?react";
+
 export const StyledSongGuesserContainer = styled.div`
   height: 100vh;
   width: 100vw;
@@ -45,6 +47,8 @@ export const StyledGameFlexboxContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 `;
 
@@ -60,7 +64,9 @@ export const StyledEndGameButton = styled.button`
   background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 20px;
   border: 4px solid black;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(7, 3, 3, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
   &:hover {
@@ -81,6 +87,7 @@ export const StyledEndGameIcon = styled.img`
 
 export const StyledGameContainer = styled.div`
   height: 100%;
+  min-height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -90,20 +97,22 @@ export const StyledGameContainer = styled.div`
 `;
 
 export const StyledChoiceGrid = styled.div`
-  height: 20%;
   width: 80%;
+  max-width: 1400px;
   margin-top: 3vh;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   justify-content: center;
-  gap: 25px;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: auto;
+  gap: 1rem;
 `;
 
-export const StyledTextBox = styled.div`
-  height: 15vh;
+export const StyledTextContainer = styled.div`
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: center;
+  height: 120px;
   gap: 20px;
   animation: ${ slideInLeftAnimation };
 `;
@@ -149,6 +158,8 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledChoiceButton = styled.button`
+  height: 100%;
+  width: 100%;
   padding: 15px 30px;
   word-wrap: break-word;
   white-space: normal;
@@ -156,9 +167,10 @@ export const StyledChoiceButton = styled.button`
   border-radius: 10px;
   border: 4px solid black;
   cursor: pointer;
-  transition: margin 10s ease;
   color: ${({ theme }) => theme.textColor};
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(7, 3, 3, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   background-color: ${({ $showAnswer, $correct, theme }) => 
     $showAnswer ? 
       $correct ? "green" : "red"
@@ -166,8 +178,11 @@ export const StyledChoiceButton = styled.button`
   };
   
   &:hover {
-    color: ${({ theme }) => theme.tertiaryColor};
+    color: ${({ $showAnswer, theme }) => $showAnswer ? theme.textColor : theme.tertiaryColor};
     background-color: ${({ $showAnswer, theme }) => $showAnswer === false ? theme.secondaryColor : null};
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+                inset 0 -4px 4px rgba(0, 0, 0, 0.6);
     transform: scale(1.01);
     transition: transform 0.2s ease, background-color 0.8s ease;
   }
@@ -201,7 +216,9 @@ export const StyledScoreBox = styled.div`
 
 export const StyledVideoMainContainer = styled.div`
   height: 60%;
+  max-height: 600px;
   width: 70%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -217,7 +234,7 @@ export const StyledVideoContainer = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 20px;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.6);
 
   animation: ${({ $animationState }) => 
     $animationState === "Enter" 
@@ -257,7 +274,10 @@ export const StyledVideoButton = styled.div`
   width: 100%;
   border-bottom: 4px solid black;
   border-radius: ${({ $position }) => $position === "Top" ? "0px 20px 0px 0px" : "0px 0px 20px 0px"};
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   background-color: ${({ theme }) => theme.primaryColor};
+  cursor: pointer;
 
   &:hover {
     background-color: ${({ theme }) => theme.secondaryColor};
@@ -282,18 +302,19 @@ export const StyledVideoTextContainer = styled.div`
 `;
 
 export const StyledVideoTextBox = styled.div`
+  position: relative;
   width: auto;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  position: relative;
+  padding: 0px 4px;
+  margin: 0px -4px;
   overflow: hidden;
 `;
 
 export const StyledMainTitle = styled.div`
   display: flex;
   flex-direction: row;
-  font-weight: 100;
   font-size: 7rem;
 `;
 
@@ -335,6 +356,19 @@ export const StyledMainTitleLetter = styled.h1`
       margin-left: 40px;
     `}
 `
+
+export const StyledHeaderTitle = styled.h2`
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),
+              0px 0px 10px rgba(0, 0, 0, 1),               
+              0px 0px 10px rgba(0, 0, 0, 1);
+
+  font-size: 7rem;
+  color: ${({ theme }) => theme.fontColor};
+`;
+
 
 export const StyledSubTitle = styled.h2`
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
@@ -392,3 +426,18 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 1.5rem;
 `;
+
+const createStyledIcon = (IconComponent) => styled(IconComponent)`
+  height: 100%;
+  width: auto;
+  transition: transform 0.4s;
+  cursor: pointer;
+  -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const StyledReplayIcon = createStyledIcon(ReplayIcon);

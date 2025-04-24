@@ -7,12 +7,15 @@ import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
-import { StyledGameFlexboxContainer, StyledGameContainer, StyledMainTitle, StyledChoiceGrid, StyledTextBox, StyledIcon } from "./SongGuesser.styles";
+import { StyledGameFlexboxContainer, StyledGameContainer, StyledMainTitle, StyledHeaderTitle, StyledChoiceGrid, StyledTextContainer, StyledIcon, StyledReplayIcon } from "./SongGuesser.styles";
 
 import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function SongGuesserGame({ category, difficulty, mode, endGame, setGameOver, handleGameOver }) {
+  const { theme } = useContext(ThemeContext);
+
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
   const { autoplay, autoNextQuestion } = useContext(SettingsContext);
 
@@ -60,10 +63,11 @@ function SongGuesserGame({ category, difficulty, mode, endGame, setGameOver, han
 
     try {
       // Post request to backend
-      if (excluded.length === 0) {
-        const choicesPostData = {"category": category, "difficulty": difficulty, "excluded": []};
-      }
-      const choicesPostData = {"category": category, "difficulty": difficulty, "excluded": excluded};
+      const choicesPostData = {
+        "category": category, 
+        "difficulty": difficulty, 
+        "excluded": excluded.length === 0 ? [] : excluded
+      };
       const response = await axios.post('http://localhost:5000/choices', choicesPostData);
 
       // Setting retrieved data
@@ -72,10 +76,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, setGameOver, han
         setVideoURL(data.video_link);
         setSongFilePath(data.location);
         setExcluded((prev) => {
-          if (!prev.includes(data.id)) {
-            return [...prev, data.id]
-          }
-          return prev
+          return !prev.includes(data.id) ? [...prev, data.id] : prev;
         });
         setSongInfo({id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty});
         const shuffledChoices = shuffle(response.data);
@@ -147,22 +148,24 @@ function SongGuesserGame({ category, difficulty, mode, endGame, setGameOver, han
 
   function handleAnswer(correct) {
     clickSound();
-    if (correct) {
-      victorySound();
-      setScore(prevScore => prevScore + 1);
-    } else {
-      defeatSound();
-      if (mode === "Sudden Death") {setGameOver(true)}
-    }
-    setShowAnswer(true);
-    audioRef.current.pause();
-
-    if (correct && autoNextQuestion && mode != "Sudden Death") {
-      if (!userClickedNext) {
-        nextQuestionTimeoutRef.current = setTimeout(() => {
-          nextQuestion();
-          setUserClickedNext(false);
-        }, 3000);
+    if (!showAnswer) {
+      if (correct) {
+        victorySound();
+        setScore(prevScore => prevScore + 1);
+      } else {
+        defeatSound();
+        if (mode === "Sudden Death") {setGameOver(true)}
+      }
+      setShowAnswer(true);
+      audioRef.current.pause();
+  
+      if (correct && autoNextQuestion && mode != "Sudden Death") {
+        if (!userClickedNext) {
+          nextQuestionTimeoutRef.current = setTimeout(() => {
+            nextQuestion();
+            setUserClickedNext(false);
+          }, 3000);
+        }
       }
     }
   }
@@ -181,77 +184,45 @@ function SongGuesserGame({ category, difficulty, mode, endGame, setGameOver, han
   }, [volume]);
 
   return (
-    <StyledGameFlexboxContainer>
-      <audio ref={audioRef} src={song}/>
-      {mode === "Regular" && <SongGuesserScore score={score}/>}
-      <SongGuesserEndGameButton endGame={endGame} mode={mode}/>
-      <StyledGameContainer>
-        {showAnswer === false ? 
-          <StyledTextBox>
-            <StyledMainTitle>Guess the song...</StyledMainTitle>
-            <StyledIcon
-              viewBox="-100 -60 720 600" 
-              xmlns="http://www.w3.org/2000/svg"
-              strokeColor="black"
-              fillColor="antiquewhite"
-              onClick={() => playSong()}>
+  <StyledGameFlexboxContainer>
+    <audio ref={audioRef} src={song} />
 
-              <defs>
-                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur in="SourceAlpha" stdDeviation="25" result="blur" />
-                  <feOffset dx="0" dy="0" result="offsetBlur" />
-                  <feFlood floodColor="rgba(0, 0, 0, 0.4)" />
-                  <feComposite in2="offsetBlur" operator="in" />
-                  <feMerge>
-                    <feMergeNode />
-                    <feMergeNode />
-                    <feMergeNode />
-                    <feMergeNode />
-                    <feMergeNode />
-                    <feMergeNode />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
+    {mode === "Regular" && <SongGuesserScore score={score} />}
+    <SongGuesserEndGameButton endGame={endGame} mode={mode} />
 
-              <g filter="url(#shadow)">
-              <path 
-                fill="#ededed"
-                stroke="black"
-                strokeWidth="20px"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M97.38,292.692V181.229c0-24.324,19.792-44.125,44.134-44.125h170.733v19.506 c0,5.525,3.065,10.59,7.941,13.162c4.884,2.59,10.786,2.229,15.343-0.885l100.888-69.057c3.607-2.475,5.771-6.557,5.788-10.934 c0.015-4.377-2.124-8.49-5.722-10.965L335.63,7.956c-4.548-3.146-10.483-3.508-15.383-0.949c-4.91,2.557-7.975,7.653-7.975,13.178 v19.539H141.515C63.483,39.724,0,103.208,0,181.229v111.463c0,26.881,21.801,48.684,48.689,48.684 C75.58,341.376,97.38,319.573,97.38,292.692z"/>
+    <StyledGameContainer>
+      {showAnswer === false ? (
+        <StyledTextContainer>
+          <StyledHeaderTitle theme={theme}>Guess the song...</StyledHeaderTitle>
+          <StyledReplayIcon onClick={() => playSong()} />
+        </StyledTextContainer>
+      ) : (
+        <SongGuesserVideo
+          url={videoURL}
+          nextQuestionButton={nextQuestionButton}
+          playSong={playSong}
+          name={songInfo.song_name}
+          property={songInfo.property}
+        />
+      )}
 
-              <path 
-                fill="#ededed"
-                stroke="black"
-                strokeWidth="20px"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M442.199,149.513c-26.891,0-48.691,21.801-48.691,48.701V309.64c0,24.342-19.793,44.143-44.134,44.143 H178.641v-19.506c0-5.523-3.065-10.588-7.941-13.162c-4.884-2.572-10.786-2.23-15.343,0.887L54.468,391.056 c-3.606,2.477-5.771,6.572-5.786,10.951c-0.017,4.359,2.122,8.475,5.72,10.965l100.856,69.961 c4.548,3.147,10.482,3.504,15.384,0.965c4.908-2.572,7.974-7.654,7.974-13.195v-19.539h170.756 c78.031,0,141.516-63.498,141.516-141.523V198.214C490.89,171.313,469.088,149.513,442.199,149.513z"/>
+      <StyledChoiceGrid>
+        {choices.map((choice, index) => (
+          <SongGuesserChoice
+            key={index}
+            index={index}
+            id={choice.id}
+            name={choice.property}
+            correct={choice.correct}
+            showAnswer={showAnswer}
+            onClick={handleAnswer}
+          />
+        ))}
+      </StyledChoiceGrid>
+    </StyledGameContainer>
+  </StyledGameFlexboxContainer>
+);
 
-              <path 
-                fill="none"
-                d="M97.38,292.692V181.229c0-24.324,19.792-44.125,44.134-44.125h170.733v19.506 c0,5.525,3.065,10.59,7.941,13.162c4.884,2.59,10.786,2.229,15.343-0.885l100.888-69.057c3.607-2.475,5.771-6.557,5.788-10.934 c0.015-4.377-2.124-8.49-5.722-10.965L335.63,7.956c-4.548-3.146-10.483-3.508-15.383-0.949c-4.91,2.557-7.975,7.653-7.975,13.178 v19.539H141.515C63.483,39.724,0,103.208,0,181.229v111.463c0,26.881,21.801,48.684,48.689,48.684 C75.58,341.376,97.38,319.573,97.38,292.692z"/>
-
-              <path 
-                fill="none"
-                d="M442.199,149.513c-26.891,0-48.691,21.801-48.691,48.701V309.64c0,24.342-19.793,44.143-44.134,44.143 H178.641v-19.506c0-5.523-3.065-10.588-7.941-13.162c-4.884-2.572-10.786-2.23-15.343,0.887L54.468,391.056 c-3.606,2.477-5.771,6.572-5.786,10.951c-0.017,4.359,2.122,8.475,5.72,10.965l100.856,69.961 c4.548,3.147,10.482,3.504,15.384,0.965c4.908-2.572,7.974-7.654,7.974-13.195v-19.539h170.756 c78.031,0,141.516-63.498,141.516-141.523V198.214C490.89,171.313,469.088,149.513,442.199,149.513z"/>
-              </g>
-            </StyledIcon>
-          </StyledTextBox> 
-          : <SongGuesserVideo url={videoURL} nextQuestionButton={nextQuestionButton} playSong={playSong} name={songInfo.song_name} property={songInfo.property}/>
-        }
-
-        <StyledChoiceGrid>
-          {choices.map((choice, index) => {
-            return <SongGuesserChoice key={index} index={index} id={choice.id} name={choice.property} correct={choice.correct} showAnswer={showAnswer} onClick={handleAnswer}/>
-          })}
-        </StyledChoiceGrid>
-      </StyledGameContainer>
-    </StyledGameFlexboxContainer>
-  )
 }
 
 export default SongGuesserGame
