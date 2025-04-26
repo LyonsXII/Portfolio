@@ -26,16 +26,24 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
     excluded: [],
     score: 0
   });
+  const [nextRoundData, setNextRoundData] = useState({
+    numQuestions: 0,
+    choices: [{}],
+    songInfo: {},
+    excluded: [],
+    score: 0,
+    songFilePath: "",
+    videoURL: ""
+  });
 
   const [scoreTransition, setScoreTransition] = useState(false);
 
   const [showAnswer, setShowAnswer] = useState(false);
   const nextQuestionTimeoutRef = useRef(null);
 
-  const [songFilePath, setSongFilePath] = useState("");
   const [song, setSong] = useState(null);
+  const [firstRound, setFirstRound]= useState(false);
   const audioRef = useRef(null);
-  const [videoURL, setVideoURL] = useState("");
 
   // Fetch number of possible questions for category from database
   async function getNumQuestions() {
@@ -80,16 +88,17 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
       // Setting retrieved data
       const data = response.data[0];
       const shuffledChoices = shuffle(response.data);
-      if (songFilePath !== data.location) {
-        setVideoURL(data.video_link);
-        setSongFilePath(data.location);
-        setRoundData((prev) => ({
+      if (roundData.songFilePath !== data.location) {
+        setNextRoundData((prev) => ({
           ...prev,
           choices: shuffledChoices,
           songInfo: {id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty},
-          excluded: !prev.excluded.includes(data.id) ? [...prev.excluded, data.id] : prev.excluded
+          excluded: !prev.excluded.includes(data.id) ? [...prev.excluded, data.id] : prev.excluded,
+          songFilePath: data.location,
+          videoURL: data.video_link
         }))
       }
+      if(!firstRound) {setFirstRound(true)}
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -98,14 +107,14 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
 
   // Fetch mp3 file from backend
   async function getAudio() {
-    const songPostData = {"location": songFilePath};
+    const songPostData = {"location": roundData.songFilePath};
     const songData = await axios.post('http://localhost:5000/mp3', songPostData, {responseType: "blob"});
     return songData.data
   }
 
   // Set current song to correct choice
   async function updateSong() {
-    if (songFilePath) {
+    if (roundData.songFilePath) {
       try{
         const audio = await getAudio();
         const url = URL.createObjectURL(audio);
@@ -137,6 +146,10 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
 
   function nextQuestion() {
     clickSound();
+    setRoundData((prev) => ({
+      ...nextRoundData,
+      score: prev.score
+    }));
     fetchData();
     setShowAnswer(false);
   }
@@ -163,8 +176,9 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
 
   // Fetch first set of questions on component load
   useEffect(() => {fetchData()}, []);
-  // Set current song whenever a new set of choices is fetched
-  useEffect(() => {updateSong()}, [songFilePath]);
+  useEffect(() => {nextQuestion()}, [firstRound]);
+  // Set current song whenever a new set of choices is displayed
+  useEffect(() => {updateSong()}, [roundData.songFilePath]);
   // Automatically play next song if autoplay toggled on in settings
   useEffect(() => {
     if (autoplay) {setTimeout(() => {playSong()}, 500)}
@@ -204,14 +218,14 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
     <SongGuesserEndGameButton endGame={endGame} mode={mode} />
 
     <StyledGameContainer>
-      {showAnswer === false || !videoURL ? (
+      {showAnswer === false || !roundData.videoURL ? (
         <StyledTextContainer>
           <StyledHeaderTitle theme={theme}>Guess the song...</StyledHeaderTitle>
           <StyledReplayShadowIcon onClick={() => playSong()} />
         </StyledTextContainer>
       ) : (
         <SongGuesserVideo
-          url={videoURL}
+          url={roundData.videoURL}
           nextQuestionButton={nextQuestionButton}
           playSong={playSong}
           name={roundData.songInfo.song_name}
