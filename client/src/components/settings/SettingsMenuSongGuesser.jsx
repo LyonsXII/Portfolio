@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledSettingsMenuSectionFlexbox, StyledSettingsMenuSectionRow, SettingsMenuCheckbox, StyledSettingsMenuBodyText } from "./Settings.styles";
+import { StyledSettingsMenuSectionFlexbox, StyledSettingsMenuSectionRow, StyledSettingsMenuCheckbox, StyledSettingsMenuSliderWrapper, StyledSliderValue, StyledSettingsMenuSlider, StyledSettingsMenuButton, StyledSettingsMenuBodyText } from "./Settings.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
@@ -10,17 +10,30 @@ import { SettingsContext } from "../../context/SettingsContext";
 function SettingsMenuSongGuesser({ active }) {
   const { theme } = useContext(ThemeContext);
   const { volume, changeVolume } = useContext(AudioContext);
-  const { autoplay, autoNextQuestion, toggleAutoplay, toggleAutoNextQuestion } = useContext(SettingsContext);
+  const { autoplay, autoNextQuestion, toggleAutoplay, toggleAutoNextQuestion, autoNextQuestionDelay, adjustAutoNextQuestionDelay } = useContext(SettingsContext);
+
+  const [autoNextQuestionDelayHover, setAutoNextQuestionDelayHover] = useState(false);
+
+  function toggleAutoNextQuestionDelayHover() {
+    setAutoNextQuestionDelayHover(prev => !prev);
+  }
 
   return (
     <StyledSettingsMenuSectionFlexbox>
       <StyledSettingsMenuSectionRow>
         <StyledSettingsMenuBodyText>Autoplay</StyledSettingsMenuBodyText>
-        <SettingsMenuCheckbox theme={theme} type="checkbox" checked={autoplay} onChange={toggleAutoplay}/>
+        <StyledSettingsMenuCheckbox theme={theme} type="checkbox" checked={autoplay} onChange={toggleAutoplay}/>
       </StyledSettingsMenuSectionRow>
       <StyledSettingsMenuSectionRow>
         <StyledSettingsMenuBodyText>Auto Next Question</StyledSettingsMenuBodyText>
-        <SettingsMenuCheckbox theme={theme} type="checkbox" checked={autoNextQuestion} onChange={toggleAutoNextQuestion}/>
+        <StyledSettingsMenuCheckbox theme={theme} type="checkbox" checked={autoNextQuestion} onChange={toggleAutoNextQuestion}/>
+      </StyledSettingsMenuSectionRow>
+      <StyledSettingsMenuSectionRow $width="40%">
+        <StyledSettingsMenuBodyText>Auto Next Question Delay</StyledSettingsMenuBodyText>
+        <StyledSettingsMenuSliderWrapper>
+          <StyledSliderValue theme={theme} $visible={autoNextQuestionDelayHover}>{autoNextQuestionDelay}s</StyledSliderValue>
+          <StyledSettingsMenuSlider theme={theme} type="range" min="1" max="10" value={autoNextQuestionDelay} id="Auto Next Question Delay Slider" onChange={adjustAutoNextQuestionDelay} onMouseEnter={toggleAutoNextQuestionDelayHover} onMouseLeave={toggleAutoNextQuestionDelayHover}/>
+        </StyledSettingsMenuSliderWrapper>
       </StyledSettingsMenuSectionRow>
     </StyledSettingsMenuSectionFlexbox>
   )

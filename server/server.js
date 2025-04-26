@@ -36,7 +36,8 @@ app.post("/numQuestions", async (req, res) => {
 app.post("/choices", async (req, res) => {
   const difficulty = req.body.difficulty;
   const category = req.body.category;
-  let excluded = req.body.excluded[0] != null ? req.body.excluded : [];
+  const excluded = req.body.excluded;
+  console.log(excluded);
   const excludedString = excluded.length > 0 ? excluded.join(',') : undefined;
   let choices = {};
 

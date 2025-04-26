@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-import { StyledVideoMainContainer, StyledVideoContainer, StyledVideoDivLeft, StyledIframe, StyledVideoDivRight, StyledVideoButton, StyledVideoTextContainer, StyledVideoTextBox, StyledSubTitleScrolling, StyledMinorTitle } from "./SongGuesser.styles";
+import { StyledVideoMainContainer, StyledVideoContainer, StyledVideoDivLeft, StyledIframe, StyledVideoDivRight, StyledVideoButton, StyledVideoTextContainer, StyledVideoTextBox, StyledSubTitleScrolling, StyledMinorTitle, StyledNextSongIcon, StyledReplayIcon } from "./SongGuesser.styles";
 
 function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property }) {
   const { theme } = useContext(ThemeContext);
@@ -52,10 +52,10 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
         </StyledVideoDivLeft>
         <StyledVideoDivRight>
           <StyledVideoButton theme={theme} $position="Top" onClick={handleNextQuestionButton}>
-            <img src="./icons/nextSong.svg" width="80%"/>
-          </StyledVideoButton>
+            <StyledNextSongIcon $width="80%"/>
+          </StyledVideoButton >
           <StyledVideoButton theme={theme} onClick={handlePlaySong}>
-            <img src="./icons/replay.svg" width="80%"/>
+            <StyledReplayIcon $width="80%"/>
           </StyledVideoButton>
         </StyledVideoDivRight>
       </StyledVideoContainer>

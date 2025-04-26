@@ -47,8 +47,6 @@ export const StyledButton = styled.button`
   border-radius: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
-  background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/diagonal_stripes.png');
-  background-size: 10px 10px;  /* Adjust the size for the pattern */
   cursor: pointer;
 
   &:hover {
@@ -73,8 +71,6 @@ export const StyledDiv = styled.div`
   border-radius: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
-  background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/diagonal_stripes.png');
-  background-size: 10px 10px;  /* Adjust the size for the pattern */
 `;
 
 export const StyledIncrementButton = styled.button`

@@ -6,8 +6,8 @@ import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swin
 
 import { slideInBottomIntroAnimation, slideInBottomIntroAnimationMobile, slideOutBottomIntroAnimation, slideOutBottomIntroAnimationMobile } from './IntroductionAnimations';
 
-import NextIcon from "../../../public/icons/nextSong.svg?react";
-import DownloadIcon from "../../../public/icons/download.svg?react";
+import NextIcon from "../../icons/nextSong.svg?react";
+import DownloadIcon from "../../icons/download.svg?react";
 
 export const StyledContentContainer = styled.div`
   display: flex;

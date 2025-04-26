@@ -4,7 +4,9 @@ import { flicker } from "./SongGuesserAnimations";
 
 import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation, slideInBottomAnimation } from '../../context/Animations';
 
-import ReplayIcon from "../../../public/icons/replay.svg?react";
+import ReplayIcon from "../../icons/replay.svg?react";
+import ReplayShadowIcon from "../../icons/replay-shadow.svg?react";
+import NextSongIcon from "../../icons/nextSong.svg?react";
 
 export const StyledSongGuesserContainer = styled.div`
   height: 100vh;
@@ -195,6 +197,7 @@ export const StyledScoreFlexbox = styled.div`
   width: 3vw;
   border-right: 4px solid black;
   background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.8);
 `;
 
 export const StyledScoreIncrement = styled.div`
@@ -202,6 +205,8 @@ export const StyledScoreIncrement = styled.div`
   box-sizing: border-box;
   border-bottom: 4px solid black;
   background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
+  box-shadow: inset 0 2px 4px rgba(7, 3, 3, 0.3), 
+            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
 
   animation: ${({$current}) => $current ? slideInBottomAnimation : "none"};
 `
@@ -212,6 +217,7 @@ export const StyledScoreBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
 `
 
 export const StyledVideoMainContainer = styled.div`
@@ -429,11 +435,11 @@ export const StyledBodyText = styled.p`
 
 const createStyledIcon = (IconComponent) => styled(IconComponent)`
   height: 100%;
-  width: auto;
+  width: ${({ $width }) => $width || "auto"};
   transition: transform 0.4s;
   cursor: pointer;
-  -webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
-  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+  -webkit-filter: ${({ $shadow }) => $shadow ? "drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7))" : "none"};
+  filter: ${({ $shadow }) => $shadow ? "drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7))" : "none"};
 
   &:hover {
     transform: scale(1.1);
@@ -441,3 +447,5 @@ const createStyledIcon = (IconComponent) => styled(IconComponent)`
 `;
 
 export const StyledReplayIcon = createStyledIcon(ReplayIcon);
+export const StyledReplayShadowIcon = createStyledIcon(ReplayShadowIcon);
+export const StyledNextSongIcon = createStyledIcon(NextSongIcon);

@@ -233,25 +233,49 @@ export const StyledSettingsMenuSectionFlexbox= styled.div`
 
 export const StyledSettingsMenuSectionRow = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
   width: ${({ $width }) => $width || "25%"};
   gap: 40px;
+  box-sizing: border-box;
 `;
 
-export const SettingsMenuSlider = styled.input`
+export const StyledSettingsMenuSliderWrapper = styled.div`
+  position: relative;
+  height: fit-content;
+  width: 100%;
+`
+
+export const StyledSliderValue = styled.div`
+  position: absolute;
+  top: 5px; /* move above slider */
+  left: 50%;
+  transform: translateX(-50%);
+  color: ${({ theme }) => theme.primaryColor};
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  pointer-events: none;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transition: opacity 0.3s ease;
+  z-index: 2;
+`;
+
+export const StyledSettingsMenuSlider = styled.input`
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
   min-width: 80px;
-  height: 25px;
-  background: #d3d3d3;
+  height: 30px;
+  background-color: ${({ theme }) => theme.tertiaryColor};
   outline: none;
   opacity: 0.7;
   transition: opacity 0.2s;
   border-radius: 20px;
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+              inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+  padding-inline: 6px;
 
   &:hover {
     opacity: 1;
@@ -261,35 +285,45 @@ export const SettingsMenuSlider = styled.input`
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: 19px;
+    height: 19px;
     background: ${({ theme }) => theme.primaryColor};
+    border: 1px solid black;
+    border-radius: 50%;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 
+            inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+            inset 0 -4px 2px rgba(0, 0, 0, 0.6);
     cursor: pointer;
   }
 
   //Firefox
   &::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
+    width: 19px;
+    height: 19px;
     background: ${({ theme }) => theme.primaryColor};
-    border: 4px solid black;
+    border: 1px solid black;
     border-radius: 50%;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 
+            inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+            inset 0 -4px 2px rgba(0, 0, 0, 0.6);
     cursor: pointer;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
-                inset 0 2px 4px rgba(7, 3, 3, 0.3), 
-                inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   }
 
   // Custom thumb styling for internet explorer and edge
   &::-ms-thumb {
-    width: 25px;
-    height: 25px;
+    width: 19px;
+    height: 19px;
     background: ${({ theme }) => theme.primaryColor};
+    border: 1px solid black;
+    border-radius: 50%;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 
+            inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+            inset 0 -4px 2px rgba(0, 0, 0, 0.6);
     cursor: pointer;
   }
 `;
 
-export const SettingsMenuCheckbox = styled.input`
+export const StyledSettingsMenuCheckbox = styled.input`
   // Hide default tickbox
   appearance: none;
   -webkit-appearance: none;
@@ -341,6 +375,26 @@ export const SettingsMenuCheckbox = styled.input`
   // Hover effect
   &:hover {
     transform: scale(1.02);
+  }
+`;
+
+export const StyledSettingsMenuButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 50px;
+  padding: 0px;
+  border: 4px solid black;
+  border-radius: 40px;
+  background-color: ${({ theme }) => theme.primaryColor};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    color: ${({ theme }) => theme.tertiaryColor};
+    transform: scale(1.01);
+    transition: transform 0.1s ease, background-color 0.8s ease;
   }
 `;
 
