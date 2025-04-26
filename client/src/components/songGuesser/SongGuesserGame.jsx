@@ -27,6 +27,8 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
     score: 0
   });
 
+  const [scoreTransition, setScoreTransition] = useState(false);
+
   const [showAnswer, setShowAnswer] = useState(false);
   const nextQuestionTimeoutRef = useRef(null);
 
@@ -149,10 +151,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
     if (!showAnswer) {
       if (correct) {
         victorySound();
-        setRoundData((prev) => ({
-          ...prev,
-          score: prev.score + 1
-        }));
+        setScoreTransition(true);
       } else {
         defeatSound();
         if (mode === "Sudden Death") {setGameOver(true)}
@@ -170,7 +169,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
   useEffect(() => {
     if (autoplay) {setTimeout(() => {playSong()}, 500)}
   }, [song]);
-  // Automaticlly move onto next question after a short delay if auto next question toggled on in settings
+  // Automatically move onto next question after a short delay if auto next question toggled on in settings
   useEffect(() => {
     if (showAnswer && autoNextQuestion && !gameOver) {
       nextQuestionTimeoutRef.current = setTimeout(() => {
@@ -180,6 +179,18 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
       return () => clearTimeout(nextQuestionTimeoutRef.current);
     }
   }, [showAnswer]);
+  // Update score after transition completed
+  useEffect(() => {
+    if (scoreTransition) {
+      setTimeout(() => {
+        setRoundData((prev) => ({
+          ...prev,
+          score: prev.score + 1
+        }));
+        setScoreTransition(false);
+      }, 1000)
+      }
+  }, [scoreTransition])
   // Update volume of audio playback when volume updated
   useEffect(() => {
     audioRef.current.volume = volume / 100;
@@ -189,7 +200,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
   <StyledGameFlexboxContainer>
     <audio ref={audioRef} src={song} />
 
-    {mode === "Regular" && <SongGuesserScore score={roundData.score} />}
+    {mode === "Regular" && <SongGuesserScore score={roundData.score} transition={scoreTransition}/>}
     <SongGuesserEndGameButton endGame={endGame} mode={mode} />
 
     <StyledGameContainer>

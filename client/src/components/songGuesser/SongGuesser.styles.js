@@ -201,23 +201,37 @@ export const StyledScoreFlexbox = styled.div`
 `;
 
 export const StyledScoreIncrement = styled.div`
-  height: calc(100vh / 20);
+  height: 100%;
+  ${({ $mode, $transition }) => {
+    if ($mode === "0") return "max-height: calc(100% / 20);"
+    else if ($mode === "1") {
+      if ($transition) {
+        return "max-height: calc(100% / 20);"
+      } else {
+        return "max-height: 100%;"
+      }
+    }
+    else if ($mode === "2") {
+      if ($transition) {
+        return "max-height: 100%;"
+      } else {
+        return "max-height: 0%;"
+      }
+    }
+    return ""
+  }}
+  overflow: ${({ $current }) => $current ? "visible" : "hidden"};
   box-sizing: border-box;
   border-bottom: 4px solid black;
   background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
   box-shadow: inset 0 2px 4px rgba(7, 3, 3, 0.3), 
             inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-
-  animation: ${({$current}) => $current ? slideInBottomAnimation : "none"};
-`
-
-export const StyledScoreBox = styled.div`
-  height: 100%;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  
+  transition: ${({ $transition }) => $transition ? "max-height 1s ease" : "max-height 0s ease"};
 `
 
 export const StyledVideoMainContainer = styled.div`
