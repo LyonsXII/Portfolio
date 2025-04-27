@@ -34,28 +34,12 @@ const StyledBackground = styled.div`
               inset 0px 0px 80px rgba(0, 0, 0, 0.6);
 `;
 
-const StyledBackgroundGif = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-image: url('./bg.webp');
-  background-size: cover;
-  opacity: 0.03;
-  pointer-events: none;
-  height: 100%;
-  width: 100%;
-`;
-
 function Container({ children }) {
   const { theme, bg } = useContext(ThemeContext);
 
   return (
     <div>
       <StyledBackground theme={theme} $bg={bg}/>
-      <StyledBackgroundGif/>
       <StyledContainer>
         <StyledDiv theme={theme}>
           {children}

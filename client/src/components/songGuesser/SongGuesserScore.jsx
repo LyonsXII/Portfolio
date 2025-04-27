@@ -5,19 +5,19 @@ import { StyledScoreFlexbox, StyledScoreIncrement, StyledBodyText } from "./Song
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function SongGuesserScore({ score, transition }) {
+function SongGuesserScore({ score, transition, numQuestions }) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <div>
       <StyledScoreFlexbox theme={theme}>
         {Array.from({ length: score }, (_, i) => (
-          <StyledScoreIncrement theme={theme} key={i} $mode="0">
+          <StyledScoreIncrement theme={theme} key={i} $mode="0" $numQuestions={numQuestions}>
               <StyledBodyText>{i + 1}</StyledBodyText>
           </StyledScoreIncrement>
         ))}
 
-        <StyledScoreIncrement theme={theme} $current="true" $transition={transition} $mode="1">
+        <StyledScoreIncrement theme={theme} $current="true" $transition={transition} $mode="1" $numQuestions={numQuestions}>
             <StyledBodyText>{score + 1}</StyledBodyText>
         </StyledScoreIncrement>
         <StyledScoreIncrement theme={theme} $transition={transition} $mode="2">

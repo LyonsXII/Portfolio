@@ -1,38 +1,27 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
+import { StyledGameOverBackdrop, StyledMainTitle, StyledMainTitleLetter, StyledGameOverText } from "./SongGuesser.styles";
+
 import { ThemeContext } from "../../context/ThemeContext";
 
-import { fadeInAnimation, fadeOutAnimation } from '../../context/Animations';
-
-const StyledBackdrop = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  height: 100vh;
-  width: 112vw;
-  background-color: black; 
-  z-index: 4;
-  opacity: 1;
-  cursor: pointer;
-
-  animation: ${fadeInAnimation};
-
-  animation: ${({ $gameOverExit }) => 
-    !$gameOverExit
-      ? fadeInAnimation
-      : fadeOutAnimation
-  };
-`;
-
-function GameOver({ gameOverExit, handleGameOver }) {
+function GameOver({ gameOverExit, handleGameOver, lose, score }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledBackdrop $gameOverExit={gameOverExit} onClick={handleGameOver}>
-
-    </StyledBackdrop>
+    <StyledGameOverBackdrop $gameOverExit={gameOverExit} onClick={handleGameOver}>
+        <StyledMainTitle>
+          {lose && "Game Over".split("").map((letter, index) => {
+            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $gameOver={true} $gameOverExit={gameOverExit}>{letter}</StyledMainTitleLetter>
+          })
+          }
+          {!lose && "Round End".split("").map((letter, index) => {
+            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $gameOver={true} $gameOverExit={gameOverExit}>{letter}</StyledMainTitleLetter>
+          })
+          }
+        </StyledMainTitle>
+        <StyledGameOverText theme={theme}>Final Score {score} </StyledGameOverText>
+    </StyledGameOverBackdrop>
   )
 }
 

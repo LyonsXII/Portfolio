@@ -13,25 +13,25 @@ import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
 import { ThemeContext } from "../../context/ThemeContext";
 
-function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGameOver, handleGameOver }) {
+function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, setLose, endGame, gameOver, setGameOver, handleGameOver }) {
   const { theme } = useContext(ThemeContext);
 
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
-  const { autoplay, autoNextQuestion, autoNextQuestionDelay } = useContext(SettingsContext);
+  const { autoplay, autoNextQuestion, autoNextQuestionDelay, skipVideo } = useContext(SettingsContext);
 
   const [roundData, setRoundData] = useState({
-    numQuestions: 0,
+    currentQuestion: 15,
     choices: [{}],
     songInfo: {},
     excluded: [],
-    score: 0
+    songFilePath: "",
+    videoURL: ""
   });
   const [nextRoundData, setNextRoundData] = useState({
-    numQuestions: 0,
+    currentQuestion: 15,
     choices: [{}],
     songInfo: {},
     excluded: [],
-    score: 0,
     songFilePath: "",
     videoURL: ""
   });
@@ -41,6 +41,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
   const [showAnswer, setShowAnswer] = useState(false);
   const nextQuestionTimeoutRef = useRef(null);
 
+  const [numQuestions, setNumQuestions] = useState(Infinity);
   const [song, setSong] = useState(null);
   const [firstRound, setFirstRound]= useState(false);
   const audioRef = useRef(null);
@@ -50,11 +51,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
     try {
       const postData = {"category": category, "difficulty": difficulty};
       const response = await axios.post('http://localhost:5000/numQuestions', postData);
-      setRoundData((prev) => ({
-        ...prev,
-        numQuestions: response.data[0]["count"]
-      })
-      );
+      setNumQuestions(response.data);
     } catch(error) {
       console.error('Error fetching data:', error);
     }
@@ -91,6 +88,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
       if (roundData.songFilePath !== data.location) {
         setNextRoundData((prev) => ({
           ...prev,
+          currentQuestion: prev.currentQuestion + 1,
           choices: shuffledChoices,
           songInfo: {id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty},
           excluded: !prev.excluded.includes(data.id) ? [...prev.excluded, data.id] : prev.excluded,
@@ -137,18 +135,18 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
 
   // Game functionality
   function startGame() {
-    setRoundData((prev) => ({
-      ...prev,
-      excluded: []
-    }));
+    setFirstRound(true);
     nextQuestion();
   }
 
   function nextQuestion() {
     clickSound();
+    if (roundData.currentQuestion >= numQuestions - 4) {
+      setGameOver(true);
+    }
     setRoundData((prev) => ({
-      ...nextRoundData,
-      score: prev.score
+      ...prev,
+      ...nextRoundData
     }));
     fetchData();
     setShowAnswer(false);
@@ -156,6 +154,12 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
 
   function nextQuestionButton() {
     clearTimeout(nextQuestionTimeoutRef.current);
+    clickSound();
+    setRoundData((prev) => ({
+      ...prev,
+      ...nextRoundData
+    }));
+    fetchData();
     nextQuestion();
   }
 
@@ -167,15 +171,21 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
         setScoreTransition(true);
       } else {
         defeatSound();
-        if (mode === "Sudden Death") {setGameOver(true)}
+        if (mode === "Sudden Death") {
+          setGameOver(true);
+          setLose(true);
+        }
       }
       setShowAnswer(true);
       audioRef.current.pause();
     }
   }
 
-  // Fetch first set of questions on component load
-  useEffect(() => {fetchData()}, []);
+  // Fetch first set of questions on component load, 
+  useEffect(() => {
+    getNumQuestions();
+    fetchData(); 
+  }, []);
   useEffect(() => {nextQuestion()}, [firstRound]);
   // Set current song whenever a new set of choices is displayed
   useEffect(() => {updateSong()}, [roundData.songFilePath]);
@@ -197,10 +207,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
   useEffect(() => {
     if (scoreTransition) {
       setTimeout(() => {
-        setRoundData((prev) => ({
-          ...prev,
-          score: prev.score + 1
-        }));
+        setScore(prev => prev + 1);
         setScoreTransition(false);
       }, 1000)
       }
@@ -214,7 +221,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
   <StyledGameFlexboxContainer>
     <audio ref={audioRef} src={song} />
 
-    {mode === "Regular" && <SongGuesserScore score={roundData.score} transition={scoreTransition}/>}
+    {mode === "Regular" && <SongGuesserScore score={score} transition={scoreTransition} numQuestions={numQuestions}/>}
     <SongGuesserEndGameButton endGame={endGame} mode={mode} />
 
     <StyledGameContainer>
@@ -224,7 +231,7 @@ function SongGuesserGame({ category, difficulty, mode, endGame, gameOver, setGam
           <StyledReplayShadowIcon onClick={() => playSong()} />
         </StyledTextContainer>
       ) : (
-        <SongGuesserVideo
+        !skipVideo && <SongGuesserVideo
           url={roundData.videoURL}
           nextQuestionButton={nextQuestionButton}
           playSong={playSong}

@@ -30,14 +30,13 @@ app.post("/numQuestions", async (req, res) => {
   const difficulty = req.body.difficulty;
   const category = req.body.category;
   const numQuestions = await db.query("SELECT COUNT(id) FROM songs WHERE difficulty = $1 AND category = $2", [difficulty, category]);
-  res.json(numQuestions.rows);
+  res.json(numQuestions.rows[0]["count"]);
 });
 
 app.post("/choices", async (req, res) => {
   const difficulty = req.body.difficulty;
   const category = req.body.category;
   const excluded = req.body.excluded;
-  console.log(excluded);
   const excludedString = excluded.length > 0 ? excluded.join(',') : undefined;
   let choices = {};
 

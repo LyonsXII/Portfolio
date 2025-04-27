@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 
 import SongGuesserIntro from "./SongGuesserIntro";
@@ -20,6 +20,9 @@ function SongGuesser({ transition, setTransition }) {
   const [difficulty, setDifficulty] = useState("Easy");
   const [mode, setMode] = useState("Regular");
 
+  const [lose, setLose] = useState(false);
+  const [score, setScore] = useState(0);
+
   function startGame() {
     setIntro(false);
   }
@@ -30,6 +33,15 @@ function SongGuesser({ transition, setTransition }) {
       setIntro(true);
       setTransition(false);
     }, 500)
+  }
+
+  function handleGameOver() {
+    setGameOverExit(true);
+    setIntro(true);
+    setTimeout(() => {
+      setGameOver(false);
+      setGameOverExit(false);
+    }, 3000)
   }
 
   function updateCategory(category) {
@@ -44,21 +56,12 @@ function SongGuesser({ transition, setTransition }) {
     setMode(mode);
   }
 
-  function handleGameOver() {
-    setGameOverExit(true);
-    setIntro(true);
-    setTimeout(() => {
-      setGameOver(false);
-      setGameOverExit(false);
-    }, 1200)
-  }
-
   return (
     <StyledSongGuesserContainer $transition={transition}>
-      {gameOver && <GameOver gameOverExit={gameOverExit} handleGameOver={handleGameOver}/>}
+      {gameOver && <GameOver gameOverExit={gameOverExit} handleGameOver={handleGameOver} lose={lose} score={score}/>}
       {intro ? 
         <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
-        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} endGame={endGame} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver} transition={transition} setTransition={setTransition}/>
+        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} score={score} setScore={setScore} lose={lose} setLose={setLose} endGame={endGame} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver} transition={transition} setTransition={setTransition}/>
       }
     </StyledSongGuesserContainer>
   )

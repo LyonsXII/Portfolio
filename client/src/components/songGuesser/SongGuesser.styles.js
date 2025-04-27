@@ -1,6 +1,6 @@
 import styled, { css, createGlobalStyle } from 'styled-components';
 
-import { flicker } from "./SongGuesserAnimations";
+import { flicker, fadeInFastAnimation, fadeInSlowAnimation, fadeOutFastAnimation, fadeOutSlowAnimation } from "./SongGuesserAnimations";
 
 import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation, slideInBottomAnimation } from '../../context/Animations';
 
@@ -202,27 +202,27 @@ export const StyledScoreFlexbox = styled.div`
 
 export const StyledScoreIncrement = styled.div`
   height: 100%;
-  ${({ $mode, $transition }) => {
-    if ($mode === "0") return "max-height: calc(100% / 20);"
+  border-bottom: 4px solid black;
+  ${({ $mode, $transition, $numQuestions }) => {
+    if ($mode === "0") return `max-height: calc(100% / ${$numQuestions});`
     else if ($mode === "1") {
       if ($transition) {
-        return "max-height: calc(100% / 20);"
+        return `max-height: calc(100% / ${$numQuestions});`
       } else {
-        return "max-height: 100%;"
+        return "max-height: 100%; border-bottom: none;"
       }
     }
     else if ($mode === "2") {
       if ($transition) {
-        return "max-height: 100%;"
+        return "max-height: 100%; border-bottom: none;"
       } else {
-        return "max-height: 0%;"
+        return "max-height: 0%; border-bottom: none;"
       }
     }
     return ""
   }}
   overflow: ${({ $current }) => $current ? "visible" : "hidden"};
   box-sizing: border-box;
-  border-bottom: 4px solid black;
   background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
   box-shadow: inset 0 2px 4px rgba(7, 3, 3, 0.3), 
             inset 0 -4px 4px rgba(0, 0, 0, 0.6);
@@ -332,6 +332,27 @@ export const StyledVideoTextBox = styled.div`
   overflow: hidden;
 `;
 
+export const StyledGameOverBackdrop = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  gap: 40px;
+  background-color: black; 
+  z-index: 4;
+  opacity: 1;
+  cursor: pointer;
+
+  animation: ${({ $gameOverExit }) => 
+    !$gameOverExit
+      ? fadeInFastAnimation
+      : fadeOutSlowAnimation
+  };
+`;
+
 export const StyledMainTitle = styled.div`
   display: flex;
   flex-direction: row;
@@ -375,6 +396,13 @@ export const StyledMainTitleLetter = styled.h1`
     $index === 4 && css`
       margin-left: 40px;
     `}
+
+    ${({ $gameOver, $gameOverExit }) => 
+      $gameOver 
+        ? css`animation: ${!$gameOverExit ? fadeInSlowAnimation : fadeOutFastAnimation};`
+        : ''
+    }
+    
 `
 
 export const StyledHeaderTitle = styled.h2`
@@ -446,6 +474,19 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 1.5rem;
 `;
+
+export const StyledGameOverText = styled.h1`
+  font-family: "Liberty";
+  font-size: 4rem;
+  color: ${({ theme }) => theme.tertiaryColor};
+  text-shadow: 
+  3px 3px 6px #000,
+  -3px -3px 6px #000,  
+  3px -3px 6px #000,
+  -3px 3px 6px #000,
+  3px 3px 6px #000,
+  0 0 2rem rgb(255, 255, 255);
+`
 
 const createStyledIcon = (IconComponent) => styled(IconComponent)`
   height: 100%;
