@@ -20,7 +20,7 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
   const { autoplay, autoNextQuestion, autoNextQuestionDelay, skipVideo } = useContext(SettingsContext);
 
   const [roundData, setRoundData] = useState({
-    currentQuestion: 15,
+    currentQuestion: -1,
     choices: [{}],
     songInfo: {},
     excluded: [],
@@ -28,7 +28,7 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
     videoURL: ""
   });
   const [nextRoundData, setNextRoundData] = useState({
-    currentQuestion: 15,
+    currentQuestion: 0,
     choices: [{}],
     songInfo: {},
     excluded: [],
@@ -78,18 +78,18 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
       const choicesPostData = {
         "category": category, 
         "difficulty": difficulty, 
-        "excluded": roundData.excluded.length === 0 ? [] : roundData.excluded
+        "excluded": nextRoundData.excluded.length === 0 ? [] : nextRoundData.excluded
       };
       const response = await axios.post('http://localhost:5000/choices', choicesPostData);
 
       // Setting retrieved data
       const data = response.data[0];
       const shuffledChoices = shuffle(response.data);
-      if (roundData.songFilePath !== data.location) {
+      if (nextRoundData.songFilePath !== data.location) {
         setNextRoundData((prev) => ({
           ...prev,
           currentQuestion: prev.currentQuestion + 1,
-          choices: shuffledChoices,
+          choices: response.data,
           songInfo: {id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty},
           excluded: !prev.excluded.includes(data.id) ? [...prev.excluded, data.id] : prev.excluded,
           songFilePath: data.location,
@@ -135,31 +135,27 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
 
   // Game functionality
   function startGame() {
-    setFirstRound(true);
-    nextQuestion();
+    setScore(0);
+    getNumQuestions();
+    fetchData();
   }
 
   function nextQuestion() {
     clickSound();
     if (roundData.currentQuestion >= numQuestions - 4) {
       setGameOver(true);
+    } else {
+      setRoundData((prev) => ({
+        ...prev,
+        ...nextRoundData
+      }));
+      fetchData();
+      setShowAnswer(false);
     }
-    setRoundData((prev) => ({
-      ...prev,
-      ...nextRoundData
-    }));
-    fetchData();
-    setShowAnswer(false);
   }
 
   function nextQuestionButton() {
     clearTimeout(nextQuestionTimeoutRef.current);
-    clickSound();
-    setRoundData((prev) => ({
-      ...prev,
-      ...nextRoundData
-    }));
-    fetchData();
     nextQuestion();
   }
 
@@ -181,17 +177,24 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
     }
   }
 
-  // Fetch first set of questions on component load, 
+  // Fetch first set of questions on component load, then run next question
   useEffect(() => {
-    getNumQuestions();
-    fetchData(); 
+    startGame();
   }, []);
-  useEffect(() => {nextQuestion()}, [firstRound]);
+  useEffect(() => {
+    if (firstRound) {
+      nextQuestion();
+    }
+  }, [firstRound]);
   // Set current song whenever a new set of choices is displayed
-  useEffect(() => {updateSong()}, [roundData.songFilePath]);
+  useEffect(() => {
+    if (roundData.songFilePath) {
+      updateSong();
+    }
+  }, [roundData.songFilePath]);
   // Automatically play next song if autoplay toggled on in settings
   useEffect(() => {
-    if (autoplay) {setTimeout(() => {playSong()}, 500)}
+    if (autoplay && song) {setTimeout(() => {playSong()}, 500)}
   }, [song]);
   // Automatically move onto next question after a short delay if auto next question toggled on in settings
   useEffect(() => {
@@ -211,7 +214,7 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
         setScoreTransition(false);
       }, 1000)
       }
-  }, [scoreTransition])
+  }, [scoreTransition]);
   // Update volume of audio playback when volume updated
   useEffect(() => {
     audioRef.current.volume = volume / 100;

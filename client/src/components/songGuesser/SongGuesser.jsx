@@ -24,6 +24,7 @@ function SongGuesser({ transition, setTransition }) {
   const [score, setScore] = useState(0);
 
   function startGame() {
+    setScore(0);
     setIntro(false);
   }
 
@@ -41,7 +42,7 @@ function SongGuesser({ transition, setTransition }) {
     setTimeout(() => {
       setGameOver(false);
       setGameOverExit(false);
-    }, 3000)
+    }, 1200)
   }
 
   function updateCategory(category) {

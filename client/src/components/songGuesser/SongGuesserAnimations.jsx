@@ -36,8 +36,20 @@ export const fadeInFastAnimation = css`
   ${fadeIn} 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 `;
 
+export const fadeInDelayed = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const fadeInSlowAnimation = css`
-  ${fadeIn} 3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  ${fadeInDelayed} 2.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 `;
 
 export const fadeOut = keyframes`
@@ -49,10 +61,6 @@ export const fadeOut = keyframes`
   }
 `;
 
-export const fadeOutFastAnimation = css`
+export const fadeOutAnimation = css`
   ${fadeOut} 1.2s ease-out both;
-`;
-
-export const fadeOutSlowAnimation = css`
-  ${fadeOut} 3s ease-out both;
 `;

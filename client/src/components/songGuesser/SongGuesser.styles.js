@@ -1,6 +1,6 @@
 import styled, { css, createGlobalStyle } from 'styled-components';
 
-import { flicker, fadeInFastAnimation, fadeInSlowAnimation, fadeOutFastAnimation, fadeOutSlowAnimation } from "./SongGuesserAnimations";
+import { flicker, fadeInFastAnimation, fadeInSlowAnimation, fadeOutAnimation } from "./SongGuesserAnimations";
 
 import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation, slideInBottomAnimation } from '../../context/Animations';
 
@@ -204,7 +204,7 @@ export const StyledScoreIncrement = styled.div`
   height: 100%;
   border-bottom: 4px solid black;
   ${({ $mode, $transition, $numQuestions }) => {
-    if ($mode === "0") return `max-height: calc(100% / ${$numQuestions});`
+    if ($mode === "0") return `max-height: calc(100% / (${$numQuestions} - 4));`
     else if ($mode === "1") {
       if ($transition) {
         return `max-height: calc(100% / ${$numQuestions});`
@@ -343,13 +343,13 @@ export const StyledGameOverBackdrop = styled.div`
   gap: 40px;
   background-color: black; 
   z-index: 4;
-  opacity: 1;
+  opacity: 0.9;
   cursor: pointer;
 
   animation: ${({ $gameOverExit }) => 
     !$gameOverExit
       ? fadeInFastAnimation
-      : fadeOutSlowAnimation
+      : fadeOutAnimation
   };
 `;
 
@@ -399,7 +399,7 @@ export const StyledMainTitleLetter = styled.h1`
 
     ${({ $gameOver, $gameOverExit }) => 
       $gameOver 
-        ? css`animation: ${!$gameOverExit ? fadeInSlowAnimation : fadeOutFastAnimation};`
+        ? css`animation: ${!$gameOverExit ? fadeInSlowAnimation : fadeOutAnimation};`
         : ''
     }
     
@@ -486,6 +486,12 @@ export const StyledGameOverText = styled.h1`
   -3px 3px 6px #000,
   3px 3px 6px #000,
   0 0 2rem rgb(255, 255, 255);
+
+  animation: ${({ $gameOverExit }) => 
+    !$gameOverExit
+      ? fadeInSlowAnimation
+      : fadeOutAnimation
+  };
 `
 
 const createStyledIcon = (IconComponent) => styled(IconComponent)`

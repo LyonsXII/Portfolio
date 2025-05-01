@@ -20,7 +20,7 @@ function GameOver({ gameOverExit, handleGameOver, lose, score }) {
           })
           }
         </StyledMainTitle>
-        <StyledGameOverText theme={theme}>Final Score {score} </StyledGameOverText>
+        <StyledGameOverText theme={theme} $gameOverExit={gameOverExit}>Final Score {score} </StyledGameOverText>
     </StyledGameOverBackdrop>
   )
 }
