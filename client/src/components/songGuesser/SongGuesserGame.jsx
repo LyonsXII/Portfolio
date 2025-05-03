@@ -79,7 +79,7 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
       const choicesPostData = {
         "category": category, 
         "difficulty": difficulty, 
-        "excluded": roundData.currentQuestion === 1 
+        "excluded": nextRoundData.currentQuestion === 1 
           ? firstRound.excluded 
           : nextRoundData.excluded
       };
@@ -94,7 +94,7 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
           currentQuestion: prev.currentQuestion + 1,
           choices: response.data,
           songInfo: {id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty},
-          excluded: roundData.currentQuestion === 1 ? [...firstRound.excluded, data.id] : [...prev.excluded, data.id],
+          excluded: nextRoundData.currentQuestion === 1 ? [...firstRound.excluded, data.id] : [...prev.excluded, data.id],
           songFilePath: data.location,
           videoURL: data.video_link
         }))

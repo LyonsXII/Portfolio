@@ -357,47 +357,45 @@ export const StyledMainTitle = styled.div`
 export const StyledMainTitleLetter = styled.h1`
   font-family: "Liberty";
 
-  ${({ $index }) => ![2, 6, 10].includes($index) && css`
-    color:${({ theme }) => theme.tertiaryColor};
-    text-shadow: 
-      3px 3px 6px #000,
-      -3px -3px 6px #000,  
-      3px -3px 6px #000,
-      -3px 3px 6px #000,
-      3px 3px 6px #000,
-      0 0 2rem rgb(255, 255, 255);
-  `}
-
-  ${({ $index }) => [2, 6, 10].includes($index) && css`
-    color:${({ theme }) => theme.primaryColor};
-    text-shadow: 
-      3px 3px 6px #000,
-      -3px -3px 6px #000,  
-      3px -3px 6px #000,
-      -3px 3px 6px #000,
-      3px 3px 6px #000,
-      0 0 2rem rgb(0, 0, 0);
-    transform: translate(-0.2rem, 1rem) rotate(10deg);
-    animation: ${({ theme }) => {
-      const textColour = theme.tertiaryColor; 
-      return css`
-        ${flicker(textColour)} 2s ease-in-out infinite alternate;
-      `
-    }};
-    animation-delay: ${({ $index }) => `${0.2 * $index}s`};
-  `}
-
-  ${({ $index }) => 
-    $index === 4 && css`
-      margin-left: 40px;
-    `}
-
-    ${({ $gameOver, $gameOverExit }) => 
-      $gameOver 
-        ? css`animation: ${!$gameOverExit ? fadeInSlowAnimation : fadeOutAnimation};`
-        : ''
-    }
+  ${({ $index, $gameOver, $gameOverAnimation, theme }) => {
+    if ($gameOver) {
+      if ($gameOverAnimation === "Entrance") {
+        return css`animation: ${fadeInSlowAnimation};`
+      } else if ($gameOverAnimation === "Exit") {
+        return css`animation: ${fadeOutAnimation};`
+      }
+    } 
     
+    if (!$gameOver || ($gameOverAnimation != "Entrance" && $gameOverAnimation != "Exit")) {
+      if (![2, 6, 10].includes($index)) {
+        return css`
+          color: ${theme.tertiaryColor};
+          text-shadow: 
+            3px 3px 6px #000,
+            -3px -3px 6px #000,  
+            3px -3px 6px #000,
+            -3px 3px 6px #000,
+            3px 3px 6px #000,
+            0 0 2rem rgb(255, 255, 255);
+          }
+        `
+      }
+
+      if ([2, 6, 10].includes($index)) {
+        return css`
+          color: ${theme.primaryColor};
+          text-shadow: 
+            3px 3px 6px #000,
+            -3px -3px 6px #000,  
+            3px -3px 6px #000,
+            -3px 3px 6px #000,
+            3px 3px 6px #000,
+            0 0 2rem rgb(0, 0, 0);
+          transform: translate(-0.2rem, 1rem) rotate(10deg);
+          animation: ${flicker(theme.tertiaryColour)} 2s ease-in-out infinite alternate;
+        `
+      } 
+}}}
 `
 
 export const StyledHeaderTitle = styled.h2`
@@ -482,8 +480,8 @@ export const StyledGameOverText = styled.h1`
   3px 3px 6px #000,
   0 0 2rem rgb(255, 255, 255);
 
-  animation: ${({ $gameOverExit }) => 
-    !$gameOverExit
+  animation: ${({ $gameOverAnimation }) => 
+    $gameOverAnimation === "Enter"
       ? fadeInSlowAnimation
       : fadeOutAnimation
   };

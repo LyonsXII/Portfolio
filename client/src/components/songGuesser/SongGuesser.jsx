@@ -15,7 +15,7 @@ function SongGuesser({ transition, setTransition }) {
 
   const [intro, setIntro] = useState(true);
   const [gameOver, setGameOver] = useState(false);
-  const [gameOverExit, setGameOverExit] = useState(false);
+  const [gameOverAnimation, setGameOverAnimation] = useState("Enter");
 
   const [category, setCategory] = useState("Anime");
   const [difficulty, setDifficulty] = useState("Easy");
@@ -51,11 +51,11 @@ function SongGuesser({ transition, setTransition }) {
   }
 
   function handleGameOver() {
-    setGameOverExit(true);
+    setGameOverAnimation("Exit");
     setIntro(true);
     setTimeout(() => {
       setGameOver(false);
-      setGameOverExit(false);
+      setGameOverAnimation("Enter");
     }, 1200)
   }
 
@@ -122,10 +122,10 @@ function SongGuesser({ transition, setTransition }) {
 
   return (
     <StyledSongGuesserContainer $transition={transition}>
-      {gameOver && <GameOver gameOverExit={gameOverExit} handleGameOver={handleGameOver} lose={lose} score={score}/>}
+      {gameOver && <GameOver gameOverAnimation={gameOverAnimation} handleGameOver={handleGameOver} lose={lose} score={score}/>}
       {intro ? 
         <SongGuesserIntro startGame={startGame} updateCategory={updateCategory} updateDifficulty={updateDifficulty} updateMode={updateMode} category={category} difficulty={difficulty} mode={mode}/> : 
-        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} firstRound={firstRound} score={score} setScore={setScore} lose={lose} setLose={setLose} endGame={endGame} gameOver={gameOver} setGameOver={setGameOver} gameOverExit={gameOverExit} handleGameOver={handleGameOver} transition={transition} setTransition={setTransition}/>
+        <SongGuesserGame category={category} difficulty={difficulty} mode={mode} firstRound={firstRound} score={score} setScore={setScore} lose={lose} setLose={setLose} endGame={endGame} gameOver={gameOver} setGameOver={setGameOver} gameOverAnimation={gameOverAnimation} handleGameOver={handleGameOver} transition={transition} setTransition={setTransition}/>
       }
     </StyledSongGuesserContainer>
   )
