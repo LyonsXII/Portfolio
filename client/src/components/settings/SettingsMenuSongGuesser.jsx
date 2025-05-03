@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 
 import { StyledSettingsMenuSectionFlexbox, StyledSettingsMenuSectionRow, StyledSettingsMenuCheckbox, StyledSettingsMenuSliderWrapper, StyledSliderValue, StyledSettingsMenuSlider, StyledSettingsMenuButton, StyledSettingsMenuBodyText } from "./Settings.styles";
@@ -18,6 +18,12 @@ function SettingsMenuSongGuesser({ active }) {
     setAutoNextQuestionDelayHover(prev => !prev);
   }
 
+  useEffect(() => {
+    if (skipVideo && !autoplay) {
+      toggleAutoplay()
+    }
+  }, [skipVideo])
+
   return (
     <StyledSettingsMenuSectionFlexbox>
       <StyledSettingsMenuSectionRow>
@@ -34,7 +40,7 @@ function SettingsMenuSongGuesser({ active }) {
         <StyledSettingsMenuBodyText>Auto Next Question Delay</StyledSettingsMenuBodyText>
         <StyledSettingsMenuSliderWrapper>
           <StyledSliderValue theme={theme} $visible={autoNextQuestionDelayHover}>{autoNextQuestionDelay}s</StyledSliderValue>
-          <StyledSettingsMenuSlider theme={theme} type="range" min="1" max="10" value={autoNextQuestionDelay} id="Auto Next Question Delay Slider" onChange={adjustAutoNextQuestionDelay} onMouseEnter={toggleAutoNextQuestionDelayHover} onMouseLeave={toggleAutoNextQuestionDelayHover}/>
+          <StyledSettingsMenuSlider theme={theme} type="range" min="2" max="10" value={autoNextQuestionDelay} id="Auto Next Question Delay Slider" onChange={adjustAutoNextQuestionDelay} onMouseEnter={toggleAutoNextQuestionDelayHover} onMouseLeave={toggleAutoNextQuestionDelayHover}/>
         </StyledSettingsMenuSliderWrapper>
       </StyledSettingsMenuSectionRow>
 

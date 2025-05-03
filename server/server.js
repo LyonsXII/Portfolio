@@ -74,6 +74,8 @@ app.post("/choices", async (req, res) => {
     console.log(err)
   }
 
+  console.log("excluded", excluded);
+  console.log(choices[0].id);
   // Adding correct / false to choices
   choices[0]["correct"] = true;
   for (let i = 1; i < choices.length; i++) {choices[i]["correct"] = false}

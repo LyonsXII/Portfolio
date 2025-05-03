@@ -64,3 +64,46 @@ export const fadeOut = keyframes`
 export const fadeOutAnimation = css`
   ${fadeOut} 1.2s ease-out both;
 `;
+
+export const slideOutLeft = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+`;
+
+export const slideOutLeftAnimation = css`
+  ${slideOutLeft} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
+export const slideOutRight = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+`;
+
+export const slideOutRightAnimation = css`
+  ${slideOutRight} 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+`;
+
+export const expandScoreBar = keyframes`
+  0% {
+    transform: translateX(-3vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+
+export const expandScoreBarAnimation = css`
+  ${expandScoreBar} 1s ease-out both;
+`;

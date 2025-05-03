@@ -1,8 +1,8 @@
 import styled, { css, createGlobalStyle } from 'styled-components';
 
-import { flicker, fadeInFastAnimation, fadeInSlowAnimation, fadeOutAnimation } from "./SongGuesserAnimations";
+import { flicker, fadeInFastAnimation, fadeInSlowAnimation, fadeOutAnimation, slideOutLeftAnimation, slideOutRightAnimation, expandScoreBarAnimation } from "./SongGuesserAnimations";
 
-import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideOutRightAnimation, slideInBottomAnimation } from '../../context/Animations';
+import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideInBottomAnimation } from '../../context/Animations';
 
 import ReplayIcon from "../../icons/replay.svg?react";
 import ReplayShadowIcon from "../../icons/replay-shadow.svg?react";
@@ -15,7 +15,7 @@ export const StyledSongGuesserContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
+  animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutLeftAnimation};
 `;
 
 export const StyledIntroContainer = styled.div`
@@ -116,7 +116,7 @@ export const StyledTextContainer = styled.div`
   justify-content: center;
   height: 120px;
   gap: 20px;
-  animation: ${ slideInLeftAnimation };
+  animation: ${({ $showAnswerExit}) => !$showAnswerExit ? slideInLeftAnimation : slideOutRightAnimation};
 `;
 
 export const StyledIcon = styled.svg`
@@ -190,6 +190,11 @@ export const StyledChoiceButton = styled.button`
   }
 `;
 
+export const StyledScoreWrapper = styled.div`
+  visibility: ${({ $display }) => $display ? "auto" : "hidden"};
+  animation: ${({ $display }) => $display && expandScoreBarAnimation}
+`
+
 export const StyledScoreFlexbox = styled.div`
   display: flex;
   flex-direction: column;
@@ -207,7 +212,7 @@ export const StyledScoreIncrement = styled.div`
     if ($mode === "0") return `max-height: calc(100% / (${$numQuestions} - 4));`
     else if ($mode === "1") {
       if ($transition) {
-        return `max-height: calc(100% / ${$numQuestions});`
+        return `max-height: calc(100% / (${$numQuestions} - 4));`
       } else {
         return "max-height: 100%; border-bottom: none;"
       }
@@ -243,7 +248,9 @@ export const StyledVideoMainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
+
+  animation: ${({ $showAnswerExit}) => !$showAnswerExit ? slideInLeftAnimation : slideOutRightAnimation};
 `;
 
 export const StyledVideoContainer = styled.div`
@@ -255,12 +262,6 @@ export const StyledVideoContainer = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 20px;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.6);
-
-  animation: ${({ $animationState }) => 
-    $animationState === "Enter" 
-      ? slideInLeftAnimation
-      : slideOutRightAnimation
-  };
 `;
 
 export const StyledVideoDivLeft = styled.div`
@@ -313,12 +314,6 @@ export const StyledVideoTextContainer = styled.div`
   gap: 40px;
   position: relative;
   overflow: hidden;
-
-  animation: ${({ $animationState }) => 
-    $animationState === "Enter" 
-      ? slideInLeftAnimation
-      : slideOutRightAnimation
-  };
 `;
 
 export const StyledVideoTextBox = styled.div`
@@ -327,8 +322,8 @@ export const StyledVideoTextBox = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  padding: 0px 4px;
-  margin: 0px -4px;
+  padding: 10px;
+  margin: 0px 0px;
   overflow: hidden;
 `;
 

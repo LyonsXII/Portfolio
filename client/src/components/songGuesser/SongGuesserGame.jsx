@@ -13,14 +13,14 @@ import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
 import { ThemeContext } from "../../context/ThemeContext";
 
-function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, setLose, endGame, gameOver, setGameOver, handleGameOver }) {
+function SongGuesserGame({ category, difficulty, mode, firstRound, score, setScore, lose, setLose, endGame, gameOver, setGameOver, handleGameOver }) {
   const { theme } = useContext(ThemeContext);
 
   const { volume, clickSound, victorySound, defeatSound } = useContext(AudioContext);
   const { autoplay, autoNextQuestion, autoNextQuestionDelay, skipVideo } = useContext(SettingsContext);
 
   const [roundData, setRoundData] = useState({
-    currentQuestion: -1,
+    currentQuestion: 1,
     choices: [{}],
     songInfo: {},
     excluded: [],
@@ -28,7 +28,7 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
     videoURL: ""
   });
   const [nextRoundData, setNextRoundData] = useState({
-    currentQuestion: 0,
+    currentQuestion: 1,
     choices: [{}],
     songInfo: {},
     excluded: [],
@@ -37,13 +37,14 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
   });
 
   const [scoreTransition, setScoreTransition] = useState(false);
+  const [showAnswerExit, setShowAnswerExit] = useState(false);
 
   const [showAnswer, setShowAnswer] = useState(false);
+  const [skipVideoText, setSkipVideoText] = useState(false);
   const nextQuestionTimeoutRef = useRef(null);
 
   const [numQuestions, setNumQuestions] = useState(Infinity);
   const [song, setSong] = useState(null);
-  const [firstRound, setFirstRound]= useState(false);
   const audioRef = useRef(null);
 
   // Fetch number of possible questions for category from database
@@ -78,7 +79,9 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
       const choicesPostData = {
         "category": category, 
         "difficulty": difficulty, 
-        "excluded": nextRoundData.excluded.length === 0 ? [] : nextRoundData.excluded
+        "excluded": roundData.currentQuestion === 1 
+          ? firstRound.excluded 
+          : nextRoundData.excluded
       };
       const response = await axios.post('http://localhost:5000/choices', choicesPostData);
 
@@ -91,12 +94,11 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
           currentQuestion: prev.currentQuestion + 1,
           choices: response.data,
           songInfo: {id: data.id, property: data.property, song_name: data.song_name, difficulty: data.difficulty},
-          excluded: !prev.excluded.includes(data.id) ? [...prev.excluded, data.id] : prev.excluded,
+          excluded: roundData.currentQuestion === 1 ? [...firstRound.excluded, data.id] : [...prev.excluded, data.id],
           songFilePath: data.location,
           videoURL: data.video_link
         }))
       }
-      if(!firstRound) {setFirstRound(true)}
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -135,6 +137,7 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
 
   // Game functionality
   function startGame() {
+    setRoundData(firstRound);
     setScore(0);
     getNumQuestions();
     fetchData();
@@ -156,36 +159,53 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
 
   function nextQuestionButton() {
     clearTimeout(nextQuestionTimeoutRef.current);
-    nextQuestion();
+    setShowAnswerExit(true);
+    setTimeout(() => {
+      nextQuestion();
+      setShowAnswerExit(false);
+    }, 500);
   }
 
   function handleAnswer(correct) {
     clickSound();
-    if (!showAnswer) {
-      if (correct) {
-        victorySound();
-        setScoreTransition(true);
-      } else {
-        defeatSound();
-        if (mode === "Sudden Death") {
-          setGameOver(true);
-          setLose(true);
-        }
-      }
-      setShowAnswer(true);
-      audioRef.current.pause();
+
+    if (showAnswer) return;
+
+    const correctMessages = ["Good job!", "Nice!", "Exactly right!", "Nice work!", "Bullseye!", "Nailed it!", "Sharp thinking!", "Spectacular!", "Boom! Correct!", "Tremendous effort!"];
+    const incorrectMessages = ["Close!", "Not quite...", "Bzzzzztt!", "Almost!", "Worth a try!", "Oops!", "Swing and a miss...", "Almost not wrong!"];
+    
+    function getRandomItem(array) {
+      return array[Math.floor(Math.random() * array.length)];
     }
+
+    if (correct) {
+      victorySound();
+      const message = getRandomItem(correctMessages);
+      setSkipVideoText(message);
+      setScoreTransition(true);
+    } else {
+      defeatSound();
+      const message = getRandomItem(incorrectMessages);
+      setSkipVideoText(message);
+      if (mode === "Sudden Death") {
+        setGameOver(true);
+        setLose(true);
+      }
+    }
+
+    // Play exit animation then show the answer
+    setShowAnswerExit(true);
+    setTimeout(() => {
+      setShowAnswer(true);
+      setShowAnswerExit(false);
+    }, 500);
+    audioRef.current.pause();
   }
 
-  // Fetch first set of questions on component load, then run next question
+  // Set initial config on game load
   useEffect(() => {
     startGame();
   }, []);
-  useEffect(() => {
-    if (firstRound) {
-      nextQuestion();
-    }
-  }, [firstRound]);
   // Set current song whenever a new set of choices is displayed
   useEffect(() => {
     if (roundData.songFilePath) {
@@ -199,6 +219,16 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
   // Automatically move onto next question after a short delay if auto next question toggled on in settings
   useEffect(() => {
     if (showAnswer && autoNextQuestion && !gameOver) {
+      // Trigger showAnswer exit animation
+      setTimeout(() => {
+        setShowAnswerExit(true);
+      }, (autoNextQuestionDelay * 1000) - 500); // 0.5 seconds
+
+      setTimeout(() => {
+        setShowAnswerExit(false);
+      }, autoNextQuestionDelay * 1000); // 0.5 seconds
+
+      // Move onto next question
       nextQuestionTimeoutRef.current = setTimeout(() => {
         nextQuestion()
       }, autoNextQuestionDelay * 1000);
@@ -229,18 +259,23 @@ function SongGuesserGame({ category, difficulty, mode, score, setScore, lose, se
 
     <StyledGameContainer>
       {showAnswer === false || !roundData.videoURL ? (
-        <StyledTextContainer>
+        <StyledTextContainer key="Guess" $showAnswerExit={showAnswerExit}>
           <StyledHeaderTitle theme={theme}>Guess the song...</StyledHeaderTitle>
           <StyledReplayShadowIcon onClick={() => playSong()} />
         </StyledTextContainer>
-      ) : (
-        !skipVideo && <SongGuesserVideo
-          url={roundData.videoURL}
-          nextQuestionButton={nextQuestionButton}
-          playSong={playSong}
-          name={roundData.songInfo.song_name}
-          property={roundData.songInfo.property}
-        />
+      ) : skipVideo ? (
+        <StyledTextContainer key="Skip" $showAnswerExit={showAnswerExit}>
+          <StyledHeaderTitle theme={theme}>{skipVideoText}</StyledHeaderTitle>
+        </StyledTextContainer>
+      ) : (        
+      <SongGuesserVideo
+        url={roundData.videoURL}
+        nextQuestionButton={nextQuestionButton}
+        playSong={playSong}
+        name={roundData.songInfo.song_name}
+        property={roundData.songInfo.property}
+        showAnswerExit={showAnswerExit}
+      />
       )}
 
       <StyledChoiceGrid>

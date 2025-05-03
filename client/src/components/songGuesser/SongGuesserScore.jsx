@@ -1,15 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledScoreFlexbox, StyledScoreIncrement, StyledBodyText } from "./SongGuesser.styles";
+import { StyledScoreWrapper, StyledScoreFlexbox, StyledScoreIncrement, StyledBodyText } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
 function SongGuesserScore({ score, transition, numQuestions }) {
   const { theme } = useContext(ThemeContext);
 
+  const [display, setDisplay] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDisplay(true);
+    }, 1000)
+  }, [])
+
   return (
-    <div>
+    <StyledScoreWrapper $display={display}>
       <StyledScoreFlexbox theme={theme}>
         {Array.from({ length: score }, (_, i) => (
           <StyledScoreIncrement theme={theme} key={i} $mode="0" $numQuestions={numQuestions}>
@@ -24,7 +32,7 @@ function SongGuesserScore({ score, transition, numQuestions }) {
             <StyledBodyText>{score + 2}</StyledBodyText>
         </StyledScoreIncrement>
       </StyledScoreFlexbox>
-    </div>
+    </StyledScoreWrapper>
   )
 }
 

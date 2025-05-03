@@ -6,7 +6,7 @@ import { AudioContext } from "../../context/AudioContext";
 
 import { StyledVideoMainContainer, StyledVideoContainer, StyledVideoDivLeft, StyledIframe, StyledVideoDivRight, StyledVideoButton, StyledVideoTextContainer, StyledVideoTextBox, StyledSubTitleScrolling, StyledMinorTitle, StyledNextSongIcon, StyledReplayIcon } from "./SongGuesser.styles";
 
-function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property }) {
+function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property, showAnswerExit }) {
   const { theme } = useContext(ThemeContext);
   const { clickSound } = useContext(AudioContext);
 
@@ -18,11 +18,8 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
   const [ellipsis, setEllipsis] = useState(true);
 
   function handleNextQuestionButton() {
-    setAnimationState("Exit");
     clickSound();
-    setTimeout(() => {
-      nextQuestionButton();
-    }, 500);
+    nextQuestionButton();
   }
 
   function handlePlaySong() {
@@ -45,8 +42,8 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
   }, [ellipsis]);
 
   return (
-    <StyledVideoMainContainer>
-      <StyledVideoContainer theme={theme} $animationState={animationState}>
+    <StyledVideoMainContainer $showAnswerExit={showAnswerExit}>
+      <StyledVideoContainer theme={theme}>
         <StyledVideoDivLeft>
           <StyledIframe src={url}/>
         </StyledVideoDivLeft>
@@ -59,7 +56,7 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property })
           </StyledVideoButton>
         </StyledVideoDivRight>
       </StyledVideoContainer>
-      <StyledVideoTextContainer $animationState={animationState}>
+      <StyledVideoTextContainer>
         <StyledVideoTextBox style={{flex: "0 1 auto"}}
           ref={containerRef} 
           onMouseEnter={() => {
