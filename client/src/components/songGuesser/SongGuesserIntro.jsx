@@ -14,7 +14,7 @@ function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficul
     <StyledIntroContainer>
         <StyledMainTitle>
           {"Song Guesser".split("").map((letter, index) => {
-            return <StyledMainTitleLetter theme={theme} key={index} $index={index}>{letter}</StyledMainTitleLetter>
+            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2,6,10]} $spaces={[4]}>{letter}</StyledMainTitleLetter>
           })
           }
         </StyledMainTitle>

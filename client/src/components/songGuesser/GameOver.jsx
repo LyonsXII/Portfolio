@@ -12,11 +12,11 @@ function GameOver({ gameOverAnimation, handleGameOver, lose, score }) {
     <StyledGameOverBackdrop $gameOverAnimation={gameOverAnimation} onClick={handleGameOver}>
         <StyledMainTitle>
           {lose && "Game Over".split("").map((letter, index) => {
-            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $gameOver={true} $gameOverAnimation={gameOverAnimation}>{letter}</StyledMainTitleLetter>
+            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2,7]} $spaces={[4]} $gameOver={true} $gameOverAnimation={gameOverAnimation}>{letter}</StyledMainTitleLetter>
           })
           }
           {!lose && "Round End".split("").map((letter, index) => {
-            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $gameOver={true} $gameOverAnimation={gameOverAnimation}>{letter}</StyledMainTitleLetter>
+            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2,7]} $spaces={[5]} $gameOver={true} $gameOverAnimation={gameOverAnimation}>{letter}</StyledMainTitleLetter>
           })
           }
         </StyledMainTitle>

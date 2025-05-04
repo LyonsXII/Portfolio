@@ -356,47 +356,45 @@ export const StyledMainTitle = styled.div`
 
 export const StyledMainTitleLetter = styled.h1`
   font-family: "Liberty";
+  color: ${({ theme }) => theme.tertiaryColor};
+  text-shadow: 
+    3px 3px 6px #000,
+    -3px -3px 6px #000,  
+    3px -3px 6px #000,
+    -3px 3px 6px #000,
+    3px 3px 6px #000,
+    0 0 2rem rgb(255, 255, 255);
 
-  ${({ $index, $gameOver, $gameOverAnimation, theme }) => {
-    if ($gameOver) {
-      if ($gameOverAnimation === "Entrance") {
-        return css`animation: ${fadeInSlowAnimation};`
-      } else if ($gameOverAnimation === "Exit") {
-        return css`animation: ${fadeOutAnimation};`
-      }
-    } 
-    
-    if (!$gameOver || ($gameOverAnimation != "Entrance" && $gameOverAnimation != "Exit")) {
-      if (![2, 6, 10].includes($index)) {
-        return css`
-          color: ${theme.tertiaryColor};
-          text-shadow: 
-            3px 3px 6px #000,
-            -3px -3px 6px #000,  
-            3px -3px 6px #000,
-            -3px 3px 6px #000,
-            3px 3px 6px #000,
-            0 0 2rem rgb(255, 255, 255);
-          }
-        `
-      }
+  ${({ $index, $faulty }) =>
+    Array.isArray($faulty) && $faulty.includes($index) && css`
+      color: ${({ theme }) => theme.primaryColor};
+      text-shadow: 
+        3px 3px 6px #000,
+        -3px -3px 6px #000,  
+        3px -3px 6px #000,
+        -3px 3px 6px #000,
+        3px 3px 6px #000,
+        0 0 2rem rgb(0, 0, 0);
+      transform: translate(-0.2rem, 1rem) rotate(10deg);
+      animation: ${({ theme }) => flicker(theme.tertiaryColour)} 2s ease-in-out infinite alternate;
+  `}
 
-      if ([2, 6, 10].includes($index)) {
-        return css`
-          color: ${theme.primaryColor};
-          text-shadow: 
-            3px 3px 6px #000,
-            -3px -3px 6px #000,  
-            3px -3px 6px #000,
-            -3px 3px 6px #000,
-            3px 3px 6px #000,
-            0 0 2rem rgb(0, 0, 0);
-          transform: translate(-0.2rem, 1rem) rotate(10deg);
-          animation: ${flicker(theme.tertiaryColour)} 2s ease-in-out infinite alternate;
-        `
-      } 
-}}}
-`
+  ${({ $index, $spaces }) =>
+    Array.isArray($spaces) && $spaces.includes($index) && css`
+      margin-left: 40px;
+  `}
+
+  ${({ $gameOver, $gameOverAnimation }) =>
+    $gameOver && $gameOverAnimation === "Entrance" && css`
+      animation: ${fadeInSlowAnimation};
+  `}
+
+  ${({ $gameOver, $gameOverAnimation }) =>
+    $gameOver && $gameOverAnimation === "Exit" && css`
+      animation: ${fadeOutAnimation};
+  `}
+`;
+
 
 export const StyledHeaderTitle = styled.h2`
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
