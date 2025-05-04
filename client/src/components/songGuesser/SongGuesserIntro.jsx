@@ -1,23 +1,26 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
 
+import ReturnButton from "../general/ReturnButton";
 import SongGuesserButton from "./SongGuesserButton";
 
 import { StyledIntroContainer, StyledMainTitle, StyledMainTitleLetter, StyledIntroFlexbox, StyledIntroGrid } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficulty, mode, updateMode, startGame }) {
+function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficulty, mode, updateMode, startGame, home }) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <StyledIntroContainer>
-        <StyledMainTitle>
-          {"Song Guesser".split("").map((letter, index) => {
-            return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2,6,10]} $spaces={[4]}>{letter}</StyledMainTitleLetter>
-          })
-          }
-        </StyledMainTitle>
+      <ReturnButton returnFunction={home}/>
+
+      <StyledMainTitle>
+        {"Song Guesser".split("").map((letter, index) => {
+          return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2,6,10]} $spaces={[4]}>{letter}</StyledMainTitleLetter>
+        })
+        }
+      </StyledMainTitle>
       
       <StyledIntroFlexbox>
         <StyledIntroGrid $position="First">

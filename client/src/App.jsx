@@ -51,9 +51,9 @@ function App() {
         <SettingsProvider>
           <Container>
             {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage} activateAuthorAnalysis={activateAuthorAnalysis} transition={transition}/> : null}
-            {songGuesserSection === true ? <SongGuesser transition={transition} setTransition={setTransition}/> : null}
-            {faradaySection === true ? <FaradayCage transition={transition}/> : null}
-            {authorAnalysisSection === true ? <AuthorAnalysis transition={transition} setTransition={setTransition}/> : null}
+            {songGuesserSection === true ? <SongGuesser transition={transition} setTransition={setTransition} home={home}/> : null}
+            {faradaySection === true ? <FaradayCage transition={transition} home={home}/> : null}
+            {authorAnalysisSection === true ? <AuthorAnalysis transition={transition} setTransition={setTransition} home={home}/> : null}
             <Settings home={home}/>
           </Container>
         </SettingsProvider>

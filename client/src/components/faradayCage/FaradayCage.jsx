@@ -2,14 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
-import { ThemeContext } from "../../context/ThemeContext";
-import { StyledFlexboxContainer, StyledChartContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledDiv, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
+import { StyledFlexboxContainer, StyledChartContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledTextBox, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
 
+import ReturnButton from "../general/ReturnButton";
 import FaradaySettingsRow from "./FaradaySettingsRow";
 import { Faraday } from "./faraday.js";
-import { initialData } from "./initialData";  // Faraday output for initial scenario
+import { initialData } from "./initialData";  // Faraday function output for initial scenario
 
-function FaradayCage({ transition }) {
+import { ThemeContext } from "../../context/ThemeContext";
+import { StyledTextContainer } from "../songGuesser/SongGuesser.styles";
+
+function FaradayCage({ transition, home }) {
   const { theme } = useContext(ThemeContext);
 
   const [plotData, setPlotData] = useState(initialData.uu);
@@ -128,6 +131,8 @@ function FaradayCage({ transition }) {
 
   return (
     <StyledFlexboxContainer $transition={transition}>
+      <ReturnButton returnFunction={home}/>
+
       <StyledChartContainer>
         <Plot
           data={[
@@ -234,10 +239,10 @@ function FaradayCage({ transition }) {
         <FaradaySettingsRow theme={theme} name="Radius of Disks" value={tempRadiusDisks} onClick={incrementRadiusDisks}/>
         <FaradaySettingsRow theme={theme} name="Shape" value={numSidesDict[numSides]} onClick={incrementNumSides}/>
         <StyledRowContainer>
-          <StyledDiv theme={theme}>
+          <StyledTextBox theme={theme}>
             <StyledTextH4>Heatmap?</StyledTextH4>
             <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}/>
-          </StyledDiv>
+          </StyledTextBox>
         </StyledRowContainer>
       </StyledButtonContainer>
 

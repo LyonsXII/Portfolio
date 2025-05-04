@@ -38,3 +38,36 @@ export const SpinnerItem = styled.div`
     animation-delay: ${-1.2 + $index * 0.1}s;
   `}
 `;
+
+export const StyledEndGameButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  top: 40px;
+  left: ${({ $left }) => $left || "40px"};
+  background-color: ${({ theme }) => theme.primaryColor};
+  border-radius: 20px;
+  border: 4px solid black;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(7, 3, 3, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    transform: scale(1.01);
+    transition: transform 0.2s ease, background-color 0.8s ease;
+  }
+`;
+
+export const StyledEndGameIcon = styled.img`
+  width: 90%;
+  transition: transform 0.5s ease-in-out;
+
+  &:hover {
+    transform: rotate(-36deg);
+  }
+`

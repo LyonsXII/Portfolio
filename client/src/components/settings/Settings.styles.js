@@ -248,7 +248,7 @@ export const StyledSettingsMenuSliderWrapper = styled.div`
 
 export const StyledSliderValue = styled.div`
   position: absolute;
-  top: 5px; /* move above slider */
+  top: 5px;
   left: 50%;
   transform: translateX(-50%);
   color: ${({ theme }) => theme.primaryColor};

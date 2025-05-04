@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import styled from 'styled-components';
 import axios from "axios";
 
-import SongGuesserEndGameButton from "./SongGuesserEndGameButton";
+import ReturnButton from "../General/ReturnButton";
 import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
@@ -255,7 +255,7 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
     <audio ref={audioRef} src={song} />
 
     {mode === "Regular" && <SongGuesserScore score={score} transition={scoreTransition} numQuestions={numQuestions}/>}
-    <SongGuesserEndGameButton endGame={endGame} mode={mode} />
+    <ReturnButton returnFunction={endGame} left={mode === "Regular" ? "calc(3vw + 44px)" : "40px"} />
 
     <StyledGameContainer>
       {showAnswer === false || !roundData.videoURL ? (

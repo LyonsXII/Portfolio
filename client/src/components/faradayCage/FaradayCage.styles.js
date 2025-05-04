@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { slideInTopAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 export const StyledFlexboxContainer = styled.div`
+  position: relative;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -47,6 +48,9 @@ export const StyledButton = styled.button`
   border-radius: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+          inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
   &:hover {
@@ -57,7 +61,30 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const StyledDiv = styled.div`
+export const StyledIncrementButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 60px;
+  padding: 0px;
+  border: 4px solid black;
+  border-radius: 40px;
+  background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    color: ${({ theme }) => theme.tertiaryColor};
+    transform: scale(1.01);
+    transition: transform 0.1s ease, background-color 0.8s ease;
+  }
+`;
+
+export const StyledTextBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,27 +98,10 @@ export const StyledDiv = styled.div`
   border-radius: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
-`;
-
-export const StyledIncrementButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60px;
-  width: 60px;
-  padding: 0px;
-  border: 4px solid black;
-  border-radius: 40px;
-  background-color: ${({ theme }) => theme.primaryColor};
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    color: ${({ theme }) => theme.tertiaryColor};
-    transform: scale(1.01);
-    transition: transform 0.1s ease, background-color 0.8s ease;
-  }
-`;
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+`
 
 export const StyledToggle = styled.input`
   // Hide default tickbox
@@ -100,26 +110,32 @@ export const StyledToggle = styled.input`
   -moz-appearance: none;
 
   width: 60px;
+  min-width: 60px;
   height: 30px;
-  background-color: ${({ theme }) => theme.secondaryColor};
+  background-color: ${({ theme }) => theme.tertiaryColor};
   border-radius: 50px;
   position: relative;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+              inset 0 -2px 2px rgba(0, 0, 0, 0.6);
 
   // Knob settings
   &::after {
     content: "";
     position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 24px;
-    height: 24px;
-    background-color: ${({ theme }) => theme.textColor};
+    top: 4px;
+    left: 6px;
+    width: 19px;
+    height: 19px;
+    background-color: ${({ theme }) => theme.primaryColor};
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.4), 
+                inset 0 2px 2px rgba(7, 3, 3, 0.3), 
+                inset 0 -4px 2px rgba(0, 0, 0, 0.6);
+    border: 1px solid black;
     border-radius: 50%;
     transition: 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
   // State when toggled off
@@ -138,8 +154,7 @@ export const StyledToggle = styled.input`
 
   // Hover effect
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 0px 16px black;
+    transform: scale(1.02);
   }
 `;
 
