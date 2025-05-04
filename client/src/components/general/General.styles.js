@@ -12,8 +12,8 @@ export const spinAnimation = keyframes`
 
 export const SpinnerContainer = styled.div`
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 20px;
+  right: 120px;
   color: currentColor;
   display: inline-block;
   width: 80px;

@@ -20,7 +20,6 @@ function AuthorAnalysis({ transition }) {
   const [showAuthorData, setShowAuthorData] = useState(false);
   const [showTopicGraph, setShowTopicGraph] = useState(false);
   const [showWordcloud, setShowWordcloud] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
 
   const [predictionExpanded, setPredictionExpanded] = useState(false);
   const [authorExpanded, setAuthorExpanded] = useState(false);

@@ -6,7 +6,8 @@ import { StyledFlexboxContainer, StyledChartContainer, StyledButtonContainer, St
 
 import ReturnButton from "../general/ReturnButton";
 import FaradaySettingsRow from "./FaradaySettingsRow";
-import { Faraday } from "./faraday.js";
+import FaradayWorker from "./faraday.worker.js?worker";
+import LoadingIcon from "../general/LoadingIcon.jsx"
 import { initialData } from "./initialData";  // Faraday function output for initial scenario
 
 import { ThemeContext } from "../../context/ThemeContext";
@@ -45,8 +46,10 @@ function FaradayCage({ transition, home }) {
   const numSidesDict = {3: "Triangle", 4: "Square", 5: "Pentagon", 6: "Hexagon", 7: "Septagon", 8: "Octagon", 360: "Circle"};
   const [heatmap, setHeatmap] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   // Update values used in plots
-  function setValues(uu, uu_heat, diskXValues, diskYValues, centerGradient) {
+  function updatePlotValues(uu, uu_heat, diskXValues, diskYValues, centerGradient) {
     // Values used in contour and heatmap plots
     const contour = [];
     const contour_heat = [];
@@ -76,10 +79,38 @@ function FaradayCage({ transition, home }) {
     setCenterGradient(centerGradient);
   }
 
-  // Generate heatmap data from xx, yy, uu
+  // Generate heatmap data from xx, yy, uu using using separate worker process
   function updateData() {
-    const { uu, uu_heat, diskXValues, diskYValues, centerGradient } = Faraday(numDisks, tempRadiusDisks, numSides);
-    setValues(uu, uu_heat, diskXValues, diskYValues, centerGradient);
+    setLoading(true);
+    const worker = new FaradayWorker();
+
+    worker.postMessage({
+      n: numDisks,
+      r: tempRadiusDisks,
+      sides: numSides 
+    })
+
+    worker.onmessage = (event) => {
+      const {
+        uu,
+        uu_heat,
+        diskXValues,
+        diskYValues,
+        centerGradient,
+      } = event.data;
+
+      // Update the UI state
+      updatePlotValues(
+        uu,
+        uu_heat,
+        diskXValues,
+        diskYValues,
+        centerGradient,
+      );
+
+      setLoading(false);
+      worker.terminate(); // Clean up the worker
+    };
   }
 
   function incrementNumDisks(direction) {
@@ -132,6 +163,7 @@ function FaradayCage({ transition, home }) {
   return (
     <StyledFlexboxContainer $transition={transition}>
       <ReturnButton returnFunction={home}/>
+      {loading && <LoadingIcon/>}
 
       <StyledChartContainer>
         <Plot
