@@ -383,15 +383,20 @@ export const StyledSettingsMenuButton = styled.button`
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 50px;
-  padding: 0px;
+  width: fit-content;
+  min-width: 140px;
+  padding: 10px 20px;
   border: 4px solid black;
   border-radius: 40px;
+  color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+        inset 0 -2px 2px rgba(0, 0, 0, 0.4);
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
+    background-color: ${({ theme }) => theme.tertiaryColor};
     color: ${({ theme }) => theme.tertiaryColor};
     transform: scale(1.01);
     transition: transform 0.1s ease, background-color 0.8s ease;
@@ -419,7 +424,7 @@ export const StyledSettingsMenuHeadingText = styled.h3`
 
 export const StyledSettingsMenuBodyText = styled.p`
   flex-grow: 1;
-  text-align: right;
+  text-align: ${({ $align }) => $align || "right"};
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledSettingsMenuSectionFlexbox, StyledSettingsMenuSectionRow, StyledSettingsMenuCheckbox, StyledSettingsMenuSliderWrapper, StyledSliderValue, StyledSettingsMenuSlider, StyledSettingsMenuButton, StyledSettingsMenuBodyText } from "./Settings.styles";
+import { StyledSettingsMenuSectionFlexbox, StyledSettingsMenuSectionRow, StyledSettingsMenuCheckbox, StyledSettingsMenuSliderWrapper, StyledSliderValue, StyledSettingsMenuSlider, StyledSettingsMenuBodyText } from "./Settings.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";

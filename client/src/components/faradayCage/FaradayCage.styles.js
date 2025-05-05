@@ -7,28 +7,40 @@ export const StyledFlexboxContainer = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   gap: 40px;
 
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
 
-export const StyledChartContainer = styled.div`
-  height: 85vh;
-  width: 40vw;
+export const StyledPlotContainer = styled.div`
+  aspect-ratio: 1 / 1;
+  height: auto;
+  min-height: 500px;
+  max-height: 80vh;
+  min-width: 500px;
+  max-width: 80vh;
+  margin: 10vh 0vh;
+  flex-grow: 1;
+  margin-left: 160px;
   border: 4px solid black;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
 `;
 
 export const StyledButtonContainer = styled.div`
-  height: 100vh;
-  width: auto;
-  margin-left: 6%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  height: fit-content;
+  max-height: 90vh;
+  width: fit-content;
+  gap: 30px;
+  margin-right: 160px;
 `;
 
 export const StyledRowContainer = styled.div`
@@ -48,7 +60,7 @@ export const StyledButton = styled.button`
   border-radius: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
-  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+  box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.4),
           inset 0 2px 4px rgba(255, 255, 255, 0.3), 
           inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
@@ -71,9 +83,9 @@ export const StyledIncrementButton = styled.button`
   border: 4px solid black;
   border-radius: 40px;
   background-color: ${({ theme }) => theme.primaryColor};
-  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+  box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.4),
             inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+            inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
   &:hover {

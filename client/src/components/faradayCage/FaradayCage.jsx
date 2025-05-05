@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Plot from 'react-plotly.js';
 
-import { StyledFlexboxContainer, StyledChartContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledTextBox, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
+import { StyledFlexboxContainer, StyledPlotContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledTextBox, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
 
 import ReturnButton from "../general/ReturnButton";
 import FaradaySettingsRow from "./FaradaySettingsRow";
@@ -12,9 +12,11 @@ import { initialData } from "./initialData";  // Faraday function output for ini
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { StyledTextContainer } from "../songGuesser/SongGuesser.styles";
+import { SettingsContext } from "../../context/SettingsContext";
 
 function FaradayCage({ transition, home }) {
   const { theme } = useContext(ThemeContext);
+  const { plotColour } = useContext(SettingsContext);
 
   const [plotData, setPlotData] = useState(initialData.uu);
   const [plotDataHeat, setPlotDataHeat] = useState(initialData.uu_heat);
@@ -165,7 +167,7 @@ function FaradayCage({ transition, home }) {
       <ReturnButton returnFunction={home}/>
       {loading && <LoadingIcon/>}
 
-      <StyledChartContainer>
+      <StyledPlotContainer>
         <Plot
           data={[
             // Heatmap
@@ -195,7 +197,7 @@ function FaradayCage({ transition, home }) {
               x: axisValues.xValues,
               y: axisValues.yValues,
               type: "contour",
-              colorscale: "Portland",
+              colorscale: plotColour,
               contours: {
                 coloring: "lines",
                 width: 3,
@@ -228,7 +230,7 @@ function FaradayCage({ transition, home }) {
             }
           ]}
           layout={{
-            autosize: true, 
+            autosize: true,
             title: { 
               text: "Faraday Cage in Two Dimensions",
               font: {
@@ -256,12 +258,13 @@ function FaradayCage({ transition, home }) {
               b: 70
             }
           }}
-          style={{ width: "100%", height: "100%" }}
+          config={{ displayModeBar: false, responsive: true }}
           useResizeHandler={true} 
+          style={{ width: "100%", height: "100%" }}
         />
-      </StyledChartContainer>
+      </StyledPlotContainer>
 
-      <StyledButtonContainer>
+      <StyledButtonContainer theme={theme}>
         <StyledTextH3>Configuration</StyledTextH3>
         <StyledTextH4 style={{marginTop: "-30px"}}>Center Gradient: {centerGradient}</StyledTextH4>
         <StyledButton theme={theme} onClick={() => {updateData(numDisks, radiusDisks, numSides)}}>

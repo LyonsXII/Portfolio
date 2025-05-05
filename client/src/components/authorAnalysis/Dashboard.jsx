@@ -80,6 +80,7 @@ function Dashboard({data, functional}) {
           <Plot 
             data={[predictedAuthorsPlotData]}
             layout={{
+              autosize: true,
               xaxis: {
                 title: "",
                 showgrid: false,

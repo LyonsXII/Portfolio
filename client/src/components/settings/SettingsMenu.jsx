@@ -10,6 +10,7 @@ import { StyledSettingsMenuBackground, StyledSettingsMenuFlexbox, StyledSettings
 import SettingsMenuHeaderElement from "./SettingsMenuHeaderElement";
 import SettingsMenuGeneral from "./SettingsMenuGeneral";
 import SettingsMenuSongGuesser from "./SettingsMenuSongGuesser";
+import SettingsMenuFaradayCage from "./SettingsMenuFaradayCage";
 
 function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
   const { theme } = useContext(ThemeContext);
@@ -37,6 +38,7 @@ function SettingsMenu({ settingsMenuHidden, toggleSettingsMenu }) {
         <StyledSettingsMenuTextContainer theme={theme}>
           {active === "General" && <SettingsMenuGeneral/>}
           {active === "Song Guesser" && <SettingsMenuSongGuesser/>}
+          {active === "Faraday Cage" && <SettingsMenuFaradayCage/>}
         </StyledSettingsMenuTextContainer>
       </StyledSettingsMenuContainer>
     </StyledSettingsMenuFlexbox>
