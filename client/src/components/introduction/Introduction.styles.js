@@ -317,7 +317,7 @@ export const StyledGallery = styled.div`
   
   display: grid;
   grid-template-columns: repeat(3,auto);
-  gap: 10px;
+  gap: calc(var(--s) / 22);
   position: relative;
 
   animation: ${bounceDownAnimation};
@@ -327,7 +327,7 @@ export const StyledInput = styled.input`
   position: absolute;
   border: 6px solid #000;
   border-radius: 50%;
-  width: calc(var(--s) / 1.25); /* Dynamically size */
+  width: calc(var(--s) / 1.25);
   height: calc(var(--s) / 1.25);
   cursor: pointer;
   --g: linear-gradient(#000 0 0) no-repeat;
@@ -372,10 +372,9 @@ export const StyledInput = styled.input`
   }
 
   &:checked ~ img {
-    transform: scale(1);
+    transform: translateY(-40px);
     filter: brightness(1);
     pointer-events: initial;
-    transform: translateY(-40px);
   }
 
   &:checked {
@@ -468,64 +467,63 @@ export const StyledGalleryImage = styled.img`
     transform: scale(0.1);
 
     &:nth-of-type(1) {
-    border-radius: 40px 0px 0px 0px;
-    --i: 1;
-    --x: 20%;
-    --y: 150%;
-  }
+      border-radius: 40px 0px 0px 0px;
+      --i: 1;
+      --x: 20%;
+      --y: 150%;
+    }
 
-  &:nth-of-type(2) {
-    --i: 2;
-    --x: -80%;
-    --y: 150%;
-  }
+    &:nth-of-type(2) {
+      --i: 2;
+      --x: -80%;
+      --y: 150%;
+    }
 
-  &:nth-of-type(3) {
-    border-radius: 0px 40px 0px 0px;
-    --i: 3;
-    --x: -180%;
-    --y: 150%;
-  }
+    &:nth-of-type(3) {
+      border-radius: 0px 40px 0px 0px;
+      --i: 3;
+      --x: -180%;
+      --y: 150%;
+    }
 
-  &:nth-of-type(4) {
-    --i: 4;
-    --x: 20%;
-    --y: 50%;
-  }
+    &:nth-of-type(4) {
+      --i: 4;
+      --x: 20%;
+      --y: 50%;
+    }
 
-  &:nth-of-type(5) {
-    --i: 5;
-    --x: -80%;
-    --y: 50%;
-  }
+    &:nth-of-type(5) {
+      --i: 5;
+      --x: -80%;
+      --y: 50%;
+    }
 
-  &:nth-of-type(6) {
-    --i: 6;
-    --x: -180%;
-    --y: 50%;
-  }
+    &:nth-of-type(6) {
+      --i: 6;
+      --x: -180%;
+      --y: 50%;
+    }
 
-  &:nth-of-type(7) {
-    border-radius: 0px 0px 0px 40px;
-    --i: 7;
-    --x: 20%;
-    --y: -50%;
-  }
+    &:nth-of-type(7) {
+      border-radius: 0px 0px 0px 40px;
+      --i: 7;
+      --x: 20%;
+      --y: -50%;
+    }
 
-  &:nth-of-type(8) {
-    --i: 8;
-    --x: -80%;
-    --y: -50%;
-  }
+    &:nth-of-type(8) {
+      --i: 8;
+      --x: -80%;
+      --y: -50%;
+    }
 
-  &:nth-of-type(9) {
-    border-radius: 0px 0px 40px 0px;
-    --i: 9;
-    --x: -180%;
-    --y: -50%;
-  }
-  `}
-
+    &:nth-of-type(9) {
+      border-radius: 0px 0px 40px 0px;
+      --i: 9;
+      --x: -180%;
+      --y: -50%;
+    }
+    `}
 `;
 
 export const StyledRowContainer = styled.div`

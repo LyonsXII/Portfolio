@@ -64,7 +64,7 @@ export const StyledEndGameButton = styled.button`
 `;
 
 export const StyledEndGameIcon = styled.img`
-  width: 90%;
+  width: 75%;
   transition: transform 0.5s ease-in-out;
 
   &:hover {

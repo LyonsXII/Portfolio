@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { colourSchemeA, colourSchemeB, colourSchemeC } from "./themes";
+import { colourSchemeA, colourSchemeB, colourSchemeC, colourSchemeD } from "./themes";
 
 const ThemeContext = createContext();
 
@@ -10,7 +10,7 @@ function ThemeProvider({ children }) {
   const [bgCount, setBgCount] = useState(1);
 
   function toggleTheme() {
-    setThemeCount(prevCount => (prevCount + 1) % 3);
+    setThemeCount(prevCount => (prevCount + 1) % 4);
     switch(themeCount) {
       case 0:
         setTheme(colourSchemeA);
@@ -20,6 +20,9 @@ function ThemeProvider({ children }) {
         break;
       case 2:
         setTheme(colourSchemeC);
+        break;
+      case 3:
+        setTheme(colourSchemeD);
         break;
       default:
         setTheme(colourSchemeA);

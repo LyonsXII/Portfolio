@@ -4,9 +4,10 @@ import { keyframes, css } from 'styled-components';
 import { media } from '../../context/media';
 
 import { slideInTopAnimation, slideOutRightAnimation } from '../../context/Animations';
-import { fadeInAnimation, fadeOutAnimation, slideInBottomAnimation, slideOutBottomAnimation } from './AuthorAnalysisAnimations';
+import { fadeInAnimation, delayedFadeInAnimation, fadeOutAnimation, slideInBottomAnimation, slideOutBottomAnimation } from './AuthorAnalysisAnimations';
 
 export const StyledFlexboxContainer = styled.div`
+  position: relative;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -54,7 +55,11 @@ export const StyledMainButton = styled.button`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+          inset 0 -6px 6px rgba(0, 0, 0, 0.6);
   z-index: 1;
   cursor: pointer;
 
@@ -62,7 +67,9 @@ export const StyledMainButton = styled.button`
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+    box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+        inset 0 6px 10px rgba(255, 255, 255, 0.3), 
+        inset 0 -10px 10px rgba(0, 0, 0, 0.6);
     transform: scale(1.02);
   }
 
@@ -159,9 +166,36 @@ export const StyledAuthorButtonContainer = styled.div`
   align-items: flex-start;
   background-color: ${({ theme }) => theme.secondaryColor};
   border-radius: 0px 20px 20px 0px;
-  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
-
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+          inset 0 -6px 6px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+  direction: ltr;
+  scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
+  scrollbar-width: thin;
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    margin-right: 200px;
+    background-color: #e4e4e4;
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: #8070d4;
+  }
 
   ${media.mobile`
     height: calc(34vw - 26px);
@@ -172,7 +206,7 @@ export const StyledAuthorButtonContainer = styled.div`
   ${media.desktop`
     height: 160px;
     margin-left: -75px;
-    padding: ${({$expanded}) => $expanded ? "10px 20px 10px 90px" : "0px"};
+    padding: ${({$expanded}) => $expanded ? "15px 20px 15px 90px" : "0px"};
     transition: max-width 1s ease, padding 1s ease;
     border: 4px solid black;
   `}
@@ -186,16 +220,20 @@ export const StyledAuthorButton = styled.button`
   width: 100%;
   background-color: ${({ theme, $selectedAuthor, $value }) => $selectedAuthor === $value ? theme.tertiaryColor : theme.primaryColor};
   border: 3px solid black;
-  border-radius: 20px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 4px 10px;
   box-sizing: border-box;
   color: ${({ theme }) => theme.textColor};
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
+          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+          inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   cursor: pointer;
-  box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
 
   &:hover {
     background-color: ${props => props.theme.secondaryColor};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
+            inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+            inset 0 -2px 2px rgba(0, 0, 0, 0.6);
     transform: scale(1.02);
     transition: transform 0.2s ease, background-color 0.8s ease;
   }
@@ -215,13 +253,17 @@ export const StyledIcon = styled.img`
   width: ${({ $width }) => $width};
 
   &:hover {
-    background-color: ${props => props.theme.secondaryColor};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+    background-color: ${({ theme }) => theme.secondaryColor};
+    transform: scale(1.08);
     transition: transform 0.2s ease;
   }
 
-  animation: ${fadeInAnimation};
+  animation: ${({ $expanded, $main }) => 
+    $main && $expanded ? fadeOutAnimation
+    : $main && !$expanded ? fadeInAnimation
+    : !$main && $expanded ? delayedFadeInAnimation
+    : fadeOutAnimation
+  };;
 `
 
 export const StyledGrid = styled.div`
@@ -273,6 +315,9 @@ export const StyledDataBox = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
+        inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+        inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   border-radius: 20px;
   box-sizing: border-box;
   grid-column: ${({ span }) => span};
@@ -304,12 +349,12 @@ export const StyledInfoButton = styled.button`
     border-radius: 50%;
     background-color: ${({ theme }) => theme.secondaryColor};
     box-sizing: border-box;
-    z-index: 1000;
+    z-index: 4;
     cursor: pointer;
 
     &:hover {
       background-color: ${({ theme }) => theme.tertiaryColor};
-      box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0px 10px rgba(255, 255, 255, 0.6);
       transform: scale(1.05);
       transition: transform 0.2s ease;
     }
@@ -342,16 +387,18 @@ export const StyledToolTip = styled.div`
   box-sizing: border-box;
   opacity: 1;
   transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-  z-index: 2;
-  white-space: pre-line
+  z-index: 3;
+  white-space: pre-line;
 `
 
 export const StyledBackdrop = styled.div`
   position: absolute;
   height: 100vh;
-  width: 112vw;
+  width: 100vw;
+  top: 0;
+  left: 0;
   background-color: black; 
-  z-index: 1;
+  z-index: 2;
   opacity: 0.8;
   pointer-events: none;
 `;
@@ -359,7 +406,10 @@ export const StyledBackdrop = styled.div`
 export const StyledPlotContainer = styled.div`
   border-radius: 20px;
   overflow: hidden;
-  background-color: white;
+  background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
+        inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+        inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   color: antiquewhite;
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 1),
             0px 0px 6px rgba(0, 0, 0, 1),
@@ -383,7 +433,7 @@ export const StyledPlotContainer = styled.div`
 export const StyledWordcloud = styled.img`
   height: 100%;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 14px;
   grid-row: span 3;
   box-sizing: border-box;
 
@@ -403,7 +453,11 @@ export const StyledTopicButton = styled.button`
   padding: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
+          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+          inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   border-radius: 20px;
+  cursor: pointer;
 
   ${media.mobile`
     border: 3px solid black;
@@ -416,7 +470,9 @@ export const StyledTopicButton = styled.button`
 
   &:hover {
   background-color: ${({ theme }) => theme.secondaryColor};
-  box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
+          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+          inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   }
 `
 
@@ -427,7 +483,7 @@ export const FullScreenBackground = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: black;
-  z-index: 1;
+  z-index: 2;
   opacity: 0.8;
 `
 
@@ -439,9 +495,7 @@ export const FullScreenContainer = styled.div`
   height: 90%;
   top: 5vh;
   left: 5vw;
-  border: 6px solid black;
-  border-radius: 20px;
-  background-color: white;
+  overflow: none;
   z-index: 2;
   
   ${media.mobile`

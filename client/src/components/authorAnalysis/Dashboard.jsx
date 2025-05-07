@@ -134,7 +134,7 @@ function Dashboard({data, functional}) {
 
       <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud}/>
 
-      <StyledPlotContainer span="span 3">
+      <StyledPlotContainer theme={theme} span="span 3">
         <Plot
           id="fleschVsLexicalPlot"
           data={[fleschVsLexicalPlotData]}
@@ -225,7 +225,7 @@ function Dashboard({data, functional}) {
         />
       </StyledPlotContainer>
 
-      <StyledPlotContainer span="span 2">
+      <StyledPlotContainer theme={theme} span="span 2">
         <Plot
           id="wordTypesPlot"
           data={[wordTypesPlotData]}

@@ -32,7 +32,7 @@ function MainButtons({ showData, authorProps, predictionProps}) {
     if (authorExpanded) {
       setTimeout(() => {
         setAuthorExpandedButtonAnimation(true);
-      }, 600);
+      }, 800);
     } else {
       setAuthorExpandedButtonAnimation(false);
     }
@@ -42,9 +42,9 @@ function MainButtons({ showData, authorProps, predictionProps}) {
     <StyledButtonsFlexbox $showData={showData}>
       <StyledTextEntryFlexbox $showData={showData} $expanded={authorExpanded}>
         <StyledMainButton theme={theme} onClick={authorExpanded ? undefined : toggleAuthorExpanded} $expanded={authorExpanded}>
-          <StyledIcon src="./icons/book.svg" $width="72px" $expanded={authorExpanded} $main={true}/>
-          <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={authorExpanded} onClick={handleAuthorReport}/>
-          <StyledIcon src="./icons/return.svg" $width="46px" $expanded={authorExpanded} onClick={toggleAuthorExpanded}/>
+          <StyledIcon src="./icons/book.svg" $width="50%" $expanded={authorExpanded} $main={true}/>
+          <StyledIcon src="./icons/next.svg" $width="70%" $expanded={authorExpanded} onClick={handleAuthorReport}/>
+          <StyledIcon src="./icons/return.svg" $width="70%" $expanded={authorExpanded} onClick={toggleAuthorExpanded}/>
         </StyledMainButton>
         <StyledAuthorButtonContainer theme={theme} $expanded={authorExpanded}>
           {authorList.map((author, index) => {
@@ -59,9 +59,9 @@ function MainButtons({ showData, authorProps, predictionProps}) {
 
       <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
         <StyledMainButton theme={theme} onClick={predictionExpanded ? undefined : togglePredictionExpanded} $expanded={predictionExpanded}>
-          <StyledIcon src="./icons/search.svg" $width="72px" $expanded={predictionExpanded} $main={true}/>
-          <StyledIcon src="./icons/nextSong.svg" $width="40px" $expanded={predictionExpanded} onClick={handlePrediction}/>
-          <StyledIcon src="./icons/return.svg" $width="46px" $expanded={predictionExpanded} onClick={togglePredictionExpanded}/>
+          <StyledIcon src="./icons/search.svg" $width="50%" $expanded={predictionExpanded} $main={true}/>
+          <StyledIcon src="./icons/next.svg" $width="70%" $expanded={predictionExpanded} onClick={handlePrediction}/>
+          <StyledIcon src="./icons/return.svg" $width="70%" $expanded={predictionExpanded} onClick={togglePredictionExpanded}/>
         </StyledMainButton>
         <StyledTextBox theme={theme} $expanded={predictionExpanded}>
           <StyledTextField theme={theme} value={predictionText} onChange={handleChange} placeholder="Enter your text here..."/>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 
+import ReturnButton from "../general/ReturnButton";
+import LoadingIcon from "../general/LoadingIcon.jsx"
 import MainButtons from "./MainButtons.jsx";
 import Dashboard from "./Dashboard.jsx";
 import TopicAnalysis from "./TopicAnalysis.jsx";
 import Wordcloud from "./Wordcloud.jsx";
-import LoadingIcon from "../general/LoadingIcon.jsx"
 
 import { toolTipText } from "./toolTipText.js";
 
@@ -13,7 +14,7 @@ import { ThemeContext } from "../../context/ThemeContext.jsx";
 
 import { StyledFlexboxContainer, StyledToolTip, StyledBackdrop, StyledBodyText } from './AuthorAnalysis.styles';
 
-function AuthorAnalysis({ transition }) {
+function AuthorAnalysis({ transition, home }) {
   const { theme } = useContext(ThemeContext);
 
   const [showData, setShowData] = useState(false);
@@ -21,8 +22,8 @@ function AuthorAnalysis({ transition }) {
   const [showTopicGraph, setShowTopicGraph] = useState(false);
   const [showWordcloud, setShowWordcloud] = useState(false);
 
-  const [predictionExpanded, setPredictionExpanded] = useState(false);
   const [authorExpanded, setAuthorExpanded] = useState(false);
+  const [predictionExpanded, setPredictionExpanded] = useState(false);
 
   const [predictionText, setPredictionText] = useState("");
   const [selectedAuthor, setSelectedAuthor] = useState("Custom");
@@ -420,10 +421,13 @@ function AuthorAnalysis({ transition }) {
   }, []);
 
   return (
-    <div>
+    <StyledFlexboxContainer $transition={transition}>
+      <ReturnButton returnFunction={home}/>
+      {loading && <LoadingIcon/>}
+
       {showTopicGraph && <TopicAnalysis toggleTopicGraph={toggleTopicGraph} topicAnalysisFile={topicAnalysisFile}/>}
       {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={wordcloudUrl}/>}
-      {loading && <LoadingIcon/>}
+
       {hoverText.text != "" && 
       <div>
           <StyledToolTip theme={theme} $hoverText={hoverText}>
@@ -435,46 +439,43 @@ function AuthorAnalysis({ transition }) {
       </div>
       }
 
-      <StyledFlexboxContainer $transition={transition}>
-        <MainButtons 
-          showData={showData} 
-          authorProps={{
-            authorList,
-            selectedAuthor,
-            changeSelectedAuthor,
-            authorExpanded,
-            toggleAuthorExpanded,
-            handleAuthorReport
-          }}
-          predictionProps={{
-            predictionExpanded,
-            togglePredictionExpanded,
-            handleChange,
-            handlePrediction,
-            predictionText
-          }}
-        />
+      <MainButtons 
+        showData={showData} 
+        authorProps={{
+          authorList,
+          selectedAuthor,
+          changeSelectedAuthor,
+          authorExpanded,
+          toggleAuthorExpanded,
+          handleAuthorReport
+        }}
+        predictionProps={{
+          predictionExpanded,
+          togglePredictionExpanded,
+          handleChange,
+          handlePrediction,
+          predictionText
+        }}
+      />
 
-        <Dashboard
-          data={{
-            showData,
-            reportData,
-            predictedAuthorsPlotData,
-            fleschVsLexicalPlotData,
-            wordTypesPlotData,
-            wordcloudUrl
-          }}
-          functional={{
-            toggleTopicGraph,
-            toggleWordcloud,
-            hoverText,
-            handleHoverText,
-            predictionExpanded
-          }}
-        />
-      </StyledFlexboxContainer>
-
-    </div>
+      <Dashboard
+        data={{
+          showData,
+          reportData,
+          predictedAuthorsPlotData,
+          fleschVsLexicalPlotData,
+          wordTypesPlotData,
+          wordcloudUrl
+        }}
+        functional={{
+          toggleTopicGraph,
+          toggleWordcloud,
+          hoverText,
+          handleHoverText,
+          predictionExpanded
+        }}
+      />
+    </StyledFlexboxContainer>
   )
 }
 

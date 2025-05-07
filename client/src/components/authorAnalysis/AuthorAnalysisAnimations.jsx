@@ -10,7 +10,23 @@ const fadeIn = keyframes`
 `;
 
 export const fadeInAnimation = css`
-  ${fadeIn} 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  ${fadeIn} 0.6s ease both;
+`;
+
+const delayedFadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+export const delayedFadeInAnimation = css`
+  ${delayedFadeIn} 0.6s ease both;
 `;
 
 const fadeOut = keyframes`

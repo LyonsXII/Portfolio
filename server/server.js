@@ -4,8 +4,10 @@ import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import cors from "cors";
 import pg from "pg";
-import env from "dotenv";
 import path from 'path';
+
+import dotenv from 'dotenv';
+dotenv.config({ path: "../.env" });
 
 const app = express();
 const port = 5000;
@@ -16,7 +18,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "172.31.192.1",
   database: "Song_Data",
-  password: "Serpentarius1859",
+  password: process.env.DB_Password,
   port: 5432
   });
 
