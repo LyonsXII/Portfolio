@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import styled from 'styled-components';
 import axios from "axios";
 
-import ReturnButton from "@components/General/ReturnButton";
+import ReturnButton from "..//general/ReturnButton";
 import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
