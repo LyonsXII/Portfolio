@@ -11,13 +11,19 @@ import DownloadIcon from "../../icons/download.svg?react";
 
 export const StyledContentContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
+  height: 100vh;
   width: 100vw;
 
   ${media.mobile`
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  `}
+
+  ${media.desktop`
+    align-items: flex-start;
+    justify-content: flex-start;
   `}
 `;
 
@@ -247,19 +253,22 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   margin: 0;
   box-sizing: border-box;
+  // border: 1px solid red;
 
   ${media.mobile`
+    height: 100%;
     width: 100%;
-    align-items: flex-start;
-    justify-content: center;
-    height: 100vh;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 10px;
 
-    max-height: ${({ $expandIntroText }) => $expandIntroText ? "56%" : "20%"};
+    max-height: ${({ $expandIntroText }) => $expandIntroText ? "62%" : "20%"};
     transition: max-height 0.5s ease-in-out;
   `}
 
   ${media.desktop`
-    height: 84vh;
+    height: 100vh;
     width: 100%;
     align-items: ${({ $current }) => $current == 0 ? "flex-end" : "flex-start"};
     justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
@@ -296,24 +305,28 @@ export const StyledIntroButton = styled.button`
 
 export const StyledGalleryContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-right: 130px;
+  // border: 1px solid yellow;
 
   ${media.mobile`
+    justify-content: center;
+    height: fit-content;
     width: 100%;
+    margin-bottom: ${({ $current }) => $current == 0 ? "4vh" : "0vh"};
   `}
 
   ${media.desktop`
+    justify-content: flex-start;
+    align-items: center;
     height: 100vh;
     width: fit-content;
+    margin-right: 130px;
     margin-left: ${({ $current }) => $current == 0 ? "3vw" : "0vw"};
   `}
 `;
 
 /* Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/" */
 export const StyledGallery = styled.div`
-  --s: 18vh; // Gallery image size
+  --s: 18vh;
   
   display: grid;
   grid-template-columns: repeat(3,auto);
@@ -347,8 +360,7 @@ export const StyledInput = styled.input`
     left: calc(50% - var(--s) / 2.5);
 
     &:checked {
-      border: 8px solid #000;
-      transform: translateY(calc(0.925 * var(--s))) scale(0.5) rotate(45deg);
+      transform: translateX(calc(-0.78 * var(--s) - 20px)) scale(0.5) rotate(45deg);
       --b: 70%;
     }
   `}
@@ -358,7 +370,6 @@ export const StyledInput = styled.input`
     left: 0;
 
     &:checked {
-      border: 8px solid #000;
       transform: translateX(calc(1.25 * var(--s))) translateY(calc(1.85 * var(--s))) scale(0.5) rotate(45deg);
       --b: 70%;
     }
@@ -372,7 +383,7 @@ export const StyledInput = styled.input`
   }
 
   &:checked ~ img {
-    transform: translateY(-40px);
+    transform: translateX(40px);
     filter: brightness(1);
     pointer-events: initial;
   }
@@ -403,62 +414,62 @@ export const StyledGalleryImage = styled.img`
     transform: scale(0.2);
 
     &:nth-of-type(1) {
-    border-radius: 40px 0px 0px 0px;
-    --i: 1;
-    --x: 150%;
-    --y: 150%;
-  }
+      border-radius: 40px 0px 0px 0px;
+      --i: 1;
+      --x: 150%;
+      --y: 150%;
+    }
 
-  &:nth-of-type(2) {
-    --i: 2;
-    --x: 50%;
-    --y: 150%;
-  }
+    &:nth-of-type(2) {
+      --i: 2;
+      --x: 50%;
+      --y: 150%;
+    }
 
-  &:nth-of-type(3) {
-    border-radius: 0px 40px 0px 0px;
-    --i: 3;
-    --x: -50%;
-    --y: 150%;
-  }
+    &:nth-of-type(3) {
+      border-radius: 0px 40px 0px 0px;
+      --i: 3;
+      --x: -50%;
+      --y: 150%;
+    }
 
-  &:nth-of-type(4) {
-    --i: 4;
-    --x: 150%;
-    --y: 50%;
-  }
+    &:nth-of-type(4) {
+      --i: 4;
+      --x: 150%;
+      --y: 50%;
+    }
 
-  &:nth-of-type(5) {
-    --i: 5;
-    --x: 50%;
-    --y: 50%;
-  }
+    &:nth-of-type(5) {
+      --i: 5;
+      --x: 50%;
+      --y: 50%;
+    }
 
-  &:nth-of-type(6) {
-    --i: 6;
-    --x: -50%;
-    --y: 50%;
-  }
+    &:nth-of-type(6) {
+      --i: 6;
+      --x: -50%;
+      --y: 50%;
+    }
 
-  &:nth-of-type(7) {
-    border-radius: 0px 0px 0px 40px;
-    --i: 7;
-    --x: 150%;
-    --y: -50%;
-  }
+    &:nth-of-type(7) {
+      border-radius: 0px 0px 0px 40px;
+      --i: 7;
+      --x: 150%;
+      --y: -50%;
+    }
 
-  &:nth-of-type(8) {
-    --i: 8;
-    --x: 50%;
-    --y: -50%;
-  }
+    &:nth-of-type(8) {
+      --i: 8;
+      --x: 50%;
+      --y: -50%;
+    }
 
-  &:nth-of-type(9) {
-    border-radius: 0px 0px 40px 0px;
-    --i: 9;
-    --x: -50%;
-    --y: -50%;
-  }
+    &:nth-of-type(9) {
+      border-radius: 0px 0px 40px 0px;
+      --i: 9;
+      --x: -50%;
+      --y: -50%;
+    }
   `}
 
   ${media.desktop`

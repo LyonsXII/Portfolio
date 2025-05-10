@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 
 const sizes = {
   mobile: '768px',
-  desktop: '1200px',
+  desktop: "769px"
 };
 
 export const media = {
