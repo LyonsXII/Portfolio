@@ -18,8 +18,8 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
   const [showSubTitle, setShowSubTitle] = useState(false);
   const [subTitleEntranceComplete, setSubTitleEntranceComplete] = useState(false);
   const [expandIntroText, setExpandIntroText] = useState(false);
-  const [introBodyTextAnimationActive, setIntroBodyTextAnimationActive] = useState("none");
   const [galleryAnimationComplete, setGalleryAnimationComplete] = useState(false);
+  const [collapseIntroText, setCollapseIntroText] = useState(false);
 
   const sectionData = [
     { id: 1, title: "Song Guesser", textA: text.songGuesserText1A, textB: text.songGuesserText1B, textC: text.songGuesserText1C, textD: text.songGuesserText1D, textImgA: text.songGuesserText1ImgA, textImgB: text.songGuesserText1ImgB, layout: "A", reverse: false, imgA: "/images/Song Guesser - 001.jpg" },
@@ -86,14 +86,20 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
   }
 
   function changeInitialSection(e) {
-    if (initialSection == "None") {
-      setInitialSection(e.target.value)
+    if (initialSection === "None") {
+      setCollapseIntroText(true);
+      setInitialSection(e.target.value);
     } else {
-      setInitialSection("None");
-      if (initialSection != e.target.value) {
+      if (initialSection === e.target.value) {
+        setInitialSection("None")
+        setCollapseIntroText(false);  
+      } else {
+        setInitialSection("None");
         setTimeout(() => {setInitialSection(e.target.value)}, 800);
       }
     }
+    
+
   }
 
   // Time allowed insertion of subtitle to animation completion, avoids jarring title movement
@@ -101,7 +107,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
 
   return (
     <StyledContentContainer>
-      <IntroTextInitial id={0} title="Portfolio" text={text.introText} current={current} tempCurrent={tempCurrent} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} introBodyTextAnimationActive={introBodyTextAnimationActive} initialSection={initialSection} setInitialSection={setInitialSection} changeInitialSection={changeInitialSection}/>
+      <IntroTextInitial id={0} title="Portfolio" text={text.introText} current={current} tempCurrent={tempCurrent} showSubTitle={showSubTitle} subTitleEntranceComplete={subTitleEntranceComplete} expandIntroText={expandIntroText} initialSection={initialSection} setInitialSection={setInitialSection} changeInitialSection={changeInitialSection} collapseIntroText={collapseIntroText}/>
       
       {sectionData.map((section) => (
         <IntroText

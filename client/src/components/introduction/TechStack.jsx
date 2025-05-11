@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from 'styled-components';
 
-import { StyledSectionFlexbox, StyledSectionHeadingsFlexbox, StyledSectionRowFlexbox, StyledTechPairFlexbox, StyledTechIcon, StyledHeadingText, StyledBodyText } from "./Introduction.styles";
+import { StyledSectionFlexbox, StyledSectionHeadingsFlexbox, StyledSectionRowTechStackFlexbox, StyledTechPairFlexbox, StyledTechIcon, StyledHeadingText, StyledBodyText } from "./Introduction.styles";
 
 import { StyledPythonIcon, StyledJavascriptIcon, StyledHTMLIcon, StyledCSSIcon, StyledReactIcon, StyledEJSIcon, StyledBootstrapIcon, StyledMaterialUIIcon, StyledNodeJSIcon, StyledExpressIcon, StyledFlaskIcon, StyledGitIcon, StyledPostgresqlIcon, StyledVSCodeIcon, StyledPyCharmIcon, StyledPostmanIcon, StyledJupyterIcon } from "./TechStack.styles";
 
@@ -13,7 +13,7 @@ function TechStack({ initialSection }) {
   return (
     <StyledSectionFlexbox $initialSection={initialSection} $sectionName="Tech Stack">
       <StyledSectionHeadingsFlexbox theme={theme}>
-        <StyledSectionRowFlexbox>
+        <StyledSectionRowTechStackFlexbox>
           <StyledHeadingText>Languages:</StyledHeadingText>
           <StyledTechPairFlexbox>
             <StyledBodyText>Javascript</StyledBodyText>
@@ -23,9 +23,9 @@ function TechStack({ initialSection }) {
             <StyledBodyText>Python</StyledBodyText>
             <StyledPythonIcon/>
           </StyledTechPairFlexbox>
-        </StyledSectionRowFlexbox>
+        </StyledSectionRowTechStackFlexbox>
 
-        <StyledSectionRowFlexbox>
+        <StyledSectionRowTechStackFlexbox>
           <StyledHeadingText>Front End:</StyledHeadingText>
           <StyledTechPairFlexbox>
             <StyledBodyText>HTML</StyledBodyText>
@@ -51,9 +51,9 @@ function TechStack({ initialSection }) {
             <StyledBodyText>EJS</StyledBodyText>
             <StyledEJSIcon/>
           </StyledTechPairFlexbox>
-        </StyledSectionRowFlexbox>
+        </StyledSectionRowTechStackFlexbox>
 
-        <StyledSectionRowFlexbox>
+        <StyledSectionRowTechStackFlexbox>
           <StyledHeadingText>Back End:</StyledHeadingText>
           <StyledTechPairFlexbox>
             <StyledBodyText>Node.js</StyledBodyText>
@@ -67,9 +67,9 @@ function TechStack({ initialSection }) {
             <StyledBodyText>Flask</StyledBodyText>
             <StyledFlaskIcon/>
           </StyledTechPairFlexbox>
-        </StyledSectionRowFlexbox>
+        </StyledSectionRowTechStackFlexbox>
 
-        <StyledSectionRowFlexbox>
+        <StyledSectionRowTechStackFlexbox>
           <StyledHeadingText>Tools & Platforms:</StyledHeadingText>
           <StyledTechPairFlexbox>
             <StyledBodyText>Git</StyledBodyText>
@@ -95,7 +95,7 @@ function TechStack({ initialSection }) {
             <StyledBodyText>PyCharm</StyledBodyText>
             <StyledPyCharmIcon/>
           </StyledTechPairFlexbox>
-        </StyledSectionRowFlexbox>
+        </StyledSectionRowTechStackFlexbox>
       </StyledSectionHeadingsFlexbox>
     </StyledSectionFlexbox>
   )

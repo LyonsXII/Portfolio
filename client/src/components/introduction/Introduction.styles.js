@@ -18,7 +18,6 @@ export const StyledContentContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
   `}
 
   ${media.desktop`
@@ -66,17 +65,49 @@ export const StyledIntroContentContainer = styled.div`
 `;
 
 export const StyledIntroInitialContentContainer = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: flex-end;
   width: 100%;
-  margin-top: 40px;
-  gap: 20px;
   max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
   opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
-  transition: max-height 2s ease, opacity 2s ease;
-  overflow: hidden;
+  transition: max-height 1.4s ease, opacity 1.4s ease;
+
+  ${media.mobile`
+    flex-direction: column-reverse;
+  `}
+
+  ${media.desktop`
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scroll-behavior: smooth;
+    direction: ltr;
+    scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
+    scrollbar-width: thin;
+
+    ::-webkit-scrollbar {
+      width: 20px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #e4e4e4;
+      border-radius: 100px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 100px;
+      border: 6px solid rgba(0, 0, 0, 0.18);
+      border-left: 0;
+      border-right: 0;
+      background-color: #8070d4;
+    }
+  `}
 `;
 
 export const StyledTechIcon = styled.div`
@@ -91,12 +122,20 @@ export const StyledTechIcon = styled.div`
 
 export const StyledSectionFlexbox = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
   max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "250px" : "0px"};
   opacity: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1" : "0"};
   transition: max-height 1s ease, opacity 1s ease;
   overflow: hidden;
+
+  ${media.mobile`
+    justify-content: center;
+    align-items: flex-start;
+  `}
+
+  ${media.desktop`
+    justify-content: flex-end;
+    align-items: flex-start;
+  `}
 `
 
 export const StyledSectionHeadingsFlexbox = styled.div`
@@ -105,9 +144,8 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   justify-content: flex-start;
   align-items: flex-end;
   height: 230px;
-  width: 100%;
   margin-top: 20px;
-  gap: 30px;
+
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -132,20 +170,69 @@ export const StyledSectionHeadingsFlexbox = styled.div`
     border-right: 0;
     background-color: #8070d4;
   }
+
+  ${media.mobile`
+    width: 90%;
+    gap: 20px;
+  `}
+
+  ${media.desktop`
+    width: 100%;
+    gap: 30px;
+  `}
 `
 
 export const StyledSectionRowFlexbox = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   height: fit-content;
   margin-top: ${({ $marginTop }) => $marginTop || "0px"};
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
-  width: 90%;
-  row-gap: 20px;
-  column-gap: 40px;
-  padding-right: 10px;
+  box-sizing: border-box;
+
+  ${media.mobile`
+    gap: 10px;
+    padding: 0px 20px;
+    margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
+    max-height: ${({ $collapse }) => $collapse ? "0px" : "160px"};
+    transition: max-height 1s ease, opacity 1s ease;
+    overflow: hidden;
+  `}
+
+  ${media.desktop`
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+    padding-right: 10px;
+    row-gap: 20px;
+    column-gap: 40px;
+  `}
+`
+
+export const StyledSectionRowTechStackFlexbox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: fit-content;
+  box-sizing: border-box;
+
+  ${media.mobile`
+    row-gap: 0px;
+    column-gap: 10px;
+    transition: max-height 1s ease, opacity 1s ease;
+  `}
+
+  ${media.desktop`
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+    padding-right: 10px;
+    row-gap: 20px;
+    column-gap: 40px;
+  `}
 `
 
 export const StyledSectionRowTextFlexbox = styled.div`
@@ -200,7 +287,15 @@ export const StyledTechPairFlexbox = styled.div`
   align-items: center;
   height: fit-content;
   width: fit-content;
-  gap: 20px;
+
+
+  ${media.mobile`
+    gap: 0px;
+  `}
+
+  ${media.desktop`
+    gap: 20px;
+  `}
 `
 
 export const StyledContentFlexbox = styled.div`
@@ -253,7 +348,6 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   margin: 0;
   box-sizing: border-box;
-  // border: 1px solid red;
 
   ${media.mobile`
     height: 100%;
@@ -280,32 +374,63 @@ export const StyledIntroContainer = styled.div`
   };
 `;
 
+export const StyledIntroButtonContainer = styled.div`
+  display: flex;
+  height: fit-content;
+  margin-top: ${({ $marginTop }) => $marginTop || "0px"};
+  margin-right: ${({ $marginRight }) => $marginRight || "20px"};
+
+  ${media.mobile`
+    justify-content: center;
+    width: 100%;
+  `}
+
+  ${media.desktop`
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 90%;
+    padding-right: 10px;
+    row-gap: 20px;
+    column-gap: 40px;
+  `}
+`;
+
+
 export const StyledIntroButton = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 3px solid black;
-  border-radius: 20px;
+
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
               inset 0 2px 4px rgba(7, 3, 3, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
   cursor: pointer;
 
-  &:hover {
-    background-color: ${props => props.theme.secondaryColor};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
-              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-  }
+  ${media.mobile`
+    padding: 10px;
+    max-width: 30%;
+  `}
+
+  ${media.desktop`
+    padding: 20px;
+    border-radius: 20px;
+
+    &:hover {
+      background-color: ${props => props.theme.secondaryColor};
+      box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+                inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+    }
+  `}
 `
 
 export const StyledGalleryContainer = styled.div`
   display: flex;
-  // border: 1px solid yellow;
 
   ${media.mobile`
     justify-content: center;
@@ -676,22 +801,6 @@ export const StyledTitleButtonContainer = styled.div`
   }
 `
 
-export const StyledIntroButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
-
-  ${media.mobile`
-    margin-top: 1vh;
-    gap: 10px;
-  `}
-
-  ${media.desktop`
-    margin-top: 1vh;
-    gap: 30px;
-  `}
-`;
-
 export const StyledSVG = styled.svg`
   ${media.mobile`
     height: 40px;
@@ -716,7 +825,6 @@ export const StyledMainTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    margin-top: 4%;
     font-size: 5rem;
   `}
 
@@ -756,7 +864,7 @@ export const StyledMinorTitleInitial = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-  font-size: 2rem;
+    font-size: 2rem;
   `}
 
   ${media.desktop`
@@ -796,9 +904,17 @@ export const StyledHeadingText = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
 
-  font-size: 2rem;
+
   color: ${({ theme }) => theme.textColor};
   pointer-events: none;
+
+  ${media.mobile`
+    font-size: 1.4rem;
+  `}
+
+  ${media.desktop`
+    font-size: 2rem;
+  `}
 `;
 
 export const StyledBodyTextInitialText = styled.p`
@@ -810,18 +926,10 @@ export const StyledBodyTextInitialText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    margin-top: 10%;
-    padding: 0% 4% 0% 4%;
     text-align: center;
     font-size: 1.2rem;
-
-    animation: ${({ $introBodyTextAnimationActive }) => 
-      $introBodyTextAnimationActive === "Entrance" 
-        ? slideInBottomIntroAnimationMobile 
-      : $introBodyTextAnimationActive === "Exit" 
-          ? slideOutBottomIntroAnimationMobile
-      : "none"
-    };
+    opacity: ${({ $collapse }) => $collapse ? "0" : "1"};
+    transition: opacity 1s ease;
   `}
 
   ${media.desktop`
@@ -841,8 +949,7 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    width: calc(100% - 40px);
-    margin-top: 20px;
+    width: 100%;
     font-size: 1.2rem;
   `}
 

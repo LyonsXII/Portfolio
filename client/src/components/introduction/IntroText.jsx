@@ -8,7 +8,7 @@ import IntroLayoutA from "./IntroLayoutA";
 import IntroLayoutB from "./IntroLayoutB";
 import IntroLayoutC from "./IntroLayoutC";
 
-import { StyledIntroContentContainer, StyledContentFlexbox, StyledContentInteriorFlexbox, StyledTitle, StyledMinorTitle, StyledBodyText, StyledImageWrapper, StyledShadowOverlay, StyledImage, StyledTitleFlexbox, StyledTitleContainer, StyledTitleButtonContainer, StyledIntroButtonContainer, StyledButtonsContainer, StyledIntroContainer, StyledSVG, StyledNextIcon } from "./Introduction.styles";
+import { StyledIntroContentContainer, StyledContentFlexbox, StyledContentInteriorFlexbox, StyledTitle, StyledMinorTitle, StyledBodyText, StyledImageWrapper, StyledShadowOverlay, StyledImage, StyledTitleFlexbox, StyledTitleContainer, StyledTitleButtonContainer, StyledButtonsContainer, StyledIntroContainer, StyledSVG, StyledNextIcon } from "./Introduction.styles";
 
 function IntroText({ id, title, textA, textB, textC, textD, textImgA, textImgB, layout, reverse, links, current, tempCurrent, changeSection, $expandIntroText, imgA }) {
   const { theme } = useContext(ThemeContext);
