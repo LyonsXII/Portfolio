@@ -11,7 +11,7 @@ function Interests({ initialSection }) {
 
   return (
     <StyledSectionFlexbox $initialSection={initialSection} $sectionName="Interests">
-      <StyledSectionRowTextFlexbox theme={theme} $marginRight="0px" $marginTop="20px">
+      <StyledSectionRowTextFlexbox theme={theme} $marginRight="0px" $marginTop="20px" $marginTopMobile="0px">
         <StyledBodyTextInitialText>{text.interestsA}</StyledBodyTextInitialText>
         <StyledBodyTextInitialText>{text.interestsB}</StyledBodyTextInitialText>
         <StyledBodyTextInitialText>{text.interestsC}</StyledBodyTextInitialText>

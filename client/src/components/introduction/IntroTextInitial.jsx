@@ -28,7 +28,7 @@ function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle,
               {text}
             </StyledBodyTextInitialText>
           </StyledSectionRowFlexbox>
-          <StyledIntroButtonContainer $initialSection={initialSection} $collapse={false} $marginTop="20px" $marginTopMobile="0px" $marginRight="0px">
+          <StyledIntroButtonContainer $initialSection={initialSection} $collapse={collapseIntroText} $marginTop="20px" $marginTopMobile="0px" $marginRight="0px">
             <StyledIntroButton theme={theme} value="About Me" onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>About Me</StyledHeadingText>
             </StyledIntroButton>
@@ -40,7 +40,7 @@ function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle,
             </StyledIntroButton>
           </StyledIntroButtonContainer>
 
-          <StyledInitialSectionFlexbox>
+          <StyledInitialSectionFlexbox $collapse={collapseIntroText}>
             <AboutMe initialSection={initialSection}/>
             <TechStack initialSection={initialSection}/>
             <Interests initialSection={initialSection}/>

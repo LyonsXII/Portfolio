@@ -81,6 +81,8 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
         setCurrent(0);
         setInitialSection("None");
       }, 500);
+    } else {
+      setCollapseIntroText(false);
     }
     setExpandIntroText(prev => !prev)
   }

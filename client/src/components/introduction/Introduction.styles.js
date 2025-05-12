@@ -17,7 +17,7 @@ export const StyledContentContainer = styled.div`
   ${media.mobile`
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   `}
 
   ${media.desktop`
@@ -72,16 +72,17 @@ export const StyledIntroInitialContentContainer = styled.div`
   width: 100%;
   max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
   opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
-  transition: max-height 1.4s ease, opacity 1.4s ease;
 
   ${media.mobile`
-    flex-direction: column-reverse;
+    flex-direction: column;
+    transition: max-height 1.4s ease, opacity 0.2s ease;
   `}
 
   ${media.desktop`
     flex-direction: column;
     gap: 20px;
     margin-top: 40px;
+    transition: max-height 1.4s ease, opacity 1.4s ease;
 
     overflow-y: auto;
     overflow-x: hidden;
@@ -122,7 +123,7 @@ export const StyledTechIcon = styled.div`
 
 export const StyledSectionFlexbox = styled.div`
   display: flex;
-  max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "250px" : "0px"};
+
   opacity: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1" : "0"};
   transition: max-height 1s ease, opacity 1s ease;
   overflow: hidden;
@@ -130,11 +131,13 @@ export const StyledSectionFlexbox = styled.div`
   ${media.mobile`
     justify-content: center;
     align-items: flex-start;
+    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "280px" : "0px"};
   `}
 
   ${media.desktop`
     justify-content: flex-end;
     align-items: flex-start;
+    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "250px" : "0px"};
   `}
 `
 
@@ -240,8 +243,6 @@ export const StyledSectionRowTextFlexbox = styled.div`
   justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
-  height: 200px;
-  margin-top: ${({ $marginTop }) => $marginTop || "0px"};
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
   width: 90%;
   row-gap: 20px;
@@ -273,12 +274,35 @@ export const StyledSectionRowTextFlexbox = styled.div`
     border-right: 0;
     background-color: #8070d4;
   }
+
+  ${media.mobile`
+    height: 100%;
+    flex: 1;
+    padding: 10px 20px 10px 0px;
+    margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
+  `}
+
+  ${media.desktop`
+    height: 200px;
+    margin-top: ${({ $marginTop }) => $marginTop || "0px"};
+  `}
 `
 
 export const StyledInitialSectionFlexbox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0px;
+  box-sizing: border-box;
+
+  ${media.mobile`
+    flex: 1;
+    margin-top: ${({ $collapse }) => $collapse ? "20px" : "0px"};
+    transition: margin-top 1s ease;
+  `}
+
+  ${media.desktop`
+
+  `}
 `
 
 export const StyledTechPairFlexbox = styled.div`
@@ -350,14 +374,13 @@ export const StyledIntroContainer = styled.div`
   box-sizing: border-box;
 
   ${media.mobile`
-    height: 100%;
     width: 100%;
-    flex-grow: 1;
+    flex: 1;
     align-items: center;
     justify-content: flex-start;
     padding: 0px 10px;
 
-    max-height: ${({ $expandIntroText }) => $expandIntroText ? "62%" : "20%"};
+    max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "20%"};
     transition: max-height 0.5s ease-in-out;
   `}
 
@@ -383,6 +406,8 @@ export const StyledIntroButtonContainer = styled.div`
   ${media.mobile`
     justify-content: center;
     width: 100%;
+    margin-top: ${({ $marginTopMobile, $collapse }) => $collapse ? $marginTopMobile : "20px"};
+    transition: margin-top 1s ease;
   `}
 
   ${media.desktop`
@@ -404,7 +429,6 @@ export const StyledIntroButton = styled.button`
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 3px solid black;
-
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
               inset 0 2px 4px rgba(7, 3, 3, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
@@ -413,7 +437,7 @@ export const StyledIntroButton = styled.button`
 
   ${media.mobile`
     padding: 10px;
-    max-width: 30%;
+    flex-grow: 1;
   `}
 
   ${media.desktop`
@@ -435,8 +459,8 @@ export const StyledGalleryContainer = styled.div`
   ${media.mobile`
     justify-content: center;
     height: fit-content;
+    min-height: fit-content;
     width: 100%;
-    margin-bottom: ${({ $current }) => $current == 0 ? "4vh" : "0vh"};
   `}
 
   ${media.desktop`
