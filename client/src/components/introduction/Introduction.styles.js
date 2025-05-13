@@ -67,19 +67,22 @@ export const StyledIntroContentContainer = styled.div`
 export const StyledIntroInitialContentContainer = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: flex-end;
   width: 100%;
   max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
   opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
 
   ${media.mobile`
+    flex: 1;
     flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px 0px 0px 0px;
     transition: max-height 1.4s ease, opacity 0.2s ease;
   `}
 
   ${media.desktop`
     flex-direction: column;
+    justify-content: center;
     gap: 20px;
     margin-top: 40px;
     transition: max-height 1.4s ease, opacity 1.4s ease;
@@ -123,15 +126,16 @@ export const StyledTechIcon = styled.div`
 
 export const StyledSectionFlexbox = styled.div`
   display: flex;
-
   opacity: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1" : "0"};
   transition: max-height 1s ease, opacity 1s ease;
   overflow: hidden;
 
   ${media.mobile`
+    flex: 1;
     justify-content: center;
     align-items: flex-start;
     max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "280px" : "0px"};
+    min-height: 0px;
   `}
 
   ${media.desktop`
@@ -187,24 +191,26 @@ export const StyledSectionHeadingsFlexbox = styled.div`
 
 export const StyledSectionRowFlexbox = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  height: fit-content;
   margin-top: ${({ $marginTop }) => $marginTop || "0px"};
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
   box-sizing: border-box;
 
   ${media.mobile`
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1;
     gap: 10px;
     padding: 0px 20px;
-    margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
-    max-height: ${({ $collapse }) => $collapse ? "0px" : "160px"};
-    transition: max-height 1s ease, opacity 1s ease;
+    min-height: 0px;
+    max-height: ${({ $collapse }) => $collapse ? "0%" : "100%"};
+    margin-top: ${({ $collapse, $marginTopMobile }) => $collapse ? "0px" : $marginTopMobile};
+    opacity: ${({ $collapse }) => $collapse ? "0" : "1"};
+    transition: max-height 1s ease, margin-top 1s ease, opacity 1s ease;
     overflow: hidden;
   `}
 
   ${media.desktop`
+    flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
     width: 90%;
@@ -278,7 +284,7 @@ export const StyledSectionRowTextFlexbox = styled.div`
   ${media.mobile`
     height: 100%;
     flex: 1;
-    padding: 10px 20px 10px 0px;
+    padding: 0px 20px 0px 0px;
     margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
   `}
 
@@ -295,13 +301,11 @@ export const StyledInitialSectionFlexbox = styled.div`
   box-sizing: border-box;
 
   ${media.mobile`
-    flex: 1;
+    flex: ${({ $collapse }) => $collapse ? "1" : "none"};
+    padding: 0px 20px 0px 20px;
+    overflow: hidden;
     margin-top: ${({ $collapse }) => $collapse ? "20px" : "0px"};
     transition: margin-top 1s ease;
-  `}
-
-  ${media.desktop`
-
   `}
 `
 
@@ -361,7 +365,7 @@ export const StyledButtonsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 36%;
   gap: 40px;
   margin-right: 4vw;
@@ -374,14 +378,14 @@ export const StyledIntroContainer = styled.div`
   box-sizing: border-box;
 
   ${media.mobile`
-    width: 100%;
-    flex: 1;
     align-items: center;
     justify-content: flex-start;
-    padding: 0px 10px;
-
+    flex: 1;
+    width: 100%;
+    padding: 20px 0px 0px 0px;
     max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "20%"};
     transition: max-height 0.5s ease-in-out;
+    overflow: hidden;
   `}
 
   ${media.desktop`
@@ -404,9 +408,10 @@ export const StyledIntroButtonContainer = styled.div`
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
 
   ${media.mobile`
+    order: -1;
     justify-content: center;
     width: 100%;
-    margin-top: ${({ $marginTopMobile, $collapse }) => $collapse ? $marginTopMobile : "20px"};
+    margin-top: ${({ $marginTopMobile}) => $marginTopMobile || "0px"};
     transition: margin-top 1s ease;
   `}
 
@@ -461,6 +466,7 @@ export const StyledGalleryContainer = styled.div`
     height: fit-content;
     min-height: fit-content;
     width: 100%;
+    padding: 20px 0px;
   `}
 
   ${media.desktop`

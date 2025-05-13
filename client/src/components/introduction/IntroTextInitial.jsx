@@ -28,6 +28,7 @@ function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle,
               {text}
             </StyledBodyTextInitialText>
           </StyledSectionRowFlexbox>
+          
           <StyledIntroButtonContainer $initialSection={initialSection} $collapse={collapseIntroText} $marginTop="20px" $marginTopMobile="0px" $marginRight="0px">
             <StyledIntroButton theme={theme} value="About Me" onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>About Me</StyledHeadingText>
