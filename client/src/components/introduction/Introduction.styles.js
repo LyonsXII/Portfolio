@@ -68,8 +68,9 @@ export const StyledIntroInitialContentContainer = styled.div`
   position: relative;
   display: flex;
   align-items: flex-end;
-  width: 100%;
+  height: 100%;
   max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
+  width: 100%;
   opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
 
   ${media.mobile`
@@ -132,9 +133,11 @@ export const StyledSectionFlexbox = styled.div`
 
   ${media.mobile`
     flex: 1;
+    margin: 0px;
     justify-content: center;
     align-items: flex-start;
-    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "280px" : "0px"};
+    height: 100%;
+    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
     min-height: 0px;
   `}
 
@@ -194,6 +197,7 @@ export const StyledSectionRowFlexbox = styled.div`
   margin-top: ${({ $marginTop }) => $marginTop || "0px"};
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
   box-sizing: border-box;
+  border: 1px solid cyan;
 
   ${media.mobile`
     justify-content: center;
@@ -202,10 +206,10 @@ export const StyledSectionRowFlexbox = styled.div`
     gap: 10px;
     padding: 0px 20px;
     min-height: 0px;
-    max-height: ${({ $collapse }) => $collapse ? "0%" : "100%"};
-    margin-top: ${({ $collapse, $marginTopMobile }) => $collapse ? "0px" : $marginTopMobile};
+    max-height: ${({ $collapse }) => $collapse ? "0px" : "160px"};
+    margin-top: ${({ $marginTopMobile }) => $marginTopMobile};
     opacity: ${({ $collapse }) => $collapse ? "0" : "1"};
-    transition: max-height 1s ease, margin-top 1s ease, opacity 1s ease;
+    transition: max-height 1s ease, opacity 1s ease;
     overflow: hidden;
   `}
 
@@ -244,13 +248,24 @@ export const StyledSectionRowTechStackFlexbox = styled.div`
   `}
 `
 
+export const Scroll = styled.div`
+  height: 800px;
+  box-sizing: border-box;
+  background-color: grey;
+  width: 100%;
+`
+
 export const StyledSectionRowTextFlexbox = styled.div`
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
+
   flex-wrap: wrap;
-  margin-right: ${({ $marginRight }) => $marginRight || "20px"};
+  height: 100%;
   width: 90%;
+  margin-right: ${({ $marginRight }) => $marginRight || "20px"};
   row-gap: 20px;
   column-gap: 40px;
   padding-right: 20px;
@@ -299,13 +314,15 @@ export const StyledInitialSectionFlexbox = styled.div`
   flex-direction: column;
   gap: 0px;
   box-sizing: border-box;
+  border: 1px solid red;
 
   ${media.mobile`
     flex: ${({ $collapse }) => $collapse ? "1" : "none"};
+    height: 100%;
+    max-height: ${({ $collapse }) => $collapse ? "1000px" : "0px"};
     padding: 0px 20px 0px 20px;
     overflow: hidden;
-    margin-top: ${({ $collapse }) => $collapse ? "20px" : "0px"};
-    transition: margin-top 1s ease;
+    margin-top: 0px;
   `}
 `
 
@@ -375,15 +392,16 @@ export const StyledIntroContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
-  box-sizing: border-box;
 
   ${media.mobile`
     align-items: center;
     justify-content: flex-start;
-    flex: 1;
+    flex-grow: 1;
+    height: 100%;
+    min-height: 150px;
+    max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "20%"};
     width: 100%;
     padding: 20px 0px 0px 0px;
-    max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "20%"};
     transition: max-height 0.5s ease-in-out;
     overflow: hidden;
   `}
@@ -412,6 +430,8 @@ export const StyledIntroButtonContainer = styled.div`
     justify-content: center;
     width: 100%;
     margin-top: ${({ $marginTopMobile}) => $marginTopMobile || "0px"};
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
     transition: margin-top 1s ease;
   `}
 
@@ -433,7 +453,7 @@ export const StyledIntroButton = styled.button`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
-  border: 3px solid black;
+
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
               inset 0 2px 4px rgba(7, 3, 3, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
@@ -442,11 +462,15 @@ export const StyledIntroButton = styled.button`
 
   ${media.mobile`
     padding: 10px;
+    border: none;
+    border-left: ${({ $left }) => $left ? "3px solid black" : "none"};
+    border-right: ${({ $right }) => $right ? "3px solid black" : "none"};
     flex-grow: 1;
   `}
 
   ${media.desktop`
     padding: 20px;
+    border: 3px solid black;
     border-radius: 20px;
 
     &:hover {

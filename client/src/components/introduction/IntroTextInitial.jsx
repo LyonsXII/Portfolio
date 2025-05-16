@@ -30,13 +30,13 @@ function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle,
           </StyledSectionRowFlexbox>
           
           <StyledIntroButtonContainer $initialSection={initialSection} $collapse={collapseIntroText} $marginTop="20px" $marginTopMobile="0px" $marginRight="0px">
-            <StyledIntroButton theme={theme} value="About Me" onClick={changeInitialSection}>
+            <StyledIntroButton theme={theme} value="About Me" $right={true} onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>About Me</StyledHeadingText>
             </StyledIntroButton>
             <StyledIntroButton theme={theme} value="Tech Stack" onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>Tech Stack</StyledHeadingText>
             </StyledIntroButton>
-            <StyledIntroButton theme={theme} value="Interests" onClick={changeInitialSection}>
+            <StyledIntroButton theme={theme} value="Interests" $left={true} onClick={changeInitialSection}>
               <StyledHeadingText theme={theme}>Interests</StyledHeadingText>
             </StyledIntroButton>
           </StyledIntroButtonContainer>
