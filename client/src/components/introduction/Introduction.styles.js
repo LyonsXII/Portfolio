@@ -4,7 +4,7 @@ import { media } from '../../context/media';
 
 import { slideInTopAnimation, slideOutBottomAnimation, bounceDownAnimation, swingInAnimation, nudgeUpSubTitleAnimation, nudgeUpBodyTextAnimation, nudgeDownBodyTextAnimation } from '../../context/Animations';
 
-import { slideInBottomIntroAnimation, slideInBottomIntroAnimationMobile, slideOutBottomIntroAnimation, slideOutBottomIntroAnimationMobile } from './IntroductionAnimations';
+import { slideInBottomIntroAnimation, slideInBottomIntroAnimationMobile, slideOutBottomIntroAnimation, slideOutBottomIntroAnimationMobile, slideInLeftMobileAnimation, slideOutRightMobileAnimation, fadeInAnimation, fadeOutAnimation } from './IntroductionAnimations';
 
 import NextIcon from "../../icons/nextSong.svg?react";
 import DownloadIcon from "../../icons/download.svg?react";
@@ -32,8 +32,7 @@ export const StyledIntroContentContainer = styled.div`
   align-items: flex-start;
   height: 100%;
   max-height: 10000px;
-  width: 90%;
-  padding: 0px 20px;
+  padding: 0px 30px 0px 25px;
   gap: ${({ $gap }) => $gap || "20px"};
   box-sizing: border-box;
 
@@ -62,28 +61,38 @@ export const StyledIntroContentContainer = styled.div`
     border-right: 0;
     background-color: #8070d4;
   }
+
+  ${media.mobile`
+    width: 100%;
+    animation: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? fadeOutAnimation : fadeInAnimation};
+  `}
+
+  ${media.desktop`
+    width: 90%;
+  `}
 `;
 
 export const StyledIntroInitialContentContainer = styled.div`
   position: relative;
   display: flex;
-  align-items: flex-end;
   height: 100%;
   max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
   width: 100%;
   opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
 
   ${media.mobile`
-    flex: 1;
+    flex: 1 1 auto;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 20px 0px 0px 0px;
-    transition: max-height 1.4s ease, opacity 0.2s ease;
+    align-items: flex-start;
+    opacity: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? 0 : 1};
+    transition: max-height 1.4s ease, opacity 0.5s ease;
   `}
 
   ${media.desktop`
     flex-direction: column;
     justify-content: center;
+    align-items: flex-end;
     gap: 20px;
     margin-top: 40px;
     transition: max-height 1.4s ease, opacity 1.4s ease;
@@ -132,13 +141,14 @@ export const StyledSectionFlexbox = styled.div`
   overflow: hidden;
 
   ${media.mobile`
-    flex: 1;
-    margin: 0px;
+    flex-direction: column;
+    flex: 1 1 auto;
     justify-content: center;
     align-items: flex-start;
     height: 100%;
     max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
     min-height: 0px;
+    padding: 0px 5px 0px 15px;
   `}
 
   ${media.desktop`
@@ -153,7 +163,6 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  height: 230px;
   margin-top: 20px;
 
   overflow-y: scroll;
@@ -182,11 +191,13 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   }
 
   ${media.mobile`
+    height: 100%;
     width: 90%;
     gap: 20px;
   `}
 
   ${media.desktop`
+    height: 230px;
     width: 100%;
     gap: 30px;
   `}
@@ -197,17 +208,19 @@ export const StyledSectionRowFlexbox = styled.div`
   margin-top: ${({ $marginTop }) => $marginTop || "0px"};
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
   box-sizing: border-box;
-  border: 1px solid cyan;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 
   ${media.mobile`
     justify-content: center;
     align-items: flex-start;
-    flex: 1;
+    flex: 1 1 auto;
     gap: 10px;
-    padding: 0px 20px;
     min-height: 0px;
     max-height: ${({ $collapse }) => $collapse ? "0px" : "160px"};
-    margin-top: ${({ $marginTopMobile }) => $marginTopMobile};
+    margin-top: 15px;
+    padding: 0px 20px 0px 20px;
     opacity: ${({ $collapse }) => $collapse ? "0" : "1"};
     transition: max-height 1s ease, opacity 1s ease;
     overflow: hidden;
@@ -249,7 +262,7 @@ export const StyledSectionRowTechStackFlexbox = styled.div`
 `
 
 export const Scroll = styled.div`
-  height: 800px;
+  height: auto;
   box-sizing: border-box;
   background-color: grey;
   width: 100%;
@@ -262,14 +275,17 @@ export const StyledSectionRowTextFlexbox = styled.div`
   justify-content: flex-end;
   align-items: center;
 
+  flex: 1 1 auto;
   flex-wrap: wrap;
-  height: 100%;
-  width: 90%;
-  margin-right: ${({ $marginRight }) => $marginRight || "20px"};
-  row-gap: 20px;
-  column-gap: 40px;
   padding-right: 20px;
   padding-bottom: 20px;
+  margin-right: ${({ $marginRight }) => $marginRight || "20px"};
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+
+  row-gap: 20px;
+  column-gap: 40px;
 
   overflow-y: scroll;
   overflow-x: hidden;
@@ -299,12 +315,13 @@ export const StyledSectionRowTextFlexbox = styled.div`
   ${media.mobile`
     height: 100%;
     flex: 1;
-    padding: 0px 20px 0px 0px;
+    padding: 10px 20px 0px 10px;
     margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
   `}
 
   ${media.desktop`
     height: 200px;
+    width: 90%;
     margin-top: ${({ $marginTop }) => $marginTop || "0px"};
   `}
 `
@@ -314,15 +331,14 @@ export const StyledInitialSectionFlexbox = styled.div`
   flex-direction: column;
   gap: 0px;
   box-sizing: border-box;
-  border: 1px solid red;
 
   ${media.mobile`
-    flex: ${({ $collapse }) => $collapse ? "1" : "none"};
+    flex: ${({ $collapse }) => $collapse ? "1 1 auto" : "none"};
     height: 100%;
-    max-height: ${({ $collapse }) => $collapse ? "1000px" : "0px"};
+    width: 100%;
+    max-height: ${({ $collapse }) => $collapse ? "none" : "0px"};
     padding: 0px 20px 0px 20px;
-    overflow: hidden;
-    margin-top: 0px;
+    // overflow: hidden;
   `}
 `
 
@@ -392,17 +408,16 @@ export const StyledIntroContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
+  box-sizing: border-box;
 
   ${media.mobile`
     align-items: center;
     justify-content: flex-start;
-    flex-grow: 1;
+    flex-grow: 1 1 auto;
     height: 100%;
-    min-height: 150px;
-    max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "20%"};
+    max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
     width: 100%;
-    padding: 20px 0px 0px 0px;
-    transition: max-height 0.5s ease-in-out;
+    transition: max-height 1s ease-in-out;
     overflow: hidden;
   `}
 
@@ -412,20 +427,22 @@ export const StyledIntroContainer = styled.div`
     align-items: ${({ $current }) => $current == 0 ? "flex-end" : "flex-start"};
     justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
     padding-left: ${({ $current }) => $current == 0 ? "0px" : "5%"};
+
+    animation: ${({ $tempCurrent, $id }) =>
+      $tempCurrent !== $id ? slideOutBottomAnimation : slideInTopAnimation
+    };
   `}
 
-  animation: ${({ $tempCurrent, $id }) =>
-    $tempCurrent !== $id ? slideOutBottomAnimation : slideInTopAnimation
-  };
+
 `;
 
 export const StyledIntroButtonContainer = styled.div`
   display: flex;
-  height: fit-content;
   margin-top: ${({ $marginTop }) => $marginTop || "0px"};
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
 
   ${media.mobile`
+    flex: 0 0 auto;
     order: -1;
     justify-content: center;
     width: 100%;
@@ -439,6 +456,7 @@ export const StyledIntroButtonContainer = styled.div`
     justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
+    height: fit-content;
     width: 90%;
     padding-right: 10px;
     row-gap: 20px;
@@ -452,7 +470,7 @@ export const StyledIntroButton = styled.button`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.primaryColor};
+  background-color: ${({ $initialSection, value, theme }) => $initialSection === value ? theme.secondaryColor : theme.primaryColor};
 
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
               inset 0 2px 4px rgba(7, 3, 3, 0.3), 
@@ -487,8 +505,8 @@ export const StyledGalleryContainer = styled.div`
 
   ${media.mobile`
     justify-content: center;
-    height: fit-content;
-    min-height: fit-content;
+    align-items: center;
+    flex: 1 1 auto; /* Change to 0 0 auto if messing up scroll box again*/
     width: 100%;
     padding: 20px 0px;
   `}
@@ -794,18 +812,28 @@ export const StyledImage = styled.img`
 
 export const StyledTitleFlexbox = styled.div`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  height: fit-content;
   background-color: ${({ theme }) => theme.primaryColor};
-  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
-              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 
+  ${media.mobile`
+    justify-content: center;
+    min-height: 60px;
+    width: 100%;
+    border-bottom: 4px solid black;
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+            inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+  `}
+
   ${media.desktop`
+    justify-content: flex-start;
+    height: fit-content;
     width: 90%;
     border: 6px solid black;
+    box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
     box-sizing: border-box;
     border-radius: 20px;
     margin-bottom: 30px;
@@ -815,18 +843,25 @@ export const StyledTitleFlexbox = styled.div`
 export const StyledTitleContainer = styled.div`
   position: relative;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
   height: 100%;
   width: 100%;
-  padding: 30px 40px;
   box-sizing: border-box;
 
   ${media.mobile`
-    width: 100%;
-    flex-direction: column;
-    border-bottom: 3px solid black;
-    padding: 4px 0px 8px 0px;
+    justify-content: center;
+    align-items: center;
+    border-right: 4px solid black;
+
+    animation: ${({ $tempCurrent, $id }) =>
+      $tempCurrent !== $id ? slideOutRightMobileAnimation : slideInLeftMobileAnimation
+    };
+  `}
+
+  ${media.desktop`
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30px 40px;
+    border-right: 4px solid black;
   `}
 `;
 
@@ -834,25 +869,29 @@ export const StyledTitleButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   height: 100%;
   width: 100px;
   max-width: 60px;
-  border-left: 6px solid black;
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   cursor: pointer;
 
-  transition: max-width 0.6s ease;
+  ${media.mobile`
+    animation: ${({ $tempCurrent, $id }) =>
+      $tempCurrent !== $id ? slideOutRightMobileAnimation : slideInLeftMobileAnimation
+    };
+  `}
 
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-          inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-    max-width: 100px;
-  }
+  ${media.desktop`
+    border-left: 6px solid black;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.secondaryColor};
+      box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+      max-width: 100px;
+    }
+  `}
 `
 
 export const StyledSVG = styled.svg`
@@ -870,6 +909,19 @@ export const StyledSVG = styled.svg`
   `}
 `;
 
+export const StyledIntroTitleWrapper = styled.div`
+  ${media.mobile`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    width: 100%;
+    background-color: ${({ theme }) => theme.primaryColor};
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+            inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+  `}
+`
+
 export const StyledMainTitle = styled.h1`
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
@@ -879,7 +931,11 @@ export const StyledMainTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    font-size: 5rem;
+    font-size: 2.5rem;
+
+    animation: ${({ $tempCurrent, $id }) =>
+      $tempCurrent !== $id ? slideOutRightMobileAnimation : slideInLeftMobileAnimation
+    };
   `}
 
   ${media.desktop`
@@ -901,7 +957,7 @@ export const StyledTitle = styled.h1`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    font-size: 3rem;
+    font-size: 2.5rem;
   `}
 
   ${media.desktop`
@@ -918,7 +974,7 @@ export const StyledMinorTitleInitial = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    font-size: 2rem;
+    display: none;
   `}
 
   ${media.desktop`
@@ -980,7 +1036,6 @@ export const StyledBodyTextInitialText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    text-align: center;
     font-size: 1.2rem;
     opacity: ${({ $collapse }) => $collapse ? "0" : "1"};
     transition: opacity 1s ease;
@@ -1019,9 +1074,11 @@ const createStyledIcon = (IconComponent) => styled(IconComponent)`
   transition: transform 0.4s;
   cursor: pointer;
 
-  &:hover {
-    transform: scale(1.2);
-  }
+  ${media.desktop`
+    &:hover {
+      transform: scale(1.2);
+    }
+  `}
 `;
 
 export const StyledNextIcon = createStyledIcon(NextIcon);

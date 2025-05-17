@@ -7,10 +7,10 @@ import { StyledIntroContainer, StyledTitleFlexbox, StyledTitleContainer, StyledT
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroLayoutC({ title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, $expandIntroText, current, reverse }) {
+function IntroLayoutC({ id, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, expandIntroText, current, tempCurrent, reverse }) {
 
   return (
-    <StyledIntroContainer $expandIntroText={$expandIntroText}>
+    <StyledIntroContainer $expandIntroText={expandIntroText} $current={current}>
       <StyledTitleFlexbox theme={theme}>
         <StyledTitleContainer>
           <StyledTitle>{title}</StyledTitle>
@@ -20,7 +20,7 @@ function IntroLayoutC({ title, theme, textA, textB, textC, textD, textImgA, text
         </StyledTitleButtonContainer>
       </StyledTitleFlexbox>
 
-      <StyledIntroContentContainer theme={theme}>
+      <StyledIntroContentContainer theme={theme} $id={id} $tempCurrent={tempCurrent}>
         <StyledRowContainer>
           <IntroImage src={imgA} caption={textImgA} width="60%" paddingText="0px 0px 0px 20px" margin={reverse ? "10px 0px 20px 30px" : "10px 30px 20px 0px"} float={reverse ? "right" : "left"}/>
           <StyledBodyText>

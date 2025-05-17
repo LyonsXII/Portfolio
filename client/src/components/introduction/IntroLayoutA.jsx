@@ -7,20 +7,20 @@ import { StyledIntroContainer, StyledTitleFlexbox, StyledTitleContainer, StyledT
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroLayoutA({ title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, $expandIntroText, current, reverse }) {
+function IntroLayoutA({ id, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, expandIntroText, current, tempCurrent, reverse }) {
 
   return (
-    <StyledIntroContainer $expandIntroText={$expandIntroText} $current={current}>
+    <StyledIntroContainer $expandIntroText={expandIntroText} $current={current} >
       <StyledTitleFlexbox theme={theme}>
-        <StyledTitleContainer>
+        <StyledTitleContainer $id={id} $tempCurrent={tempCurrent}>
           <StyledTitle>{title}</StyledTitle>
         </StyledTitleContainer>
-        <StyledTitleButtonContainer theme={theme} onClick={changeSection} data-title={title}>
+        <StyledTitleButtonContainer theme={theme} $id={id} $tempCurrent={tempCurrent}onClick={changeSection} data-title={title}>
           <StyledNextIcon/>
         </StyledTitleButtonContainer>
       </StyledTitleFlexbox>
 
-      <StyledIntroContentContainer theme={theme}>
+      <StyledIntroContentContainer theme={theme} $id={id} $tempCurrent={tempCurrent}>
         <StyledContentFlexbox>
           <StyledBodyText>
             {textA}
