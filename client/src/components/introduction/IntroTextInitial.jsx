@@ -24,7 +24,7 @@ function IntroTextInitial({ id, title, text, current, tempCurrent, showSubTitle,
           </StyledMinorTitleInitial>
         </StyledIntroTitleWrapper>
         
-        <StyledIntroInitialContentContainer theme={theme} $id={id} $tempCurrent={tempCurrent} $expandIntroText={expandIntroText}>
+        <StyledIntroInitialContentContainer theme={theme} $id={id} $tempCurrent={tempCurrent} $expandIntroText={expandIntroText} $initialSection={initialSection}>
           <StyledSectionRowFlexbox $initialSection={initialSection} $collapse={collapseIntroText} $marginTopMobile="20px" $marginRight="0px">
             <StyledBodyTextInitialText $collapse={collapseIntroText}>
               {text}

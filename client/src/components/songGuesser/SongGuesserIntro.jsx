@@ -23,20 +23,20 @@ function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficul
       </StyledMainTitle>
       
       <StyledIntroFlexbox>
-        <StyledIntroGrid $position="First">
-          <SongGuesserButton name="Pop" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
-          <SongGuesserButton name="Indie" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
-          <SongGuesserButton name="Anime" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
-          <SongGuesserButton name="Video Games" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
-          <SongGuesserButton name="Movies" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
-          <SongGuesserButton name="TV Shows" columns="span 6" rows="span 2" onClick={updateCategory} section={category}/>
+        <StyledIntroGrid $position="First" $mobileHeight="40%">
+          <SongGuesserButton name="Pop" rowsMobile="span 3" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Indie" rowsMobile="span 3" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Anime" rowsMobile="span 3" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Video Games" rowsMobile="span 3" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Movies" rowsMobile="span 3" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="TV Shows" rowsMobile="span 3" onClick={updateCategory} section={category}/>
         </StyledIntroGrid>
-        <StyledIntroGrid>
-          <SongGuesserButton name="Easy" columns="span 6" rows="span 2" onClick={updateDifficulty} section={difficulty}/>
-          <SongGuesserButton name="Hard" columns="span 6" rows="span 2" onClick={updateDifficulty} section={difficulty}/>
-          <SongGuesserButton name="Regular" columns="span 6" rows="span 2" onClick={updateMode} section={mode}/>
-          <SongGuesserButton name="Sudden Death" columns="span 6" rows="span 2" onClick={updateMode} section={mode}/>
-          <SongGuesserButton name="Start" rows="span 2" start="3" end="11" onClick={startGame}/>
+        <StyledIntroGrid $mobileHeight="60%">
+          <SongGuesserButton name="Easy" columnsMobile="span 6" onClick={updateDifficulty} section={difficulty}/>
+          <SongGuesserButton name="Hard" columnsMobile="span 6" onClick={updateDifficulty} section={difficulty}/>
+          <SongGuesserButton name="Regular" columnsMobile="span 6" onClick={updateMode} section={mode}/>
+          <SongGuesserButton name="Sudden Death" columnsMobile="span 6" onClick={updateMode} section={mode}/>
+          <SongGuesserButton name="Start" rowsMobile="span 3" columnsDesktop="span 0" columnsMobile="span 0" start="3" end="11" onClick={startGame}/>
         </StyledIntroGrid>
       </StyledIntroFlexbox>
     </StyledIntroContainer>

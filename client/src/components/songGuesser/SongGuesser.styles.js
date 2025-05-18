@@ -1,5 +1,7 @@
 import styled, { css, createGlobalStyle } from 'styled-components';
 
+import { media } from '../../context/media';
+
 import { flicker, fadeInFastAnimation, fadeInSlowAnimation, fadeOutAnimation, slideOutLeftAnimation, slideOutRightAnimation, expandScoreBarAnimation } from "./SongGuesserAnimations";
 
 import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideInBottomAnimation } from '../../context/Animations';
@@ -20,20 +22,38 @@ export const StyledSongGuesserContainer = styled.div`
 
 export const StyledIntroContainer = styled.div`
   height: 100vh;
-  width: 88vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  ${media.mobile`
+    width: 100vw;
+  `}
+
+  ${media.desktop`
+    width: 88vw;
+  `}
 `;
 
 export const StyledIntroFlexbox = styled.div`
-  width: 90%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 90%;
   margin-top: 8vh;
+
+  ${media.mobile`
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 55vh;
+    gap: 30px;
+  `}
+
+  ${media.desktop`
+    align-items: center;
+    justify-content: center;
+  `}
 `;
 
 export const StyledIntroGrid = styled.div`
@@ -41,8 +61,16 @@ export const StyledIntroGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(6, 1fr);
-  margin-left: ${({ $position }) => $position === "First" ? null : "4%"};
-  gap: 20px;
+
+  ${media.mobile`
+    height: ${({ $mobileHeight }) => $mobileHeight};
+    gap: 10px;
+  `}
+
+  ${media.desktop`
+    margin-left: ${({ $position }) => $position === "First" ? null : "4%"};
+    gap: 20px;
+  `}
 `;
 
 export const StyledGameFlexboxContainer = styled.div`
@@ -104,26 +132,36 @@ export const StyledIcon = styled.svg`
 export const StyledButton = styled.button`
   height: 100%;
   width: 100%;
-  padding: 15px 0px;
   background-color: ${({ $name, $section, theme }) => $name === $section ? theme.secondaryColor : theme.primaryColor};
   border-radius: 10px;
   border: 4px solid black;
   cursor: pointer;
-  grid-column-start: ${({ $start }) => $start ? $start : "auto"};
-  grid-column-end: ${({ $end }) => $end ? $end : "auto"};
-  grid-column: ${({ $columns }) => $columns};
-  grid-row: ${({ $rows }) => $rows};
+  grid-column-start: ${({ $start }) => $start || "auto"};
+  grid-column-end: ${({ $end }) => $end || "auto"};
   color: ${({ theme }) => theme.textColor};
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
               inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    transform: scale(1.01);
-    transition: transform 0.2s ease, background-color 0.8s ease;
-  }
+
+  ${media.mobile`
+    grid-column: ${({ $columnsMobile }) => $columnsMobile || "span 4"};
+    grid-row: ${({ $rowsMobile }) => $rowsMobile || "span 2"};
+    padding: 5px 0px;
+  `}
+
+  ${media.desktop`
+    grid-column: ${({ $columnsDesktop }) => $columnsDesktop || "span 6"};
+    grid-row: ${({ $rowsDesktop }) => $rowsDesktop || "span 2"};
+    padding: 15px 0px;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.secondaryColor};
+      transform: scale(1.01);
+      transition: transform 0.2s ease, background-color 0.8s ease;
+    }
+  `}
 `;
 
 export const StyledChoiceButton = styled.button`
@@ -318,7 +356,6 @@ export const StyledGameOverBackdrop = styled.div`
 export const StyledMainTitle = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 7rem;
 `;
 
 export const StyledMainTitleLetter = styled.h1`
@@ -359,6 +396,14 @@ export const StyledMainTitleLetter = styled.h1`
   ${({ $gameOver, $gameOverAnimation }) =>
     $gameOver && $gameOverAnimation === "Exit" && css`
       animation: ${fadeOutAnimation};
+  `}
+
+  ${media.mobile`
+    font-size: 5rem;
+  `}
+
+  ${media.desktop`
+    font-size: 10rem;
   `}
 `;
 
@@ -409,7 +454,15 @@ export const StyledLargeText = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 3rem;
+
+
+  ${media.mobile`
+    font-size: 1.2rem;
+  `}
+
+  ${media.desktop`
+    font-size: 3rem;
+  `}
 `;
 
 export const StyledMinorTitle = styled.h4`

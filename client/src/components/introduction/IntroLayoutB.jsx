@@ -22,9 +22,9 @@ function IntroLayoutB({ id, title, theme, textA, textB, textC, textD, textImgA, 
 
       <StyledIntroContentContainer theme={theme} $id={id} $tempCurrent={tempCurrent} $flexDirection={reverse ? "row-reverse" : "row"} $gap="30px">
         <StyledRowContainer>
-          <StyledFloatContainer $float={reverse ? "right" : "left"} $width="40%" $margin={reverse ? "10px 0px 0px 30px" : "10px 30px 20px 0px"}>
-            <IntroImage src={imgA} caption={textImgA} width="100%" paddingText="0px 0px 0px 20px"/>
-            <IntroImage src={imgA} caption={textImgB} width="100%" paddingText="0px 0px 0px 20px" margin={reverse ? "20px 0px 0px 0px" : "20px 0px 0px 0px"}/>
+          <StyledFloatContainer $float={reverse ? "right" : "left"} $width="40%" >
+            <IntroImage src={imgA} caption={textImgA} width="100%" paddingText="0px 0px 0px 20px" float={reverse ? "right" : "left"}/>
+            <IntroImage src={imgA} caption={textImgB} width="100%" paddingText="0px 0px 0px 20px" float={reverse ? "right" : "left"}/>
           </StyledFloatContainer>
 
           <StyledBodyText>

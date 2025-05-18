@@ -30,7 +30,7 @@ function IntroLayoutA({ id, title, theme, textA, textB, textC, textD, textImgA, 
           </StyledBodyText>
         </StyledContentFlexbox>
         <StyledRowContainer>
-          <IntroImage src={imgA} caption={textImgA} width="60%" paddingText="0px 0px 0px 20px" margin={reverse ? "10px 0px 20px 30px" : "10px 30px 20px 0px"} float={reverse ? "right" : "left"}/>
+          <IntroImage src={imgA} caption={textImgA} width="60%" paddingText="0px 0px 0px 20px"  float={reverse ? "right" : "left"}/>
           <StyledBodyText $padding="0px 20px 0px 0px">
             {textC}
             <br />

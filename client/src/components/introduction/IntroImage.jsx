@@ -5,11 +5,11 @@ import { StyledContentFlexbox, StyledImageWrapper, StyledImage, StyledShadowOver
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroImage({ src, caption, width, margin, textPadding, float }) {
+function IntroImage({ src, caption, width, position, textPadding, float }) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <StyledImageContainer $width={width} $margin={margin} $float={float}>
+    <StyledImageContainer $width={width} $position={position} $float={float}>
       <StyledImageWrapper>
         <StyledImage src={src}/>
         <StyledShadowOverlay/>

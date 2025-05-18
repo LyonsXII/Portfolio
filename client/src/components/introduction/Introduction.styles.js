@@ -76,7 +76,6 @@ export const StyledIntroInitialContentContainer = styled.div`
   position: relative;
   display: flex;
   height: 100%;
-  max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
   width: 100%;
   opacity: ${({ $expandIntroText }) => $expandIntroText ? 1 : 0};
 
@@ -85,42 +84,22 @@ export const StyledIntroInitialContentContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
     opacity: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? 0 : 1};
     transition: max-height 1.4s ease, opacity 0.5s ease;
   `}
 
   ${media.desktop`
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-end;
-    gap: 20px;
+    max-height: ${({ $expandIntroText, $initialSection }) => 
+      $expandIntroText && $initialSection === "None" ? "25%" 
+      : $expandIntroText ? "50%" 
+      : "0%"
+    };
     margin-top: 40px;
     transition: max-height 1.4s ease, opacity 1.4s ease;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    scroll-behavior: smooth;
-    direction: ltr;
-    scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
-    scrollbar-width: thin;
-
-    ::-webkit-scrollbar {
-      width: 20px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background-color: #e4e4e4;
-      border-radius: 100px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      border-radius: 100px;
-      border: 6px solid rgba(0, 0, 0, 0.18);
-      border-left: 0;
-      border-right: 0;
-      background-color: #8070d4;
-    }
   `}
 `;
 
@@ -154,7 +133,7 @@ export const StyledSectionFlexbox = styled.div`
   ${media.desktop`
     justify-content: flex-end;
     align-items: flex-start;
-    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "250px" : "0px"};
+    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
   `}
 `
 
@@ -163,7 +142,6 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  margin-top: 20px;
 
   overflow-y: scroll;
   overflow-x: hidden;
@@ -200,6 +178,7 @@ export const StyledSectionHeadingsFlexbox = styled.div`
     height: 230px;
     width: 100%;
     gap: 30px;
+    padding: ${({ $paddingDesktop }) => $paddingDesktop};
   `}
 `
 
@@ -274,9 +253,6 @@ export const StyledSectionRowTextFlexbox = styled.div`
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
-
-  flex: 1 1 auto;
-  flex-wrap: wrap;
   padding-right: 20px;
   padding-bottom: 20px;
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
@@ -314,15 +290,15 @@ export const StyledSectionRowTextFlexbox = styled.div`
 
   ${media.mobile`
     height: 100%;
-    flex: 1;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
     padding: 10px 20px 0px 10px;
     margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
   `}
 
   ${media.desktop`
     height: 200px;
-    width: 90%;
-    margin-top: ${({ $marginTop }) => $marginTop || "0px"};
+    width: 100%;
   `}
 `
 
@@ -447,7 +423,6 @@ export const StyledIntroButtonContainer = styled.div`
     justify-content: center;
     width: 100%;
     margin-top: ${({ $marginTopMobile}) => $marginTopMobile || "0px"};
-    border-top: 3px solid black;
     border-bottom: 3px solid black;
     transition: margin-top 1s ease;
   `}
@@ -461,9 +436,9 @@ export const StyledIntroButtonContainer = styled.div`
     padding-right: 10px;
     row-gap: 20px;
     column-gap: 40px;
+    margin-bottom: 20px;
   `}
 `;
-
 
 export const StyledIntroButton = styled.button`
   display: flex;
@@ -550,7 +525,7 @@ export const StyledInput = styled.input`
   box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
 
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-  inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
 
   ${media.mobile`
     top: calc(50% - var(--s) / 2.5);
@@ -748,14 +723,27 @@ export const StyledFloatContainer = styled.div`
   float: ${({ $float }) => $float || "left"};
   height: fit-content;
   width: ${({ $width }) => $width || "100%"};
-  margin: ${({ $margin }) => $margin || "0px"};
   box-sizing: border-box;
+
+  ${media.mobile`
+    margin-top: 0px;
+    margin-left: ${({ $float }) => $float === "right" ? "20px" : "0px"};
+    margin-bottom: 0px;
+    margin-right: ${({ $float }) => $float === "left" ? "20px" : "0px"};
+  `}
+
+  ${media.desktop`
+    margin-top: 10px;
+    margin-left: ${({ $float }) => $float === "right" ? "30px" : "0px"};
+    margin-bottom: 20px;
+    margin-right: ${({ $float }) => $float === "left" ? "30px" : "0px"};
+  `}
 `
 
 export const StyledImageContainer = styled.div`
   float: ${({ $float }) => $float || "none"};
   height: fit-content;
-  width: ${({ $width }) => $width || "100%"};
+
   margin: ${({ $margin }) => $margin || "0px"};
   box-sizing: border-box;
   text-align: justify;
@@ -765,14 +753,39 @@ export const StyledImageContainer = styled.div`
           inset 0 2px 4px rgba(255, 255, 255, 0.3), 
           inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   border-radius: 20px;
+
+  ${media.mobile`
+    width: ${({ $width }) => $width || "100%"};
+    margin-top: 0px;
+    margin-left: ${({ $float }) => $float === "right" ? "20px" : "0px"};
+    margin-bottom: 10px;
+    margin-right: ${({ $float }) => $float === "left" ? "20px" : "0px"};
+  `}
+
+  ${media.desktop`
+    width: ${({ $width }) => $width || "100%"};
+    margin-top: 10px;
+    margin-left: ${({ $float }) => $float === "right" ? "30px" : "0px"};
+    margin-bottom: 20px;
+    margin-right: ${({ $float }) => $float === "left" ? "30px" : "0px"};
+  `}
 `
 
 export const StyledImageWrapper = styled.div`
   position: relative;
-  border: 6px solid black;
-  border-radius: 20px 20px 0px 0px;
+
   box-sizing: border-box;
   overflow: hidden;
+
+  ${media.mobile`
+    border: 4px solid black;
+    border-radius: 20px;
+  `}
+
+  ${media.desktop`
+    border: 6px solid black;
+    border-radius: 20px 20px 0px 0px;
+  `}
 `
 
 export const StyledCaptionContainer = styled.div`
@@ -780,14 +793,24 @@ export const StyledCaptionContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  padding: 20px;
+
   background-color: ${({ theme }) => theme.primaryColor};
-  border: 6px solid black;
   border-radius: 0px 0px 20px 20px;
   margin-top: -6px;
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
+
+  ${media.mobile`
+    display: none;
+    padding: 10px;
+    border: 4px solid black;
+  `}
+
+  ${media.desktop`
+    padding: 20px;
+    border: 6px solid black;
+  `}
 `
 
 export const StyledShadowOverlay = styled.div`
@@ -917,8 +940,16 @@ export const StyledIntroTitleWrapper = styled.div`
     min-height: 60px;
     width: 100%;
     background-color: ${({ theme }) => theme.primaryColor};
+    border-bottom: 4px solid black;
     box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
             inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+  `}
+
+  ${media.desktop`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
   `}
 `
 
