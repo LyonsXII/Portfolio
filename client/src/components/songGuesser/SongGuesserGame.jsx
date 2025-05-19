@@ -7,7 +7,7 @@ import SongGuesserScore from "./SongGuesserScore";
 import SongGuesserChoice from "./SongGuesserChoice";
 import SongGuesserVideo from "./SongGuesserVideo";
 
-import { StyledGameFlexboxContainer, StyledGameContainer, StyledMainTitle, StyledHeaderTitle, StyledChoiceGrid, StyledTextContainer, StyledIcon, StyledReplayShadowIcon } from "./SongGuesser.styles";
+import { StyledGameFlexboxContainer, StyledGameContainer, StyledMainTitle, StyledHeaderTitle, StyledChoiceGrid, StyledTextContainer, StyledIcon, StyledIconContainer, StyledReplayShadowIcon } from "./SongGuesser.styles";
 
 import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
@@ -260,8 +260,11 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
     <StyledGameContainer>
       {showAnswer === false || !roundData.videoURL ? (
         <StyledTextContainer key="Guess" $showAnswerExit={showAnswerExit}>
-          <StyledHeaderTitle theme={theme}>Guess the song...</StyledHeaderTitle>
-          <StyledReplayShadowIcon onClick={() => playSong()} />
+          <StyledHeaderTitle theme={theme}>
+            Guess the song...
+            <StyledReplayShadowIcon $heightDesktop="8rem" $heightMobile="4.5rem" onClick={() => playSong()}/>
+          </StyledHeaderTitle>
+
         </StyledTextContainer>
       ) : skipVideo ? (
         <StyledTextContainer key="Skip" $showAnswerExit={showAnswerExit}>

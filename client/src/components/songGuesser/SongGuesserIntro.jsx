@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ReturnButton from "../general/ReturnButton";
 import SongGuesserButton from "./SongGuesserButton";
 
-import { StyledIntroContainer, StyledMainTitle, StyledMainTitleLetter, StyledIntroFlexbox, StyledIntroGrid } from "./SongGuesser.styles";
+import { StyledIntroContainer, StyledMainTitle, StyledMainTitleWord, StyledMainTitleLetter, StyledIntroFlexbox, StyledIntroGrid } from "./SongGuesser.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -16,10 +16,16 @@ function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficul
       <ReturnButton returnFunction={home}/>
 
       <StyledMainTitle>
-        {"Song Guesser".split("").map((letter, index) => {
-          return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2,6,10]} $spaces={[4]}>{letter}</StyledMainTitleLetter>
-        })
-        }
+        <StyledMainTitleWord $position="first">
+          {"Song".split("").map((letter, index) => {
+          return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2]}>{letter}</StyledMainTitleLetter>
+          })}
+        </StyledMainTitleWord>
+        <StyledMainTitleWord>
+          {"Guesser".split("").map((letter, index) => {
+          return <StyledMainTitleLetter theme={theme} key={index} $index={index} $faulty={[2,4]}>{letter}</StyledMainTitleLetter>
+          })}
+        </StyledMainTitleWord>
       </StyledMainTitle>
       
       <StyledIntroFlexbox>

@@ -83,35 +83,53 @@ export const StyledGameFlexboxContainer = styled.div`
 `;
 
 export const StyledGameContainer = styled.div`
-  height: 100%;
-  min-height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
+
+  ${media.mobile`
+    justify-content: flex-end;
+  `}
+
+  ${media.desktop`
+    justify-content: center;
+
+  `}
 `;
 
 export const StyledChoiceGrid = styled.div`
   width: 80%;
   max-width: 1400px;
   margin-top: 3vh;
-  display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: auto;
-  gap: 1rem;
+
+  ${media.mobile`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 40%;
+    margin-bottom: 10%;
+  `}
+
+  ${media.desktop`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 1rem;
+  `}
 `;
 
 export const StyledTextContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  height: 120px;
-  gap: 20px;
+  height: fit-content;
   animation: ${({ $showAnswerExit}) => !$showAnswerExit ? slideInLeftAnimation : slideOutRightAnimation};
+
+  ${media.mobile`
+    width: 90%;
+  `}
 `;
 
 export const StyledIcon = styled.svg`
@@ -196,8 +214,15 @@ export const StyledChoiceButton = styled.button`
 `;
 
 export const StyledScoreWrapper = styled.div`
-  visibility: ${({ $display }) => $display ? "auto" : "hidden"};
-  animation: ${({ $display }) => $display && expandScoreBarAnimation}
+
+  ${media.mobile`
+    display: none;
+  `}
+
+  ${media.desktop`
+    visibility: ${({ $display }) => $display ? "auto" : "hidden"};
+    animation: ${({ $display }) => $display && expandScoreBarAnimation}
+  `}
 `
 
 export const StyledScoreFlexbox = styled.div`
@@ -356,7 +381,32 @@ export const StyledGameOverBackdrop = styled.div`
 export const StyledMainTitle = styled.div`
   display: flex;
   flex-direction: row;
+
+  ${media.mobile`
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+  `}
+
+  ${media.desktop`
+    gap: 40px;
+  `}
 `;
+
+export const StyledMainTitleWord = styled.div`
+  display: flex;
+
+  ${media.mobile`
+    justify-content: flex-start;
+    width: ${({ $position }) => $position === "first" ? "75%" : "100%"};
+    margin-left: ${({ $position }) => $position === "first" ? "25%" : "0%"};
+  `}
+
+  ${media.desktop`
+    width: 100%;
+  `}
+`
 
 export const StyledMainTitleLetter = styled.h1`
   font-family: "Liberty";
@@ -383,11 +433,6 @@ export const StyledMainTitleLetter = styled.h1`
       animation: ${({ theme }) => flicker(theme.tertiaryColour)} 2s ease-in-out infinite alternate;
   `}
 
-  ${({ $index, $spaces }) =>
-    Array.isArray($spaces) && $spaces.includes($index) && css`
-      margin-left: 40px;
-  `}
-
   ${({ $gameOver, $gameOverAnimation }) =>
     $gameOver && $gameOverAnimation === "Entrance" && css`
       animation: ${fadeInSlowAnimation};
@@ -399,7 +444,7 @@ export const StyledMainTitleLetter = styled.h1`
   `}
 
   ${media.mobile`
-    font-size: 5rem;
+    font-size: 4rem;
   `}
 
   ${media.desktop`
@@ -409,15 +454,22 @@ export const StyledMainTitleLetter = styled.h1`
 
 
 export const StyledHeaderTitle = styled.h2`
+  text-align: center;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-
-  font-size: 7rem;
   color: ${({ theme }) => theme.fontColor};
+
+  ${media.mobile`
+    font-size: 4rem;
+  `}
+
+  ${media.desktop`
+    font-size: 7rem;
+  `}
 `;
 
 
@@ -505,17 +557,45 @@ export const StyledGameOverText = styled.h1`
   };
 `
 
+export const StyledIconContainer = styled.div`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: ${({ $height }) => $height || "40px"};
+  width: ${({ $width }) => $width || "40px"};
+
+  ${media.mobile`
+    height: 4rem;
+    width: 4rem;
+  `}
+
+  ${media.desktop`
+    height: 8rem;
+    width: 8rem;
+  `}
+`
+
 const createStyledIcon = (IconComponent) => styled(IconComponent)`
-  height: 100%;
   width: ${({ $width }) => $width || "auto"};
   transition: transform 0.4s;
   cursor: pointer;
   -webkit-filter: ${({ $shadow }) => $shadow ? "drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7))" : "none"};
   filter: ${({ $shadow }) => $shadow ? "drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7))" : "none"};
+  vertical-align: bottom;
 
-  &:hover {
-    transform: scale(1.1);
-  }
+  ${media.mobile`
+    height: ${({ $heightMobile }) => $heightMobile || "100%"};
+    margin-left: 10px;
+  `}
+
+  ${media.desktop`
+    height: ${({ $heightDesktop }) => $heightDesktop || "100%"};
+    margin-left: 10px;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  `}
 `;
 
 export const StyledReplayIcon = createStyledIcon(ReplayIcon);

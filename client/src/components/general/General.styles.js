@@ -44,9 +44,7 @@ export const StyledEndGameButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: absolute;
-
 
   background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 20px;
@@ -55,7 +53,7 @@ export const StyledEndGameButton = styled.button`
 
   ${media.mobile`
     top: 20px;
-    left: ${({ $left }) => $left || "20px"};
+    left: 20px;
     height: 60px;
     width: 60px;
     border: 3px solid black;
