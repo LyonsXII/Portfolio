@@ -96,23 +96,21 @@ export const StyledGameContainer = styled.div`
 
   ${media.desktop`
     justify-content: center;
-
   `}
 `;
 
 export const StyledChoiceGrid = styled.div`
-  width: 80%;
-  max-width: 1400px;
-  margin-top: 3vh;
+  width: calc(100% - 60px);
   justify-content: center;
   align-items: center;
 
   ${media.mobile`
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 40%;
-    margin-bottom: 10%;
+    height: 35%;
+    margin-bottom: 30px;
   `}
 
   ${media.desktop`
@@ -120,15 +118,24 @@ export const StyledChoiceGrid = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: auto;
     gap: 1rem;
+    max-width: 1400px;
+    margin-top: 3%;
   `}
 `;
 
 export const StyledTextContainer = styled.div`
-  height: fit-content;
   animation: ${({ $showAnswerExit}) => !$showAnswerExit ? slideInLeftAnimation : slideOutRightAnimation};
 
   ${media.mobile`
+    height: 30%;
+    display: flex;
+    align-items: center;
     width: 90%;
+    margin-top: 30px;
+  `}
+
+  ${media.desktop`
+    height: fit-content;
   `}
 `;
 
@@ -185,13 +192,11 @@ export const StyledButton = styled.button`
 export const StyledChoiceButton = styled.button`
   height: 100%;
   width: 100%;
-  padding: 15px 30px;
   word-wrap: break-word;
   white-space: normal;
   letter-spacing: 1px;
   border-radius: 10px;
   border: 4px solid black;
-  cursor: pointer;
   color: ${({ theme }) => theme.textColor};
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4),
               inset 0 2px 4px rgba(7, 3, 3, 0.3), 
@@ -201,16 +206,25 @@ export const StyledChoiceButton = styled.button`
       $correct ? "green" : "red"
       : theme.primaryColor
   };
+  cursor: pointer;
   
-  &:hover {
-    color: ${({ $showAnswer, theme }) => $showAnswer ? theme.textColor : theme.tertiaryColor};
-    background-color: ${({ $showAnswer, theme }) => $showAnswer === false ? theme.secondaryColor : null};
-    box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
-                inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-                inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-    transform: scale(1.01);
-    transition: transform 0.2s ease, background-color 0.8s ease;
-  }
+  ${media.mobile`
+    padding: 10px 20px;
+  `}
+
+  ${media.desktop`
+    padding: 15px 30px;
+
+    &:hover {
+      color: ${({ $showAnswer, theme }) => $showAnswer ? theme.textColor : theme.tertiaryColor};
+      background-color: ${({ $showAnswer, theme }) => $showAnswer === false ? theme.secondaryColor : null};
+      box-shadow: 0 0px 10px rgba(255, 255, 255, 0.3),
+                  inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+                  inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+      transform: scale(1.01);
+      transition: transform 0.2s ease, background-color 0.8s ease;
+    }
+  `}
 `;
 
 export const StyledScoreWrapper = styled.div`
@@ -270,91 +284,165 @@ export const StyledScoreIncrement = styled.div`
 `
 
 export const StyledVideoMainContainer = styled.div`
-  height: 60%;
-  max-height: 600px;
-  width: 70%;
-  max-width: 1200px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
+  gap: 10px;
+  box-sizing: border-box;
 
   animation: ${({ $showAnswerExit}) => !$showAnswerExit ? slideInLeftAnimation : slideOutRightAnimation};
+
+  ${media.mobile`
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1 1 auto;
+    max-height: calc(65% - 140px);
+    width: 80%;
+    margin-top: 100px;
+    margin-bottom: 10px;
+  `}
+
+  ${media.desktop`
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+    max-height: 600px;
+    width: 70%;
+    max-width: 1200px;
+  `}
 `;
 
 export const StyledVideoContainer = styled.div`
-  height: 100%;
+  height: calc((100vw / 16) * 9);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 20px;
+  border: 4px solid black;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.6);
+  
+  ${media.mobile`
+    flex-direction: column;
+  `}
+
+  ${media.desktop`
+
+    overflow: hidden;
+  `}
 `;
 
 export const StyledVideoDivLeft = styled.div`
-  height: 100%;
-  width: calc(100% + 4px);
-  border: 4px solid black;
-  border-right: none;
-  border-radius: 20px 0px 0px 20px;
+  ${media.mobile`
+    height: 100%;
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+    overflow: hidden;
+  `}
+
+  ${media.desktop`
+    flex: 1 1 auto;
+    height: 100%;
+    width: calc(100% + 4px);
+    border-radius: 16px 0px 0px 16px;
+    overflow: hidden;
+  `}
 `;
 
 export const StyledIframe = styled.iframe`
-  border: none;
-  border-radius: 16px 0px 0px 16px;
+  height: 100%;
   width: 100%;
-  height: calc(100% + 0px); // Adding 0.5px avoids subpixel gap, something to do with subpixel rendering?
-  margin-top: 0px;
+  border: none;
 `;
 
 export const StyledVideoDivRight = styled.div`
-  height: 100%;
-  width: 6%;
-  border: 4px solid black;
-  border-radius: 0px 20px 20px 0px;
+  ${media.mobile`
+    display: flex;
+    height: 40px;
+    width: 100%;
+    border-top: 4px solid black;
+    border-radius: 0px 0px 20px 20px;
+  `}
+
+  ${media.desktop`
+    flex: 0 0 auto;
+    height: 100%;
+    border-left: 4px solid black;
+    border-radius: 0px 20px 20px 0px;
+  `}
 `;
 
 export const StyledVideoButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(50% - 2px);
-  width: 100%;
-  border-bottom: 4px solid black;
-  border-radius: ${({ $position }) => $position === "Top" ? "0px 20px 0px 0px" : "0px 0px 20px 0px"};
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   background-color: ${({ theme }) => theme.primaryColor};
   cursor: pointer;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    color: ${({ theme }) => theme.tertiaryColor};
-  }
+  ${media.mobile`
+    height: 100%;
+    width: 50%;
+    border-right: ${({ $position }) => $position === "Top" ? "4px solid black" : "none"};
+    border-radius: ${({ $position }) => $position === "Top" ? "0px 0px 0px 16px" : "0px 0px 16px 0px"};
+  `}
+
+  ${media.desktop`
+    height: calc(50% - 2px);
+    width: 60px;
+    border-bottom: 4px solid black;
+    border-radius: ${({ $position }) => $position === "Top" ? "0px 20px 0px 0px" : "0px 0px 20px 0px"};
+
+    &:hover {
+      background-color: ${({ theme }) => theme.secondaryColor};
+      color: ${({ theme }) => theme.tertiaryColor};
+    }
+  `}
 `;
 
 export const StyledVideoTextContainer = styled.div`
-  width: calc(100% - 40px);
+  width: 100%;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
-  gap: 40px;
+
   position: relative;
   overflow: hidden;
+
+  ${media.mobile`
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `}
+
+  ${media.desktop`
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    gap: 40px;
+  `}
 `;
 
 export const StyledVideoTextBox = styled.div`
   position: relative;
-  width: auto;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  padding: 10px;
-  margin: 0px 0px;
+  margin: 0px;
   overflow: hidden;
+  box-sizing: border-box;
+
+  ${media.mobile`
+    flex: ${({ $position }) => $position === "first" ? "0 1 auto" : "0 0 auto"};
+    width: fit-content;
+    padding: 0px 10px;
+    overflow: flex: ${({ $position }) => $position === "first" ? "hidden" : "visible"};
+  `}
+
+  ${media.desktop`
+    width: auto;
+    padding: 10px;
+  `}
 `;
 
 export const StyledGameOverBackdrop = styled.div`
@@ -401,6 +489,7 @@ export const StyledMainTitleWord = styled.div`
     justify-content: flex-start;
     width: ${({ $position }) => $position === "first" ? "75%" : "100%"};
     margin-left: ${({ $position }) => $position === "first" ? "25%" : "0%"};
+    gap: 3px;
   `}
 
   ${media.desktop`
@@ -490,13 +579,20 @@ export const StyledSubTitleScrolling = styled.h2`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 4rem;
   white-space: nowrap;
   text-overflow: ${({ $ellipsis }) => $ellipsis ? "ellipsis" : "clip"};
   overflow: ${({ $ellipsis }) => $ellipsis ? "hidden" : "visible"};
   transform: translateX(0);
   transition: transform linear;
   display: inline-block;
+
+  ${media.mobile`
+    font-size: 1.5rem;
+  `}
+
+  ${media.desktop`
+    font-size: 4rem;
+  `}
 `;
 
 export const StyledLargeText = styled.h3`
@@ -524,8 +620,15 @@ export const StyledMinorTitle = styled.h4`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 2.5rem;
   white-space: nowrap;
+
+  ${media.mobile`
+    font-size: 1.5rem;
+  `}
+
+  ${media.desktop`
+    font-size: 2.5rem;
+  `}
 `;
 
 export const StyledBodyText = styled.p`
@@ -576,7 +679,6 @@ export const StyledIconContainer = styled.div`
 `
 
 const createStyledIcon = (IconComponent) => styled(IconComponent)`
-  width: ${({ $width }) => $width || "auto"};
   transition: transform 0.4s;
   cursor: pointer;
   -webkit-filter: ${({ $shadow }) => $shadow ? "drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7))" : "none"};
@@ -584,13 +686,15 @@ const createStyledIcon = (IconComponent) => styled(IconComponent)`
   vertical-align: bottom;
 
   ${media.mobile`
-    height: ${({ $heightMobile }) => $heightMobile || "100%"};
+    height: ${({ $heightMobile }) => $heightMobile || "auto"};
+    width: ${({ $widthMobile }) => $widthMobile || "auto"};
     margin-left: 10px;
   `}
 
   ${media.desktop`
-    height: ${({ $heightDesktop }) => $heightDesktop || "100%"};
-    margin-left: 10px;
+    height: ${({ $heightDesktop }) => $heightDesktop || "auto"};
+    width: ${({ $widthDesktop }) => $widthDesktop || "auto"};
+    margin-left: ${({ $marginLeft }) => $marginLeft || "0px"};
 
     &:hover {
       transform: scale(1.1);
