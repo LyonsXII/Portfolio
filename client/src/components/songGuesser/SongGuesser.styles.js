@@ -228,9 +228,7 @@ export const StyledChoiceButton = styled.button`
 `;
 
 export const StyledScoreWrapper = styled.div`
-
   ${media.mobile`
-    display: none;
   `}
 
   ${media.desktop`
@@ -241,46 +239,96 @@ export const StyledScoreWrapper = styled.div`
 
 export const StyledScoreFlexbox = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 3vw;
   border-right: 4px solid black;
   background-color: ${({ theme }) => theme.primaryColor};
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.8);
+
+  ${media.mobile`
+    position: absolute;
+    top: 25px;
+    left: 100px;
+    height: 40px;
+    width: calc(100vw - 130px);
+    border: 3px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+  `}
+
+  ${media.desktop`
+    flex-direction: column;
+    height: 100vh;
+    width: 3vw;
+  `}
 `;
 
 export const StyledScoreIncrement = styled.div`
-  height: 100%;
-  border-bottom: 4px solid black;
-  ${({ $mode, $transition, $numQuestions }) => {
-    if ($mode === "0") return `max-height: calc(100% / (${$numQuestions} - 4));`
-    else if ($mode === "1") {
-      if ($transition) {
-        return `max-height: calc(100% / (${$numQuestions} - 4));`
-      } else {
-        return "max-height: 100%; border-bottom: none;"
+  ${media.mobile`
+    width: 100%;
+    border-right: 3px solid black;
+    ${({ $mode, $transition, $numQuestions }) => {
+      if ($mode === "0") return `max-width: calc(100% / (${$numQuestions} - 4));`
+      else if ($mode === "1") {
+        if ($transition) {
+          return `max-width: calc(100% / (${$numQuestions} - 4));`
+        } else {
+          return "max-width: 100%; border-right: none;"
+        }
       }
-    }
-    else if ($mode === "2") {
-      if ($transition) {
-        return "max-height: 100%; border-bottom: none;"
-      } else {
-        return "max-height: 0%; border-bottom: none;"
+      else if ($mode === "2") {
+        if ($transition) {
+          return "max-width: 100%; border-right: none;"
+        } else {
+          return "max-width: 0%; border-right: none;"
+        }
       }
-    }
-    return ""
-  }}
-  overflow: ${({ $current }) => $current ? "visible" : "hidden"};
-  box-sizing: border-box;
-  background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
-  box-shadow: inset 0 2px 4px rgba(7, 3, 3, 0.3), 
-            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  
-  transition: ${({ $transition }) => $transition ? "max-height 1s ease" : "max-height 0s ease"};
+      return ""
+    }}
+    overflow: ${({ $current }) => $current ? "visible" : "hidden"};
+    box-sizing: border-box;
+    background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
+    box-shadow: inset 0 2px 4px rgba(7, 3, 3, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    
+    transition: ${({ $transition }) => $transition ? "max-width 1s ease" : "max-width 0s ease"};
+  `}
+
+  ${media.desktop`
+    height: 100%;
+    border-bottom: 4px solid black;
+    ${({ $mode, $transition, $numQuestions }) => {
+      if ($mode === "0") return `max-height: calc(100% / (${$numQuestions} - 4));`
+      else if ($mode === "1") {
+        if ($transition) {
+          return `max-height: calc(100% / (${$numQuestions} - 4));`
+        } else {
+          return "max-height: 100%; border-bottom: none;"
+        }
+      }
+      else if ($mode === "2") {
+        if ($transition) {
+          return "max-height: 100%; border-bottom: none;"
+        } else {
+          return "max-height: 0%; border-bottom: none;"
+        }
+      }
+      return ""
+    }}
+    overflow: ${({ $current }) => $current ? "visible" : "hidden"};
+    box-sizing: border-box;
+    background-color: ${({ $current, theme }) => $current === "true" ? theme.secondaryColor : theme.primaryColor};
+    box-shadow: inset 0 2px 4px rgba(7, 3, 3, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    
+    transition: ${({ $transition }) => $transition ? "max-height 1s ease" : "max-height 0s ease"};
+  `}
 `
 
 export const StyledVideoMainContainer = styled.div`
@@ -632,6 +680,7 @@ export const StyledMinorTitle = styled.h4`
 `;
 
 export const StyledBodyText = styled.p`
+  display: ${({ $visible }) => $visible ? "auto" : "none"};
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),

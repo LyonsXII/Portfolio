@@ -26,7 +26,7 @@ function SongGuesserScore({ score, transition, numQuestions }) {
         ))}
 
         <StyledScoreIncrement theme={theme} $current="true" $transition={transition} $mode="1" $numQuestions={numQuestions}>
-            <StyledBodyText>{score + 1}</StyledBodyText>
+            <StyledBodyText $visible={false}>{score + 1}</StyledBodyText>
         </StyledScoreIncrement>
         <StyledScoreIncrement theme={theme} $transition={transition} $mode="2">
             <StyledBodyText>{score + 2}</StyledBodyText>
