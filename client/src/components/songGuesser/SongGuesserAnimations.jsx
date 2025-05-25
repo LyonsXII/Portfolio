@@ -23,6 +23,19 @@ export const flicker = (textColour ) => keyframes`
   }
 `;
 
+export const flickerGameOver = (textColour) => keyframes`
+  0%, 5% {
+    color: ${textColour};
+    text-shadow: 
+      3px 3px 6px #000,
+      -3px -3px 6px #000,  
+      3px -3px 6px #000,
+      -3px 3px 6px #000,
+      3px 3px 6px #000,
+      0 0 2rem rgb(255, 255, 255);
+  }
+`;
+
 export const fadeIn = keyframes`
   0% {
     opacity: 0;

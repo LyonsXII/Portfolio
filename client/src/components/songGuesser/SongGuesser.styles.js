@@ -2,7 +2,7 @@ import styled, { css, createGlobalStyle } from 'styled-components';
 
 import { media } from '../../context/media';
 
-import { flicker, fadeInFastAnimation, fadeInSlowAnimation, fadeOutAnimation, slideOutLeftAnimation, slideOutRightAnimation, expandScoreBarAnimation } from "./SongGuesserAnimations";
+import { flicker, flickerGameOver, fadeInFastAnimation, fadeInSlowAnimation, fadeOutAnimation, slideOutLeftAnimation, slideOutRightAnimation, expandScoreBarAnimation } from "./SongGuesserAnimations";
 
 import { slideInTopAnimation, slideInLeftAnimation, slideOutUpAnimation, slideInBottomAnimation } from '../../context/Animations';
 
@@ -228,9 +228,6 @@ export const StyledChoiceButton = styled.button`
 `;
 
 export const StyledScoreWrapper = styled.div`
-  ${media.mobile`
-  `}
-
   ${media.desktop`
     visibility: ${({ $display }) => $display ? "auto" : "hidden"};
     animation: ${({ $display }) => $display && expandScoreBarAnimation}
@@ -245,9 +242,9 @@ export const StyledScoreFlexbox = styled.div`
 
   ${media.mobile`
     position: absolute;
-    top: 25px;
+    top: 30px;
     left: 100px;
-    height: 40px;
+    height: 30px;
     width: calc(100vw - 130px);
     border: 3px solid black;
     border-radius: 10px;
@@ -453,9 +450,7 @@ export const StyledVideoTextContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-end;
-
   position: relative;
-  overflow: hidden;
 
   ${media.mobile`
     flex: 0 0 auto;
@@ -467,6 +462,7 @@ export const StyledVideoTextContainer = styled.div`
   ${media.desktop`
     flex: 0 0 auto;
     justify-content: flex-start;
+    width: 100%;
     gap: 40px;
   `}
 `;
@@ -477,19 +473,22 @@ export const StyledVideoTextBox = styled.div`
   align-items: flex-end;
   justify-content: flex-start;
   margin: 0px;
-  overflow: hidden;
   box-sizing: border-box;
 
   ${media.mobile`
     flex: ${({ $position }) => $position === "first" ? "0 1 auto" : "0 0 auto"};
-    width: fit-content;
-    padding: 0px 10px;
-    overflow: flex: ${({ $position }) => $position === "first" ? "hidden" : "visible"};
+    width: auto;
+    min-width: ${({ $position }) => $position === "first" ? "0px" : "fit-content"};
+    padding: 5px;
+    margin-top: ${({ $position }) => $position === "first" ? "0px" : "-10px"};
+    overflow: ${({ $position }) => $position === "first" ? "hidden" : "visible"};
   `}
 
   ${media.desktop`
+    flex: ${({ $position }) => $position === "first" ? "0 1 auto" : "0 0 auto"};
     width: auto;
     padding: 10px;
+    overflow: hidden;
   `}
 `;
 
@@ -501,7 +500,6 @@ export const StyledGameOverBackdrop = styled.div`
   position: absolute;
   height: 100vh;
   width: 100vw;
-  gap: 40px;
   background-color: black; 
   z-index: 4;
   opacity: 0.9;
@@ -512,6 +510,14 @@ export const StyledGameOverBackdrop = styled.div`
       ? fadeInFastAnimation
       : fadeOutAnimation
   };
+
+  ${media.mobile`
+    gap: 10px;
+  `}
+
+  ${media.desktop`
+    gap: 40px;
+  `}
 `;
 
 export const StyledMainTitle = styled.div`
@@ -519,7 +525,7 @@ export const StyledMainTitle = styled.div`
   flex-direction: row;
 
   ${media.mobile`
-    flex-direction: column;
+    flex-direction: ${({ $mode }) => $mode === "Game Over" ? "row" : "column"};
     justify-content: center;
     align-items: flex-start;
     gap: 10px;
@@ -534,10 +540,20 @@ export const StyledMainTitleWord = styled.div`
   display: flex;
 
   ${media.mobile`
+    flex-direction: ${({ $mode }) => $mode === "Game Over" ? "column" : "row"};
     justify-content: flex-start;
-    width: ${({ $position }) => $position === "first" ? "75%" : "100%"};
-    margin-left: ${({ $position }) => $position === "first" ? "25%" : "0%"};
-    gap: 3px;
+    align-items: center;
+    width: ${({ $mode, $position }) => $position === "first" && !$mode ? "75%" : "100%"};
+    margin-top: ${({ $mode, $position }) => {
+      if ($position === "first" && $mode === "Game Over") return "-5vh";
+      if ($position != "first" && $mode === "Game Over") return "5vh";
+      return "0%";
+    }};
+    margin-left: ${({ $mode, $position }) => {
+      if ($mode === "Game Over" && $position !== "first") return "10vw";
+      if (!$mode && $position === "first") return "25%";
+      return "0%";
+    }};
   `}
 
   ${media.desktop`
@@ -556,20 +572,6 @@ export const StyledMainTitleLetter = styled.h1`
     3px 3px 6px #000,
     0 0 2rem rgb(255, 255, 255);
 
-  ${({ $index, $faulty }) =>
-    Array.isArray($faulty) && $faulty.includes($index) && css`
-      color: ${({ theme }) => theme.primaryColor};
-      text-shadow: 
-        3px 3px 6px #000,
-        -3px -3px 6px #000,  
-        3px -3px 6px #000,
-        -3px 3px 6px #000,
-        3px 3px 6px #000,
-        0 0 2rem rgb(0, 0, 0);
-      transform: translate(-0.2rem, 1rem) rotate(10deg);
-      animation: ${({ theme }) => flicker(theme.tertiaryColour)} 2s ease-in-out infinite alternate;
-  `}
-
   ${({ $gameOver, $gameOverAnimation }) =>
     $gameOver && $gameOverAnimation === "Entrance" && css`
       animation: ${fadeInSlowAnimation};
@@ -582,10 +584,42 @@ export const StyledMainTitleLetter = styled.h1`
 
   ${media.mobile`
     font-size: 4rem;
+
+  ${({ $index, $faulty, $mode, theme }) =>
+    Array.isArray($faulty) && $faulty.includes($index) && css`
+      color: ${theme.primaryColor};
+      text-shadow: 
+        3px 3px 6px #000,
+        -3px -3px 6px #000,  
+        3px -3px 6px #000,
+        -3px 3px 6px #000,
+        3px 3px 6px #000,
+        0 0 2rem rgb(0, 0, 0);
+      transform:  ${$mode != "Game Over" 
+        ? "translate(-0.2rem, 1rem) rotate(10deg)"
+        : "none"};
+      animation: ${$mode === "Game Over"
+        ? flickerGameOver(theme.tertiaryColor)
+        : flicker(theme.tertiaryColor)} 2s ease-in-out infinite alternate;
+    `}
   `}
 
   ${media.desktop`
     font-size: 10rem;
+
+    ${({ $index, $faulty }) =>
+    Array.isArray($faulty) && $faulty.includes($index) && css`
+      color: ${({ theme }) => theme.primaryColor};
+      text-shadow: 
+        3px 3px 6px #000,
+        -3px -3px 6px #000,  
+        3px -3px 6px #000,
+        -3px 3px 6px #000,
+        3px 3px 6px #000,
+        0 0 2rem rgb(0, 0, 0);
+      transform: translate(-0.2rem, 1rem) rotate(10deg);
+      animation: ${({ theme }) => flicker(theme.tertiaryColor)} 2s ease-in-out infinite alternate;
+    `}
   `}
 `;
 
@@ -629,17 +663,18 @@ export const StyledSubTitleScrolling = styled.h2`
               0px 0px 10px rgba(0, 0, 0, 1);
   white-space: nowrap;
   text-overflow: ${({ $ellipsis }) => $ellipsis ? "ellipsis" : "clip"};
-  overflow: ${({ $ellipsis }) => $ellipsis ? "hidden" : "visible"};
   transform: translateX(0);
   transition: transform linear;
   display: inline-block;
 
   ${media.mobile`
-    font-size: 1.5rem;
+    font-size: 2rem;
+    overflow: ${({ $ellipsis }) => $ellipsis ? "hidden" : "visible"};
   `}
 
   ${media.desktop`
     font-size: 4rem;
+    overflow: ${({ $ellipsis }) => $ellipsis ? "hidden" : "visible"};
   `}
 `;
 
@@ -680,7 +715,6 @@ export const StyledMinorTitle = styled.h4`
 `;
 
 export const StyledBodyText = styled.p`
-  display: ${({ $visible }) => $visible ? "auto" : "none"};
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
@@ -688,25 +722,39 @@ export const StyledBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   font-size: 1.5rem;
+
+  ${media.mobile`
+    display: ${({ $visible }) => $visible ? "auto" : "none"};
+  `}
 `;
 
 export const StyledGameOverText = styled.h1`
   font-family: "Liberty";
-  font-size: 4rem;
   color: ${({ theme }) => theme.tertiaryColor};
-  text-shadow: 
-  3px 3px 6px #000,
-  -3px -3px 6px #000,  
-  3px -3px 6px #000,
-  -3px 3px 6px #000,
-  3px 3px 6px #000,
-  0 0 2rem rgb(255, 255, 255);
 
   animation: ${({ $gameOverAnimation }) => 
     $gameOverAnimation === "Enter"
       ? fadeInSlowAnimation
       : fadeOutAnimation
   };
+
+  ${media.mobile`
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 2rem;
+  `}
+
+  ${media.desktop`
+    font-size: 4rem;
+    text-shadow: 
+      3px 3px 6px #000,
+      -3px -3px 6px #000,  
+      3px -3px 6px #000,
+      -3px 3px 6px #000,
+      3px 3px 6px #000,
+      0 0 2rem rgb(255, 255, 255);
+  `}
 `
 
 export const StyledIconContainer = styled.div`

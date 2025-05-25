@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { media } from '../../context/media';
+
 import { slideInTopAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 export const StyledFlexboxContainer = styled.div`
@@ -12,35 +14,59 @@ export const StyledFlexboxContainer = styled.div`
   gap: 40px;
 
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
+
+  ${media.mobile`
+    flex-direction: column;
+  `}
+
+  ${media.desktop`
+
+  `}
 `;
 
 export const StyledPlotContainer = styled.div`
   aspect-ratio: 1 / 1;
-  height: auto;
-  min-height: 500px;
-  max-height: 80vh;
-  min-width: 500px;
-  max-width: 80vh;
-  margin: 10vh 0vh;
-  flex-grow: 1;
-  margin-left: 160px;
   border: 4px solid black;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
+
+  ${media.mobile`
+    height: fit-content;
+    width: calc(100% - 40px);
+  `}
+
+  ${media.desktop`
+    flex-grow: 1;
+    height: auto;
+    min-height: 500px;
+    max-height: 80vh;
+    min-width: 500px;
+    max-width: 80vh;
+    margin: 10vh 0vh;
+    margin-left: 160px;
+  `}
 `;
 
 export const StyledButtonContainer = styled.div`
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: fit-content;
-  max-height: 90vh;
   width: fit-content;
-  gap: 30px;
-  margin-right: 160px;
+
+  ${media.mobile`
+
+  `}
+
+  ${media.desktop`
+    gap: 30px;
+    max-height: 90vh;
+    margin-right: 160px;
+  `}
 `;
 
 export const StyledRowContainer = styled.div`
@@ -177,6 +203,14 @@ export const StyledTextH3 = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);   
+
+  ${media.mobile`
+    font-size: 1.6rem;
+  `}
+
+  ${media.desktop`
+
+  `}
 `;
 
 export const StyledTextH4 = styled.h4`
@@ -185,5 +219,13 @@ export const StyledTextH4 = styled.h4`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
-              0px 0px 10px rgba(0, 0, 0, 1);   
+              0px 0px 10px rgba(0, 0, 0, 1);
+
+  ${media.mobile`
+    font-size: 1.2rem;
+  `}
+
+  ${media.desktop`
+
+  `}
 `;

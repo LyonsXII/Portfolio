@@ -106,11 +106,22 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
   };
 
   // Fetch mp3 file from backend
-  async function getAudio() {
-    const songPostData = {"location": roundData.songFilePath};
-    const songData = await axios.post('http://localhost:5000/mp3', songPostData, {responseType: "blob"});
-    return songData.data
+async function getAudio() {
+  const encodedPath = encodeURIComponent(roundData.songFilePath);
+  console.time('fetch');
+  const response = await fetch(`http://localhost:5000/mp3?location=${encodedPath}`);
+  console.timeLog('fetch', 'after fetch');
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
+
+  const blob = await response.blob();
+  console.timeEnd('fetch');
+  return blob;
+}
+
+
 
   // Set current song to correct choice
   async function updateSong() {
@@ -209,6 +220,7 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
   // Set current song whenever a new set of choices is displayed
   useEffect(() => {
     if (roundData.songFilePath) {
+      console.log(roundData.songFilePath);
       updateSong();
     }
   }, [roundData.songFilePath]);

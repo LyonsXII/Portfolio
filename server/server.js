@@ -82,12 +82,15 @@ app.post("/choices", async (req, res) => {
   res.json(choices)
 });
 
-app.post("/mp3", async (req, res) => {
-  const location = req.body.location;
+app.get("/mp3", (req, res) => {
+  console.time('getAudio');
+  const location = req.query.location;
   const relativeLocation = location.replace(/\\/g, '/');
   const filePath = path.join(__dirname, 'public', relativeLocation);
-  res.sendFile(filePath);
+  res.set('Cache-Control', 'public, max-age=3600'); // Caching file for one hour
+  res.sendFile(filePath, () => console.timeEnd('getAudio'));
 });
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);
