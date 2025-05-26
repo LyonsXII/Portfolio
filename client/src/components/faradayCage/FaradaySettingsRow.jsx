@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-import { StyledRowContainer, StyledIncrementButton, StyledTextBox, StyledTextH4 } from './FaradayCage.styles';
+import { StyledRowContainer, StyledIncrementButton, StyledTextBox, StyledTextBoxDivider, StyledTextH4, StyledPlusIcon, StyledMinusIcon } from './FaradayCage.styles';
 
 function FaradaySettingsRow({ name, value, onClick }) {
   const { theme } = useContext(ThemeContext);
@@ -19,15 +19,19 @@ function FaradaySettingsRow({ name, value, onClick }) {
 
   return (
     <StyledRowContainer>
-      <StyledIncrementButton theme={theme} onClick={() => {onClickHandler("Subtract")}}>
-        <img src="./icons/minus.svg" height="100%" width="100%" style={{minHeight: "50px", marginTop: "14px"}}></img>
+      <StyledIncrementButton theme={theme} $position="top" onClick={() => {onClickHandler("Subtract")}}>
+        <StyledMinusIcon/>
       </StyledIncrementButton>
       <StyledTextBox theme={theme}>
-        <StyledTextH4>{name}</StyledTextH4>
-        <StyledTextH4>{value}</StyledTextH4>
+        <StyledTextBoxDivider theme={theme} $position="first" $colour="main" $grow={true}>
+          <StyledTextH4>{name}</StyledTextH4>
+        </StyledTextBoxDivider>
+        <StyledTextBoxDivider theme={theme} $divider={true}>
+          <StyledTextH4>{value}</StyledTextH4>
+        </StyledTextBoxDivider>
       </StyledTextBox>
-      <StyledIncrementButton theme={theme} onClick={() => {onClickHandler("Add")}}>
-        <img src="./icons/plus.svg" height="100%" width="100%" style={{minHeight: "50px", marginTop: "14px"}}></img>
+      <StyledIncrementButton theme={theme} $position="bottom" onClick={() => {onClickHandler("Add")}}>
+        <StyledPlusIcon/>
       </StyledIncrementButton>
     </StyledRowContainer>
   )

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Plot from 'react-plotly.js';
+import { useMediaQuery } from 'react-responsive';
 
-import { StyledFlexboxContainer, StyledPlotContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledTextBox, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
+import { StyledFlexboxContainer, StyledPlotContainer, StyledTitleContainer, StyledButtonContainer, StyledRowContainer, StyledButton, StyledTextBox, StyledIncrementButton, StyledToggle, StyledTextH3, StyledTextH4 } from './FaradayCage.styles';
 
 import ReturnButton from "../general/ReturnButton";
 import FaradaySettingsRow from "./FaradaySettingsRow";
@@ -49,6 +50,92 @@ function FaradayCage({ transition, home }) {
   const [heatmap, setHeatmap] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  // Plot layout configuration
+  const mobileLayout = useMediaQuery({ maxWidth: 768 });
+  const plotLayout = {
+    autosize: true,
+    title: { 
+      text: "Faraday Cage in Two Dimensions",
+      font: mobileLayout 
+        ? { size: 14 } 
+        : { size: 24 }
+    },
+    xaxis: {
+      zeroline: false,
+      showgrid: false,
+      tickfont: mobileLayout 
+        ? { size: 12 } 
+        : { size: 18 },
+        range: [-1.4, 2]
+    },
+    yaxis: {
+      zeroline: false,
+      showgrid: false,
+      tickfont: mobileLayout 
+        ? { size: 12 } 
+        : { size: 18 },
+      range: [-1.5, 1.5]
+    },
+    margin: mobileLayout
+    ? { l: 30, r: 10, t: 40, b: 30 }
+    : { l: 80, r: 35, t: 100, b: 70 }
+  }
+  const heatMapLayout = {
+    z: plotDataHeat, 
+    x: axisValues.xValues,
+    y: axisValues.yValues,
+    type: "contour",
+    colorscale: "Portland",
+    contours: {
+      coloring: "heatmap",
+      width: 3,
+      start: -3.5,
+      end: 1,
+      size: 0.1,
+      showlines: false
+    },
+    line: {
+      width: 0
+    },
+    showscale: false,
+    opacity: heatmap ? 0.9 : 0
+  }
+  const contourLayout = {
+    z: plotData, 
+    x: axisValues.xValues,
+    y: axisValues.yValues,
+    type: "contour",
+    colorscale: plotColour,
+    contours: {
+      coloring: "lines",
+      width: 3,
+      start: -3.5,
+      end: 1,
+      size: 0.1
+    },
+    line: {
+      width: mobileLayout ? 1 : 2
+    },
+    showscale: false
+    }
+  const disksLayout = {
+    x: diskValues.diskXValues,
+    y: diskValues.diskYValues,
+    mode: "markers",
+    type: "scatter",
+    marker: {
+      size: mobileLayout ? radiusDisks * 80 : radiusDisks * 220,
+      color: "rgba(255, 0, 0, 0.6)",
+      line: {
+        color: "black",
+        width: 1,
+      },
+      symbol: "circle",
+    },
+    name: "Disks",
+    showlegend: false,
+  }
 
   // Update values used in plots
   function updatePlotValues(uu, uu_heat, diskXValues, diskYValues, centerGradient) {
@@ -170,94 +257,11 @@ function FaradayCage({ transition, home }) {
       <StyledPlotContainer>
         <Plot
           data={[
-            // Heatmap
-            {
-              z: plotDataHeat, 
-              x: axisValues.xValues,
-              y: axisValues.yValues,
-              type: "contour",
-              colorscale: "Portland",
-              contours: {
-                coloring: "heatmap",  // "heatmap" or "lines"
-                width: 3,
-                start: -3.5,
-                end: 1,
-                size: 0.1,
-                showlines: false
-              },
-              line: {
-                width: 0
-              },
-              showscale: false,
-              opacity: heatmap ? 0.9 : 0
-            },
-            // Contour plot
-            {
-              z: plotData, 
-              x: axisValues.xValues,
-              y: axisValues.yValues,
-              type: "contour",
-              colorscale: plotColour,
-              contours: {
-                coloring: "lines",
-                width: 3,
-                start: -3.5,
-                end: 1,
-                size: 0.1
-              },
-              line: {
-                width: 2
-              },
-              showscale: false
-            },
-            // Plot Disks (Visual Aid Only)
-            {
-              x: diskValues.diskXValues,
-              y: diskValues.diskYValues,
-              mode: "markers",
-              type: "scatter",
-              marker: {
-                size: radiusDisks * 220,
-                color: "rgba(255, 0, 0, 0.6)",
-                line: {
-                  color: "black",
-                  width: 1,
-                },
-                symbol: "circle",
-              },
-              name: "Disks",
-              showlegend: false,
-            }
+            heatMapLayout,
+            contourLayout,
+            disksLayout
           ]}
-          layout={{
-            autosize: true,
-            title: { 
-              text: "Faraday Cage in Two Dimensions",
-              font: {
-                size: 24
-              }
-            },
-            xaxis: {
-              zeroline: false,
-              showgrid: false,
-              tickfont: {
-                size: 18
-              }
-            },
-            yaxis: {
-              zeroline: false,
-              showgrid: false,
-              tickfont: {
-                size: 18
-              }
-            },
-            margin: {
-              l: 80,
-              r: 35,
-              t: 100,
-              b: 70
-            }
-          }}
+          layout={plotLayout}
           config={{ displayModeBar: false, responsive: true }}
           useResizeHandler={true} 
           style={{ width: "100%", height: "100%" }}
@@ -265,8 +269,10 @@ function FaradayCage({ transition, home }) {
       </StyledPlotContainer>
 
       <StyledButtonContainer theme={theme}>
-        <StyledTextH3>Configuration</StyledTextH3>
-        <StyledTextH4 style={{marginTop: "-30px"}}>Center Gradient: {centerGradient}</StyledTextH4>
+        <StyledTitleContainer>
+          <StyledTextH3>Configuration</StyledTextH3>
+          <StyledTextH4>Center Gradient: {centerGradient}</StyledTextH4>
+        </StyledTitleContainer>
         <StyledButton theme={theme} onClick={() => {updateData(numDisks, radiusDisks, numSides)}}>
           <StyledTextH4>Update Data</StyledTextH4>
         </StyledButton>
@@ -274,12 +280,13 @@ function FaradayCage({ transition, home }) {
         <FaradaySettingsRow theme={theme} name="Radius of Disks" value={tempRadiusDisks} onClick={incrementRadiusDisks}/>
         <FaradaySettingsRow theme={theme} name="Shape" value={numSidesDict[numSides]} onClick={incrementNumSides}/>
         <StyledRowContainer>
-          <StyledTextBox theme={theme}>
+          <StyledTextBox theme={theme} $standalone={true}>
             <StyledTextH4>Heatmap?</StyledTextH4>
             <StyledToggle theme={theme} type="checkbox" checked={heatmap} onChange={toggleMode}/>
           </StyledTextBox>
         </StyledRowContainer>
       </StyledButtonContainer>
+
 
     </StyledFlexboxContainer>
   )

@@ -17,6 +17,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-plotly.js": "^2.6.0",
+    "react-responsive": "^10.0.1",
     "react-ui": "^1.0.0-beta.32",
     "rollup-plugin-esbuild": "^6.2.1",
     "styled-components": "^6.1.12"

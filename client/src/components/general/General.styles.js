@@ -13,13 +13,22 @@ export const spinAnimation = keyframes`
 
 export const SpinnerContainer = styled.div`
   position: absolute;
-  top: 20px;
-  right: 120px;
   color: currentColor;
   display: inline-block;
-  width: 80px;
-  height: 80px;
-  // border: 1px solid yellow;
+
+  ${media.mobile`
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+  `}
+
+  ${media.desktop`
+    top: 20px;
+    right: 120px;
+    width: 80px;
+    height: 80px;
+  `}
 `;
 
 export const SpinnerItem = styled.div`
@@ -27,16 +36,31 @@ export const SpinnerItem = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 5.12px;
-  height: 14.08px;
   border-radius: 40%;
   background: antiqueWhite;
   border: 2px solid black;
   transform-origin: 50% 50%;
   animation: ${spinAnimation} 1.2s linear infinite;
-  ${({ $index }) => `
-    transform: rotate(${$index * 30}deg) translate(0, -26px);
-    animation-delay: ${-1.2 + $index * 0.1}s;
+
+  ${media.mobile`
+    width: 3.84px;
+    height: 10.56px;
+    margin-top: -10px;
+
+    ${({ $index }) => `
+      transform: rotate(${$index * 30}deg) translate(0, -20px);
+      animation-delay: ${-1.2 + $index * 0.1}s;
+    `}
+  `}
+
+  ${media.desktop`
+    width: 5.12px;
+    height: 14.08px;
+
+    ${({ $index }) => `
+      transform: rotate(${$index * 30}deg) translate(0, -26px);
+      animation-delay: ${-1.2 + $index * 0.1}s;
+    `}
   `}
 `;
 

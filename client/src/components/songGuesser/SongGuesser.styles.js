@@ -1,4 +1,4 @@
-import styled, { css, createGlobalStyle } from 'styled-components';
+import { styled, css, createGlobalStyle } from 'styled-components';
 
 import { media } from '../../context/media';
 
