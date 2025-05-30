@@ -18,27 +18,45 @@ export const StyledFlexboxContainer = styled.div`
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
 
+
 export const StyledButtonsFlexbox = styled.div`
   height: 100vh;
-  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 60px;
-  max-height: ${({ $showData }) => $showData ? "32vh" : "100vh"};
-  transition: max-height 1s ease;
+  border: 1px solid red;
+
+  ${media.mobile`
+    flex-direction: column;
+    max-height: ${({ $showData }) => $showData ? "34vw" : "100vh"};
+    max-width: ${({ $showData }) => $showData ? "calc(100% - 100px)" : "calc(100% - 40px)"};
+    margin-top: ${({ $showData }) => $showData ? "20px" : "0px"};
+    margin-left: ${({ $showData }) => $showData ? "80px" : "0px"};
+    transition: max-height 1s ease, max-width 0.5s ease, margin-top 1s ease, margin-left 1s ease;
+  `}
+
+  ${media.desktop`
+    gap: 60px;
+    width: 80%;
+    max-height: ${({ $showData }) => $showData ? "32vh" : "100vh"};
+    transition: max-height 1s ease;
+  `}
 `
 
 export const StyledTextEntryFlexbox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid green;
 
   ${media.mobile`
     height: 100%;
-    max-height: ${({ $showData }) => $showData ? "34vw" : "calc(100vh - 40px)"};
-    transition: max-height 1s ease;
     width: 100%;
+    max-height: ${({ $hide }) => !$hide ? "0vw" : "34vw"};
+    opacity: ${({ $hide }) => !$hide ? "0%" : "100%"};
+    padding: ${({ $hide }) => !$hide ? "0px" : "10px 0px"};
+    transition: max-height 1s ease, opacity 1s ease, padding 1s ease;
+    overflow: hidden;
   `}
 
   ${media.desktop`
@@ -66,7 +84,7 @@ export const StyledMainButton = styled.button`
   transition: border-radius 1s ease, margin-left 1s ease, width 1s ease, transform 0.2s ease, background-color 0.8s ease;
 
   &:hover {
-    background-color: ${props => props.theme.secondaryColor};
+    background-color: ${({ theme }) => theme.secondaryColor};
     box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
         inset 0 6px 10px rgba(255, 255, 255, 0.3), 
         inset 0 -10px 10px rgba(0, 0, 0, 0.6);
@@ -159,9 +177,8 @@ export const StyledAuthorButtonContainer = styled.div`
   max-width: ${({$expanded}) => $expanded ? "100%" : "0%"};
   transition: max-width 1s ease;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-gap: 10px;
   grid-auto-rows: auto;
+  grid-gap: 10px;
   justify-content: flex-start;
   align-items: flex-start;
   background-color: ${({ theme }) => theme.secondaryColor};
@@ -198,12 +215,15 @@ export const StyledAuthorButtonContainer = styled.div`
   }
 
   ${media.mobile`
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
     height: calc(34vw - 26px);
     margin-left: -10vw;
+    padding: ${({$expanded}) => $expanded ? "10px 10px 10px 45px" : "0px"};
     border: 3px solid black;
   `}
 
   ${media.desktop`
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     height: 160px;
     margin-left: -75px;
     padding: ${({$expanded}) => $expanded ? "15px 20px 15px 90px" : "0px"};
@@ -221,7 +241,6 @@ export const StyledAuthorButton = styled.button`
   background-color: ${({ theme, $selectedAuthor, $value }) => $selectedAuthor === $value ? theme.tertiaryColor : theme.primaryColor};
   border: 3px solid black;
   border-radius: 10px;
-  padding: 4px 10px;
   box-sizing: border-box;
   color: ${({ theme }) => theme.textColor};
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
@@ -229,18 +248,26 @@ export const StyledAuthorButton = styled.button`
           inset 0 -2px 2px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
-  &:hover {
-    background-color: ${props => props.theme.secondaryColor};
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
-            inset 0 4px 6px rgba(255, 255, 255, 0.3), 
-            inset 0 -2px 2px rgba(0, 0, 0, 0.6);
-    transform: scale(1.02);
-    transition: transform 0.2s ease, background-color 0.8s ease;
-  }
-
   animation: ${({ $authorExpandedButtonAnimation }) => 
     $authorExpandedButtonAnimation ? fadeInAnimation : "none"
   };
+
+  ${media.mobile`
+    padding: 4px 5px;
+  `}
+
+  ${media.desktop`
+    padding: 4px 10px;
+
+    &:hover {
+      background-color: ${props => props.theme.secondaryColor};
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
+              inset 0 4px 6px rgba(255, 255, 255, 0.3), 
+              inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+      transform: scale(1.02);
+      transition: transform 0.2s ease, background-color 0.8s ease;
+    }
+  `}
 `
 
 export const StyledIcon = styled.img`
@@ -291,9 +318,10 @@ export const StyledGrid = styled.div`
   -ms-overflow-style: none;
 
   ${media.mobile`
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-auto-rows: minmax(100px, auto);
+    width: 100%;
+    margin-top: 20px;
   `}
 
   ${media.desktop`
@@ -541,7 +569,7 @@ export const StyledButtonText = styled.p`
               0px 0px 6px rgba(0, 0, 0, 1);
 
   ${media.mobile`
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     line-height: 1.4;
   `}
 

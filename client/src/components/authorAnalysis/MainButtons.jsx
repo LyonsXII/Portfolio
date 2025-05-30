@@ -40,7 +40,7 @@ function MainButtons({ showData, authorProps, predictionProps}) {
 
   return (
     <StyledButtonsFlexbox $showData={showData}>
-      <StyledTextEntryFlexbox $showData={showData} $expanded={authorExpanded}>
+      <StyledTextEntryFlexbox $showData={showData} $expanded={authorExpanded} $hide={!predictionExpanded}>
         <StyledMainButton theme={theme} onClick={authorExpanded ? undefined : toggleAuthorExpanded} $expanded={authorExpanded}>
           <StyledIcon src="./icons/book.svg" $width="50%" $expanded={authorExpanded} $main={true}/>
           <StyledIcon src="./icons/next.svg" $width="70%" $expanded={authorExpanded} onClick={handleAuthorReport}/>
@@ -57,7 +57,7 @@ function MainButtons({ showData, authorProps, predictionProps}) {
         </StyledAuthorButtonContainer>
       </StyledTextEntryFlexbox>
 
-      <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded}>
+      <StyledTextEntryFlexbox $showData={showData} $expanded={predictionExpanded} $hide={!authorExpanded}>
         <StyledMainButton theme={theme} onClick={predictionExpanded ? undefined : togglePredictionExpanded} $expanded={predictionExpanded}>
           <StyledIcon src="./icons/search.svg" $width="50%" $expanded={predictionExpanded} $main={true}/>
           <StyledIcon src="./icons/next.svg" $width="70%" $expanded={predictionExpanded} onClick={handlePrediction}/>
