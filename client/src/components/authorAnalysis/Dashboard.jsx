@@ -132,7 +132,7 @@ function Dashboard({data, functional}) {
         </StyledBodyText>
       </StyledTopicButton>
 
-      <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud}/>
+      <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud} $desktopColSpan="4" $mobileColSpan="3" $desktopRowSpan="3" $mobileRowSpan="2"/>
 
       <StyledPlotContainer theme={theme} span="span 3">
         <Plot

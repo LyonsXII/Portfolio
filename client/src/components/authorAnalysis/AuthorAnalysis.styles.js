@@ -21,10 +21,10 @@ export const StyledFlexboxContainer = styled.div`
 
 export const StyledButtonsFlexbox = styled.div`
   height: 100vh;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid red;
 
   ${media.mobile`
     flex-direction: column;
@@ -32,14 +32,19 @@ export const StyledButtonsFlexbox = styled.div`
     max-width: ${({ $showData }) => $showData ? "calc(100% - 100px)" : "calc(100% - 40px)"};
     margin-top: ${({ $showData }) => $showData ? "20px" : "0px"};
     margin-left: ${({ $showData }) => $showData ? "80px" : "0px"};
-    transition: max-height 1s ease, max-width 0.5s ease, margin-top 1s ease, margin-left 1s ease;
+    transition: ${({ $showData }) => $showData 
+    ? "max-height 0.5s ease, max-width 0.5s ease, margin-top 0.5s ease, margin-left 0.5s ease"
+    : "max-height ease 0.5s, max-width 0.5s ease 0.5s, margin-top 0.5s ease 0.5s, margin-left 0.5s ease 0.5s"
+    };
   `}
 
   ${media.desktop`
     gap: 60px;
-    width: 80%;
-    max-height: ${({ $showData }) => $showData ? "32vh" : "100vh"};
-    transition: max-height 1s ease;
+    max-height: ${({ $showData }) => $showData ? "260px" : "100vh"};
+    max-width: ${({ $showData }) => $showData ? "calc(100vw - 200px)" : "80%"};
+    margin-top: ${({ $showData }) => $showData ? "20px" : "0px"};
+    margin-left: ${({ $showData }) => $showData ? "80px" : "0px"};
+    transition: all 0.5s ease;
   `}
 `
 
@@ -47,15 +52,24 @@ export const StyledTextEntryFlexbox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid green;
 
   ${media.mobile`
     height: 100%;
     width: 100%;
     max-height: ${({ $hide }) => !$hide ? "0vw" : "34vw"};
-    opacity: ${({ $hide }) => !$hide ? "0%" : "100%"};
-    padding: ${({ $hide }) => !$hide ? "0px" : "10px 0px"};
-    transition: max-height 1s ease, opacity 1s ease, padding 1s ease;
+    opacity: ${({ $hide }) => $hide ? "100%" : "0%"};
+    padding: ${({ $hide }) => $hide ? "10px 0px" : "0px"};
+    transition: ${({ $showData, $hide }) => 
+      $showData && $hide
+        ? "max-height 0.5s ease 0.5s, opacity 1s ease 1s, padding 1s ease"
+      : $showData && !$hide 
+        ? "max-height 1s ease 1s, opacity 0.5s ease 0.5s, padding 1s ease 1s"
+      : !$showData && $hide
+        ? "max-height 0.5s ease 0.5s, opacity 1s ease 1s, padding 1s ease"
+      : !$showData && !$hide
+        ? "max-height 1s ease 1s, opacity 0.5s ease 0.5s, padding 1s ease 1s"
+      : ""
+    };
     overflow: hidden;
   `}
 
@@ -178,14 +192,13 @@ export const StyledAuthorButtonContainer = styled.div`
   transition: max-width 1s ease;
   display: grid;
   grid-auto-rows: auto;
-  grid-gap: 10px;
   justify-content: flex-start;
   align-items: flex-start;
   background-color: ${({ theme }) => theme.secondaryColor};
   border-radius: 0px 20px 20px 0px;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
-          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
-          inset 0 -6px 6px rgba(0, 0, 0, 0.6);
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
 
   overflow-y: auto;
@@ -215,15 +228,17 @@ export const StyledAuthorButtonContainer = styled.div`
   }
 
   ${media.mobile`
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-gap: 5px;
     height: calc(34vw - 26px);
     margin-left: -10vw;
-    padding: ${({$expanded}) => $expanded ? "10px 10px 10px 45px" : "0px"};
+    padding: ${({$expanded}) => $expanded ? "5px 10px 5px 45px" : "0px"};
     border: 3px solid black;
   `}
 
   ${media.desktop`
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 10px;
     height: 160px;
     margin-left: -75px;
     padding: ${({$expanded}) => $expanded ? "15px 20px 15px 90px" : "0px"};
@@ -297,15 +312,14 @@ export const StyledGrid = styled.div`
   display: grid;
   grid-auto-flow: dense;
   position: relative;
-
   justify-items: stretch;
   align-items: stretch;
   column-gap: 10px;
   row-gap: 20px;
+  max-height: ${({ $showData }) => $showData ? "100vh" : "0vh"};
 
-  max-height: ${({ $showData }) => $showData ? "1000vh" : "0vh"};
-  margin-bottom: ${({ $showData }) => $showData ? "20px" : "0px"};
   transition: max-height 1s ease, margin-bottom 1s ease;
+  transition-delay: ${({ $showData }) => $showData ? "0.5s" : "0s"};
   padding: 0% 3%;
   box-sizing: border-box;
   overflow-y: scroll;
@@ -322,12 +336,14 @@ export const StyledGrid = styled.div`
     grid-auto-rows: minmax(100px, auto);
     width: 100%;
     margin-top: 20px;
+    margin-bottom: ${({ $showData }) => $showData ? "20px" : "0px"};
   `}
 
   ${media.desktop`
     width: 90%;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-auto-rows: minmax(150px, auto);
+    margin-bottom: ${({ $showData }) => $showData ? "40px" : "0px"};
   `}
 
   animation: ${({ $showData }) => 
@@ -343,9 +359,9 @@ export const StyledDataBox = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
-        inset 0 4px 6px rgba(255, 255, 255, 0.3), 
-        inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   border-radius: 20px;
   box-sizing: border-box;
   grid-column: ${({ span }) => span};
@@ -462,18 +478,19 @@ export const StyledWordcloud = styled.img`
   height: 100%;
   width: 100%;
   border-radius: 14px;
-  grid-row: span 3;
   box-sizing: border-box;
 
   ${media.mobile`
     border: 3px solid black;
-    grid-column: span 2;
+    grid-column: span ${({ $mobileColSpan }) => $mobileColSpan || "span 1"};
+    grid-row: span ${({ $mobileRowSpan }) => $mobileRowSpan || "span 1"};
     pointer-events: none;
   `}
 
   ${media.desktop`
     border: 4px solid black;
-    grid-column: span 4;
+    grid-column: span ${({ $desktopColSpan }) => $desktopColSpan || "span 1"};
+    grid-row: span ${({ $desktopRowSpan }) => $desktopRowSpan || "span 1"};
   `}
 `
 
@@ -481,9 +498,9 @@ export const StyledTopicButton = styled.button`
   padding: 20px;
   color: ${({ theme }) => theme.textColor};
   background-color: ${({ theme }) => theme.primaryColor};
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
-          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
-          inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   border-radius: 20px;
   cursor: pointer;
 
@@ -497,10 +514,12 @@ export const StyledTopicButton = styled.button`
   `}
 
   &:hover {
-  background-color: ${({ theme }) => theme.secondaryColor};
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4),
-          inset 0 4px 6px rgba(255, 255, 255, 0.3), 
-          inset 0 -2px 2px rgba(0, 0, 0, 0.6);
+    background-color: ${({ theme }) => theme.secondaryColor};
+    box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+                inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+    transform: scale(1.02);
+    transition: transform 0.2s ease, background-color 0.8s ease;
   }
 `
 
