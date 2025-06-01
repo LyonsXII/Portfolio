@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
+import { useMediaQuery } from 'react-responsive';
 
 import ReturnButton from "../general/ReturnButton";
 import LoadingIcon from "../general/LoadingIcon.jsx"
@@ -57,6 +58,9 @@ function AuthorAnalysis({ transition, home }) {
   });
   const [wordcloudUrl, setWordcloudUrl] = useState("");
   const [topicAnalysisFile, setTopicAnalysisFile] = useState("");
+
+  // Plot configs
+  const mobileLayout = useMediaQuery({ maxWidth: 768 });
   const [predictedAuthorsPlotData, setPredictedAuthorsPlotData] = useState({
     x: [0.5, 0.3, 0.1, 0.05, 0.05],
     y: ["Example 1", "Example 2", "Example 3", "Example 4" ,"Example 5"],
@@ -71,15 +75,15 @@ function AuthorAnalysis({ transition, home }) {
     },
     textfont: {
       color: theme.textColor,
-      size: 16
+      size: mobileLayout ? 12 : 16
     },
     insidetextfont: {
       color: theme.textColor,
-      size: 16
+      size: mobileLayout ? 12 : 16
     },
     outsidetextfont: {
       color: theme.textColor,
-      size: 16
+      size: mobileLayout ? 12 : 16
     },
     text: ["Example 1", "Example 2", "Example 3", "Example 4", "Example 5"],
     textposition: ["inside", "inside", "outside", "outside", "outside"],
@@ -100,13 +104,14 @@ function AuthorAnalysis({ transition, home }) {
     autosize: true
   });
   const [wordTypesPlotData, setWordTypesPlotData] = useState({
+    type: "pie",
     values: [1, 2],
     labels: ["Noun", "Adjective"],
-    type: "pie",
+    domain: { x: [0, 1], y: [0, 1] },
     hole: 0,
     textinfo: "percent",
     textfont: {
-      size: 18, // Change font size
+      size: mobileLayout ? 16 : 18, // Change font size
       color: theme.textColor, // Change font color
     },
     marker: {
@@ -333,7 +338,7 @@ function AuthorAnalysis({ transition, home }) {
         y: reportData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
         text: reportData["predicted_authors"].slice(0, 5).map(([weight, name]) => name),
         textposition: reportData["predicted_authors"].slice(0, 5).map(([weight, name]) => 
-          weight > 0.15 ? "inside" : "outside"
+          weight > 0.50 ? "inside" : "outside"
       )
       }));
 
@@ -381,14 +386,6 @@ function AuthorAnalysis({ transition, home }) {
       labels: word_types
     }))
 
-  }, [reportData]);
-
-  // Resize plots to correct size on load
-  useEffect(() => {
-    const plotElement = document.getElementById("fleschVsLexicalPlot");
-    if (plotElement) {
-      Plotly.Plots.resize(plotElement);
-    }
   }, [reportData]);
 
   // Retrieve author report data from backend on page load and update plot

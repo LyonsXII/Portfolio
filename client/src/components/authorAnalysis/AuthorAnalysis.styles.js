@@ -131,6 +131,9 @@ export const StyledTextBox = styled.div`
   align-items: flex-start;
   border-radius: 0px 20px 20px 0px;
   background-color: ${({ theme }) => theme.secondaryColor};
+  box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
 
   ${media.mobile`
     height: calc(34vw - 26px);
@@ -174,9 +177,10 @@ export const StyledTextField = styled.textarea`
   -ms-overflow-style: none;
 
   ${media.mobile`
-    height: calc(100% - 40px);
-    width: calc(100% - 80px);
-    margin: 20px 0px 0px 56px;
+    height: calc(100% - 20px);
+    width: calc(100% - 55px);
+    margin: 10px 0px 0px 44px;
+    border: 1px solid red;
   `}
 
   ${media.desktop`
@@ -187,13 +191,13 @@ export const StyledTextField = styled.textarea`
 `
 
 export const StyledAuthorButtonContainer = styled.div`
-  width: 100%;
-  max-width: ${({$expanded}) => $expanded ? "100%" : "0%"};
-  transition: max-width 1s ease;
   display: grid;
   grid-auto-rows: auto;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
+  max-width: ${({$expanded}) => $expanded ? "100%" : "0%"};
+  transition: max-width 1s ease;
   background-color: ${({ theme }) => theme.secondaryColor};
   border-radius: 0px 20px 20px 0px;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
@@ -314,10 +318,7 @@ export const StyledGrid = styled.div`
   position: relative;
   justify-items: stretch;
   align-items: stretch;
-  column-gap: 10px;
-  row-gap: 20px;
   max-height: ${({ $showData }) => $showData ? "100vh" : "0vh"};
-
   transition: max-height 1s ease, margin-bottom 1s ease;
   transition-delay: ${({ $showData }) => $showData ? "0.5s" : "0s"};
   padding: 0% 3%;
@@ -334,15 +335,19 @@ export const StyledGrid = styled.div`
   ${media.mobile`
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-auto-rows: minmax(100px, auto);
+    column-gap: 10px;
+    row-gap: 10px;
     width: 100%;
     margin-top: 20px;
     margin-bottom: ${({ $showData }) => $showData ? "20px" : "0px"};
   `}
 
   ${media.desktop`
-    width: 90%;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-auto-rows: minmax(150px, auto);
+    column-gap: 10px;
+    row-gap: 20px;
+    width: 90%;
     margin-bottom: ${({ $showData }) => $showData ? "40px" : "0px"};
   `}
 
@@ -368,6 +373,7 @@ export const StyledDataBox = styled.div`
   z-index: 2;
 
   ${media.mobile`
+    order: ${({ $mobileOrder }) => $mobileOrder || 0};
     padding: 10px;
     border: 3px solid black;
   `}
@@ -461,15 +467,16 @@ export const StyledPlotContainer = styled.div`
             0px 0px 6px rgba(0, 0, 0, 1),
             0px 0px 6px rgba(0, 0, 0, 1),               
             0px 0px 6px rgba(0, 0, 0, 1);
-
-  grid-column: ${({ span }) => span};;
   grid-row: span 3;
 
   ${media.mobile`
+    order: ${({ $mobileOrder }) => $mobileOrder || 0};
+    grid-column: span ${({ $mobileColSpan }) => $mobileColSpan || 2};
     border: 3px solid black;
   `}
 
   ${media.desktop`
+    grid-column: span ${({ $desktopColSpan }) => $desktopColSpan || 2};
     border: 4px solid black;
   `}
 `
@@ -481,16 +488,17 @@ export const StyledWordcloud = styled.img`
   box-sizing: border-box;
 
   ${media.mobile`
+    order: ${({ $mobileOrder }) => $mobileOrder || 0};
+    grid-column: span ${({ $mobileColSpan }) => $mobileColSpan || "1"};
+    grid-row: span ${({ $mobileRowSpan }) => $mobileRowSpan || "1"};
     border: 3px solid black;
-    grid-column: span ${({ $mobileColSpan }) => $mobileColSpan || "span 1"};
-    grid-row: span ${({ $mobileRowSpan }) => $mobileRowSpan || "span 1"};
     pointer-events: none;
   `}
 
   ${media.desktop`
     border: 4px solid black;
-    grid-column: span ${({ $desktopColSpan }) => $desktopColSpan || "span 1"};
-    grid-row: span ${({ $desktopRowSpan }) => $desktopRowSpan || "span 1"};
+    grid-column: span ${({ $desktopColSpan }) => $desktopColSpan || "1"};
+    grid-row: span ${({ $desktopRowSpan }) => $desktopRowSpan || "1"};
   `}
 `
 
@@ -505,8 +513,7 @@ export const StyledTopicButton = styled.button`
   cursor: pointer;
 
   ${media.mobile`
-    border: 3px solid black;
-    pointer-events: none;
+    display: none;
   `}
 
   ${media.desktop`

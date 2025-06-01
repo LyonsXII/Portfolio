@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 import Plot from 'react-plotly.js';
+import AutoSizer from "react-virtualized-auto-sizer";
+import { useMediaQuery } from 'react-responsive';
 
 import TopicAnalysis from "./TopicAnalysis.jsx";
 import Wordcloud from "./Wordcloud.jsx";
@@ -29,9 +31,193 @@ function Dashboard({data, functional}) {
     predictionExpanded
   } = functional
 
+  // Plot configs
+  const mobileLayout = useMediaQuery({ maxWidth: 768 });
+  const predictedAuthorsPlotLayout = {
+    title: {
+      text: "Predicted Authors",
+      font: {
+        color: theme.textColor,
+        size: mobileLayout ? 16 : 20
+      },
+      x: 0.5,
+      y: 0.91,
+      xanchor: "center",
+      yanchor: "bottom",
+    },
+    xaxis: {
+      title: {
+        text: "",
+        font: {
+          color: theme.textColor,
+          size: mobileLayout ? 12 : 16
+        },
+        standoff: mobileLayout ? 10 : 16
+      },
+      tickfont: {
+        color: theme.textColor,
+        size: mobileLayout ? 12 : 14
+      },
+      ticklen: 10,
+      autorange: "reversed",
+      gridcolor: "rgba(36, 36, 36, 0.2)",
+      gridwidth: 1,
+      showline: true,
+      showgrid: false,
+      showticklabels: false
+    },
+    yaxis: {
+      title: {
+        text: "",
+        font: {
+          color: theme.textColor,
+          size: mobileLayout ? 12 : 16
+        },
+        standoff: mobileLayout ? 0 : 10
+      },
+      tickfont: {
+        color: theme.textColor,
+        size: 14
+      },
+      ticklen: 10,
+      gridcolor: "rgba(36, 36, 36, 0.2)",
+      gridwidth: 1,
+      showline: true,
+      showgrid: false,
+      showticklabels: false
+    },
+    paper_bgcolor: theme.primaryColor,
+    plot_bgcolor: "white",
+    hoverlabel: {
+      font: {
+        color: theme.textColor
+      }
+    },
+    autosize: true,
+    height: "100%",
+    margin: mobileLayout ? {t: 45, b: 15, l: 15, r: 15} : {t: 65, b: 90, l: 75, r: 35},
+    // Plot region border box
+    shapes: [
+      {
+        type: "rect",
+        x0: 0,
+        y0: 0,
+        x1: 1,
+        y1: 1,
+        xref: "paper",
+        yref: "paper",
+        line: {
+          color: "black",
+          width: 3
+        }
+      }
+    ]
+  };
+  const fleschVsLexicalPlotLayout = {
+    title: {
+      text: mobileLayout ? "FK Readability vs Lexical Diversity" : "Flesch-Kincaid Readability vs Lexical Diversity",
+      font: {
+        color: theme.textColor,
+        size: mobileLayout ? 16 : 20
+      },
+      x: 0.5,
+      y: 0.91,
+      xanchor: "center",
+      yanchor: "bottom",
+    },
+    xaxis: {
+      title: {
+        text: "Flesch-Kincaid Readability Score",
+        font: {
+          color: theme.textColor,
+          size: mobileLayout ? 14 : 16
+        },
+        standoff: mobileLayout ? 12 : 16
+      },
+      tickfont: {
+        color: theme.textColor,
+        size: 14
+      },
+      ticklen: mobileLayout ? 5 : 10,
+      autorange: "reversed",
+      gridcolor: "rgba(36, 36, 36, 0.2)",
+      gridwidth: 1,
+      showline: true
+    },
+    yaxis: {
+      title: {
+        text: "Lexical Diversity",
+        font: {
+          color: theme.textColor,
+          size: mobileLayout ? 14 : 16
+        },
+        standoff: mobileLayout ? 5 : 10
+      },
+      tickfont: {
+        color: theme.textColor,
+        size: 14
+      },
+      ticklen: mobileLayout ? 5 : 10,
+      gridcolor: "rgba(36, 36, 36, 0.2)",
+      gridwidth: 1,
+      showline: true
+    },
+    paper_bgcolor: theme.primaryColor,
+    plot_bgcolor: "white",
+    hoverlabel: {
+      font: {
+        color: theme.textColor
+      }
+    },
+    autosize: true,
+    height: "100%",
+    margin: mobileLayout 
+      ? {t: 45, b: 65, l: 60, r: 15} 
+      : {t: 65, b: 90, l: 75, r: 35},
+    // Plot region border box
+    shapes: [
+      {
+        type: "rect",
+        x0: 0,
+        y0: 0,
+        x1: 1,
+        y1: 1,
+        xref: "paper",
+        yref: "paper",
+        line: {
+          color: "black",
+          width: 3
+        }
+      }
+    ]
+  };
+  const wordTypesPlotLayout = {
+    legend: {
+      x: 0,
+      y: mobileLayout ? -0.3 : -0.25,
+      xanchor: "left",
+      yanchor: "bottom",
+      font: {
+        color: theme.textColor,
+        size: mobileLayout ? 12 : 14
+      }
+    },
+    hoverlabel: {
+      font: {
+        color: theme.textColor,
+        size:  14
+      }
+    },
+    paper_bgcolor: theme.primaryColor,
+    autosize: true,
+    margin: mobileLayout 
+      ? {t: 0, b: 0, l: 10, r: 10} 
+      : {t: 20, b: 40, l: 20, r: 20},
+  };
+
   return (
     <StyledGrid $showData={showData}>
-      <StyledDataBox theme={theme} span="span 2">
+      <StyledDataBox theme={theme} span="span 2" $mobileOrder="1">
         <StyledBodyText>
           Total Words: {reportData["metrics"]["total_words"]}
           <br/>
@@ -43,7 +229,7 @@ function Dashboard({data, functional}) {
         </StyledBodyText>
       </StyledDataBox>
 
-      <StyledDataBox theme={theme}>
+      <StyledDataBox theme={theme} $mobileOrder="2">
         <StyledBodyText>
           Tense: {reportData["metrics"]["tense"]}
           <br/>
@@ -53,7 +239,7 @@ function Dashboard({data, functional}) {
         </StyledBodyText>
       </StyledDataBox>
 
-      <StyledDataBox theme={theme} $hoverText={hoverText} $value="emotion">
+      <StyledDataBox theme={theme} $hoverText={hoverText} $value="emotion" $mobileOrder="3">
           <StyledBodyText>
             Valence: {reportData["predicted_emotions"]["valence"]}
             <br/>
@@ -76,29 +262,10 @@ function Dashboard({data, functional}) {
 
       { 
         predictionExpanded &&
-        <StyledPlotContainer span="span 2">
-          <Plot 
+        <StyledPlotContainer $mobileOrder="5" $desktopColSpan="4" $mobileColSpan="3">
+          <Plot
             data={[predictedAuthorsPlotData]}
-            layout={{
-              autosize: true,
-              xaxis: {
-                title: "",
-                showgrid: false,
-                zeroline: false,
-                showticklabels: false
-              },
-              yaxis: {
-                title: "",
-                showgrid: false,
-                zeroline: false,
-                showticklabels: false,
-                type: 'category', 
-                autorange: 'reversed'
-              },
-              margin: { t: 10, b: 10, l: 10, r: 10 },
-              paper_bgcolor: theme.secondaryColor,
-              plot_bgcolor: theme.secondaryColor
-            }}
+            layout={predictedAuthorsPlotLayout}
             config={{ displayModeBar: false, responsive: true }}
             useResizeHandler={true}
             style={{ width: '100%', height: '100%' }}
@@ -106,7 +273,7 @@ function Dashboard({data, functional}) {
         </StyledPlotContainer>
       }
 
-      <StyledDataBox theme={theme} span="span 2">
+      <StyledDataBox theme={theme} $mobileOrder="4" span="span 2">
         <StyledBodyText>
           Flesch-Kincaid: {reportData["metrics"]["fk_score"]}
           <br/>
@@ -126,139 +293,28 @@ function Dashboard({data, functional}) {
           </StyledInfoButton>
       </StyledDataBox>
 
-      <StyledTopicButton theme={theme} onClick={toggleTopicGraph}>
+      <StyledTopicButton theme={theme} onClick={toggleTopicGraph} $mobileOrder="6">
         <StyledBodyText>
           Show Topic Graph
         </StyledBodyText>
       </StyledTopicButton>
 
-      <StyledWordcloud src={wordcloudUrl} onClick={toggleWordcloud} $desktopColSpan="4" $mobileColSpan="3" $desktopRowSpan="3" $mobileRowSpan="2"/>
+      <StyledWordcloud src={wordcloudUrl || "images/Placeholder Wordcloud.png"} onClick={toggleWordcloud} $mobileOrder="9" $desktopColSpan="4" $mobileColSpan="3" $desktopRowSpan="3" $mobileRowSpan="2"/>
 
-      <StyledPlotContainer theme={theme} span="span 3">
-        <Plot
-          id="fleschVsLexicalPlot"
-          data={[fleschVsLexicalPlotData]}
-          layout={{
-            title: {
-              text: "Flesch-Kincaid Readability vs Lexical Diversity",
-              font: {
-                color: theme.textColor,
-                size: 20
-              },
-              x: 0.5, // Title horizontal position
-              y: 0.91, // Title vertical position (increase for more space)
-              xanchor: "center", // Align title horizontally
-              yanchor: "bottom", // Align title vertically
-            },
-            xaxis: {
-              title: {
-                text: "Flesch-Kincaid Readability Score",
-                font: {
-                  color: theme.textColor,
-                  size: 16
-                },
-                standoff: 16
-              },
-              tickfont: {
-                color: theme.textColor,
-                size: 14
-              },
-              ticklen: 10,
-              autorange: "reversed",
-              gridcolor: "rgba(36, 36, 36, 0.2)",
-              gridwidth: 1,
-              showline: true
-            },
-            yaxis: {
-              title: {
-                text: "Lexical Diversity",
-                font: {
-                  color: theme.textColor,
-                  size: 16
-                },
-                standoff: 10
-              },
-              tickfont: {
-                color: theme.textColor,
-                size: 14
-              },
-              ticklen: 10,
-              gridcolor: "rgba(36, 36, 36, 0.2)",
-              gridwidth: 1,
-              showline: true
-            },
-            paper_bgcolor: theme.primaryColor,
-            plot_bgcolor: "white",
-            hoverlabel: {
-              font: {
-                color: theme.textColor
-              }
-            },
-            autosize: true,
-            height: "100%",
-            margin: {
-              t: 65,
-              b: 90,
-              l: 75,
-              r: 35
-            },
-            // Plot region border box
-            shapes: [
-              {
-                type: "rect",
-                x0: 0,
-                y0: 0,
-                x1: 1,
-                y1: 1,
-                xref: "paper",
-                yref: "paper",
-                line: {
-                  color: "black",
-                  width: 3
-                }
-              }
-            ]
-          }}
-          config={{ displayModeBar: false, responsive: true }}
-          useResizeHandler={true}
-          style={{ width: '100%', height: '100%' }}
-        />
+      <StyledPlotContainer theme={theme} $mobileOrder="7" $desktopColSpan="4" $mobileColSpan="3" $mobileFillColumn={true}>
+          <Plot
+            data={[fleschVsLexicalPlotData]}
+            layout={fleschVsLexicalPlotLayout}
+            config={{ displayModeBar: false, responsive: true, autosizeable: true }}
+            useResizeHandler={true}
+            style={{ height: "100%", width: "100%" }}
+          />
       </StyledPlotContainer>
 
-      <StyledPlotContainer theme={theme} span="span 2">
+      <StyledPlotContainer theme={theme} $mobileOrder="8" $desktopColSpan="2" $mobileColSpan="2">
         <Plot
-          id="wordTypesPlot"
           data={[wordTypesPlotData]}
-          layout={{
-            title: {
-              text: ""
-            }, 
-            legend: {
-              x: 0,
-              y: -0.25,
-              xanchor: "left",
-              yanchor: "bottom",
-              font: {
-                color: theme.textColor,
-                size: 14
-              }
-            },
-            hoverlabel: {
-              font: {
-                color: theme.textColor,
-                size: 14
-              }
-            },
-            paper_bgcolor: theme.primaryColor,
-            autosize: true,
-            height: "100%",
-            margin: {
-              t: 20,
-              b: 40,
-              l: 20,
-              r: 20
-            },
-          }}
+          layout={wordTypesPlotLayout}
           config={{ displayModeBar: false, responsive: true }}
           useResizeHandler={true}
           style={{ width: '100%', height: '100%' }}
