@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from 'styled-components';
 import Plot from 'react-plotly.js';
-import AutoSizer from "react-virtualized-auto-sizer";
 import { useMediaQuery } from 'react-responsive';
 
 import TopicAnalysis from "./TopicAnalysis.jsx";
@@ -28,7 +27,10 @@ function Dashboard({data, functional}) {
     toggleWordcloud,
     hoverText,
     handleHoverText,
-    predictionExpanded
+    predictionExpanded,
+    selectedAuthor,
+    showTopicGraph,
+    showWordcloud
   } = functional
 
   // Plot configs
@@ -95,7 +97,7 @@ function Dashboard({data, functional}) {
     },
     autosize: true,
     height: "100%",
-    margin: mobileLayout ? {t: 45, b: 15, l: 15, r: 15} : {t: 65, b: 90, l: 75, r: 35},
+    margin: mobileLayout ? {t: 45, b: 15, l: 15, r: 15} : {t: 70, b: 30, l: 30, r: 30},
     // Plot region border box
     shapes: [
       {
@@ -151,7 +153,7 @@ function Dashboard({data, functional}) {
           color: theme.textColor,
           size: mobileLayout ? 14 : 16
         },
-        standoff: mobileLayout ? 5 : 10
+        standoff: mobileLayout ? 0 : 10
       },
       tickfont: {
         color: theme.textColor,
@@ -214,6 +216,10 @@ function Dashboard({data, functional}) {
       ? {t: 0, b: 0, l: 10, r: 10} 
       : {t: 20, b: 40, l: 20, r: 20},
   };
+
+  // Trigger window resize event to update Plotly plots
+    // Workaround - function listed in documentation not working (likely due to grid and max-height transition)
+  useEffect(() => { window.dispatchEvent(new Event("resize"))}, [reportData, selectedAuthor, showTopicGraph, showWordcloud, hoverText]);
 
   return (
     <StyledGrid $showData={showData}>
@@ -301,14 +307,14 @@ function Dashboard({data, functional}) {
 
       <StyledWordcloud src={wordcloudUrl || "images/Placeholder Wordcloud.png"} onClick={toggleWordcloud} $mobileOrder="9" $desktopColSpan="4" $mobileColSpan="3" $desktopRowSpan="3" $mobileRowSpan="2"/>
 
-      <StyledPlotContainer theme={theme} $mobileOrder="7" $desktopColSpan="4" $mobileColSpan="3" $mobileFillColumn={true}>
-          <Plot
-            data={[fleschVsLexicalPlotData]}
-            layout={fleschVsLexicalPlotLayout}
-            config={{ displayModeBar: false, responsive: true, autosizeable: true }}
-            useResizeHandler={true}
-            style={{ height: "100%", width: "100%" }}
-          />
+      <StyledPlotContainer theme={theme} $mobileOrder="7" $desktopColSpan="3" $mobileColSpan="3">
+        <Plot
+          data={[fleschVsLexicalPlotData]}
+          layout={fleschVsLexicalPlotLayout}
+          config={{ displayModeBar: false, responsive: true }}
+          useResizeHandler={true}
+          style={{ width: "100%", height: "100%" }}
+        />
       </StyledPlotContainer>
 
       <StyledPlotContainer theme={theme} $mobileOrder="8" $desktopColSpan="2" $mobileColSpan="2">
@@ -320,6 +326,7 @@ function Dashboard({data, functional}) {
           style={{ width: '100%', height: '100%' }}
         />
       </StyledPlotContainer>
+
     </StyledGrid>
   )
 }

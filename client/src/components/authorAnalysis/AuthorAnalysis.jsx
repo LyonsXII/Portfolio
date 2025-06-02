@@ -107,6 +107,7 @@ function AuthorAnalysis({ transition, home }) {
     type: "pie",
     values: [1, 2],
     labels: ["Noun", "Adjective"],
+    hoverinfo: 'skip',
     domain: { x: [0, 1], y: [0, 1] },
     hole: 0,
     textinfo: "percent",
@@ -469,7 +470,10 @@ function AuthorAnalysis({ transition, home }) {
           toggleWordcloud,
           hoverText,
           handleHoverText,
-          predictionExpanded
+          predictionExpanded,
+          selectedAuthor,
+          showTopicGraph,
+          showWordcloud
         }}
       />
     </StyledFlexboxContainer>

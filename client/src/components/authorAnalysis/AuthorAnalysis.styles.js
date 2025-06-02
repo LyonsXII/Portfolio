@@ -149,7 +149,10 @@ export const StyledTextBox = styled.div`
 `
 
 export const StyledTextField = styled.textarea`
-  padding: 0px;
+  padding: ${({ $expanded }) => $expanded ? "5px" : "0px"};
+  opacity: ${({ $expanded }) => $expanded ? "1" : "0"};
+  transition: padding 0.5s ease;
+  transition: ${({ $expanded }) => $expanded ? "opacity 0.5s ease 0.5s" : "opacity 0.5s ease"};
   background: transparent;
   border: none;
   outline: none;
@@ -180,7 +183,6 @@ export const StyledTextField = styled.textarea`
     height: calc(100% - 20px);
     width: calc(100% - 55px);
     margin: 10px 0px 0px 44px;
-    border: 1px solid red;
   `}
 
   ${media.desktop`
@@ -208,28 +210,12 @@ export const StyledAuthorButtonContainer = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 
-  scroll-behavior: smooth;
-  direction: ltr;
-  scrollbar-color: ${({ theme }) => `${theme.primaryColor} ${theme.secondaryColor}`};
-  scrollbar-width: thin;
-
-  ::-webkit-scrollbar {
-    width: 20px;
+  /* Hide scrollbar, covers various browsers */
+  &::-webkit-scrollbar {
+    display: none;
   }
-
-  ::-webkit-scrollbar-track {
-    margin-right: 200px;
-    background-color: #e4e4e4;
-    border-radius: 100px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 100px;
-    border: 6px solid rgba(0, 0, 0, 0.18);
-    border-left: 0;
-    border-right: 0;
-    background-color: #8070d4;
-  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   ${media.mobile`
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -542,6 +528,7 @@ export const FullScreenBackground = styled.div`
 `
 
 export const FullScreenContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -549,8 +536,12 @@ export const FullScreenContainer = styled.div`
   height: 90%;
   top: 5vh;
   left: 5vw;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 20px;
   overflow: none;
   z-index: 2;
+
   
   ${media.mobile`
     width: 90%;
@@ -562,8 +553,9 @@ export const FullScreenContainer = styled.div`
 `
 
 export const StyledIFrame = styled.iframe`
-  width: 100%;
+  position: absolute;
   height: 100%;
+  width: 100%;
   border: none;
   overflow: hidden;
 `;

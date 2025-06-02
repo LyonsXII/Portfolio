@@ -64,7 +64,7 @@ function MainButtons({ showData, authorProps, predictionProps}) {
           <StyledIcon src="./icons/return.svg" $width="70%" $expanded={predictionExpanded} onClick={togglePredictionExpanded}/>
         </StyledMainButton>
         <StyledTextBox theme={theme} $expanded={predictionExpanded}>
-          <StyledTextField theme={theme} value={predictionText} onChange={handleChange} placeholder="Enter your text here..."/>
+          <StyledTextField theme={theme} value={predictionText} onChange={handleChange} $expanded={predictionExpanded} placeholder="Enter your text here..."/>
         </StyledTextBox>
       </StyledTextEntryFlexbox>
     </StyledButtonsFlexbox>
