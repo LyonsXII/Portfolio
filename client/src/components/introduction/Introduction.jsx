@@ -106,7 +106,6 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
 
   // Time allowed insertion of subtitle to animation completion, avoids jarring title movement
   useEffect(() => {setTimeout(() => {setGalleryAnimationComplete(true)}, 1000)}, []);
-  useEffect(() => {console.log(tempCurrent)}, [tempCurrent])
 
   return (
     <StyledContentContainer>

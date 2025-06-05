@@ -127,7 +127,8 @@ export const StyledSectionFlexbox = styled.div`
     height: 100%;
     max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
     min-height: 0px;
-    padding: 0px 5px 0px 15px;
+    padding: 0px 5px 0px 0px;
+    border: 1px solid blue;
   `}
 
   ${media.desktop`
@@ -198,11 +199,12 @@ export const StyledSectionRowFlexbox = styled.div`
     gap: 10px;
     min-height: 0px;
     max-height: ${({ $collapse }) => $collapse ? "0px" : "160px"};
-    margin-top: 15px;
-    padding: 0px 20px 0px 20px;
+    margin-top: ${({ $collapse }) => $collapse ? "0px" : "15px"};
+    padding: 5px 20px 0px 20px;
     opacity: ${({ $collapse }) => $collapse ? "0" : "1"};
-    transition: max-height 1s ease, opacity 1s ease;
+    transition: max-height 1s ease, margin-top 1s ease, opacity 1s ease;
     overflow: hidden;
+    border: 1px solid green;
   `}
 
   ${media.desktop`
@@ -292,8 +294,9 @@ export const StyledSectionRowTextFlexbox = styled.div`
     height: 100%;
     flex: 1 1 auto;
     flex-wrap: wrap;
-    padding: 10px 20px 0px 10px;
+    padding: 5px 20px 0px 20px;
     margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
+    border: 1px solid yellow;
   `}
 
   ${media.desktop`
@@ -483,7 +486,8 @@ export const StyledGalleryContainer = styled.div`
     align-items: center;
     flex: 1 1 auto; /* Change to 0 0 auto if messing up scroll box again*/
     width: 100%;
-    padding: 20px 0px;
+    padding: 20px 0px 60px 0px;
+    border: 1px solid red;
   `}
 
   ${media.desktop`

@@ -21,6 +21,7 @@ export const StyledMainContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: env(safe-area-inset-top);
   overflow: hidden;
 
   color: ${({ theme }) => theme.textColor};
