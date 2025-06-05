@@ -3,7 +3,7 @@ import axios from "axios";
 import './App.css'
 
 import Settings from "./components/settings/Settings";
-import Container from "./components/Container";
+import PrimaryContainer from "./components/general/PrimaryContainer";
 import Introduction from "./components/introduction/Introduction"
 import SongGuesser from "./components/songGuesser/SongGuesser";
 import FaradayCage from "./components/faradayCage/FaradayCage";
@@ -49,13 +49,13 @@ function App() {
     <ThemeProvider>
       <AudioProvider>
         <SettingsProvider>
-          <Container>
+          <PrimaryContainer>
             {intro === true ? <Introduction home={home} activateSongGuesser={activateSongGuesser} activateFaradayCage={activateFaradayCage} activateAuthorAnalysis={activateAuthorAnalysis} transition={transition}/> : null}
             {songGuesserSection === true ? <SongGuesser transition={transition} setTransition={setTransition} home={home}/> : null}
             {faradaySection === true ? <FaradayCage transition={transition} home={home}/> : null}
             {authorAnalysisSection === true ? <AuthorAnalysis transition={transition} setTransition={setTransition} home={home}/> : null}
             <Settings home={home}/>
-          </Container>
+          </PrimaryContainer>
         </SettingsProvider>
       </AudioProvider>
     </ThemeProvider>

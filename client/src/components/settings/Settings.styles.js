@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { media } from '../../context/media';
 
-import { slideInRightSettingsAnimation, slideOutRightSettingsAnimation, notchSlideLeftAnimation, notchSlideRightAnimation } from '../../context/Animations';
+import { slideInRightSettingsAnimation, slideInBottomSettingsMobileAnimation, slideOutRightSettingsAnimation, slideOutBottomSettingsMobileAnimation, notchSlideLeftAnimation, notchSlideUpMobileAnimation, notchSlideRightAnimation, notchSlideDownMobileAnimation } from './SettingsAnimations';
 
 export const StyledNotchContainer = styled.div`
   background-color: ${({ theme }) => theme.primaryColor};
@@ -15,13 +15,21 @@ export const StyledNotchContainer = styled.div`
   cursor: pointer;
 
   ${media.mobile`
-    display: none;
-    height: 100px;
-    width: 20px
+    height: 20px;
+    width: 100px;
     border-bottom: none;
-    border-radius: 20px 0px 0px 20px;
+    border-radius: 20px 20px 0px 0px;
     position: absolute;
+    left: calc(50% - 50px);
     bottom: 0px;
+
+    animation: ${({ $animationState }) => 
+      $animationState === "Enter" 
+        ? notchSlideUpMobileAnimation : 
+        $animationState === "Exit" 
+        ? notchSlideDownMobileAnimation :
+        "none"
+    };
   `}
 
   ${media.desktop`
@@ -32,99 +40,152 @@ export const StyledNotchContainer = styled.div`
     position: absolute;
     top: calc(50% - 50px);
     right: 0px;
+
+    &:hover {
+      background-color: ${props => props.theme.secondaryColor};
+    }
+
+    animation: ${({ $animationState }) => 
+      $animationState === "Enter" 
+        ? notchSlideLeftAnimation : 
+        $animationState === "Exit" 
+        ? notchSlideRightAnimation :
+        "none"
+    };
   `}
-
-  &:hover {
-    background-color: ${props => props.theme.secondaryColor};
-  }
-
-  animation: ${({ $animationState }) => 
-    $animationState === "Enter" 
-      ? notchSlideLeftAnimation : 
-      $animationState === "Exit" 
-      ? notchSlideRightAnimation :
-      "none"
-  };
 `;
 
 export const StyledSettingsContainer = styled.div`
   position: absolute;
-  top: 0px;
-  right: -84px;
   color: ${({ theme }) => theme.textColor};
-  height: 100vh;
-  z-index: 2;
+  z-index: 3;
 
   ${media.mobile`
-    display: none;
+    display: flex;
+    justify-content: flex-start;
+    bottom: -64px;
+    left: 0px;
+    width: 100vw;
+
+    animation: ${({ $animationState }) => 
+      $animationState === "Enter" 
+        ? slideInBottomSettingsMobileAnimation 
+        : $animationState === "Exit" 
+        ? slideOutBottomSettingsMobileAnimation 
+        : "none"
+    };
   `}
 
   ${media.desktop`
     display: flex;
     justify-content: flex-end;
-  `}
+    top: 0px;
+    right: -84px;
+    height: 100vh;
 
-  animation: ${({ $animationState }) => 
-    $animationState === "Enter" 
-      ? slideInRightSettingsAnimation : 
-      $animationState === "Exit" 
-      ? slideOutRightSettingsAnimation :
-      "none"
-  };
+    animation: ${({ $animationState }) => 
+      $animationState === "Enter" 
+        ? slideInRightSettingsAnimation : 
+        $animationState === "Exit" 
+        ? slideOutRightSettingsAnimation :
+        "none"
+    };
+  `}
 `;
 
 export const StyledHoverTextContainer = styled.div`
-  position: absolute;
-  top: 0px;
-  right: 80px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  z-index: 2;
-  pointer-events: none;
+  ${media.mobile`
+    display: none;
+  `}
+
+  ${media.desktop`
+    position: absolute;
+    top: 0px;
+    right: 80px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 2;
+    pointer-events: none;
+  `}
 `;
 
 export const StyledButtonContainer = styled.div`
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 80px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  border-left: 4px solid black;
   z-index: 2;
+
+  ${media.mobile`
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    border-top: 4px solid black;
+  `}
+
+  ${media.desktop`
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 80px;
+    border-left: 4px solid black;
+  `}
 `;
 
+export const StyledLinkContainer = styled.a`
+  ${media.mobile`
+    order: ${({ $mobileOrder }) => $mobileOrder || 0};
+  `}
+`
+
 export const StyledSettingsButton = styled.div`
-  height: 80px;
-  width: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.primaryColor};
-  border-top: ${({ $position }) => $position === "Top" ? "none" : "4px solid black"};
-  border-bottom: ${({ $position }) => $position === "Bottom" ? "none" : "4px solid black"};
-  margin-top: -4px;
   box-sizing: border-box;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-            inset 0 -4px 4px rgba(0, 0, 0, 0.6);
-  }
+  ${media.mobile`
+    display: ${({ $mobile }) => $mobile ? "flex" : "none"};
+    height: 60px;
+    width: 60px;
+    border-left: ${({ $position }) => $position === "Top" ? "none" : "4px solid black"};
+    border-right: ${({ $mobileEnd }) => $mobileEnd ? "4px solid black" : "none"};
+  `}
+
+  ${media.desktop`
+    height: 80px;
+    width: 80px;
+    border-top: ${({ $position }) => $position === "Top" ? "none" : "4px solid black"};
+    border-bottom: ${({ $position }) => $position === "Bottom" ? "none" : "4px solid black"};
+    margin-top: -4px;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.secondaryColor};
+      box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.4),
+              inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+    }
+  `}
 `;
 
 export const StyledSVG = styled.img`
-  height: 70px;
-  width: 70px;
+  ${media.mobile`
+    height: 50px;
+    width: 50px;
+  `}
+
+  ${media.desktop`
+    height: 70px;
+    width: 70px;
+  `}
 `
 
 export const StyledSettingsText = styled.div`
@@ -152,12 +213,22 @@ export const StyledSettingsText = styled.div`
 `;
 
 export const StyledSpacer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-grow: 1;
-  width: 100%;
-  background-color: ${({ theme, $background }) => $background === "true" ? theme.secondaryColor : "none"};
+  ${media.mobile`
+    order: ${({ $mobileOrder }) => $mobileOrder || 0};
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    background-color: ${({ theme, $background }) => $background === "true" ? theme.secondaryColor : "none"};
+  `}
+
+  ${media.desktop`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+    width: 100%;
+    background-color: ${({ theme, $background }) => $background === "true" ? theme.secondaryColor : "none"};
+  `}
 `;
 
 export const StyledSettingsMenuBackground = styled.div`

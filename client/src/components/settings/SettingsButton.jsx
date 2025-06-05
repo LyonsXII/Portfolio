@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 
-import { StyledSettingsButton, StyledSVG } from "./Settings.styles";
+import { StyledLinkContainer, StyledSettingsButton, StyledSVG } from "./Settings.styles";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-function SettingsButton({ value, svgPath, link, type, position, onClick, updateHoverText, resetHoverText }) {
+function SettingsButton({ value, svgPath, link, type, position, onClick, updateHoverText, resetHoverText, mobile, mobileOrder, mobileEnd }) {
   const { theme } = useContext(ThemeContext);
   const { volume, clickSound } = useContext(AudioContext);
 
@@ -16,18 +16,20 @@ function SettingsButton({ value, svgPath, link, type, position, onClick, updateH
   }
 
   return (
-    <a href={link}>
-      <StyledSettingsButton 
+    <StyledLinkContainer href={link} $mobileOrder={mobileOrder}>
+      <StyledSettingsButton
         theme={theme} 
         onMouseOver={() => {updateHoverText(value)}} 
         onMouseLeave={() => {resetHoverText()}} 
         onClick={onClickHandler}
         $type={type}
         $position={position}
+        $mobile={mobile}
+        $mobileEnd={mobileEnd}
       >
         <StyledSVG src={svgPath}/>
       </StyledSettingsButton>
-    </a>
+    </StyledLinkContainer>
   )
 }
 

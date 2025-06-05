@@ -2,6 +2,30 @@ import { styled, keyframes, css } from 'styled-components';
 
 import { media } from '../../context/media';
 
+export const StyledMainBackground = styled.div`
+  position: absolute;
+  z-index:-1;
+  background-color: ${({ theme }) => theme.backgroundColor};
+  background-image: ${({ $bg }) => $bg};;
+  overflow: hidden;
+  pointer-events: none;
+  height: 100vh;
+  width: 100vw;
+  box-shadow: inset 0px 0px 40px rgba(0, 0, 0, 1),
+              inset 0px 0px 80px rgba(0, 0, 0, 0.6);
+`;
+
+export const StyledMainContainer = styled.div`
+  height: 100dvh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  color: ${({ theme }) => theme.textColor};
+`;
+
 export const spinAnimation = keyframes`
   0% {
     opacity: 1;

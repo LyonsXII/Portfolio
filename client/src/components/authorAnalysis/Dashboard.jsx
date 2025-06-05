@@ -153,7 +153,7 @@ function Dashboard({data, functional}) {
           color: theme.textColor,
           size: mobileLayout ? 14 : 16
         },
-        standoff: mobileLayout ? 0 : 10
+        standoff: mobileLayout ? 5 : 10
       },
       tickfont: {
         color: theme.textColor,
