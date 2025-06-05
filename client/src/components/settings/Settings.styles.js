@@ -256,22 +256,58 @@ export const StyledSettingsMenuFlexbox = styled.div`
 `;
 
 export const StyledSettingsMenuHeader = styled.div`
-  height: 10vh;
-  width: 100%;
-  background-color: ${({ theme }) => theme.secondaryColor};
-  border-radius: 20px 20px 0px 0px;
-  border-bottom: 4px solid black;
-  z-index: 4;
   display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
   justify-self: center;
   align-self: flex-start;
+  width: 100%;
+  background-color: ${({ theme }) => theme.secondaryColor};
+  border-radius: 20px 20px 0px 0px;
   box-sizing: border-box;
+  z-index: 4;
+
+  ${media.mobile`
+    flex-wrap: wrap;
+    height: fit-content;
+    min-height: 10vh;
+    border-bottom: 4px solid black;
+    overflow: hidden;
+  `}
+
+  ${media.desktop`
+    height: 10vh;
+    border-bottom: 4px solid black;
+  `}
 `;
 
+export const StyledSettingsMenuHeaderElement = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-width: fit-content;
+  white-space: nowrap;
+  background-color: ${({ $value, $active, theme }) => $value === $active ? theme.secondaryColor : theme.primaryColor};
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  cursor: pointer;
+
+  ${media.mobile`
+    width: 50%;
+    padding: 10px;
+    border: 2px solid black;
+  `}
+
+  ${media.desktop`
+    width: 100%;
+    padding: 0px 20px;
+    border-radius: ${({ $position }) => $position === "First" ? "16px 0px 0px 0px" :
+    $position === "Last" ? "0px 16px 0px 0px" : "0px"};
+    border-right: ${({ $position }) => $position === "Last" ? "none" : "4px solid black"};
+  `}
+`
+
 export const StyledSettingsMenuContainer = styled.div`
-  height: 50vh;
-  width: fit-content;
-  min-width: 70vw;
   background-color: ${({ theme }) => theme.primaryColor};
   border: 4px solid black;
   border-radius: 20px;
@@ -281,17 +317,37 @@ export const StyledSettingsMenuContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   box-sizing: border-box;
+
+  ${media.mobile`
+    height: fit-content;
+    min-height: 60vh;
+    width: 80vw;
+  `}
+
+  ${media.desktop`
+    height: 50vh;
+    width: fit-content;
+    min-width: 70vw;
+  `}
 `;
 
 export const StyledSettingsMenuTextContainer = styled.div`
   height: 100%;
   width: 100%;
-  padding: 30px;
-  box-sizing: border-box;
   background-color: ${({ theme }) => theme.secondaryColor};
   border-radius: 0px 0px 20px 20px;
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+
+  ${media.mobile`
+    flex-grow: 1;
+    padding: 10px;
+  `}
+
+  ${media.desktop`
+    padding: 30px;
+  `}
 `;
 
 export const StyledSettingsMenuSectionFlexbox= styled.div`
@@ -306,9 +362,18 @@ export const StyledSettingsMenuSectionRow = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${({ $width }) => $width || "25%"};
-  gap: 40px;
   box-sizing: border-box;
+
+  ${media.mobile`
+    gap: 20px;
+    width: 100%;
+    padding: 0px 10px;
+  `}
+
+  ${media.desktop`
+    gap: 40px;
+    width: ${({ $width }) => $width || "25%"};
+  `}
 `;
 
 export const StyledSettingsMenuSliderWrapper = styled.div`
@@ -490,7 +555,14 @@ export const StyledSettingsMenuHeadingText = styled.h3`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 2rem;
+
+  ${media.mobile`
+    font-size: 1.4rem;
+  `}
+
+  ${media.desktop`
+    font-size: 2rem;
+  `}
 `;
 
 export const StyledSettingsMenuBodyText = styled.p`
@@ -502,5 +574,12 @@ export const StyledSettingsMenuBodyText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  font-size: 1.5rem;
+
+  ${media.mobile`
+    font-size: 1.2rem;
+  `}
+
+  ${media.desktop`
+    font-size: 1.5rem;
+  `}
 `;

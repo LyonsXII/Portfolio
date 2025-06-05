@@ -117,13 +117,14 @@ export const StyledSectionFlexbox = styled.div`
   display: flex;
   opacity: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1" : "0"};
   transition: max-height 1s ease, opacity 1s ease;
+  box-sizing: border-box;
   overflow: hidden;
 
   ${media.mobile`
     flex-direction: column;
     flex: 1 1 auto;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     height: 100%;
     max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
     min-height: 0px;
@@ -172,7 +173,7 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   ${media.mobile`
     height: 100%;
     width: 90%;
-    gap: 20px;
+    gap: 0px;
   `}
 
   ${media.desktop`
@@ -229,7 +230,9 @@ export const StyledSectionRowTechStackFlexbox = styled.div`
   ${media.mobile`
     row-gap: 0px;
     column-gap: 10px;
+    padding: 10px 10px;
     transition: max-height 1s ease, opacity 1s ease;
+    border: 1px solid orange;
   `}
 
   ${media.desktop`
