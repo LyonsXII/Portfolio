@@ -19,10 +19,10 @@ export const StyledMainContainer = styled.div`
   height: 100dvh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   padding-top: env(safe-area-inset-top);
-  overflow: hidden;
 
   color: ${({ theme }) => theme.textColor};
 `;
