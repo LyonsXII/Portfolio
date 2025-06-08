@@ -5,7 +5,9 @@ import { media } from '../../context/media';
 import { slideInTopAnimation, slideOutRightAnimation } from '../../context/Animations';
 
 import PlusIcon from "../../icons/plus.svg?react";
+import PlusIconMobile from "../../icons/plusMobile.svg?react";
 import MinusIcon from "../../icons/minus.svg?react";
+import MinusIconMobile from "../../icons/minusMobile.svg?react";
 
 export const StyledFlexboxContainer = styled.div`
   position: relative;
@@ -22,6 +24,7 @@ export const StyledFlexboxContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     padding-top: 100px;
+    padding-bottom: 20px;
   `}
 
   ${media.desktop`
@@ -347,14 +350,19 @@ export const StyledTextH4 = styled.h4`
 
 const createStyledIcon = (IconComponent) => styled(IconComponent)`
   ${media.mobile`
-    display: none;
+    display: ${({ $display }) => $display === "mobile" ? "block" : "none"};
+    height: 13px;
+    width: fit-content;
   `}
 
   ${media.desktop`
+    display: ${({ $display }) => $display === "desktop" ? "block" : "none"};
     height: 50px;
     width: 100%;
   `}
 `;
 
 export const StyledPlusIcon = createStyledIcon(PlusIcon);
+export const StyledPlusIconMobile = createStyledIcon(PlusIconMobile);
 export const StyledMinusIcon = createStyledIcon(MinusIcon);
+export const StyledMinusIconMobile = createStyledIcon(MinusIconMobile);

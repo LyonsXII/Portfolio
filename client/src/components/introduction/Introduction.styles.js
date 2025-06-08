@@ -234,7 +234,6 @@ export const StyledSectionRowTechStackFlexbox = styled.div`
     column-gap: 10px;
     padding: 10px 10px;
     transition: max-height 1s ease, opacity 1s ease;
-    border: 1px solid orange;
   `}
 
   ${media.desktop`
@@ -258,15 +257,13 @@ export const StyledSectionRowTextFlexbox = styled.div`
   display: flex;
   flex-direction: column; /* Change back to row to make scroll bar work as currently does */
   justify-content: flex-start;
+  gap: 20px;
   min-height: 0;
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
   box-sizing: border-box;
   text-align: justify;
   text-justify: inter-word;
   hyphens: auto;
-  border: 1px solid yellow;
-
-  gap: 20px;
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -298,8 +295,7 @@ export const StyledSectionRowTextFlexbox = styled.div`
     align-items: flex-start;
     flex: 1 1 auto;
     margin-top: 10px;
-    padding: 5px 15px 0px 15px;
-    border: 1px solid yellow;
+    padding: 5px 15px 5px 15px;
   `}
 
   ${media.desktop`
@@ -1072,7 +1068,6 @@ export const StyledBodyTextInitialText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  border: 1px solid green;
 
   ${media.mobile`
     font-size: 1.2rem;

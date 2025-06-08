@@ -1,0 +1,13 @@
+<svg width="800px" height="800px" viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg">
+
+<rect x="0" fill="none" width="100" height="100"/>
+
+<g>
+
+<path fill="none" stroke="black" stroke-width="10px" stroke-line-join="round" stroke-linecap="round" d="M3 19h18a1.002 1.002 0 0 0 .823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 0 0 3 19z"/>
+
+<path fill="#ededed" d="M3 19h18a1.002 1.002 0 0 0 .823-1.569l-9-13c-.373-.539-1.271-.539-1.645 0l-9 13A.999.999 0 0 0 3 19z"/>
+
+</g>
+
+</svg>

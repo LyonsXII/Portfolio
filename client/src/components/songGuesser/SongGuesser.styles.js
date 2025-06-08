@@ -110,7 +110,7 @@ export const StyledChoiceGrid = styled.div`
     flex-direction: column;
     gap: 10px;
     height: 35%;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
   `}
 
   ${media.desktop`
@@ -740,7 +740,7 @@ export const StyledGameOverText = styled.h1`
 
   ${media.mobile`
     position: absolute;
-    bottom: 20px;
+    bottom: 40px;
     left: 20px;
     font-size: 2rem;
   `}

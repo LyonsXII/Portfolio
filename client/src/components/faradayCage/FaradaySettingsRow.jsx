@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-import { StyledRowContainer, StyledIncrementButton, StyledTextBox, StyledTextBoxDivider, StyledTextH4, StyledPlusIcon, StyledMinusIcon } from './FaradayCage.styles';
+import { StyledRowContainer, StyledIncrementButton, StyledTextBox, StyledTextBoxDivider, StyledTextH4, StyledPlusIcon, StyledPlusIconMobile, StyledMinusIcon, StyledMinusIconMobile } from './FaradayCage.styles';
 
 function FaradaySettingsRow({ name, value, onClick }) {
   const { theme } = useContext(ThemeContext);
@@ -20,7 +20,8 @@ function FaradaySettingsRow({ name, value, onClick }) {
   return (
     <StyledRowContainer>
       <StyledIncrementButton theme={theme} $position="top" onClick={() => {onClickHandler("Subtract")}}>
-        <StyledMinusIcon/>
+        <StyledMinusIcon $display="desktop"/>
+        <StyledMinusIconMobile $display="mobile"/>
       </StyledIncrementButton>
       <StyledTextBox theme={theme}>
         <StyledTextBoxDivider theme={theme} $position="first" $colour="main" $grow={true}>
@@ -31,7 +32,8 @@ function FaradaySettingsRow({ name, value, onClick }) {
         </StyledTextBoxDivider>
       </StyledTextBox>
       <StyledIncrementButton theme={theme} $position="bottom" onClick={() => {onClickHandler("Add")}}>
-        <StyledPlusIcon/>
+        <StyledPlusIcon $display="desktop"/>
+        <StyledPlusIconMobile $display="mobile"/>
       </StyledIncrementButton>
     </StyledRowContainer>
   )
