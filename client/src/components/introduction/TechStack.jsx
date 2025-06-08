@@ -69,7 +69,7 @@ function TechStack({ initialSection }) {
           </StyledTechPairFlexbox>
         </StyledSectionRowTechStackFlexbox>
 
-        <StyledSectionRowTechStackFlexbox>
+        <StyledSectionRowTechStackFlexbox $position="last">
           <StyledHeadingText>Tools & Platforms:</StyledHeadingText>
           <StyledTechPairFlexbox>
             <StyledBodyText>Git</StyledBodyText>

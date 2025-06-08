@@ -251,8 +251,16 @@ export const StyledSettingsMenuFlexbox = styled.div`
   width: 100vw;
   display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
   justify-content: center;
-  align-items: center;
+
   box-sizing: border-box;
+
+  ${media.mobile`
+    align-items: flex-start;
+  `}
+
+  ${media.desktop`
+    align-items: center;
+  `}
 `;
 
 export const StyledSettingsMenuHeader = styled.div`
@@ -260,13 +268,14 @@ export const StyledSettingsMenuHeader = styled.div`
   justify-self: center;
   align-self: flex-start;
   width: 100%;
-  background-color: ${({ theme }) => theme.secondaryColor};
   border-radius: 20px 20px 0px 0px;
   box-sizing: border-box;
   z-index: 4;
 
   ${media.mobile`
     flex-wrap: wrap;
+    gap: 4px;
+    background-color: black; /* Used with gap to create pseudo border for interior edges */
     height: fit-content;
     min-height: 10vh;
     border-bottom: 4px solid black;
@@ -287,15 +296,14 @@ export const StyledSettingsMenuHeaderElement = styled.div`
   min-width: fit-content;
   white-space: nowrap;
   background-color: ${({ $value, $active, theme }) => $value === $active ? theme.secondaryColor : theme.primaryColor};
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  // box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+  //             inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
   cursor: pointer;
 
   ${media.mobile`
     width: 50%;
     padding: 10px;
-    border: 2px solid black;
   `}
 
   ${media.desktop`
@@ -320,8 +328,9 @@ export const StyledSettingsMenuContainer = styled.div`
 
   ${media.mobile`
     height: fit-content;
-    min-height: 60vh;
+    min-height: calc(80vh - 64px);
     width: 80vw;
+    margin-top: 64px;
   `}
 
   ${media.desktop`
@@ -342,7 +351,7 @@ export const StyledSettingsMenuTextContainer = styled.div`
 
   ${media.mobile`
     flex-grow: 1;
-    padding: 10px;
+    padding: 20px 10px;
   `}
 
   ${media.desktop`

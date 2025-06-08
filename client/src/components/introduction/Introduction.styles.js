@@ -118,7 +118,9 @@ export const StyledSectionFlexbox = styled.div`
   opacity: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1" : "0"};
   transition: max-height 1s ease, opacity 1s ease;
   box-sizing: border-box;
-  overflow: hidden;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
 
   ${media.mobile`
     flex-direction: column;
@@ -129,7 +131,7 @@ export const StyledSectionFlexbox = styled.div`
     max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
     min-height: 0px;
     padding: 0px 5px 0px 0px;
-    border: 1px solid blue;
+    // overflow: hidden;
   `}
 
   ${media.desktop`
@@ -144,6 +146,7 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
+  min-height: 0;
 
   overflow-y: scroll;
   overflow-x: hidden;
@@ -172,7 +175,7 @@ export const StyledSectionHeadingsFlexbox = styled.div`
 
   ${media.mobile`
     height: 100%;
-    width: 90%;
+    width: 100%;
     gap: 0px;
   `}
 
@@ -200,12 +203,11 @@ export const StyledSectionRowFlexbox = styled.div`
     gap: 10px;
     min-height: 0px;
     max-height: ${({ $collapse }) => $collapse ? "0px" : "160px"};
-    margin-top: ${({ $collapse }) => $collapse ? "0px" : "15px"};
-    padding: 5px 20px 0px 20px;
+    margin-top: ${({ $collapse }) => $collapse ? "0px" : "10px"};
+    padding: ${({ $collapse }) => $collapse ? "0px 15px 0px 15px" : "5px 15px 0px 15px"};
     opacity: ${({ $collapse }) => $collapse ? "0" : "1"};
-    transition: max-height 1s ease, margin-top 1s ease, opacity 1s ease;
+    transition: max-height 1s ease, margin-top 1s ease, padding 1s ease, opacity 1s ease;
     overflow: hidden;
-    border: 1px solid green;
   `}
 
   ${media.desktop`
@@ -239,7 +241,7 @@ export const StyledSectionRowTechStackFlexbox = styled.div`
     justify-content: flex-end;
     align-items: center;
     width: 90%;
-    padding-right: 10px;
+    padding: ${({ $position }) => $position == "last" ? "0px 10px 20px 0px" : "0px 10px 0px 0px"};
     row-gap: 20px;
     column-gap: 40px;
   `}
@@ -254,21 +256,19 @@ export const Scroll = styled.div`
 
 export const StyledSectionRowTextFlexbox = styled.div`
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  flex-direction: column; /* Change back to row to make scroll bar work as currently does */
+  justify-content: flex-start;
+  min-height: 0;
   margin-right: ${({ $marginRight }) => $marginRight || "20px"};
+  box-sizing: border-box;
   text-align: justify;
   text-justify: inter-word;
   hyphens: auto;
+  border: 1px solid yellow;
 
-  row-gap: 20px;
-  column-gap: 40px;
+  gap: 20px;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 
   scroll-behavior: smooth;
@@ -294,15 +294,16 @@ export const StyledSectionRowTextFlexbox = styled.div`
   }
 
   ${media.mobile`
-    height: 100%;
+    height: 100px;
+    align-items: flex-start;
     flex: 1 1 auto;
-    flex-wrap: wrap;
-    padding: 5px 20px 0px 20px;
-    margin-top: ${({ $marginTopMobile }) => $marginTopMobile || "0px"};
+    margin-top: 10px;
+    padding: 5px 15px 0px 15px;
     border: 1px solid yellow;
   `}
 
   ${media.desktop`
+    align-items: center;
     height: 200px;
     width: 100%;
   `}
@@ -490,7 +491,6 @@ export const StyledGalleryContainer = styled.div`
     flex: 1 1 auto; /* Change to 0 0 auto if messing up scroll box again*/
     width: 100%;
     padding: 20px 0px 60px 0px;
-    border: 1px solid red;
   `}
 
   ${media.desktop`
@@ -1072,6 +1072,7 @@ export const StyledBodyTextInitialText = styled.p`
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
+  border: 1px solid green;
 
   ${media.mobile`
     font-size: 1.2rem;

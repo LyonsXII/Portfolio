@@ -23,6 +23,7 @@ export const StyledMainContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-top: env(safe-area-inset-top);
+  overflow: hidden;
 
   color: ${({ theme }) => theme.textColor};
 `;
