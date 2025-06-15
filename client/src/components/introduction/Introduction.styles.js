@@ -21,7 +21,7 @@ export const StyledContentContainer = styled.div`
   `}
 
   ${media.desktop`
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
   `}
 `;
@@ -402,10 +402,11 @@ export const StyledIntroContainer = styled.div`
   `}
 
   ${media.desktop`
-    height: 90vh;
+    height: 88vh;
     width: 100%;
     justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
     align-items: ${({ $current }) => $current == 0 ? "flex-end" : "center"};
+    margin-top: 3%;
     padding-left: ${({ $current }) => $current == 0 ? "0px" : "5%"};
 
     animation: ${({ $tempCurrent, $id }) =>

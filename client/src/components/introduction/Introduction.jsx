@@ -27,7 +27,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
 
   const sectionData = [
     { id: 1, title: "Song Guesser", textA: text.songGuesserText1A, textB: text.songGuesserText1B, textC: text.songGuesserText1C, textD: text.songGuesserText1D, textImgA: text.songGuesserText1ImgA, textImgB: text.songGuesserText1ImgB, layout: "A", reverse: false, imgA: "/images/Song Guesser - 001 - " + theme.name + ".jpg" },
-    { id: 2, title: "Song Guesser", textA: text.songGuesserText2A, textB: text.songGuesserText2B, textC: text.songGuesserText2C, textD: text.songGuesserText2D, textImgA: text.songGuesserText2ImgA, textImgB: text.songGuesserText2ImgB, layout: "B", reverse: false, imgA: "/images/Song Guesser - 002 - " + theme.name + ".jpg" },
+    { id: 2, title: "Song Guesser", textA: text.songGuesserText2A, textB: text.songGuesserText2B, textC: text.songGuesserText2C, textD: text.songGuesserText2D, textImgA: text.songGuesserText2ImgA, textImgB: text.songGuesserText2ImgB, layout: "B", reverse: false, imgA: "/images/Song Guesser - 002 - " + theme.name + ".jpg", imgB: "/images/Song Guesser - 002 - " + theme.name + ".jpg" },
     { id: 3, title: "Song Guesser", textA: text.songGuesserText3A, textB: text.songGuesserText3B, textC: text.songGuesserText3C, textD: text.songGuesserText3D, textImgA: text.songGuesserText3ImgA, textImgB: text.songGuesserText3ImgB, layout: "C", reverse: false, imgA: "/images/Song Guesser - 003 - " + theme.name + ".jpg" },
     { id: 4, title: "Faraday Cage", textA: text.faradayCageText1A, textB: text.faradayCageText1B, textC: text.faradayCageText1C, textD: text.faradayCageText1D, textImgA: text.faradayCageText1ImgA, textImgB: text.faradadayCage1ImgB, layout: "C", reverse: true, imgA: "/images/Faraday Cage - 001 - " + theme.name + ".jpg" },
     { id: 5, title: "Faraday Cage", textA: text.faradayCageText2A, textB: text.faradayCageText2B, textC: text.faradayCageText2C, textD: text.faradayCageText2D, textImgA: text.faradayCageText2ImgA, textImgB: text.faradadayCage2ImgB, layout: "A", reverse: false, imgA: "/images/Faraday Cage - 002 - " + theme.name + ".jpg" },
@@ -134,6 +134,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
           changeSection={changeSection}
           expandIntroText={expandIntroText}
           imgA={section.imgA}
+          imgB={section.imgB}
         />
       ))}
 

@@ -7,7 +7,7 @@ import { StyledIntroContainer, StyledTitleFlexbox, StyledTitleContainer, StyledT
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-function IntroLayoutB({ id, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, expandIntroText, current, tempCurrent, reverse, links }) {
+function IntroLayoutB({ id, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, imgB, expandIntroText, current, tempCurrent, reverse, links }) {
 
   return (
     <StyledIntroContainer $expandIntroText={expandIntroText} $current={current}>
@@ -24,7 +24,7 @@ function IntroLayoutB({ id, title, theme, textA, textB, textC, textD, textImgA, 
         <StyledRowContainer>
           <StyledFloatContainer $float={reverse ? "right" : "left"} $width="40%" >
             <IntroImage src={imgA} caption={textImgA} width="100%" paddingText="0px 0px 0px 20px" float={reverse ? "right" : "left"}/>
-            <IntroImage src={imgA} caption={textImgB} width="100%" paddingText="0px 0px 0px 20px" float={reverse ? "right" : "left"}/>
+            <IntroImage src={imgB} caption={textImgB} width="100%" paddingText="0px 0px 0px 20px" float={reverse ? "right" : "left"}/>
           </StyledFloatContainer>
 
           <StyledBodyText>
