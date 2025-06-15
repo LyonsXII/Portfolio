@@ -1,4 +1,5 @@
 export const colourSchemeA = {
+  name: "Blue",
   backgroundColor: "rgba(54, 59, 78, 1)",
   primaryColor: "rgba(79, 59, 120, 1)",
   primaryColorTransparent: "rgba(79, 59, 120, 0.5)",
@@ -10,6 +11,7 @@ export const colourSchemeA = {
 };
 
 export const colourSchemeB = {
+  name: "Red",
   backgroundColor: "rgb(98, 69, 41)",
   primaryColor: "rgb(132, 35, 35)",
   primaryColorTransparent: "rgba(120, 59, 59, 0.5)",
@@ -21,6 +23,7 @@ export const colourSchemeB = {
 };
 
 export const colourSchemeC = {
+  name: "Green",
   backgroundColor: "rgb(49, 78, 68)",
   primaryColor: "rgb(38, 123, 66)",
   primaryColorTransparent: "rgba(59, 120, 68, 0.5)",
@@ -32,6 +35,7 @@ export const colourSchemeC = {
 };
 
 export const colourSchemeD = {
+  name: "Black",
   backgroundColor: "rgb(88, 88, 88)",
   primaryColor: "rgb(44, 44, 44)",
   primaryColorTransparent: "rgba(122, 122, 122, 0.5)",

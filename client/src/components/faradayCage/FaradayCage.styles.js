@@ -51,11 +51,10 @@ export const StyledPlotContainer = styled.div`
     flex-grow: 1;
     height: auto;
     min-height: 500px;
-    max-height: 80vh;
+    max-height: 70vh;
     min-width: 500px;
     max-width: 80vh;
-    margin: 10vh 0vh;
-    margin-left: 160px;
+    margin-left: 40px;
   `}
 `;
 
@@ -85,7 +84,7 @@ export const StyledButtonContainer = styled.div`
     align-items: center;
     gap: 20px;
     max-height: 90vh;
-    margin-right: 160px;
+    margin-right: 130px;
   `}
 `;
 
@@ -217,7 +216,7 @@ export const StyledTextBox = styled.div`
   ${media.desktop`
     flex-direction: column;
     align-items: center;
-    min-width: 200px;
+    min-width: 140px;
     border-radius: 20px;
 
     ${({ $standalone, theme }) =>
@@ -251,9 +250,10 @@ export const StyledTextBoxDivider = styled.div`
   `}
 
   ${media.desktop`
+    flex-wrap: wrap;
     height: 100%;
     width: 100%;
-    padding: 15px 30px;
+    padding: 15px;
     border-top: ${({ $divider }) => $divider ? "4px solid black" : "none"};
     border-radius: ${({ $position }) => $position === "first" ? "20px 20px 0px 0px" : "0px 0px 20px 20px"};
   `}

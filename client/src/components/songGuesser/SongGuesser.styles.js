@@ -21,11 +21,11 @@ export const StyledSongGuesserContainer = styled.div`
 `;
 
 export const StyledIntroContainer = styled.div`
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
   overflow: hidden;
 
   ${media.mobile`
@@ -100,7 +100,6 @@ export const StyledGameContainer = styled.div`
 `;
 
 export const StyledChoiceGrid = styled.div`
-  width: calc(100% - 60px);
   justify-content: center;
   align-items: center;
 
@@ -110,6 +109,7 @@ export const StyledChoiceGrid = styled.div`
     flex-direction: column;
     gap: 10px;
     height: 35%;
+    width: calc(100% - 60px);
     margin-bottom: 50px;
   `}
 
@@ -118,8 +118,9 @@ export const StyledChoiceGrid = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: auto;
     gap: 1rem;
+    width: 75%;
     max-width: 1400px;
-    margin-top: 3%;
+    margin-top: ${({ $showAnswer }) => $showAnswer ? "40px" : "5%"};
   `}
 `;
 
@@ -136,6 +137,7 @@ export const StyledTextContainer = styled.div`
 
   ${media.desktop`
     height: fit-content;
+    width: 75%;
   `}
 `;
 
@@ -179,7 +181,7 @@ export const StyledButton = styled.button`
   ${media.desktop`
     grid-column: ${({ $columnsDesktop }) => $columnsDesktop || "span 6"};
     grid-row: ${({ $rowsDesktop }) => $rowsDesktop || "span 2"};
-    padding: 15px 0px;
+    padding: 15px 5px;
 
     &:hover {
       background-color: ${({ theme }) => theme.secondaryColor};
@@ -255,6 +257,7 @@ export const StyledScoreFlexbox = styled.div`
     flex-direction: column;
     height: 100vh;
     width: 3vw;
+    min-width: 50px;
   `}
 `;
 
@@ -365,6 +368,7 @@ export const StyledVideoContainer = styled.div`
   align-items: center;
   border-radius: 20px;
   border: 4px solid black;
+  background-color: black;
   box-shadow: 4px 10px 10px rgba(0, 0, 0, 0.6);
   
   ${media.mobile`
@@ -372,7 +376,6 @@ export const StyledVideoContainer = styled.div`
   `}
 
   ${media.desktop`
-
     overflow: hidden;
   `}
 `;
@@ -456,14 +459,18 @@ export const StyledVideoTextContainer = styled.div`
     flex: 0 0 auto;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 100%;
+    overflow: hidden;
   `}
 
   ${media.desktop`
     flex: 0 0 auto;
+    flex-wrap: wrap;
     justify-content: flex-start;
     width: 100%;
-    gap: 40px;
+    column-gap: 40px;
   `}
 `;
 
@@ -477,9 +484,8 @@ export const StyledVideoTextBox = styled.div`
 
   ${media.mobile`
     flex: ${({ $position }) => $position === "first" ? "0 1 auto" : "0 0 auto"};
-    width: auto;
+    width: 80vw;
     min-width: ${({ $position }) => $position === "first" ? "0px" : "fit-content"};
-    padding: 5px;
     margin-top: ${({ $position }) => $position === "first" ? "0px" : "-10px"};
     overflow: ${({ $position }) => $position === "first" ? "hidden" : "visible"};
   `}
@@ -487,8 +493,9 @@ export const StyledVideoTextBox = styled.div`
   ${media.desktop`
     flex: ${({ $position }) => $position === "first" ? "0 1 auto" : "0 0 auto"};
     width: auto;
-    padding: 10px;
-    overflow: hidden;
+    min-width: 400px;
+    margin-bottom: ${({ $position }) => $position === "first" ? "0px" : "8px"};
+    overflow: ${({ $position }) => $position === "first" ? "hidden" : "visible"};
   `}
 `;
 
@@ -500,7 +507,8 @@ export const StyledGameOverBackdrop = styled.div`
   position: absolute;
   height: 100vh;
   width: 100vw;
-  background-color: black; 
+  background-color: black;
+  box-sizing: border-box; 
   z-index: 4;
   opacity: 0.9;
   cursor: pointer;
@@ -517,22 +525,24 @@ export const StyledGameOverBackdrop = styled.div`
 
   ${media.desktop`
     gap: 40px;
+    padding: 10%;
   `}
 `;
 
 export const StyledMainTitle = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
 
   ${media.mobile`
     flex-direction: ${({ $mode }) => $mode === "Game Over" ? "row" : "column"};
-    justify-content: center;
-    align-items: flex-start;
     gap: 10px;
   `}
 
   ${media.desktop`
-    gap: 40px;
+    flex-wrap: wrap;
+    column-gap: 40px;
   `}
 `;
 
@@ -557,7 +567,7 @@ export const StyledMainTitleWord = styled.div`
   `}
 
   ${media.desktop`
-    width: 100%;
+    width: fit-content;
   `}
 `
 
@@ -655,25 +665,28 @@ export const StyledSubTitle = styled.h2`
 `;
 
 export const StyledSubTitleScrolling = styled.h2`
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ${({ $ellipsis }) => $ellipsis ? "ellipsis" : "clip"};
+  transform: translateX(0px);
+  transition: transform linear;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
-  white-space: nowrap;
-  text-overflow: ${({ $ellipsis }) => $ellipsis ? "ellipsis" : "clip"};
-  transform: translateX(0);
-  transition: transform linear;
-  display: inline-block;
+
 
   ${media.mobile`
     font-size: 2rem;
+    padding: 5px;
     overflow: ${({ $ellipsis }) => $ellipsis ? "hidden" : "visible"};
   `}
 
   ${media.desktop`
     font-size: 4rem;
+    padding: 5px 10px;
     overflow: ${({ $ellipsis }) => $ellipsis ? "hidden" : "visible"};
   `}
 `;
@@ -692,7 +705,7 @@ export const StyledLargeText = styled.h3`
   `}
 
   ${media.desktop`
-    font-size: 3rem;
+    font-size: 2rem;
   `}
 `;
 
@@ -704,6 +717,8 @@ export const StyledMinorTitle = styled.h4`
               0px 0px 10px rgba(0, 0, 0, 1),               
               0px 0px 10px rgba(0, 0, 0, 1);
   white-space: nowrap;
+  margin-bottom: 2px;
+  padding: 0px 5px;
 
   ${media.mobile`
     font-size: 1.5rem;
@@ -791,7 +806,7 @@ const createStyledIcon = (IconComponent) => styled(IconComponent)`
   ${media.desktop`
     height: ${({ $heightDesktop }) => $heightDesktop || "auto"};
     width: ${({ $widthDesktop }) => $widthDesktop || "auto"};
-    margin-left: ${({ $marginLeft }) => $marginLeft || "0px"};
+    margin-left: ${({ $marginLeftDesktop }) => $marginLeftDesktop || "0px"};
 
     &:hover {
       transform: scale(1.1);

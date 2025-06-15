@@ -21,7 +21,7 @@ export const StyledContentContainer = styled.div`
   `}
 
   ${media.desktop`
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
   `}
 `;
@@ -302,6 +302,7 @@ export const StyledSectionRowTextFlexbox = styled.div`
     align-items: center;
     height: 200px;
     width: 100%;
+    padding: 5px 15px 5px 15px;
   `}
 `
 
@@ -401,18 +402,16 @@ export const StyledIntroContainer = styled.div`
   `}
 
   ${media.desktop`
-    height: 100vh;
+    height: 90vh;
     width: 100%;
-    align-items: ${({ $current }) => $current == 0 ? "flex-end" : "flex-start"};
     justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
+    align-items: ${({ $current }) => $current == 0 ? "flex-end" : "center"};
     padding-left: ${({ $current }) => $current == 0 ? "0px" : "5%"};
 
     animation: ${({ $tempCurrent, $id }) =>
       $tempCurrent !== $id ? slideOutBottomAnimation : slideInTopAnimation
     };
   `}
-
-
 `;
 
 export const StyledIntroButtonContainer = styled.div`
@@ -545,7 +544,7 @@ export const StyledInput = styled.input`
     left: 0;
 
     &:checked {
-      transform: translateX(calc(1.25 * var(--s))) translateY(calc(1.85 * var(--s))) scale(0.5) rotate(45deg);
+      transform: translateX(calc(1.5 * var(--s))) translateY(calc(2 * var(--s))) scale(0.5) rotate(45deg);
       --b: 70%;
     }
   `}
@@ -908,7 +907,8 @@ export const StyledTitleButtonContainer = styled.div`
   `}
 
   ${media.desktop`
-    border-left: 6px solid black;
+    border-left: 2px solid black;
+    transition: max-width 1s ease;
 
     &:hover {
       background-color: ${({ theme }) => theme.secondaryColor};

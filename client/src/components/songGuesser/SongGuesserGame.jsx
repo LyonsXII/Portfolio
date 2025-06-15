@@ -267,16 +267,15 @@ async function getAudio() {
     <audio ref={audioRef} src={song} />
 
     {mode === "Regular" && <SongGuesserScore score={score} transition={scoreTransition} numQuestions={numQuestions}/>}
-    <ReturnButton returnFunction={endGame} left={mode === "Regular" ? "calc(3vw + 44px)" : "40px"} />
+    <ReturnButton returnFunction={endGame} left={mode === "Regular" ? "max(calc(3vw + 44px), 90px)" : "40px"} />
 
     <StyledGameContainer>
       {showAnswer === false || !roundData.videoURL ? (
         <StyledTextContainer key="Guess" $showAnswerExit={showAnswerExit}>
           <StyledHeaderTitle theme={theme}>
             Guess the song...
-            <StyledReplayShadowIcon $heightDesktop="8rem" $heightMobile="4.5rem" onClick={() => playSong()}/>
+            <StyledReplayShadowIcon $heightDesktop="8rem" $heightMobile="4.5rem" $marginLeftDesktop="20px" onClick={() => playSong()}/>
           </StyledHeaderTitle>
-
         </StyledTextContainer>
       ) : skipVideo ? (
         <StyledTextContainer key="Skip" $showAnswerExit={showAnswerExit}>
@@ -293,7 +292,7 @@ async function getAudio() {
       />
       )}
 
-      <StyledChoiceGrid>
+      <StyledChoiceGrid $showAnswer={showAnswer}>
         {roundData.choices && roundData.choices.map((choice, index) => (
           <SongGuesserChoice
             key={index}

@@ -11,8 +11,8 @@ export const StyledMainBackground = styled.div`
   pointer-events: none;
   height: 100vh;
   width: 100vw;
-  box-shadow: inset 0px 0px 40px rgba(0, 0, 0, 1),
-              inset 0px 0px 80px rgba(0, 0, 0, 0.6);
+  // box-shadow: inset 0px 0px 40px rgba(0, 0, 0, 1),
+  //             inset 0px 0px 80px rgba(0, 0, 0, 0.6);
 `;
 
 export const StyledMainContainer = styled.div`
@@ -95,10 +95,8 @@ export const StyledEndGameButton = styled.button`
   justify-content: center;
   align-items: center;
   position: absolute;
-
   background-color: ${({ theme }) => theme.primaryColor};
   border-radius: 20px;
-
   cursor: pointer;
 
   ${media.mobile`

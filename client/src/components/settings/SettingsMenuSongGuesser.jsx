@@ -19,8 +19,8 @@ function SettingsMenuSongGuesser({ active }) {
   }
 
   useEffect(() => {
-    if (skipVideo && !autoplay) {
-      toggleAutoplay()
+    if (skipVideo && !autoNextQuestion) {
+      toggleAutoNextQuestion()
     }
   }, [skipVideo])
 

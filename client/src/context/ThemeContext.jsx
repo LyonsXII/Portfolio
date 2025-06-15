@@ -5,7 +5,8 @@ const ThemeContext = createContext();
 
 function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(colourSchemeA);
-  const [bg, setBg] = useState("url('https://www.transparenttextures.com/patterns/cubes.png')");
+  // const [bg, setBg] = useState("url('https://www.transparenttextures.com/patterns/cubes.png')");
+  const [bg, setBg] = useState("url('')");
   const [themeCount, setThemeCount] = useState(1);
   const [bgCount, setBgCount] = useState(1);
 

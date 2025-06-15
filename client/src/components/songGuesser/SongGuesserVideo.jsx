@@ -31,7 +31,7 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property, s
     if (!textRef.current) {return}
     setEllipsis(false);
     textRef.current.style.transitionDuration = `${animationDuration}s`; // Apply transition
-    textRef.current.style.transitionTimingFunction = "linear"; // Ensure smooth scrolling
+    textRef.current.style.transitionTimingFunction = "linear";
     // Trigger layout reflow before setting transform
     requestAnimationFrame(() => {
       textRef.current.style.transform = `translateX(-${textRef.current.scrollWidth - containerRef.current.offsetWidth}px)`;
@@ -54,8 +54,8 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property, s
       const containerWidth = containerRef.current.offsetWidth;
       const scrollDistance = textWidth - containerWidth;
 
-      // Set the duration based on the text length (e.g., 50px per second)
-      const duration = scrollDistance > 0 ? scrollDistance / 100 : 0; // Adjust speed (50px/sec)
+      // Set the duration based on the text length
+      const duration = scrollDistance > 0 ? scrollDistance / 200 : 0;
       setAnimationDuration(duration);
     }
   }, [ellipsis]);
@@ -92,7 +92,7 @@ function SongGuesserVideo({ url, nextQuestionButton, playSong, name, property, s
           </StyledSubTitleScrolling>
         </StyledVideoTextBox>
         <StyledVideoTextBox>
-          <StyledMinorTitle style={{marginBottom: "2px"}}>{property}</StyledMinorTitle>
+          <StyledMinorTitle>{property}</StyledMinorTitle>
         </StyledVideoTextBox>
       </StyledVideoTextContainer>
     </StyledVideoMainContainer>

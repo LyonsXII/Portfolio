@@ -31,7 +31,7 @@ function IntroLayoutA({ id, title, theme, textA, textB, textC, textD, textImgA, 
         </StyledContentFlexbox>
         <StyledRowContainer>
           <IntroImage src={imgA} caption={textImgA} width="60%" paddingText="0px 0px 0px 20px"  float={reverse ? "right" : "left"}/>
-          <StyledBodyText $padding="0px 20px 0px 0px">
+          <StyledBodyText>
             {textC}
             <br />
             <br />

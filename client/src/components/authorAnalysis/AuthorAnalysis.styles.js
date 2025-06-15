@@ -18,7 +18,6 @@ export const StyledFlexboxContainer = styled.div`
   animation: ${({ $transition } ) => !$transition ? slideInTopAnimation : slideOutRightAnimation};
 `;
 
-
 export const StyledButtonsFlexbox = styled.div`
   height: 100vh;
   width: 100%;
@@ -325,7 +324,7 @@ export const StyledGrid = styled.div`
     row-gap: 10px;
     width: 100%;
     margin-top: 20px;
-    margin-bottom: ${({ $showData }) => $showData ? "20px" : "0px"};
+    margin-bottom: ${({ $showData }) => $showData ? "40px" : "0px"};
   `}
 
   ${media.desktop`
@@ -467,27 +466,6 @@ export const StyledPlotContainer = styled.div`
   `}
 `
 
-export const StyledWordcloud = styled.img`
-  height: 100%;
-  width: 100%;
-  border-radius: 14px;
-  box-sizing: border-box;
-
-  ${media.mobile`
-    order: ${({ $mobileOrder }) => $mobileOrder || 0};
-    grid-column: span ${({ $mobileColSpan }) => $mobileColSpan || "1"};
-    grid-row: span ${({ $mobileRowSpan }) => $mobileRowSpan || "1"};
-    border: 3px solid black;
-    pointer-events: none;
-  `}
-
-  ${media.desktop`
-    border: 4px solid black;
-    grid-column: span ${({ $desktopColSpan }) => $desktopColSpan || "1"};
-    grid-row: span ${({ $desktopRowSpan }) => $desktopRowSpan || "1"};
-  `}
-`
-
 export const StyledTopicButton = styled.button`
   padding: 20px;
   color: ${({ theme }) => theme.textColor};
@@ -516,6 +494,27 @@ export const StyledTopicButton = styled.button`
   }
 `
 
+export const StyledWordcloudButton = styled.img`
+  height: 100%;
+  width: 100%;
+  border-radius: 14px;
+  box-sizing: border-box;
+
+  ${media.mobile`
+    order: ${({ $mobileOrder }) => $mobileOrder || 0};
+    grid-column: span ${({ $mobileColSpan }) => $mobileColSpan || "1"};
+    grid-row: span ${({ $mobileRowSpan }) => $mobileRowSpan || "1"};
+    border: 3px solid black;
+    pointer-events: none;
+  `}
+
+  ${media.desktop`
+    border: 4px solid black;
+    grid-column: span ${({ $desktopColSpan }) => $desktopColSpan || "1"};
+    grid-row: span ${({ $desktopRowSpan }) => $desktopRowSpan || "1"};
+  `}
+`
+
 export const FullScreenBackground = styled.div`
   position: absolute;
   top: 0;
@@ -537,19 +536,23 @@ export const FullScreenContainer = styled.div`
   top: 5vh;
   left: 5vw;
   background-color: white;
-  border: 3px solid black;
+  border: 4px solid black;
   border-radius: 20px;
-  overflow: none;
+  overflow: hidden;
   z-index: 2;
-
   
   ${media.mobile`
     width: 90%;
   `}
 
   ${media.desktop`
-    width: calc(90% - 180px);
+    width: calc(90% - 80px);
   `}
+`
+
+export const StyledWordcloud = styled.img`
+  height: 100%;
+  width: 100%;
 `
 
 export const StyledIFrame = styled.iframe`

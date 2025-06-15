@@ -30,9 +30,9 @@ function SongGuesserIntro({ category, updateCategory, difficulty, updateDifficul
       
       <StyledIntroFlexbox>
         <StyledIntroGrid $position="First" $mobileHeight="40%">
-          <SongGuesserButton name="Pop" rowsMobile="span 3" onClick={updateCategory} section={category}/>
-          <SongGuesserButton name="Indie" rowsMobile="span 3" onClick={updateCategory} section={category}/>
           <SongGuesserButton name="Anime" rowsMobile="span 3" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Indie" rowsMobile="span 3" onClick={updateCategory} section={category}/>
+          <SongGuesserButton name="Disney" rowsMobile="span 3" onClick={updateCategory} section={category}/>
           <SongGuesserButton name="Video Games" rowsMobile="span 3" onClick={updateCategory} section={category}/>
           <SongGuesserButton name="Movies" rowsMobile="span 3" onClick={updateCategory} section={category}/>
           <SongGuesserButton name="TV Shows" rowsMobile="span 3" onClick={updateCategory} section={category}/>

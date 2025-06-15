@@ -13,15 +13,15 @@ function IntroGallery({ imageChoice, toggleShowSubTitle, galleryAnimationComplet
       <StyledGallery>
         <StyledInput theme={theme} type="checkbox" onMouseOver={galleryAnimationComplete ? toggleShowSubTitle : null}  onClick={toggleExpandIntroText}/>
         {sectionData.map((section) => (
-        <StyledGalleryImage
-          theme={theme}
-          key={section.id}
-          src={section.imgA}
-          alt="a forest after an apocalypse"
-          data-id={section.id}
-          onClick={imageChoice}
-        />
-      ))}
+          <StyledGalleryImage
+            theme={theme}
+            key={section.id}
+            src={section.imgA}
+            alt="a forest after an apocalypse"
+            data-id={section.id}
+            onClick={imageChoice}
+          />
+        ))}
       </StyledGallery>
     </StyledGalleryContainer>
   )

@@ -8,7 +8,7 @@ import Wordcloud from "./Wordcloud.jsx";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-import { StyledGrid, StyledDataBox, StyledBodyText, StyledInfoButton, StyledSVG, StyledPlotContainer, StyledTopicButton, StyledWordcloud } from './AuthorAnalysis.styles';
+import { StyledGrid, StyledDataBox, StyledBodyText, StyledInfoButton, StyledSVG, StyledPlotContainer, StyledTopicButton, StyledWordcloudButton } from './AuthorAnalysis.styles';
 
 function Dashboard({data, functional}) {
   const { theme } = useContext(ThemeContext);
@@ -305,7 +305,7 @@ function Dashboard({data, functional}) {
         </StyledBodyText>
       </StyledTopicButton>
 
-      <StyledWordcloud src={wordcloudUrl || "images/Placeholder Wordcloud.png"} onClick={toggleWordcloud} $mobileOrder="9" $desktopColSpan="4" $mobileColSpan="3" $desktopRowSpan="3" $mobileRowSpan="2"/>
+      <StyledWordcloudButton src={wordcloudUrl || "images/Placeholder Wordcloud.png"} onClick={toggleWordcloud} $mobileOrder="9" $desktopColSpan="4" $mobileColSpan="3" $desktopRowSpan="3" $mobileRowSpan="2"/>
 
       <StyledPlotContainer theme={theme} $mobileOrder="7" $desktopColSpan="3" $mobileColSpan="3">
         <Plot

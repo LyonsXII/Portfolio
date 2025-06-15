@@ -296,8 +296,8 @@ export const StyledSettingsMenuHeaderElement = styled.div`
   min-width: fit-content;
   white-space: nowrap;
   background-color: ${({ $value, $active, theme }) => $value === $active ? theme.secondaryColor : theme.primaryColor};
-  // box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
-  //             inset 0 -4px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3), 
+              inset 0 -4px 4px rgba(0, 0, 0, 0.6);
   box-sizing: border-box;
   cursor: pointer;
 
