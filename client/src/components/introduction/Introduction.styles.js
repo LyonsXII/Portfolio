@@ -407,7 +407,7 @@ export const StyledIntroContainer = styled.div`
     justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
     align-items: ${({ $current }) => $current == 0 ? "flex-end" : "center"};
     margin-top: 3%;
-    padding-left: ${({ $current }) => $current == 0 ? "0px" : "5%"};
+    // padding-left: ${({ $current }) => $current == 0 ? "0px" : "5%"};
 
     animation: ${({ $tempCurrent, $id }) =>
       $tempCurrent !== $id ? slideOutBottomAnimation : slideInTopAnimation
@@ -501,7 +501,14 @@ export const StyledGalleryContainer = styled.div`
 
 /* Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/" */
 export const StyledGallery = styled.div`
-  --s: 18vh;
+  ${media.mobile`
+    --s: 18vh;
+  `}
+
+  ${media.desktop`
+    --s: 10vw;
+    // --s: min(20vw, 190px);
+  `}
   
   display: grid;
   grid-template-columns: repeat(3,auto);
@@ -535,7 +542,10 @@ export const StyledInput = styled.input`
     left: calc(50% - var(--s) / 2.5);
 
     &:checked {
-      transform: translateX(calc(-0.78 * var(--s) - 20px)) scale(0.5) rotate(45deg);
+      transform: 
+        translateX(calc(-0.78 * var(--s) - 20px)) 
+        scale(0.5) 
+        rotate(45deg);
       --b: 70%;
     }
   `}
@@ -545,7 +555,11 @@ export const StyledInput = styled.input`
     left: 0;
 
     &:checked {
-      transform: translateX(calc(1.5 * var(--s))) translateY(calc(2 * var(--s))) scale(0.5) rotate(45deg);
+      transform: 
+        translateX(calc(1.28 * var(--s))) 
+        translateY(calc(2 * var(--s))) 
+        scale(0.5) 
+        rotate(45deg);
       --b: 70%;
     }
   `}
@@ -558,7 +572,7 @@ export const StyledInput = styled.input`
   }
 
   &:checked ~ img {
-    transform: translateX(40px);
+    transform: translateX(0px);
     filter: brightness(1);
     pointer-events: initial;
   }

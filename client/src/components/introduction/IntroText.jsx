@@ -10,7 +10,7 @@ import IntroLayoutC from "./IntroLayoutC";
 
 import { StyledIntroContentContainer, StyledContentFlexbox, StyledContentInteriorFlexbox, StyledTitle, StyledMinorTitle, StyledBodyText, StyledImageWrapper, StyledShadowOverlay, StyledImage, StyledTitleFlexbox, StyledTitleContainer, StyledTitleButtonContainer, StyledButtonsContainer, StyledIntroContainer, StyledSVG, StyledNextIcon } from "./Introduction.styles";
 
-function IntroText({ id, title, textA, textB, textC, textD, textImgA, textImgB, layout, reverse, links, current, tempCurrent, changeSection, expandIntroText, imgA }) {
+function IntroText({ id, title, textA, textB, textC, textD, textImgA, textImgB, layout, reverse, links, current, tempCurrent, changeSection, expandIntroText, imgA, imgB }) {
   const { theme } = useContext(ThemeContext);
 
   if (current != id) {return null}
@@ -48,6 +48,7 @@ function IntroText({ id, title, textA, textB, textC, textD, textImgA, textImgB, 
         textImgB={textImgB}
         changeSection={changeSection}
         imgA={imgA}
+        imgB={imgB}
         expandIntroText={expandIntroText}
         current={current}
         tempCurrent={tempCurrent}
@@ -79,7 +80,7 @@ function IntroText({ id, title, textA, textB, textC, textD, textImgA, textImgB, 
   const renderLayout = layoutMap[layout];
 
   return renderLayout
-    ? renderLayout({ id, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, expandIntroText, current, tempCurrent, reverse, links })
+    ? renderLayout({ id, title, theme, textA, textB, textC, textD, textImgA, textImgB, changeSection, imgA, imgB, expandIntroText, current, tempCurrent, reverse, links })
     : null;
 }
 
