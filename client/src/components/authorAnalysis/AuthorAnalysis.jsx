@@ -418,6 +418,17 @@ function AuthorAnalysis({ transition, home }) {
     list_authors();
   }, []);
 
+  // Update plot colours when theme changes
+  useEffect(() => {
+    setPredictedAuthorsPlotData(prev => ({
+      ...prev,
+      marker: {
+        ...prev.marker,
+        color: theme.primaryColor
+      }
+    }));
+  }, [theme])
+
   return (
     <StyledFlexboxContainer $transition={transition}>
       <ReturnButton returnFunction={home}/>

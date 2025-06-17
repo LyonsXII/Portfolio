@@ -56,6 +56,7 @@ function Dashboard({data, functional}) {
         },
         standoff: mobileLayout ? 10 : 16
       },
+      ticks: "",
       tickfont: {
         color: theme.textColor,
         size: mobileLayout ? 12 : 14
@@ -219,7 +220,7 @@ function Dashboard({data, functional}) {
 
   // Trigger window resize event to update Plotly plots
     // Workaround - function listed in documentation not working (likely due to grid and max-height transition)
-  useEffect(() => { window.dispatchEvent(new Event("resize"))}, [reportData, selectedAuthor, showTopicGraph, showWordcloud, hoverText]);
+  useEffect(() => { window.dispatchEvent(new Event("resize"))}, [reportData, selectedAuthor, showTopicGraph, showWordcloud, hoverText, theme]);
 
   return (
     <StyledGrid $showData={showData}>
