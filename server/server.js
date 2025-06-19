@@ -14,6 +14,7 @@ const port = 5000;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+let db;
 // Connect to database
 if (process.env.DB_URL) {
   // Production
@@ -27,7 +28,7 @@ if (process.env.DB_URL) {
   // Local
   db = new pg.Client({
     user: "postgres",
-    host: "localhost",
+    host: "172.31.192.1",
     database: "Song_Data",
     password: process.env.DB_PASSWORD,
     port: 5432,
