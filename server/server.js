@@ -38,14 +38,17 @@ db.connect()
   .then(() => console.log("Connected to PostgreSQL"))
   .catch((err) => console.error("Connection error", err));
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://portfolio-lyonsxiis-projects.vercel.app/',
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
 app.post("/numQuestions", async (req, res) => {
   const difficulty = req.body.difficulty;
   const category = req.body.category;
-  const numQuestions = await db.query("SELECT COUNT(id) FROM songs WHERE difficulty = $1 AND category = $2", [difficulty, category]);
+  const numQuestions = await db.query("SELECT COUNT(id) FROM song_data WHERE difficulty = $1 AND category = $2", [difficulty, category]);
   res.json(numQuestions.rows[0]["count"]);
 });
 
@@ -60,7 +63,7 @@ app.post("/choices", async (req, res) => {
   try {
     let query = `
       SELECT id, property 
-      FROM songs 
+      FROM song_data 
       WHERE difficulty = $1 
       AND category = $2 
     `;
@@ -83,7 +86,7 @@ app.post("/choices", async (req, res) => {
 
   // Pulling expanded data for correct choice
   try {
-    choices[0] = await db.query("SELECT * FROM songs WHERE id=$1", [choices[0].id]);
+    choices[0] = await db.query("SELECT * FROM song_data WHERE id=$1", [choices[0].id]);
     choices[0] = choices[0].rows[0];
 
   } catch(err) {
