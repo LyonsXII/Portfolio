@@ -38,8 +38,19 @@ db.connect()
   .then(() => console.log("Connected to PostgreSQL"))
   .catch((err) => console.error("Connection error", err));
 
+const allowedOrigins = [
+  'https://portfolio-lyonsxiis-projects.vercel.app',
+  'http://localhost:5173',
+];
+
 app.use(cors({
-  origin: 'https://portfolio-lyonsxiis-projects.vercel.app/',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
+    }
+  },
   credentials: true,
 }));
 app.use(bodyParser.json());
