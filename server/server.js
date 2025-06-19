@@ -14,15 +14,28 @@ const port = 5000;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const db = new pg.Client({
-  user: "postgres",
-  host: "172.31.192.1",
-  database: "Song_Data",
-  password: process.env.DB_Password,
-  port: 5432
+// Connect to database
+if (process.env.DB_URL) {
+  // Production
+  db = new pg.Client({
+    connectionString: process.env.DB_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   });
-
+} else {
+  // Local
+  db = new pg.Client({
+    user: "postgres",
+    host: "localhost",
+    database: "Song_Data",
+    password: process.env.DB_PASSWORD,
+    port: 5432,
+  });
+}
 db.connect();
+  .then(() => console.log("Connected to PostgreSQL"))
+  .catch((err) => console.error("Connection error", err));
 
 app.use(cors());
 app.use(bodyParser.json());
