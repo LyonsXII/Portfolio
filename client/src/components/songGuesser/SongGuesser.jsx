@@ -87,13 +87,15 @@ function SongGuesser({ transition, setTransition, home }) {
     }
 
     try {
+      const backend_url = "https://portfolio-hrd0.onrender.com"
+
       // Post request to backend
       const choicesPostData = {
         "category": category, 
         "difficulty": difficulty, 
         "excluded": []
       };
-      const response = await axios.post('http://localhost:5000/choices', choicesPostData);
+      const response = await axios.post(`${backend_url}/choices`, choicesPostData);
 
       // Setting retrieved data
       const data = response.data[0];

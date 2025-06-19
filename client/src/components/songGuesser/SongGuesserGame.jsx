@@ -47,11 +47,13 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
   const [song, setSong] = useState(null);
   const audioRef = useRef(null);
 
+  const backend_url = "https://portfolio-hrd0.onrender.com"
+
   // Fetch number of possible questions for category from database
   async function getNumQuestions() {
     try {
       const postData = {"category": category, "difficulty": difficulty};
-      const response = await axios.post('http://localhost:5000/numQuestions', postData);
+      const response = await axios.post(`${backend_url}/numQuestions`, postData);
       setNumQuestions(response.data);
     } catch(error) {
       console.error('Error fetching data:', error);
@@ -83,7 +85,7 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
           ? firstRound.excluded 
           : nextRoundData.excluded
       };
-      const response = await axios.post('http://localhost:5000/choices', choicesPostData);
+      const response = await axios.post(`${backend_url}/choices`, choicesPostData);
 
       // Setting retrieved data
       const data = response.data[0];
@@ -109,7 +111,7 @@ function SongGuesserGame({ category, difficulty, mode, firstRound, score, setSco
 async function getAudio() {
   const encodedPath = encodeURIComponent(roundData.songFilePath);
   console.time('fetch');
-  const response = await fetch(`http://localhost:5000/mp3?location=${encodedPath}`);
+  const response = await fetch(`${backend_url}/mp3?location=${encodedPath}`);
   console.timeLog('fetch', 'after fetch');
 
   if (!response.ok) {
