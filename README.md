@@ -1,5 +1,5 @@
 ## Intro
-![Landing page](readme-assets/Landing Page.jpg)
+<img src="readme-assets/Landing Page.jpg" alt="Landing Page"/>
 Welcome, here you can find my portfolio website (available online at https://portfolio-lyonsxiis-projects.vercel.app/), which consists of a few projects I've been working on recently. Feel free to take a look at the source code, or click on the link and try it out for yourself.
 
 The site is complete with transitions, adjustable settings and themes, and works both desktop and mobile.
@@ -49,4 +49,4 @@ Unfortunately due to the computational intensity of this machine learning method
 
 ## 📬 Contact
 Feel free to reach out:
-- ✉️ [michael.lyons@gmail.com](michael.lyons@gmail.com)
+- ✉️ [michael.lyons1112@gmail.com](michael.lyons@gmail.com)
