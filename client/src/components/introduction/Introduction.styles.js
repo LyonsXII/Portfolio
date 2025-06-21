@@ -480,6 +480,7 @@ export const StyledIntroButton = styled.button`
 
 export const StyledGalleryContainer = styled.div`
   display: flex;
+  border: 1px solid red;
 
   ${media.mobile`
     justify-content: center;
@@ -506,8 +507,8 @@ export const StyledGallery = styled.div`
   `}
 
   ${media.desktop`
-    --s: 10vw;
-    // --s: min(20vw, 190px);
+    // --s: 10vw;
+    --s: min(18vw, 190px);
   `}
   
   display: grid;
@@ -543,7 +544,7 @@ export const StyledInput = styled.input`
 
     &:checked {
       transform: 
-        translateX(calc(-0.78 * var(--s) - 20px)) 
+        translateX(calc(-0.78 * var(--s) - 20px))
         scale(0.5) 
         rotate(45deg);
       --b: 70%;
@@ -557,7 +558,7 @@ export const StyledInput = styled.input`
     &:checked {
       transform: 
         translateX(calc(1.28 * var(--s))) 
-        translateY(calc(2 * var(--s))) 
+        translateY(calc(2 * var(--s)))
         scale(0.5) 
         rotate(45deg);
       --b: 70%;
@@ -586,7 +587,6 @@ export const StyledGalleryImage = styled.img`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   aspect-ratio: 1;
   object-fit: cover;
-  transform: scale(0.1);
   filter: brightness(0);
   pointer-events: none;
   transform-origin: var(--x) var(--y);
@@ -664,6 +664,7 @@ export const StyledGalleryImage = styled.img`
   ${media.desktop`
     border: 6px solid black;
     width: var(--s);
+    --scale: clamp(0.1, 0.01 + 0.5 * ((100vw - 1080px) / 840), 0.2);
     transform: scale(0.1);
 
     &:nth-of-type(1) {
