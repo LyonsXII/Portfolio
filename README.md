@@ -14,7 +14,8 @@ A browser-based game that challenges the user to guess where songs come from bas
 - Over 240+ songs
 - Score tracking and fun visual effects
 
-<img src="readme-assets/Song Guesser.jpg" alt="Song Guesser Game Menu Screenshot"/>
+<img src="readme-assets/Song Guesser.jpg" alt="Song Guesser game menu screenshot"/>
+<img src="assets/Song Guesser Demo.gif" width="600" alt="Song Guesser game demo">
 
 ### 🧲 Faraday Cage 2D Simulator
 An interactive mathematical visualization of how the strength of a Faraday cage is affected by adjusting wire thickness and the number of wires used.
@@ -22,7 +23,7 @@ An interactive mathematical visualization of how the strength of a Faraday cage 
 - Calculated in browser
 - Adjustable parameters (number of disks, disk radius)
 
-<img src="readme-assets/Faraday Cage.jpg" alt="Faraday Cage Model Screenshot"/>
+<img src="readme-assets/Faraday Cage.jpg" alt="Faraday Cage model screenshot"/>
 
 ### 📊 ML Author Analysis Dashboard
 A machine learning dashboard analyzing authors' writing styles using machine learning.
@@ -30,7 +31,7 @@ A machine learning dashboard analyzing authors' writing styles using machine lea
 - Compare multiple authors or provide a text snippet of your own and see which author comes closest.
 - Built using a fine-tuning of BERT
 
-<img src="readme-assets/Author Analysis.jpg" alt="Author Analysis Dashboard Screenshot"/>
+<img src="readme-assets/Author Analysis.jpg" alt="Author Analysis dashboard screenshot"/>
 
 ## 🎥 Demo
 [![Watch the demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
