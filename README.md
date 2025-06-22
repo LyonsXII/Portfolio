@@ -16,15 +16,14 @@ A browser-based game that challenges the user to guess where songs come from bas
 
 <table>
   <tr>
-    <td width="30%">
+    <td width="40%">
       <img src="readme-assets/Song Guesser.jpg" width="100%" alt="Song Guesser game menu screenshot"/>
     </td>
-    <td width="70%">
+    <td width="60%">
       <img src="readme-assets/Song Guesser Demo.gif" width="100%" alt="Song Guesser game demo"/>
     </td>
   </tr>
 </table>
-
 
 ### 🧲 Faraday Cage 2D Simulator
 An interactive mathematical visualization of how the strength of a Faraday cage is affected by adjusting wire thickness and the number of wires used.
@@ -32,7 +31,16 @@ An interactive mathematical visualization of how the strength of a Faraday cage 
 - Calculated in browser
 - Adjustable parameters (number of disks, disk radius)
 
-<img src="readme-assets/Faraday Cage.jpg" alt="Faraday Cage model screenshot"/>
+<table>
+  <tr>
+    <td width="40%">
+      <img src="readme-assets/Faraday Cage.jpg" width="100%" alt="Faraday Cage model screenshot"/>
+    </td>
+    <td width="60%">
+      <img src="readme-assets/Faraday Cage Demo.gif" width="100%" alt="Faraday Cage model demo"/>
+    </td>
+  </tr>
+</table>
 
 ### 📊 ML Author Analysis Dashboard
 A machine learning dashboard analyzing authors' writing styles using machine learning.
@@ -40,24 +48,35 @@ A machine learning dashboard analyzing authors' writing styles using machine lea
 - Compare multiple authors or provide a text snippet of your own and see which author comes closest.
 - Built using a fine-tuning of BERT
 
-<img src="readme-assets/Author Analysis.jpg" alt="Author Analysis dashboard screenshot"/>
+<table>
+  <tr>
+    <td width="40%">
+      <img src="readme-assets/Author Analysis.jpg" width="100%" alt="Author Analysis dashboard screenshot"/>
+    </td>
+    <td width="60%">
+      <img src="readme-assets/Author Analysis Demo.gif" width="100%" alt="Author Analysis demo"/>
+    </td>
+  </tr>
+</table>
 
 ## 🎥 Demo
-[![Watch the demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+[Check out a quick run through of the site:](https://www.youtube.com/watch?v=dxcspiPQ_YI)
 
-> You can also [view a short walkthrough GIF](./assets/demo.gif) right here in the README.
-
-## Live Site
-[Visit the live site here](https://portfolio-lyonsxiis-projects.vercel.app/)
+## 💻 Live Site
+[Visit the live site here:](https://portfolio-lyonsxiis-projects.vercel.app/)
 </br>
 </br>
-Unfortunately due to the computational intensity of this machine learning method, prediction of new text is not available in the live demo. Feel free to download the code and run it locally if you'd like to give it a try, or watch the demo to get an idea of how it works.
+Due to Render winding down inactive processes you may need to retry the song guesser game after a minute or so the first time you play.
+</br>
+</br>
+Unfortunately due to the computational intensity of this machine learning method, prediction of new text is not available in the live demo. Feel free to download the code and run it locally if you'd like to give it a try, or watch the demo to get an idea of how it works in practice.
 
 ## 🛠️ Tech Stack
 - React + Styled Components
 - Express + Flask
 - PostgreSQL
+- Node JS
 
 ## 📬 Contact
 Feel free to reach out:
-- ✉️ [michael.lyons1112@gmail.com](michael.lyons@gmail.com)
+- ✉️ [michael.lyons1112@gmail.com](mailto:michael.lyons@gmail.com)

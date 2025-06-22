@@ -13,7 +13,7 @@ import { StyledContentContainer, StyledButtonsContainer, StyledTitle, StyledMino
 
 function Introduction({ home, activateSongGuesser, activateFaradayCage, activateAuthorAnalysis }) {
   const { theme } = useContext(ThemeContext);
-  const { volume, clickSound } = useContext(AudioContext);
+
 
   const [initial, setInitial] = useState(true);
   const [current, setCurrent] = useState(0);
