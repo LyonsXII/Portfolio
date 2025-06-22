@@ -16,8 +16,12 @@ A browser-based game that challenges the user to guess where songs come from bas
 
 <table>
   <tr>
-    <td><img src="readme-assets/Song Guesser.jpg" width="100%" alt="Song Guesser game menu screenshot"/></td>
-    <td><img src="readme-assets/Song Guesser Demo.gif" width="100%" alt="Song Guesser game demo"/></td>
+    <td width="30%">
+      <img src="readme-assets/Song Guesser.jpg" width="100%" alt="Song Guesser game menu screenshot"/>
+    </td>
+    <td width="70%">
+      <img src="readme-assets/Song Guesser Demo.gif" width="100%" alt="Song Guesser game demo"/>
+    </td>
   </tr>
 </table>
 
