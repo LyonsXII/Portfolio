@@ -12,11 +12,13 @@ import Wordcloud from "./Wordcloud.jsx";
 import { toolTipText } from "./toolTipText.js";
 
 import { ThemeContext } from "../../context/ThemeContext.jsx";
+import { AudioContext } from "../../context/AudioContext";
 
 import { StyledFlexboxContainer, StyledToolTip, StyledBackdrop, StyledBodyText } from './AuthorAnalysis.styles';
 
 function AuthorAnalysis({ transition, home }) {
   const { theme } = useContext(ThemeContext);
+  const { volume, clickSound } = useContext(AudioContext);
 
   const [showData, setShowData] = useState(false);
   const [showAuthorData, setShowAuthorData] = useState(false);
@@ -150,10 +152,13 @@ function AuthorAnalysis({ transition, home }) {
   }
 
   function changeSelectedAuthor(author) {
+    clickSound();
     setSelectedAuthor(author);
   }
 
   function togglePredictionExpanded() {
+    clickSound();
+
     if (predictionExpanded) {
       setShowData(false);
     } else {
@@ -170,6 +175,8 @@ function AuthorAnalysis({ transition, home }) {
   }
 
   function toggleAuthorExpanded() {
+    clickSound();
+
     if (authorExpanded) {
       setShowData(false);
     } else {
@@ -185,10 +192,12 @@ function AuthorAnalysis({ transition, home }) {
   }
 
   function toggleTopicGraph() {
+    clickSound();
     setShowTopicGraph(prev => !prev);
   }
 
   function toggleWordcloud() {
+    clickSound();
     setShowWordcloud(prev => !prev);
   }
 
@@ -301,6 +310,7 @@ function AuthorAnalysis({ transition, home }) {
   }
 
   function handlePrediction() {
+    clickSound();
     setLoading(true);
     predict(predictionText)
     fetch_wordcloud("Custom", predictionText)
@@ -323,6 +333,7 @@ function AuthorAnalysis({ transition, home }) {
       }))
     }
 
+    clickSound();
     fetch_author_report();
     fetch_wordcloud();
     fetch_topic_analysis();
@@ -438,14 +449,14 @@ function AuthorAnalysis({ transition, home }) {
       {showWordcloud && <Wordcloud toggleWordcloud={toggleWordcloud} src={wordcloudUrl}/>}
 
       {hoverText.text != "" && 
-      <div>
+        <div>
           <StyledToolTip theme={theme} $hoverText={hoverText}>
             <StyledBodyText>
               {toolTipText[hoverText.text]}
             </StyledBodyText>
           </StyledToolTip>
-        <StyledBackdrop/>
-      </div>
+          <StyledBackdrop/>
+        </div>
       }
 
       <MainButtons 

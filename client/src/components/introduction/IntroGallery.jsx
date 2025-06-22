@@ -17,7 +17,7 @@ function IntroGallery({ imageChoice, toggleShowSubTitle, galleryAnimationComplet
             theme={theme}
             key={section.id}
             src={section.imgA}
-            alt="a forest after an apocalypse"
+            alt={section.imgAAlt}
             data-id={section.id}
             onClick={imageChoice}
           />

@@ -9,20 +9,21 @@ import ReturnButton from "../general/ReturnButton";
 import FaradaySettingsRow from "./FaradaySettingsRow";
 import FaradayWorker from "./faraday.worker.js?worker";
 import LoadingIcon from "../general/LoadingIcon.jsx"
-import { initialData } from "./initialData";  // Faraday function output for initial scenario
+import { initialData } from "./initialData";  // Pre-calculated Faraday function output for initial scenario
 
 import { ThemeContext } from "../../context/ThemeContext";
-import { StyledTextContainer } from "../songGuesser/SongGuesser.styles";
+import { AudioContext } from "../../context/AudioContext";
 import { SettingsContext } from "../../context/SettingsContext";
 
 function FaradayCage({ transition, home }) {
   const { theme } = useContext(ThemeContext);
+  const { volume, clickSound } = useContext(AudioContext);
   const { plotColour } = useContext(SettingsContext);
 
   const [plotData, setPlotData] = useState(initialData.uu);
   const [plotDataHeat, setPlotDataHeat] = useState(initialData.uu_heat);
   const [plotDataGradient, setPlotDataGradient] = useState([]);
-  const [centerGradient, setCenterGradient] = useState(0);
+  const [centerGradient, setCenterGradient] = useState(0.1118);
   const [axisValues, setAxisValues] = useState({ 
     xValues: Array.from({ length: 120 }, (_, i) => -1.4 + (i * 0.03)), 
     yValues: Array.from({ length: 120 }, (_, i) => -1.8 + (i * 0.03))
@@ -170,6 +171,7 @@ function FaradayCage({ transition, home }) {
 
   // Generate heatmap data from xx, yy, uu using using separate worker process
   function updateData() {
+    clickSound();
     setLoading(true);
     const worker = new FaradayWorker();
 

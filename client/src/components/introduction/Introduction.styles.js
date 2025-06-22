@@ -480,8 +480,7 @@ export const StyledIntroButton = styled.button`
 
 export const StyledGalleryContainer = styled.div`
   display: flex;
-  border: 1px solid red;
-
+  
   ${media.mobile`
     justify-content: center;
     align-items: center;

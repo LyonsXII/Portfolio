@@ -40,6 +40,7 @@ A machine learning dashboard analyzing authors' writing styles using machine lea
 ## Live Site
 [Visit the live site here](https://portfolio-lyonsxiis-projects.vercel.app/)
 </br>
+</br>
 Unfortunately due to the computational intensity of this machine learning method, prediction of new text is not available in the live demo. Feel free to download the code and run it locally if you'd like to give it a try, or watch the demo to get an idea of how it works.
 
 ## 🛠️ Tech Stack
