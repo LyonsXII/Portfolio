@@ -1,5 +1,5 @@
 # Introduction
-<img src="readme-assets/Landing Page.jpg" alt="Landing Page"/>
+<img src="readme-assets/Landing Page.gif" alt="Landing Page"/>
 Welcome, here you can find my portfolio website (available online at https://portfolio-lyonsxiis-projects.vercel.app/), which consists of a few projects I've been working on recently. Feel free to take a look at the source code, or click on the link and try it out for yourself.
 
 The site is complete with transitions, adjustable settings and themes, and works both desktop and mobile.
@@ -16,10 +16,10 @@ A browser-based game that challenges the user to guess where songs come from bas
 
 <table>
   <tr>
-    <td width="40%">
+    <td width="35%">
       <img src="readme-assets/Song Guesser.jpg" width="100%" alt="Song Guesser game menu screenshot"/>
     </td>
-    <td width="60%">
+    <td width="65%">
       <img src="readme-assets/Song Guesser Demo.gif" width="100%" alt="Song Guesser game demo"/>
     </td>
   </tr>
@@ -33,10 +33,10 @@ An interactive mathematical visualization of how the strength of a Faraday cage 
 
 <table>
   <tr>
-    <td width="40%">
+    <td width="35%">
       <img src="readme-assets/Faraday Cage.jpg" width="100%" alt="Faraday Cage model screenshot"/>
     </td>
-    <td width="60%">
+    <td width="65%">
       <img src="readme-assets/Faraday Cage Demo.gif" width="100%" alt="Faraday Cage model demo"/>
     </td>
   </tr>
@@ -50,20 +50,23 @@ A machine learning dashboard analyzing authors' writing styles using machine lea
 
 <table>
   <tr>
-    <td width="40%">
+    <td width="35%">
       <img src="readme-assets/Author Analysis.jpg" width="100%" alt="Author Analysis dashboard screenshot"/>
     </td>
-    <td width="60%">
+    <td width="65%">
       <img src="readme-assets/Author Analysis Demo.gif" width="100%" alt="Author Analysis demo"/>
     </td>
   </tr>
 </table>
 
 ## 🎥 Demo
-[Check out a quick run through of the site:](https://www.youtube.com/watch?v=dxcspiPQ_YI)
+[Check out a quick run through of the site](https://www.youtube.com/watch?v=dxcspiPQ_YI)
+</br>
+</br>
+In the video linked above I quickly run through the main features of my portfolio, showing off how everything works.
 
 ## 💻 Live Site
-[Visit the live site here:](https://portfolio-lyonsxiis-projects.vercel.app/)
+[Visit the live site here](https://portfolio-lyonsxiis-projects.vercel.app/)
 </br>
 </br>
 Due to Render winding down inactive processes you may need to retry the song guesser game after a minute or so the first time you play.
