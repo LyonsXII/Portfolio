@@ -11,7 +11,7 @@ function AboutMe({ initialSection }) {
 
   return (
     <StyledSectionFlexbox $initialSection={initialSection} $sectionName="About Me">
-      <StyledSectionRowTextFlexbox theme={theme} $marginRight="0px">
+      <StyledSectionRowTextFlexbox theme={theme} $initialSection={initialSection} $sectionName="About Me" $marginRight="0px">
         <StyledBodyTextInitialText>{text.aboutMeTextA}</StyledBodyTextInitialText>
         <StyledBodyTextInitialText>{text.aboutMeTextB}</StyledBodyTextInitialText>
         <StyledBodyTextInitialText>{text.aboutMeTextC}</StyledBodyTextInitialText>

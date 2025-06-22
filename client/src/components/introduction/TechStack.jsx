@@ -12,7 +12,7 @@ function TechStack({ initialSection }) {
 
   return (
     <StyledSectionFlexbox $initialSection={initialSection} $sectionName="Tech Stack">
-      <StyledSectionHeadingsFlexbox theme={theme} $paddingDesktop="10px 10px 10px 0px">
+      <StyledSectionHeadingsFlexbox theme={theme} $initialSection={initialSection} $sectionName="Tech Stack" $paddingDesktop="10px 10px 10px 0px">
         <StyledSectionRowTechStackFlexbox>
           <StyledHeadingText>Languages:</StyledHeadingText>
           <StyledTechPairFlexbox>

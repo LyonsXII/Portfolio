@@ -181,9 +181,11 @@ export const StyledSectionHeadingsFlexbox = styled.div`
 
   ${media.desktop`
     height: 230px;
+    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
     width: 100%;
     gap: 30px;
     padding: ${({ $paddingDesktop }) => $paddingDesktop};
+    transition: max-height 1s ease;
   `}
 `
 
@@ -301,8 +303,10 @@ export const StyledSectionRowTextFlexbox = styled.div`
   ${media.desktop`
     align-items: center;
     height: 200px;
+    max-height: ${( { $initialSection, $sectionName }) => $initialSection == $sectionName ? "1000px" : "0px"};
     width: 100%;
     padding: 5px 15px 5px 15px;
+    transition: max-height 1s ease;
   `}
 `
 
