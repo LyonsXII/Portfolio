@@ -14,8 +14,10 @@ A browser-based game that challenges the user to guess where songs come from bas
 - Over 240+ songs
 - Score tracking and fun visual effects
 
-<img src="readme-assets/Song Guesser.jpg" alt="Song Guesser game menu screenshot"/>
-<img src="assets/Song Guesser Demo.gif" width="600" alt="Song Guesser game demo">
+<div style="display: flex; gap: 16px; align-items: center;">
+  <img src="readme-assets/Song Guesser.jpg" width="300" alt="Song Guesser game menu screenshot"/>
+  <img src="readme-assets/Song Guesser Demo.gif" width="300" alt="Song Guesser game demo">
+</div>
 
 ### 🧲 Faraday Cage 2D Simulator
 An interactive mathematical visualization of how the strength of a Faraday cage is affected by adjusting wire thickness and the number of wires used.
