@@ -1,8 +1,8 @@
 # Introduction
 <div align="center">
-  <img src="readme-assets/Landing Page.gif" width="70%" alt="Landing Page">
+  <img src="readme-assets/Landing Page.gif" width="80%" alt="Landing Page">
 </div>
-
+</br>
 Welcome, here you can find my portfolio website (available online at https://portfolio-lyonsxiis-projects.vercel.app/), which consists of a few projects I've been working on recently. Feel free to take a look at the source code, or click on the link and try it out for yourself.
 
 The site is complete with transitions, adjustable settings and themes, and works both desktop and mobile.
