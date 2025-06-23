@@ -64,6 +64,7 @@ export const StyledIntroContentContainer = styled.div`
 
   ${media.mobile`
     width: 100%;
+    padding-bottom: 10px;
     animation: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? fadeOutAnimation : fadeInAnimation};
   `}
 
@@ -87,6 +88,8 @@ export const StyledIntroInitialContentContainer = styled.div`
     max-height: ${({ $expandIntroText }) => $expandIntroText ? "100%" : "0%"};
     opacity: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? 0 : 1};
     transition: max-height 1.4s ease, opacity 0.5s ease;
+
+    animation: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? fadeOutAnimation : fadeInAnimation};
   `}
 
   ${media.desktop`
@@ -297,7 +300,7 @@ export const StyledSectionRowTextFlexbox = styled.div`
     align-items: flex-start;
     flex: 1 1 auto;
     margin-top: 10px;
-    padding: 5px 15px 5px 15px;
+    padding: 5px 15px 10px 15px;
   `}
 
   ${media.desktop`
@@ -431,7 +434,6 @@ export const StyledIntroButtonContainer = styled.div`
     width: 100%;
     margin-top: ${({ $marginTopMobile}) => $marginTopMobile || "0px"};
     border-bottom: 3px solid black;
-    transition: margin-top 1s ease;
   `}
 
   ${media.desktop`
@@ -547,7 +549,7 @@ export const StyledInput = styled.input`
 
     &:checked {
       transform: 
-        translateX(calc(-0.78 * var(--s) - 20px))
+        translateX(calc(-0.85 * var(--s) - 20px))
         scale(0.5) 
         rotate(45deg);
       --b: 70%;
@@ -576,7 +578,7 @@ export const StyledInput = styled.input`
   }
 
   &:checked ~ img {
-    transform: translateX(0px);
+    transform: translateX(30px);
     filter: brightness(1);
     pointer-events: initial;
   }
