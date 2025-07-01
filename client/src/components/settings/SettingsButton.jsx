@@ -6,7 +6,7 @@ import { StyledLinkContainer, StyledSettingsButton, StyledSVG } from "./Settings
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
 
-function SettingsButton({ value, svgPath, link, type, position, onClick, updateHoverText, resetHoverText, mobile, mobileOrder, mobileEnd }) {
+function SettingsButton({ value, svgPath, link, download, type, position, onClick, updateHoverText, resetHoverText, mobile, mobileOrder, mobileEnd }) {
   const { theme } = useContext(ThemeContext);
   const { volume, clickSound } = useContext(AudioContext);
 
@@ -16,7 +16,7 @@ function SettingsButton({ value, svgPath, link, type, position, onClick, updateH
   }
 
   return (
-    <StyledLinkContainer href={link} $mobileOrder={mobileOrder}>
+    <StyledLinkContainer href={link} download={download} $mobileOrder={mobileOrder}>
       <StyledSettingsButton
         theme={theme} 
         onMouseOver={() => {updateHoverText(value)}} 
