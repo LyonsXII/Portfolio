@@ -177,9 +177,11 @@ export const StyledSectionHeadingsFlexbox = styled.div`
   }
 
   ${media.mobile`
-    height: 100%;
-    width: 100%;
-    gap: 0px;
+    height: 100px;
+    align-items: flex-start;
+    flex: 1 1 auto;
+    margin-top: 10px;
+    padding: 5px 15px 10px 15px;
   `}
 
   ${media.desktop`
@@ -562,7 +564,7 @@ export const StyledInput = styled.input`
 
     &:checked {
       transform: 
-        translateX(calc(1.28 * var(--s))) 
+        translateX(calc(1.43 * var(--s))) 
         translateY(calc(2 * var(--s)))
         scale(0.5) 
         rotate(45deg);
