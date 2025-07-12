@@ -67,7 +67,7 @@ export const StyledIntroContentContainer = styled.div`
     flex: 1 1 auto;
     min-height: 0px;
     width: 100%;
-    padding-bottom: 60px;
+    padding-bottom: 10px;
     animation: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? fadeOutAnimation : fadeInAnimation};
   `}
 
@@ -499,6 +499,7 @@ export const StyledGalleryContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex: 1 1 auto; /* Change to 0 0 auto if messing up scroll box again*/
+    min-height: fit-content;
     width: 100%;
     padding: 20px 0px 60px 0px;
   `}
