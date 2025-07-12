@@ -64,6 +64,7 @@ export const StyledIntroContentContainer = styled.div`
 
   ${media.mobile`
     flex: 1 1 auto;
+    min-height: 0px;
     width: 100%;
     padding-bottom: 10px;
     animation: ${({ $tempCurrent, $id }) => $tempCurrent !== $id ? fadeOutAnimation : fadeInAnimation};
