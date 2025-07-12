@@ -51,7 +51,6 @@ def list_authors():
   authors = []
   for author in os.listdir(author_path):
    authors.append(author)
-
   return jsonify(authors)
 
 @app.route('/author_details', methods=['GET'])

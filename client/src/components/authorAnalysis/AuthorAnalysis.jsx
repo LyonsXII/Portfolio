@@ -128,7 +128,7 @@ function AuthorAnalysis({ transition, home }) {
 
   const [loading, setLoading] = useState(false);
 
-  const backend_url = "https://portfolio-hrd0.onrender.com" //http://localhost:5001
+  const backend_url = "https://portfolio-hrd0.onrender.com" //http://localhost:5000
 
   function handleChange(e) {
     setPredictionText(e.target.value);
@@ -263,7 +263,7 @@ function AuthorAnalysis({ transition, home }) {
         author: selectedAuthor,
         text: predictionText
       }
-      const response = await fetch("http://localhost:5001/wordcloud", {
+      const response = await fetch(`${backend_url}/wordcloud`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -406,7 +406,7 @@ function AuthorAnalysis({ transition, home }) {
   useEffect(() => {
     async function list_authors() {
       try {
-        const response = await fetch("http://localhost:5001/author_details", {
+        const response = await fetch(`${backend_url}/author_details`, {
           method: "GET"
         });
     
@@ -415,6 +415,7 @@ function AuthorAnalysis({ transition, home }) {
         }
 
         const data = await response.json();
+        console.log(data)
         setAuthorList(data["authors"]);
         setFleschVsLexicalPlotData(prevData => ({
           ...prevData,

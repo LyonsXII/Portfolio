@@ -121,6 +121,19 @@ app.get("/mp3", (req, res) => {
 
 // Author analysis report fetch functions
 // Included as python-server to intensive for free hosting on Render
+// Purely for portfolio demo
+app.get("/author_details", (req, res) => {
+  try {
+    const filePath = path.join(__dirname, "public/author reports/Plot Metrics.json");
+    const data =  fs.readFileSync(filePath, 'utf8');
+    const authorDetails = JSON.parse(data);
+
+    res.json(authorDetails)
+  } catch (err) {
+      console.log(err)
+  }
+})
+
 app.post("/author_report", (req, res) => {
   try {
     const author = req.body.author;
@@ -135,6 +148,27 @@ app.post("/author_report", (req, res) => {
     console.log(err)
   }
 });
+
+app.post("/wordcloud", (req, res) => {
+  try {
+  const author = req.body.author;
+  const relativeLocation = "public/author reports/" + author + " - Wordcloud.jpg"
+  const filePath = path.join(__dirname, relativeLocation);
+
+  res.sendFile(filePath, err => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error sending wordcloud" });
+    }
+  });
+
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+app.post("/wordcloud", (req, res) => {
+})
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);

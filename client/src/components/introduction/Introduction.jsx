@@ -122,7 +122,7 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
     try {
       const backend_url = "https://portfolio-hrd0.onrender.com"
       const postData = {"category": "Anime", "difficulty": "Easy"};
-      const response = await axios.post(`${backend_url}/numQuestions`, postData);
+      const response = axios.post(`${backend_url}/numQuestions`, postData);
     } catch(error) {
       console.error('Error fetching data:', error);
     }
