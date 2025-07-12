@@ -128,6 +128,8 @@ function AuthorAnalysis({ transition, home }) {
 
   const [loading, setLoading] = useState(false);
 
+  const backend_url = "https://portfolio-hrd0.onrender.com" //http://localhost:5001
+
   function handleChange(e) {
     setPredictionText(e.target.value);
   };
@@ -233,7 +235,7 @@ function AuthorAnalysis({ transition, home }) {
       const requestData = {
         author: selectedAuthor
       }
-      const response = await fetch("http://localhost:5001/author_report", {
+      const response = await fetch(`${backend_url}/author_report`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

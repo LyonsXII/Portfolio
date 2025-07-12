@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from 'styled-components';
+import axios from "axios";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import { AudioContext } from "../../context/AudioContext";
@@ -114,6 +115,18 @@ function Introduction({ home, activateSongGuesser, activateFaradayCage, activate
 
   // Time allowed insertion of subtitle to animation completion, avoids jarring title movement
   useEffect(() => {setTimeout(() => {setGalleryAnimationComplete(true)}, 1000)}, []);
+
+  // Purely here to spin back up the backend if Render has wound it down
+  // No actual functionality
+  useEffect(() => {
+    try {
+      const backend_url = "https://portfolio-hrd0.onrender.com"
+      const postData = {"category": "Anime", "difficulty": "Easy"};
+      const response = await axios.post(`${backend_url}/numQuestions`, postData);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+  }, [])
 
   return (
     <StyledContentContainer>

@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import pg from "pg";
 import path from 'path';
+import fs from "fs";
 
 import dotenv from 'dotenv';
 dotenv.config({ path: "../.env" });
@@ -111,14 +112,29 @@ app.post("/choices", async (req, res) => {
 });
 
 app.get("/mp3", (req, res) => {
-  console.time('getAudio');
   const location = req.query.location;
-  const relativeLocation = location.replace(/\\/g, '/');
-  const filePath = path.join(__dirname, 'public', relativeLocation);
-  res.set('Cache-Control', 'public, max-age=3600'); // Caching file for one hour
-  res.sendFile(filePath, () => console.timeEnd('getAudio'));
+  const relativeLocation = location.replace(/\\/g, "/");
+  const filePath = path.join(__dirname, "public", relativeLocation);
+  res.set("Cache-Control", "public, max-age=3600"); // Cache file for one hour
+  res.sendFile(filePath, () => console.timeEnd("getAudio"));
 });
 
+// Author analysis report fetch functions
+// Included as python-server to intensive for free hosting on Render
+app.post("/author_report", (req, res) => {
+  try {
+    const author = req.body.author;
+    const relativeLocation = "public/author reports/" + author + ".json"
+    const filePath = path.join(__dirname, relativeLocation);
+
+    const data = fs.readFileSync(filePath, 'utf8');
+    const authorReport = JSON.parse(data);
+    res.json(authorReport);
+
+  } catch(err) {
+    console.log(err)
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`);

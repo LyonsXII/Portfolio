@@ -34,7 +34,6 @@ export const StyledIntroContentContainer = styled.div`
   padding: 0px 30px 0px 25px;
   gap: ${({ $gap }) => $gap || "20px"};
   box-sizing: border-box;
-  border: 1px solid red;
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -128,7 +127,6 @@ export const StyledSectionFlexbox = styled.div`
   hyphens: auto;
   overflow-wrap: break-word;
   word-break: break-word;
-  border: 1px solid orange;
 
   ${media.mobile`
     flex-direction: column;
@@ -493,7 +491,6 @@ export const StyledIntroButton = styled.button`
 
 export const StyledGalleryContainer = styled.div`
   display: flex;
-  border: 1px solid cyan;
 
   ${media.mobile`
     justify-content: center;

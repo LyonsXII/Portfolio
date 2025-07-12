@@ -1,0 +1,44 @@
+{
+    "authors": [
+        "Charles Dickens",
+        "Mark Twain",
+        "Fyodor Dostoyevsky",
+        "Mary Shelley",
+        "Herman Melville",
+        "F Scott Fitzgerald",
+        "Oscar Wilde",
+        "Robert Jordan",
+        "Robert Louise Stevenson",
+        "Brandon Sanderson",
+        "Brandon Sanderson - WOT",
+        "James Joyce"
+    ],
+    "fk_score": [
+        73.56,
+        86.92,
+        77.32,
+        61.53,
+        65.74,
+        76.6,
+        81.0,
+        85.53,
+        73.18,
+        79.81,
+        84.64,
+        83.26
+    ],
+    "lexical_diversity": [
+        15.63,
+        11.85,
+        10.26,
+        15.41,
+        22.44,
+        12.08,
+        10.93,
+        12.04,
+        15.9,
+        12.25,
+        14.74,
+        15.44
+    ]
+}
