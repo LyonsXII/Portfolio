@@ -499,9 +499,10 @@ export const StyledGalleryContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex: 1 1 auto; /* Change to 0 0 auto if messing up scroll box again*/
-    min-height: fit-content;
+    min-height: 400px;
     width: 100%;
     padding: 20px 0px 60px 0px;
+    box-sizing: border-box;
   `}
 
   ${media.desktop`
