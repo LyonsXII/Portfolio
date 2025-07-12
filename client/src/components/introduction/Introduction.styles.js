@@ -11,7 +11,7 @@ import DownloadIcon from "../../icons/download.svg?react";
 
 export const StyledContentContainer = styled.div`
   display: flex;
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
 
   ${media.mobile`
@@ -416,7 +416,7 @@ export const StyledIntroContainer = styled.div`
   `}
 
   ${media.desktop`
-    height: 88vh;
+    height: 88dvh;
     width: 100%;
     justify-content: ${({ $current }) => $current == 0 ? "center" : "flex-start"};
     align-items: ${({ $current }) => $current == 0 ? "flex-end" : "center"};
@@ -499,7 +499,6 @@ export const StyledGalleryContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex: 1 1 auto; /* Change to 0 0 auto if messing up scroll box again*/
-    min-height: 360px;
     width: 100%;
     padding: 20px 0px 60px 0px;
     box-sizing: border-box;
@@ -508,7 +507,7 @@ export const StyledGalleryContainer = styled.div`
   ${media.desktop`
     justify-content: flex-start;
     align-items: center;
-    height: 100vh;
+    height: 100dvh;
     width: fit-content;
     margin-right: 130px;
     margin-left: ${({ $current }) => $current == 0 ? "3vw" : "0vw"};
@@ -518,7 +517,7 @@ export const StyledGalleryContainer = styled.div`
 /* Source - Temani Afif, taken from the article "https://freefrontend.com/css-gallery/" */
 export const StyledGallery = styled.div`
   ${media.mobile`
-    --s: 18vh;
+    --s: 18dvh;
   `}
 
   ${media.desktop`
