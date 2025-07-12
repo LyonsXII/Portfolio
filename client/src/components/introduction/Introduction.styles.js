@@ -31,7 +31,6 @@ export const StyledIntroContentContainer = styled.div`
   flex-direction: ${({ $flexDirection }) => $flexDirection || "column"};
   align-items: flex-start;
   height: 100%;
-  max-height: 10000px;
   padding: 0px 30px 0px 25px;
   gap: ${({ $gap }) => $gap || "20px"};
   box-sizing: border-box;
@@ -72,6 +71,7 @@ export const StyledIntroContentContainer = styled.div`
 
   ${media.desktop`
     width: 90%;
+    max-height: 10000px;
   `}
 `;
 
