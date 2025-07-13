@@ -116,7 +116,7 @@ app.get("/mp3", (req, res) => {
   const relativeLocation = location.replace(/\\/g, "/");
   const filePath = path.join(__dirname, "public", relativeLocation);
   res.set("Cache-Control", "public, max-age=3600"); // Cache file for one hour
-  res.sendFile(filePath, () => console.timeEnd("getAudio"));
+  res.sendFile(filePath);
 });
 
 // Author analysis report fetch functions

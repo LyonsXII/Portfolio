@@ -27,6 +27,7 @@ function Dashboard({data, functional}) {
     toggleWordcloud,
     hoverText,
     handleHoverText,
+    authorExpanded,
     predictionExpanded,
     selectedAuthor,
     showTopicGraph,
@@ -220,7 +221,15 @@ function Dashboard({data, functional}) {
 
   // Trigger window resize event to update Plotly plots
     // Workaround - function listed in documentation not working (likely due to grid and max-height transition)
-  useEffect(() => { window.dispatchEvent(new Event("resize"))}, [reportData, selectedAuthor, showTopicGraph, showWordcloud, hoverText, theme]);
+  useEffect(() => { 
+    window.dispatchEvent(new Event("resize"));
+    const timeout = setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, 
+    [reportData, selectedAuthor, showTopicGraph, showWordcloud, hoverText, theme, authorExpanded, predictionExpanded]);
 
   return (
     <StyledGrid $showData={showData}>

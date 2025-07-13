@@ -467,6 +467,8 @@ function AuthorAnalysis({ transition, home }) {
       <MainButtons 
         showData={showData} 
         authorProps={{
+          showData,
+          showAuthorData,
           authorList,
           selectedAuthor,
           changeSelectedAuthor,
@@ -497,6 +499,7 @@ function AuthorAnalysis({ transition, home }) {
           toggleWordcloud,
           hoverText,
           handleHoverText,
+          authorExpanded,
           predictionExpanded,
           selectedAuthor,
           showTopicGraph,
