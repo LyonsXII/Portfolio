@@ -8,8 +8,8 @@ import { fadeInAnimation, delayedFadeInAnimation, fadeOutAnimation, slideInBotto
 
 export const StyledFlexboxContainer = styled.div`
   position: relative;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +19,7 @@ export const StyledFlexboxContainer = styled.div`
 `;
 
 export const StyledButtonsFlexbox = styled.div`
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -27,7 +27,7 @@ export const StyledButtonsFlexbox = styled.div`
 
   ${media.mobile`
     flex-direction: column;
-    max-height: ${({ $showData }) => $showData ? "34vw" : "100vh"};
+    max-height: ${({ $showData }) => $showData ? "34dvw" : "100dvh"};
     max-width: ${({ $showData }) => $showData ? "calc(100% - 100px)" : "calc(100% - 40px)"};
     margin-top: ${({ $showData }) => $showData ? "20px" : "0px"};
     margin-left: ${({ $showData }) => $showData ? "80px" : "0px"};
@@ -39,8 +39,8 @@ export const StyledButtonsFlexbox = styled.div`
 
   ${media.desktop`
     gap: 60px;
-    max-height: ${({ $showData }) => $showData ? "260px" : "100vh"};
-    max-width: ${({ $showData }) => $showData ? "calc(100vw - 200px)" : "80%"};
+    max-height: ${({ $showData }) => $showData ? "260px" : "100dvh"};
+    max-width: ${({ $showData }) => $showData ? "calc(100dvw - 200px)" : "80%"};
     margin-top: ${({ $showData }) => $showData ? "20px" : "0px"};
     margin-left: ${({ $showData }) => $showData ? "80px" : "0px"};
     transition: all 0.5s ease;
@@ -55,7 +55,7 @@ export const StyledTextEntryFlexbox = styled.div`
   ${media.mobile`
     height: 100%;
     width: 100%;
-    max-height: ${({ $hide }) => !$hide ? "0vw" : "34vw"};
+    max-height: ${({ $hide }) => !$hide ? "0dvw" : "34dvw"};
     opacity: ${({ $hide }) => $hide ? "100%" : "0%"};
     padding: ${({ $hide }) => $hide ? "10px 0px" : "0px"};
     transition: ${({ $showData, $hide }) => 
@@ -74,7 +74,7 @@ export const StyledTextEntryFlexbox = styled.div`
 
   ${media.desktop`
     height: 100%;
-    max-height: ${({ $showData }) => $showData ? "200px" : "calc(100vh - 40px)"};
+    max-height: ${({ $showData }) => $showData ? "200px" : "calc(100dvh - 40px)"};
     max-width: ${({ $expanded }) => $expanded ? "80%" : "200px"};
     transition: max-height 1s ease, max-width 1s ease;
     width: 100%;
@@ -105,10 +105,10 @@ export const StyledMainButton = styled.button`
   }
 
   ${media.mobile`
-    height: 34vw;
-    width: ${({ $expanded }) => $expanded ? "15%" : "34vw"};
+    height: 34dvw;
+    width: ${({ $expanded }) => $expanded ? "15%" : "34dvw"};
     border: 3px solid black;
-    margin-left: ${({ $expanded }) => $expanded ? "0px" : "-10vw"};
+    margin-left: ${({ $expanded }) => $expanded ? "0px" : "-10dvw"};
     border-radius: ${({ $expanded }) => $expanded ? "40px" : "50%"};
   `}
 
@@ -135,8 +135,8 @@ export const StyledTextBox = styled.div`
               inset 0 -4px 4px rgba(0, 0, 0, 0.6);
 
   ${media.mobile`
-    height: calc(34vw - 26px);
-    margin-left: -10vw;
+    height: calc(34dvw - 26px);
+    margin-left: -10dvw;
     border: 3px solid black;
   `}
 
@@ -219,8 +219,8 @@ export const StyledAuthorButtonContainer = styled.div`
   ${media.mobile`
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     grid-gap: 5px;
-    height: calc(34vw - 26px);
-    margin-left: -10vw;
+    height: calc(34dvw - 26px);
+    margin-left: -10dvw;
     padding: ${({$expanded}) => $expanded ? "5px 10px 5px 45px" : "0px"};
     border: 3px solid black;
   `}
@@ -303,7 +303,7 @@ export const StyledGrid = styled.div`
   position: relative;
   justify-items: stretch;
   align-items: stretch;
-  max-height: ${({ $showData }) => $showData ? "100vh" : "0vh"};
+  max-height: ${({ $showData }) => $showData ? "100dvh" : "0dvh"};
   transition: max-height 1s ease, margin-bottom 1s ease;
   transition-delay: ${({ $showData }) => $showData ? "0.5s" : "0s"};
   padding: 0% 3%;
@@ -428,8 +428,8 @@ export const StyledToolTip = styled.div`
 
 export const StyledBackdrop = styled.div`
   position: absolute;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   top: 0;
   left: 0;
   background-color: black; 
@@ -519,8 +519,8 @@ export const FullScreenBackground = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   background-color: black;
   z-index: 2;
   opacity: 0.8;
@@ -533,8 +533,8 @@ export const FullScreenContainer = styled.div`
   align-items: center;
   position: absolute;
   height: 90%;
-  top: 5vh;
-  left: 5vw;
+  top: 5dvh;
+  left: 5dvw;
   background-color: white;
   border: 4px solid black;
   border-radius: 20px;

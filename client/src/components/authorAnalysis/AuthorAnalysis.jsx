@@ -128,7 +128,8 @@ function AuthorAnalysis({ transition, home }) {
 
   const [loading, setLoading] = useState(false);
 
-  const backend_url = "https://portfolio-hrd0.onrender.com" //http://localhost:5000
+  const backend_url_A = "https://portfolio-hrd0.onrender.com" // http://localhost:5000 - Author Analysis Tensorflow Server
+  const backend_url_B = "https://portfolio-hrd0.onrender.com" // http://localhost:5002 - Topic Analysis Mallet Server (LDA Model)
 
   function handleChange(e) {
     setPredictionText(e.target.value);
@@ -235,7 +236,7 @@ function AuthorAnalysis({ transition, home }) {
       const requestData = {
         author: selectedAuthor
       }
-      const response = await fetch(`${backend_url}/author_report`, {
+      const response = await fetch(`${backend_url_A}/author_report`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -263,7 +264,7 @@ function AuthorAnalysis({ transition, home }) {
         author: selectedAuthor,
         text: predictionText
       }
-      const response = await fetch(`${backend_url}/wordcloud`, {
+      const response = await fetch(`${backend_url_A}/wordcloud`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -290,7 +291,8 @@ function AuthorAnalysis({ transition, home }) {
         author: selectedAuthor,
         text: predictionText
       }
-      const response = await fetch("http://localhost:5002/topic_analysis", {
+      // 
+      const response = await fetch(`${backend_url_B}/topic_analysis`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -406,7 +408,7 @@ function AuthorAnalysis({ transition, home }) {
   useEffect(() => {
     async function list_authors() {
       try {
-        const response = await fetch(`${backend_url}/author_details`, {
+        const response = await fetch(`${backend_url_A}/author_details`, {
           method: "GET"
         });
     

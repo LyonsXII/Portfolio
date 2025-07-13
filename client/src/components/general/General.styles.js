@@ -9,15 +9,15 @@ export const StyledMainBackground = styled.div`
   background-image: ${({ $bg }) => $bg};;
   overflow: hidden;
   pointer-events: none;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   // box-shadow: inset 0px 0px 40px rgba(0, 0, 0, 1),
   //             inset 0px 0px 80px rgba(0, 0, 0, 0.6);
 `;
 
 export const StyledMainContainer = styled.div`
-  height: 100dvh;
-  width: 100vw;
+  height: 100ddvh;
+  width: 100dvw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

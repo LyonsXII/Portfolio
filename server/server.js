@@ -167,7 +167,22 @@ app.post("/wordcloud", (req, res) => {
   }
 })
 
-app.post("/wordcloud", (req, res) => {
+app.post("/topic_analysis", (req, res) => {
+  try {
+    const author = req.body.author;
+    const relativeLocation = "public/author reports/" + author + " - Topic Analysis.html"
+    const filePath = path.join(__dirname, relativeLocation);
+
+    res.sendFile(filePath, err => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error sending topic analysis" });
+      }
+    });
+
+  } catch(err) {
+    console.log(err)
+  }
 })
 
 app.listen(port, () => {

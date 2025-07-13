@@ -65,7 +65,7 @@ export const StyledSettingsContainer = styled.div`
     justify-content: flex-start;
     bottom: -64px;
     left: 0px;
-    width: 100vw;
+    width: 100dvw;
 
     animation: ${({ $animationState }) => 
       $animationState === "Enter" 
@@ -81,7 +81,7 @@ export const StyledSettingsContainer = styled.div`
     justify-content: flex-end;
     top: 0px;
     right: -84px;
-    height: 100vh;
+    height: 100dvh;
 
     animation: ${({ $animationState }) => 
       $animationState === "Enter" 
@@ -235,8 +235,8 @@ export const StyledSettingsMenuBackground = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   background-color: black;
   z-index: 1;
   opacity: 0.8;
@@ -247,8 +247,8 @@ export const StyledSettingsMenuFlexbox = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   display: ${({ $settingsMenuHidden }) => $settingsMenuHidden === true ? "none" : "flex"};
   justify-content: center;
 
@@ -277,13 +277,13 @@ export const StyledSettingsMenuHeader = styled.div`
     gap: 4px;
     background-color: black; /* Used with gap to create pseudo border for interior edges */
     height: fit-content;
-    min-height: 10vh;
+    min-height: 10dvh;
     border-bottom: 4px solid black;
     overflow: hidden;
   `}
 
   ${media.desktop`
-    height: 10vh;
+    height: 10dvh;
     border-bottom: 4px solid black;
   `}
 `;
@@ -328,15 +328,15 @@ export const StyledSettingsMenuContainer = styled.div`
 
   ${media.mobile`
     height: fit-content;
-    min-height: calc(80vh - 64px);
-    width: 80vw;
+    min-height: calc(80dvh - 64px);
+    width: 80dvw;
     margin-top: 64px;
   `}
 
   ${media.desktop`
-    height: 50vh;
+    height: 50dvh;
     width: fit-content;
-    min-width: 70vw;
+    min-width: 70dvw;
   `}
 `;
 

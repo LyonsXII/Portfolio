@@ -12,7 +12,7 @@ import DownloadIcon from "../../icons/download.svg?react";
 export const StyledContentContainer = styled.div`
   display: flex;
   height: 100dvh;
-  width: 100vw;
+  width: 100dvw;
 
   ${media.mobile`
     flex-direction: column;
@@ -393,7 +393,7 @@ export const StyledButtonsContainer = styled.div`
   justify-content: flex-start;
   width: 36%;
   gap: 40px;
-  margin-right: 4vw;
+  margin-right: 4dvw;
 `;
 
 export const StyledIntroContainer = styled.div`
@@ -507,7 +507,7 @@ export const StyledGalleryContainer = styled.div`
     height: 100dvh;
     width: fit-content;
     margin-right: 130px;
-    margin-left: ${({ $current }) => $current == 0 ? "3vw" : "0vw"};
+    margin-left: ${({ $current }) => $current == 0 ? "3dvw" : "0dvw"};
   `}
 `;
 
@@ -518,8 +518,8 @@ export const StyledGallery = styled.div`
   `}
 
   ${media.desktop`
-    // --s: 10vw;
-    --s: min(18vw, 190px);
+    // --s: 10dvw;
+    --s: min(18dvw, 190px);
   `}
   
   display: grid;
@@ -675,7 +675,7 @@ export const StyledGalleryImage = styled.img`
   ${media.desktop`
     border: 6px solid black;
     width: var(--s);
-    --scale: clamp(0.1, 0.01 + 0.5 * ((100vw - 1080px) / 840), 0.2);
+    --scale: clamp(0.1, 0.01 + 0.5 * ((100dvw - 1080px) / 840), 0.2);
     transform: scale(0.1);
 
     &:nth-of-type(1) {

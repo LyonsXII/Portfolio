@@ -11,8 +11,8 @@ import MinusIconMobile from "../../icons/minusMobile.svg?react";
 
 export const StyledFlexboxContainer = styled.div`
   position: relative;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -51,9 +51,9 @@ export const StyledPlotContainer = styled.div`
     flex-grow: 1;
     height: auto;
     min-height: 500px;
-    max-height: 70vh;
+    max-height: 70dvh;
     min-width: 500px;
-    max-width: 80vh;
+    max-width: 80dvh;
     margin-left: 40px;
   `}
 `;
@@ -83,7 +83,7 @@ export const StyledButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 20px;
-    max-height: 90vh;
+    max-height: 90dvh;
     margin-right: 130px;
   `}
 `;

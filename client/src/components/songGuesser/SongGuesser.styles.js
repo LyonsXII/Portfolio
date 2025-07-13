@@ -11,8 +11,8 @@ import ReplayShadowIcon from "../../icons/replay-shadow.svg?react";
 import NextSongIcon from "../../icons/nextSong.svg?react";
 
 export const StyledSongGuesserContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,28 +25,28 @@ export const StyledIntroContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 
   ${media.mobile`
-    width: 100vw;
+    width: 100dvw;
   `}
 
   ${media.desktop`
-    width: 88vw;
+    width: 88dvw;
   `}
 `;
 
 export const StyledIntroFlexbox = styled.div`
   display: flex;
   width: 90%;
-  margin-top: 8vh;
+  margin-top: 8dvh;
 
   ${media.mobile`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 55vh;
+    height: 55dvh;
     gap: 30px;
   `}
 
@@ -142,7 +142,7 @@ export const StyledTextContainer = styled.div`
 `;
 
 export const StyledIcon = styled.svg`
-  height: 15vh;
+  height: 15dvh;
   cursor: pointer;
 
   path {
@@ -247,7 +247,7 @@ export const StyledScoreFlexbox = styled.div`
     top: 30px;
     left: 100px;
     height: 30px;
-    width: calc(100vw - 130px);
+    width: calc(100dvw - 130px);
     border: 3px solid black;
     border-radius: 10px;
     overflow: hidden;
@@ -255,8 +255,8 @@ export const StyledScoreFlexbox = styled.div`
 
   ${media.desktop`
     flex-direction: column;
-    height: 100vh;
-    width: 3vw;
+    height: 100dvh;
+    width: 3dvw;
     min-width: 50px;
   `}
 `;
@@ -361,7 +361,7 @@ export const StyledVideoMainContainer = styled.div`
 `;
 
 export const StyledVideoContainer = styled.div`
-  height: calc((100vw / 16) * 9);
+  height: calc((100dvw / 16) * 9);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -484,7 +484,7 @@ export const StyledVideoTextBox = styled.div`
 
   ${media.mobile`
     flex: ${({ $position }) => $position === "first" ? "0 1 auto" : "0 0 auto"};
-    width: 80vw;
+    width: 80dvw;
     min-width: ${({ $position }) => $position === "first" ? "0px" : "fit-content"};
     margin-top: ${({ $position }) => $position === "first" ? "0px" : "-10px"};
     overflow: ${({ $position }) => $position === "first" ? "hidden" : "visible"};
@@ -505,8 +505,8 @@ export const StyledGameOverBackdrop = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   background-color: black;
   box-sizing: border-box; 
   z-index: 4;
@@ -555,12 +555,12 @@ export const StyledMainTitleWord = styled.div`
     align-items: center;
     width: ${({ $mode, $position }) => $position === "first" && !$mode ? "75%" : "100%"};
     margin-top: ${({ $mode, $position }) => {
-      if ($position === "first" && $mode === "Game Over") return "-5vh";
-      if ($position != "first" && $mode === "Game Over") return "5vh";
+      if ($position === "first" && $mode === "Game Over") return "-5dvh";
+      if ($position != "first" && $mode === "Game Over") return "5dvh";
       return "0%";
     }};
     margin-left: ${({ $mode, $position }) => {
-      if ($mode === "Game Over" && $position !== "first") return "10vw";
+      if ($mode === "Game Over" && $position !== "first") return "10dvw";
       if (!$mode && $position === "first") return "25%";
       return "0%";
     }};
