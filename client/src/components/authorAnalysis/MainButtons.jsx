@@ -22,7 +22,8 @@ function MainButtons({ showData, authorProps, predictionProps}) {
     togglePredictionExpanded,
     handleChange,
     handlePrediction,
-    predictionText
+    predictionText,
+    demoDisablePredict
   } = predictionProps
 
   const [authorExpandedButtonAnimation, setAuthorExpandedButtonAnimation] = useState(false);

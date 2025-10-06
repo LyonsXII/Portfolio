@@ -435,7 +435,7 @@ export const StyledBackdrop = styled.div`
   background-color: black; 
   z-index: 2;
   opacity: 0.8;
-  pointer-events: none;
+  pointer-events: ${({ $active }) => $active ? "auto" : "none" };
 `;
 
 export const StyledPlotContainer = styled.div`

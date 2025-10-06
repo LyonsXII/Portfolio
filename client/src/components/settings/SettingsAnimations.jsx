@@ -81,8 +81,8 @@ export const notchSlideUpMobile = keyframes`
             transform: translateY(0);
   }
   100% {
-    -webkit-transform: translateY(-64px);
-            transform: translateY(-64px);
+    -webkit-transform: translateY(-63px);
+            transform: translateY(-63px);
   }
 `;
 
@@ -109,8 +109,8 @@ export const notchSlideRightAnimation = css`
 
 export const notchSlideDownMobile = keyframes`
   0% {
-    -webkit-transform: translateY(-64px);
-            transform: translateY(-64px);
+    -webkit-transform: translateY(-63px);
+            transform: translateY(-63px);
     opacity: 1;
   }
   100% {

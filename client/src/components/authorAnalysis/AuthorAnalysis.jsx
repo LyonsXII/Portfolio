@@ -128,8 +128,12 @@ function AuthorAnalysis({ transition, home }) {
 
   const [loading, setLoading] = useState(false);
 
-  const backend_url_A = "https://portfolio-hrd0.onrender.com" // http://localhost:5000 - Author Analysis Tensorflow Server
-  const backend_url_B = "https://portfolio-hrd0.onrender.com" // http://localhost:5002 - Topic Analysis Mallet Server (LDA Model)
+  // Backend non-functional on demo site, compute too demanding for free hosting
+  // Could implement naive bayes or something instead but kind of defeats the purpose
+  const demoDisablePredict = true
+  const backend_url_A = "https://portfolio-hrd0.onrender.com" // http://localhost:5000 - Express backend, used to provide author files for demo as Flask backend not feasible for free hosting
+  const backend_url_B = "http://localhost:5001" // http://localhost:5001 - Author Analysis Tensorflow Server
+  const backend_url_C = "https://portfolio-hrd0.onrender.com" // http://localhost:5002 - Topic Analysis Mallet Server (LDA Model)
 
   function handleChange(e) {
     setPredictionText(e.target.value);
@@ -141,10 +145,19 @@ function AuthorAnalysis({ transition, home }) {
     if (hoverText.text == "") {
       const rect = e.target.getBoundingClientRect();
 
-      setHoverText({
-        text: e.target.value,
-        position: { x: (window.innerWidth / 2) - 400, y: rect.bottom + 126}
-      });
+      // Using a hacky approach to handle demo since can't pass event object through two layers
+      // Not great but saves having to rewrite
+      if (e.target.value) {
+        setHoverText({
+          text: e.target.value,
+          position: { x: (window.innerWidth / 2) - 400, y: rect.bottom + 126}
+        });
+      } else {
+        setHoverText({
+          text: "demo",
+          position: { x: (window.innerWidth / 2) - 400, y: rect.top - 40}
+        });
+      }
 
     } else {
       setHoverText({
@@ -209,7 +222,7 @@ function AuthorAnalysis({ transition, home }) {
       const requestData = {
         text: predictionText
       }
-      const response = await fetch("http://localhost:5001/predict", {
+      const response = await fetch(`${backend_url_B}/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -292,7 +305,7 @@ function AuthorAnalysis({ transition, home }) {
         text: predictionText
       }
       // 
-      const response = await fetch(`${backend_url_B}/topic_analysis`, {
+      const response = await fetch(`${backend_url_C}/topic_analysis`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -313,12 +326,16 @@ function AuthorAnalysis({ transition, home }) {
     }
   }
 
-  function handlePrediction() {
-    clickSound();
-    setLoading(true);
-    predict(predictionText)
-    fetch_wordcloud("Custom", predictionText)
-    fetch_topic_analysis();
+  function handlePrediction(e) {
+    if (demoDisablePredict) {
+      handleHoverText(e)
+    } else {
+      clickSound();
+      setLoading(true);
+      predict(predictionText)
+      fetch_wordcloud("Custom", predictionText)
+      fetch_topic_analysis();
+    }
   }
 
   async function handleAuthorReport() {
@@ -455,12 +472,12 @@ function AuthorAnalysis({ transition, home }) {
 
       {hoverText.text != "" && 
         <div>
-          <StyledToolTip theme={theme} $hoverText={hoverText}>
+          <StyledToolTip theme={theme} $hoverText={hoverText} onClick={() => setHoverText({text: "", position: { x: 0, y: 0 }})}>
             <StyledBodyText>
               {toolTipText[hoverText.text]}
             </StyledBodyText>
           </StyledToolTip>
-          <StyledBackdrop/>
+          <StyledBackdrop $active={hoverText.text === "demo"} onClick={() => setHoverText({text: "", position: { x: 0, y: 0 }})}/>
         </div>
       }
 
@@ -481,7 +498,8 @@ function AuthorAnalysis({ transition, home }) {
           togglePredictionExpanded,
           handleChange,
           handlePrediction,
-          predictionText
+          predictionText,
+          demoDisablePredict
         }}
       />
 
