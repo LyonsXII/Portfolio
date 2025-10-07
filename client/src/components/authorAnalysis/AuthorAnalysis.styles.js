@@ -424,6 +424,18 @@ export const StyledToolTip = styled.div`
   transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
   z-index: 3;
   white-space: pre-line;
+  pointer-events: ${({ $active }) => $active ? "auto" : "none" };
+
+  ${media.mobile`
+    max-width: 80dvw;
+    top: ${({ $hoverText }) => $hoverText.position.y - 120}px;
+    left: ${({ $hoverText }) => $hoverText.position.x - 150}px;
+  `}
+
+  ${media.desktop`
+    top: ${({ $hoverText }) => $hoverText.position.y - 100}px;
+    left: ${({ $hoverText }) => $hoverText.position.x - 350}px;
+  `}
 `
 
 export const StyledBackdrop = styled.div`
@@ -434,7 +446,7 @@ export const StyledBackdrop = styled.div`
   left: 0;
   background-color: black; 
   z-index: 2;
-  opacity: 0.8;
+  opacity: 0.9;
   pointer-events: ${({ $active }) => $active ? "auto" : "none" };
 `;
 

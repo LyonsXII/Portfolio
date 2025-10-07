@@ -150,12 +150,12 @@ function AuthorAnalysis({ transition, home }) {
       if (e.target.value) {
         setHoverText({
           text: e.target.value,
-          position: { x: (window.innerWidth / 2) - 400, y: rect.bottom + 126}
+          position: { x: (window.innerWidth / 2), y: rect.bottom}
         });
       } else {
         setHoverText({
           text: "demo",
-          position: { x: (window.innerWidth / 2) - 400, y: rect.top - 40}
+          position: { x: (window.innerWidth / 2), y: rect.top}
         });
       }
 
@@ -472,7 +472,7 @@ function AuthorAnalysis({ transition, home }) {
 
       {hoverText.text != "" && 
         <div>
-          <StyledToolTip theme={theme} $hoverText={hoverText} onClick={() => setHoverText({text: "", position: { x: 0, y: 0 }})}>
+          <StyledToolTip theme={theme} $hoverText={hoverText} $active={hoverText.text === "demo"} onClick={() => setHoverText({text: "", position: { x: 0, y: 0 }})}>
             <StyledBodyText>
               {toolTipText[hoverText.text]}
             </StyledBodyText>
