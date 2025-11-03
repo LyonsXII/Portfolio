@@ -5,9 +5,9 @@
 </br>
 Welcome, here you can find my portfolio website (available online at https://portfolio-lyonsxiis-projects.vercel.app/), which consists of a few projects I've been working on recently. Feel free to take a look at the source code, or click on the link and try it out for yourself.
 
-The site is complete with transitions, adjustable settings and themes, and works both desktop and mobile.
+The site is complete with transitions, adjustable settings and themes, and works on both desktop and mobile.
 
-The live site is deployed using Vercel for the frontend, with the backend consisting of a combination Render, and Neon to handle the PostgreSQL database.
+The live site is deployed using Vercel for the frontend, with the backend consisting of a combination of Render for the main logic, and Neon to handle the PostgreSQL database.
 
 ## Projects
 ### 🎵 Song Guesser Game
@@ -48,7 +48,7 @@ An interactive mathematical visualization of how the strength of a Faraday cage 
 ### 📊 ML Author Analysis Dashboard
 A machine learning dashboard analyzing authors' writing styles using machine learning.
 - Live charts and metrics
-- Compare multiple authors or provide a text snippet of your own and see which author comes closest.
+- Compare multiple authors or provide a text snippet of your own and see which author comes closest
 - Built using a fine-tuning of BERT
 
 <table>
